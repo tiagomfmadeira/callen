@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Callen
+{
+    public class Folders //Used to define a folder (Code, Theme) 
+    {
+        public String folder { get; set; }
+        public String theme { get; set; }
+    }
+}

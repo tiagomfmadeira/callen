@@ -1,0 +1,532 @@
+﻿<Application x:Class="Callen.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Callen"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        
+        <!--#region Colors-->
+
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="#c9cbcc" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="#FF252323" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="#bb5353" />
+        
+        <SolidColorBrush x:Key="mainColor" Color="#36393E"/>
+        <SolidColorBrush x:Key="lightestHighLight" Color="#C9CBCC"/>
+        <SolidColorBrush x:Key="lightHighLight" Color="#989A9C"/>
+        <SolidColorBrush x:Key="highLight" Color="#262D30"/>
+        <SolidColorBrush x:Key="darkHighLight" Color="#2E3136"/>
+        <SolidColorBrush x:Key="darkestHighLight" Color="#1D2124"/>
+        <SolidColorBrush x:Key="foreground" Color="#FF787878"/>
+        
+        <SolidColorBrush x:Key="contrastHighLight" Color="#BB5353"/>
+                         
+        <SolidColorBrush x:Key="GotFocusColor" Color="Green" />
+        <SolidColorBrush x:Key="LostFocusColor" Color="Transparent" />
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        
+        <!--#endregion-->
+
+        <Style x:Key="dataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="{DynamicResource mainColor}"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="{DynamicResource lightHighLight}"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource highLight}"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <!-- Main Grid -->
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="10,5,10,10"/>
+        </Style>
+
+        <!-- menu Min Button -->
+        <Style x:Key="menuMinButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource foreground}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                                BorderThickness="0,0,0,0"
+                                BorderBrush="{DynamicResource foreground}"
+                                Background="{x:Null}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- menu Button -->
+        <Style x:Key="menuButton" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="{DynamicResource foreground}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Name="border"
+                                BorderThickness="0,0,0,0"
+                                BorderBrush="{x:Null}"
+                                Background="{x:Null}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                <Setter TargetName="border" Property="Background" Value="#121516"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Menu Font -->
+        <Style x:Key="menuFont" TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource lightHighLight}"/>
+            <Setter Property="FontSize" Value="17"/>
+        </Style>
+        
+        <!-- Form Label -->
+        <Style x:Key="formLabel" TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource lightestHighLight}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="{DynamicResource highLight}"/>
+            <Setter Property="Width" Value="77"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        
+        <!-- Form TextBox-->
+        <Style x:Key="formTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource lightestHighLight}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource highLight}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="BorderBrush" Value="#EA7272"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="BorderBrush" Value="#BB5353"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="descTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource formTextBox}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        </Style>
+
+        <!-- Image Form -->
+        <Style x:Key="imgForm" TargetType="Image">
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+        </Style>
+
+        <!-- menu Button -->
+        <Style x:Key="gridButton" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="{DynamicResource foreground}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Image Name="image" Source="Icons/Fat/gridGray.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="image" Property="Source" Value="Icons/Fat/gridLightRed.png"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="image" Property="Source" Value="Icons/Fat/gridRed.png"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Search Bar -->
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="20,0" />
+        </Style>
+
+        <!-- Search Drop Down Button -->
+        <Style x:Key="dropDownButton" TargetType="ToggleButton">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+                            <Image Source="Icons/Fat/dropDown.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Opacity" Value="0.75"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Advance Search Form -->
+        <Style x:Key="advanceSearchForm" TargetType="Grid">
+            <Setter Property="Margin" Value="10,5,10,5"/>
+        </Style>
+
+        <!-- Simple Border -->
+        <Style x:Key="simpleBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- Advance Search Border -->
+        <Style x:Key="advanceSearchBorder" TargetType="Border" BasedOn="{StaticResource simpleBorder}">
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Panel.ZIndex" Value="1"/> <!-- Brings Border to the front -->
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <!-- Advance Search Font Format -->
+        <Style x:Key="advanceSearchFont" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- Advance Search Input Format -->
+        <Style x:Key="advanceSearchInput" TargetType="TextBox">
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <!-- Advance Search Date Picker -->
+        <Style x:Key="advanceSearchDatePicker" TargetType="DatePicker">
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <!-- Advance Search Button -->
+        <Style x:Key="advanceSearchButton" TargetType="Button">
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Help Button -->
+        <Style x:Key="helpButton" TargetType="Button">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Settings Button -->
+        <Style x:Key="settingsButton" TargetType="Button">
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Home Button -->
+        <Style x:Key="homeButton" TargetType="Button">
+            <Setter Property="Height" Value="27"/>
+            <Setter Property="Width" Value="27"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/home.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Previous Page -->
+        <Style x:Key="prevPageButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/previousPage.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Next Page -->
+        <Style x:Key="nextPageButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/nextPage.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Default Image Button -->
+        <Style x:Key="defImageButton" TargetType="Button">
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/image.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Test Image Button-->
+        <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="Chrome" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                                <Setter Property="Opacity" TargetName="Chrome" Value="0.5"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region Search Pages-->
+        
+        <!-- Mode Button -->
+        <Style x:Key="modeButton" TargetType="ToggleButton">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="-1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid>
+                            <Image Source="Icons/Fat/switchLeft.png" RenderOptions.BitmapScalingMode="HighQuality" Name="switch"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="switch" Property="Source" Value="Icons/Fat/switchRight.png"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Add Button -->
+        <Style x:Key="addButton" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/add.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+        
+        <!--#region Description-->
+
+        <!-- Print Button -->
+        <Style x:Key="printButton" TargetType="Button">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/print.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Edit Button -->
+        <Style x:Key="editButton" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/edit.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Close Button -->
+        <Style x:Key="closeButton" TargetType="Button">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/menu/close.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Text Box -->
+        <Style x:Key="descText" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Text Title -->
+        <Style x:Key="descTitle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <!--#endregion-->
+        
+    </Application.Resources>
+</Application>

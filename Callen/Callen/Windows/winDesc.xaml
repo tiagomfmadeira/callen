@@ -1,0 +1,60 @@
+﻿<Window x:Class="Callen.Windows.winDesc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Callen.Windows"
+        mc:Ignorable="d"
+        Title="winDesc" Height="600" Width="800" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <Canvas Margin="10,0,-10,0">
+            <Border Height="270" Width="479" Canvas.Left="151" Canvas.Top="165" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+
+            <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="605" Canvas.Top="165">
+                <Image>
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="../Icons/Fat/menu/close.png"/>
+                            <Setter Property="Width" Value="15"/>
+                            <Setter Property="Height" Value="auto"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Source" Value="../Icons/Fat/menu/closeWhite.png"/>
+                                    <Setter Property="Width" Value="17.5"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>
+            <TextBox Name="item_name" IsEnabled="False" Width="178" Canvas.Left="174" Canvas.Top="220" Height="26" Style="{StaticResource descTextBox}"/>
+            <TextBox Name="item_year" IsEnabled="False" Width="51" Canvas.Left="244" Canvas.Top="251" Height="26" Style="{StaticResource descTextBox}"/>
+
+
+            <Label Content="Patrocinador" Canvas.Left="373" Canvas.Top="233" Style="{DynamicResource formLabel}" />
+            <TextBox Name="item_sponsor" IsEnabled="False" Width="149" Canvas.Left="455" Canvas.Top="233" Height="26" Style="{StaticResource descTextBox}"/>
+
+            <Label Content="Fornecedor" Canvas.Left="373" Canvas.Top="279" Style="{DynamicResource formLabel}" Width="77" />
+            <TextBox Name="item_peer" IsEnabled="False" Width="149" Canvas.Left="455" Canvas.Top="279" Height="26" Style="{StaticResource descTextBox}"/>
+
+            <Label Content="Série" Canvas.Left="244" Canvas.Top="180" Style="{DynamicResource formLabel}" Width="54" />
+            <TextBox Name="item_colec" IsEnabled="False" Width="80" Canvas.Left="303" Canvas.Top="180" Height="26" Style="{StaticResource descTextBox}"/>
+
+            <Label Content="Tema" Canvas.Left="174" Canvas.Top="342" Style="{DynamicResource formLabel}" Width="41" />
+            <TextBox Name="item_theme" IsEnabled="False" Width="132" Canvas.Left="220" Canvas.Top="342" Height="26" Style="{StaticResource descTextBox}"/>
+
+            <Label Content="Pasta" Canvas.Left="174" Canvas.Top="311" Style="{DynamicResource formLabel}" Width="41" />
+            <TextBox Name="item_folder" IsEnabled="False" Width="51" Canvas.Left="220" Canvas.Top="311" Height="26" Style="{StaticResource descTextBox}"/>
+
+            <Label Content="Outro" Canvas.Left="174" Canvas.Top="390" Style="{DynamicResource formLabel}" Width="41" />
+            <TextBox Name="item_other" IsEnabled="False" Width="130" Canvas.Left="222" Canvas.Top="390" Height="26" Style="{StaticResource descTextBox}"/>
+            
+            <TextBox Name="item_desc" IsEnabled="False" VerticalContentAlignment="Top" Width="205" Canvas.Left="399" Canvas.Top="333" Height="83" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
+
+            <Border CornerRadius="3,3,3,3" Background="{DynamicResource lightestHighLight}" Name="img_border"  Height="90" Width="127" Visibility="Visible" Canvas.Left="88" Canvas.Top="120" Style="{StaticResource simpleBorder}">
+                <Image Name="item_img" Style="{DynamicResource imgForm}" Canvas.Left="432" Canvas.Top="292" Margin="-1,-1,1,1"/>
+            </Border>
+            <TextBox IsEnabled="False" Width="27" Canvas.Left="399" Canvas.Top="180" Height="26" Style="{StaticResource descTextBox}"/>
+        </Canvas>
+    </Grid>
+</Window>
