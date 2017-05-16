@@ -129,3 +129,6 @@ C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\g_callen\Proj\Callen\Callen\obj\D
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\g_callen\Proj\Callen\Callen\obj\Debug\Windows\Forms\winAddPeer.baml
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\g_callen\Proj\Callen\Callen\obj\Debug\Windows\Forms\winAddFolder.g.cs
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\g_callen\Proj\Callen\Callen\obj\Debug\Windows\Forms\winAddFolder.baml
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\bin\Debug\Callen.exe.config
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Callen.exe
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Callen.pdb
