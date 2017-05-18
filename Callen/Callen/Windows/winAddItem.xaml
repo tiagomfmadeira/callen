@@ -36,7 +36,7 @@
             <TextBox Name="name_box" Width="130" Canvas.Left="242" Canvas.Top="208" Height="26" Style="{DynamicResource formTextBox}" />
 
             <Label Content="Patrocinador" Canvas.Left="162" Canvas.Top="238" Style="{DynamicResource formLabel}" />
-            <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="242" Canvas.Top="238" Height="26" />
+            <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="242" Canvas.Top="238" Height="26"/>
             <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="240.5" Canvas.Left="373">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">

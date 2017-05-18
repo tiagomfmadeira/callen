@@ -8,87 +8,80 @@
              d:DesignHeight="575" d:DesignWidth="800">
     <Grid Style="{StaticResource gridStyle}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width=".5*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width=".5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Click="help" Style="{StaticResource helpButton}"/>
-        <Button Grid.Column="1" Style="{StaticResource settingsButton}"/>
 
-        <Grid Margin="10" Grid.Column="2" Grid.Row="1" >
+        <Grid Margin="10" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Modificados Recentemente"/>
+            <TextBlock Text="Modificados Recentemente" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
 
-        <Grid Margin="10" Grid.Column="3" Grid.Row="1" >
+        <Grid Margin="10" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Inseridos recentemente"/>
+            <TextBlock Text="Inseridos recentemente" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
 
-        <Grid Margin="10" Grid.Column="4" Grid.Row="1" >
+        <Grid Margin="10" Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Visualizados recentemente"/>
+            <TextBlock Text="Visualizados recentemente" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
 
-        <Grid Margin="10" Grid.Column="2" Grid.Row="2" >
+        <Grid Margin="10" Grid.Column="1" Grid.Row="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Fornecedores"/>
+            <TextBlock Text="Fornecedores" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
 
-        <Grid Margin="10" Grid.Column="3" Grid.Row="2" >
+        <Grid Margin="10" Grid.Column="2" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Favoritos"/>
+            <TextBlock Text="Favoritos" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
 
-        <Grid Margin="10" Grid.Column="4" Grid.Row="2" >
+        <Grid Margin="10" Grid.Column="3" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Voltar"/>
+            <TextBlock Text="Outro" Foreground="{DynamicResource lightestHighLight}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <Button Click="back" Style="{DynamicResource NoChromeButton}">
-                    <Image Source="../Icons/Fat/back.png" Stretch="None"/>
-                </Button>
+                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
         </Grid>
     </Grid>

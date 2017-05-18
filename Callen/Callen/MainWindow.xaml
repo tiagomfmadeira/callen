@@ -20,12 +20,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" x:Name="grid_menu_col"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="0" x:Name="grid_menu_col"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <!-- Menu Min Bar -->
-        <DockPanel Grid.Column="1" Background="{DynamicResource mainColor}" x:Name="menu_min_bar" MouseDown="menu_min_bar_MouseDown">
+        <DockPanel Grid.Column="2" Background="{DynamicResource mainColor}" x:Name="menu_min_bar" MouseDown="menu_min_bar_MouseDown">
 
             <DockPanel HorizontalAlignment="Right">
                 <Button Width="25" Height="Auto" x:Name="btn_mini" Click="btn_mini_Click" Style="{DynamicResource menuMinButton}">
@@ -83,16 +84,16 @@
         </DockPanel>
 
         <!-- Content Frame -->
-        <Border Grid.Row="1" Grid.Column="1">
+        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid x:Name="Content_plane" />
         </Border>
 
         <!-- Menu Bar -->
-        <Border Background="{DynamicResource darkestHighLight}" Grid.RowSpan="2"  x:Name="menu_bar" MouseEnter="menu_bar_MouseEnter" MouseLeave="menu_bar_MouseLeave" >
+        <Border Background="{DynamicResource darkestHighLight}" Grid.RowSpan="2" Grid.ColumnSpan="2"  x:Name="menu_bar" MouseEnter="menu_bar_MouseEnter" MouseLeave="menu_bar_MouseLeave" >
         </Border>
 
         <!-- Menu Bar Items -->
-        <Border Grid.Row="2"  MouseLeave="menu_bar_MouseLeave" MouseEnter="menu_bar_MouseEnter" >
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Name="menu_border"  MouseLeave="menu_bar_MouseLeave" MouseEnter="menu_bar_MouseEnter" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>

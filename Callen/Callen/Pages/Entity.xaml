@@ -13,20 +13,20 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <ComboBox Name="combo_entity_view" Width="60" HorizontalAlignment="Left" Style="{DynamicResource customCombo}" ItemContainerStyle="{DynamicResource comboItem}" SelectionChanged="combo_entity_view_SelectionChanged" SelectedValuePath="Content">
+                <ComboBoxItem Content="Fornecedor"/>
+                <ComboBoxItem Content="Patrocinador"/>
+            </ComboBox>
+
             <Grid Width="380" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
                 <TextBlock  Width="380" Margin="5,2" Text="Search" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
                 <ToggleButton HorizontalAlignment="Right"  Name="advanceSearch" Style="{DynamicResource dropDownButton}"/>
             </Grid>
-            <ComboBox Name="combo_entity_view" Width="90" Margin="490,0,0,0" SelectionChanged="combo_entity_view_SelectionChanged" SelectedValuePath="Content">
-                <ComboBoxItem Content="Fornecedor"/>
-                <ComboBoxItem Content="Patrocinador"/>
-            </ComboBox>
-
 
             <Border Margin="0,5,0,0" Grid.Row="1" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
-                <DataGrid Name="grdColec" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}">
+                <DataGrid Name="grdColec" IsReadOnly="True" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}">
                     
                 </DataGrid>
             </Border>

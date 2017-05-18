@@ -60,7 +60,7 @@ namespace Callen
 
         private void menu_bar_MouseEnter(object sender, MouseEventArgs e) // Expands Menu when entered 
         {
-            GridLength grd = new GridLength(143, GridUnitType.Pixel);
+            GridLength grd = new GridLength(103, GridUnitType.Pixel);
             grid_menu_col.Width = grd;
 
             lbl_menu1.Visibility = Visibility.Visible;
@@ -76,7 +76,7 @@ namespace Callen
         private void menu_bar_MouseLeave(object sender, MouseEventArgs e) // Minimizes menu when left 
         {
 
-            GridLength grd = new GridLength(40, GridUnitType.Pixel);
+            GridLength grd = new GridLength(0, GridUnitType.Pixel);
             grid_menu_col.Width = grd;
 
             lbl_menu1.Visibility = Visibility.Hidden;
