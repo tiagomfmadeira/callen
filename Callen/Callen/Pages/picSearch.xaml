@@ -51,7 +51,7 @@
         </Grid>
         
         <!--#endregion-->
-
+        
         <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource prevPageButton}"/>
         <Button Grid.Column="3" Grid.Row="4" Style="{StaticResource nextPageButton}"/>
         <Button Click="formPage" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Style="{StaticResource addButton}"/>

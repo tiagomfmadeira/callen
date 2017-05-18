@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/fat/sort.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/fat/sortdown.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/fat/sortup.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/callenic.png")]
 
 

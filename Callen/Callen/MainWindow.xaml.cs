@@ -52,6 +52,18 @@ namespace Callen
             }
         }
 
+        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
+            }
+        }
+
         private void menu_min_bar_MouseDown(object sender, MouseButtonEventArgs e) // Drag window 
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
@@ -70,12 +82,10 @@ namespace Callen
             lbl_menu5.Visibility = Visibility.Visible;
             lbl_menu6.Visibility = Visibility.Visible;
             lbl_menu7.Visibility = Visibility.Visible;
-
         }
 
         private void menu_bar_MouseLeave(object sender, MouseEventArgs e) // Minimizes menu when left 
         {
-
             GridLength grd = new GridLength(0, GridUnitType.Pixel);
             grid_menu_col.Width = grd;
 
@@ -86,7 +96,6 @@ namespace Callen
             lbl_menu5.Visibility = Visibility.Hidden;
             lbl_menu6.Visibility = Visibility.Hidden;
             lbl_menu7.Visibility = Visibility.Hidden;
-
         }
 
         public void btn_callen_Click(object sender, RoutedEventArgs e) // Switch to Home Page 
