@@ -28,19 +28,12 @@ namespace Callen.Windows
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                closeWin();
+                this.Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            closeWin();
-        }
-
-        private void closeWin()
-        {
             this.Close();
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            win.Opacity = 1;
         }
     }
 }

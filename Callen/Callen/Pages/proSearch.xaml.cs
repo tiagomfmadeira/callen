@@ -128,6 +128,8 @@ namespace Callen.Pages
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();
+
+            win.Opacity = 1;
         }
 
         private void formPage(object sender, RoutedEventArgs e) // Opens the form to add a new item 
@@ -137,6 +139,8 @@ namespace Callen.Pages
             popForm.Owner = win;
             win.Opacity = 0.5;
             popForm.ShowDialog();
+
+            win.Opacity = 1;
         }
     }
 }

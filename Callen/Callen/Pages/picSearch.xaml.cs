@@ -33,6 +33,8 @@ namespace Callen.Pages
             popForm.Owner = win;
             win.Opacity = 0.5;
             popForm.ShowDialog();
+
+            win.Opacity = 1;
         }
         
         private void openDesc(object sender, RoutedEventArgs e) // Opens description window 
@@ -42,6 +44,8 @@ namespace Callen.Pages
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();
+
+            win.Opacity = 1;
         }
     }
 }

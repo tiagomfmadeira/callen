@@ -31,15 +31,10 @@ namespace Callen.Windows.Forms
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                closeWin();
+                this.Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
-        {
-            closeWin();
-        }
-
-        private void closeWin()
         {
             this.Close();
         }

@@ -93,6 +93,7 @@ namespace Callen
         {
             checkedMenu(1);
             Switcher.Switch(this.Content_plane, new Stats());
+            this.Opacity = 1;
         }
 
         public void btn_colec_Click(object sender, RoutedEventArgs e) // Switch to Collection Page 
@@ -122,6 +123,7 @@ namespace Callen
             win.Opacity = 0.5;
             popPrint.ShowDialog();
 
+            this.Opacity = 1;
         }
 
         public void btn_help_Click(object sender, RoutedEventArgs e) // Opens Help window
@@ -132,6 +134,8 @@ namespace Callen
             popHelp.Owner = win;
             win.Opacity = 0.5;
             popHelp.ShowDialog();
+
+            this.Opacity = 1;
         }
 
         public void btn_settings_Click(object sender, RoutedEventArgs e) // Opens Settings window 
@@ -142,6 +146,8 @@ namespace Callen
             popSettings.Owner = win;
             win.Opacity = 0.5;
             popSettings.ShowDialog();
+
+            this.Opacity = 1;
         }
 
         void checkedMenu(int menuNum) // HighLights the click button in menu (only) 

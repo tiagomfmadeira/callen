@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Callen.Windows.Other;
+
 namespace Callen.Windows
 {
     /// <summary>
@@ -38,14 +40,14 @@ namespace Callen.Windows
             item_theme.Text = it.getTheme();
             item_desc.Text = it.getDesc();
 
-            if(it.getOther() != "")
+            if (it.getOther() != "")
                 item_other.Text = it.getOther();
 
-            if (it.getImagePath() != "") {
+            if (it.getImagePath() != "")
+            {
                 try
                 {
-                    ImageSource src = new BitmapImage(new Uri(it.getImagePath() + ".jpeg"));
-                    item_img.Source = src;
+                    img.Source = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
                 }
                 catch
                 {
@@ -57,19 +59,19 @@ namespace Callen.Windows
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                closeWin();
+                this.Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            closeWin();
+            this.Close();
         }
 
-        private void closeWin()
+        private void btn_img_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            win.Opacity = 1;
+            winZoomImage popZoomImg = new winZoomImage(img.Source);
+            popZoomImg.Owner = this;
+            popZoomImg.ShowDialog();
         }
     }
 }

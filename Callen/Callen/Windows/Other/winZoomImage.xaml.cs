@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Callen.Windows
+namespace Callen.Windows.Other
 {
     /// <summary>
-    /// Interaction logic for winHelp.xaml
+    /// Interaction logic for winZoomImage.xaml
     /// </summary>
-    public partial class winHelp : Window
+    public partial class winZoomImage : Window
     {
-        public winHelp()
+        public winZoomImage(ImageSource src)
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            img.Source = src;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)

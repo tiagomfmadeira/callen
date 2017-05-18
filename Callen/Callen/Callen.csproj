@@ -62,6 +62,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\..\..\Extended WPF Toolkit Binaries\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
       <HintPath>..\..\..\..\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
@@ -104,6 +107,9 @@
     </Compile>
     <Compile Include="Windows\Forms\winAddSponsor.xaml.cs">
       <DependentUpon>winAddSponsor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Other\winZoomImage.xaml.cs">
+      <DependentUpon>winZoomImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\winAddItem.xaml.cs">
       <DependentUpon>winAddItem.xaml</DependentUpon>
@@ -169,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Forms\winAddSponsor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Other\winZoomImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
