@@ -52,7 +52,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Favorite AS Favorito,Inst_Number AS ID,Item_Name AS Nome,Item_Descr AS Descrição,Item_Year AS Ano ,Theme_Descr AS Tema,Code AS Pasta,Peer_name AS Fornecedor,Entity_Name AS Patrocinador "
+                string Get_Data = "SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor "
                                   +"FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor "
                                         +"FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor "
                                            +"FROM(SELECT Favorite, Inst_Number, Item_ID, Code, Peer, Theme_Descr "
@@ -82,9 +82,9 @@ namespace Callen.Pages
 
                 thisConnection.Close();
             }
-            catch
+            catch (Exception ee)
             {
-                MessageBox.Show("db error");
+                MessageBox.Show(ee.ToString());
             }
         }
 
@@ -103,7 +103,7 @@ namespace Callen.Pages
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("descr");
                 sda.Fill(dt);
 
                 String tmp = string.Join(", ", dt.Rows[0].ItemArray);
@@ -126,8 +126,8 @@ namespace Callen.Pages
         {
             DataRowView row = (DataRowView)grdColec.SelectedItem;
 
-            Item it = new Item(row["Nome"].ToString(), row["ID"].ToString(), row["Descrição"].ToString(), row["Ano"].ToString(),
-                 row["Tema"].ToString(), row["Pasta"].ToString(), row["Fornecedor"].ToString(), row["Patrocinador"].ToString()); ;
+            Item it = new Item(row["name"].ToString(), row["ID"].ToString(), row["descr"].ToString(), row["year"].ToString(),
+                 row["theme"].ToString(), row["folder"].ToString(), row["sponsor"].ToString(), row["peer"].ToString()); ;
 
             // Get Other and Image Path
             String[] extra = getExtra(row["ID"].ToString());

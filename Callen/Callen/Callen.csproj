@@ -346,6 +346,15 @@
   <ItemGroup>
     <Resource Include="Icons\Fat\plus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Fat\favorite.png" />
+    <Resource Include="Icons\Fat\favoriteChecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Fat\sort.png" />
+    <Resource Include="Icons\Fat\sortDown.png" />
+    <Resource Include="Icons\Fat\sortUp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />

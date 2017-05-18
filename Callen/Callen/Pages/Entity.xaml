@@ -25,14 +25,9 @@
             </ComboBox>
 
 
-            <Border Grid.Row="1" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
-                <DataGrid Name="grdColec" Style="{DynamicResource dataGrid}">
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="{DynamicResource darkestHighLight}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource lightestHighLight}"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
+            <Border Margin="0,5,0,0" Grid.Row="1" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
+                <DataGrid Name="grdColec" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}">
+                    
                 </DataGrid>
             </Border>
         </Grid>
