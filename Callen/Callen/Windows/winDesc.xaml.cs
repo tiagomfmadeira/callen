@@ -67,6 +67,11 @@ namespace Callen.Windows
             this.Close();
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_img_Click(object sender, RoutedEventArgs e)
         {
             winZoomImage popZoomImg = new winZoomImage(img.Source);

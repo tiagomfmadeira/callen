@@ -42,6 +42,11 @@ namespace Callen.Windows.Forms
             this.Close();
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_add_address_Click(object sender, RoutedEventArgs e)
         {
             main_border.Height = 348;

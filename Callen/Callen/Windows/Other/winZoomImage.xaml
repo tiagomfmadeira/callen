@@ -8,7 +8,8 @@
         Title="winZoomImage" Height="600" Width="800" AllowsTransparency="True" AllowDrop="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <Canvas>
-            <Border Background="Black" Height="600" Width="800" Opacity="0.75"/>
+            <Border Background="Black" Height="600" Width="800" Opacity="0.75" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+            
             <Button Name="btn_close" Click="btn_close_Click" Canvas.Left="600" Canvas.Top="123" Style="{DynamicResource menuMinButton}">
                 <Image RenderOptions.BitmapScalingMode="HighQuality" Height="28" Width="29">
                     <Image.Style>

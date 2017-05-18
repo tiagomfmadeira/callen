@@ -46,6 +46,11 @@ namespace Callen.Windows
             this.Close();
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
             try

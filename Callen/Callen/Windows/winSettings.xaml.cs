@@ -39,6 +39,11 @@ namespace Callen.Windows
             this.Close();
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_change_color_Click(object sender, RoutedEventArgs e) // Changes the color Scheme 
         {
             if (btn_change_color.Content.ToString() == "Light Mode") // Set to Dark Mode

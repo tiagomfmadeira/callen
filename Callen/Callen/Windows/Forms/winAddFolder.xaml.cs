@@ -39,6 +39,11 @@ namespace Callen.Windows.Forms
             this.Close();
         }
 
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(folder_box.Text.ToString()) || string.IsNullOrEmpty(theme_box.Text.ToString()))

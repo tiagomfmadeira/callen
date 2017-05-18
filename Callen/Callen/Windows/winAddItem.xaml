@@ -10,6 +10,8 @@
         >
     <Grid>
         <Canvas Margin="10,0,-10,0">
+            <Border Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+
             <Border Height="285" Width="496" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
             <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="622" Canvas.Top="164">

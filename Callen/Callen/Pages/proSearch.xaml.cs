@@ -28,13 +28,21 @@ namespace Callen.Pages
         public proSearch()
         {
             InitializeComponent();
+            this.PreviewKeyDown += new KeyEventHandler(HandleEnter);
             FillDataGrid();
         }
 
         public proSearch(DataTable dt)
         {
             InitializeComponent();
+            this.PreviewKeyDown += new KeyEventHandler(HandleEnter);
             grdColec.ItemsSource = dt.DefaultView;
+        }
+
+        private void HandleEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                openDesc();
         }
 
         private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Peer, Sponsor) 
@@ -109,18 +117,23 @@ namespace Callen.Pages
             }
         } 
 
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e) // Opens the description of specific item in Row 
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)  
         {
-            DataRowView row = (DataRowView) grdColec.SelectedItem;
+            openDesc();
+        }
+
+        private void openDesc() // Opens the description of specific item in Row
+        {
+            DataRowView row = (DataRowView)grdColec.SelectedItem;
 
             Item it = new Item(row["Nome"].ToString(), row["ID"].ToString(), row["Descrição"].ToString(), row["Ano"].ToString(),
                  row["Tema"].ToString(), row["Pasta"].ToString(), row["Fornecedor"].ToString(), row["Patrocinador"].ToString()); ;
 
             // Get Other and Image Path
             String[] extra = getExtra(row["ID"].ToString());
-            if (extra[0] != "") 
+            if (extra[0] != "")
                 it.setOther(extra[0]);
-            if(extra[1] != "")
+            if (extra[1] != "")
                 it.setImagePath(extra[1]);
 
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
