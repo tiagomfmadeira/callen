@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="addSponsor" Height="600" Width="800" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
-        <Canvas>
-            <Border Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+        <Border Name="closeBorder" Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
+        <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Adicionar Patrocinador" Canvas.Left="317" Canvas.Top="193" Style="{DynamicResource menuFont}" FontSize="15" Panel.ZIndex="2" Foreground="{DynamicResource highLight}" />
             <Border Name="main_border" Height="211" Width="240" Canvas.Left="274" Canvas.Top="184" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 

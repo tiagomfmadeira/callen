@@ -24,7 +24,15 @@ namespace Callen.Windows
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
-            if(Application.Current.Resources["mainColor"].ToString() == "#FFFFFFFF") // Check Color Scheme
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
+
+            if (Application.Current.Resources["mainColor"].ToString() == "#FFFFFFFF") // Check Color Scheme
                 btn_change_color.Content = "Light Mode";
         }
 

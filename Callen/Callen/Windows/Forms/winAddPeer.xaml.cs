@@ -28,6 +28,15 @@ namespace Callen.Windows.Forms
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
+
             address = false;
         }
 

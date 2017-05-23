@@ -25,12 +25,27 @@ namespace Callen.Windows
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
         }
 
         public winDesc(Item it)  // sets the text Boxes with information from an given Item 
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent =  Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized) {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
 
             item_name.Text = it.getName();
             item_year.Text = it.getYear();

@@ -23,6 +23,14 @@ namespace Callen.Windows
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
