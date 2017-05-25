@@ -9,7 +9,6 @@
     <Grid Style="{StaticResource gridStyle}">
         <Grid>
             <Grid.RowDefinitions>
-
                 <RowDefinition/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
@@ -57,7 +56,7 @@
                 </DataGrid>
             </Border>
 
-            <Button HorizontalAlignment="Right" Click="formPage" Grid.Row="1" Margin="10,10,10,0" Style="{StaticResource addButton}"/>
+            <Button Click="formPage" Grid.Row="1" Style="{StaticResource addButton}"/>
         </Grid>
     </Grid>
 </UserControl>

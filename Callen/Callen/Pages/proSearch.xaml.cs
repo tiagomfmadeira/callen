@@ -43,6 +43,8 @@ namespace Callen.Pages
         {
             if (e.Key == Key.Enter)
                 openDesc();
+
+            e.Handled = true;
         }
 
         private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Peer, Sponsor) 
@@ -52,24 +54,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor "
-                                  +"FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor "
-                                        +"FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor "
-                                           +"FROM(SELECT Favorite, Inst_Number, Item_ID, Code, Peer, Theme_Descr "
-                                               +"FROM(SELECT Item_ID, Inst_Number, Favorite, Arquive, Peer "
-                                                    +"FROM G_Callen.INST) AS IT "
-                                                    +"JOIN(SELECT * "
-                                                         +"FROM G_Callen.ARQUIVE) AS A "
-                                                    +"ON IT.Arquive = A.Arquive_ID) AS IA "
-                                                + "JOIN(SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor "
-                                                     + "FROM G_Callen.ITEM) AS I "
-                                                + "ON IA.Item_ID = I.Item_ID) AS IAI "
-                                            + "JOIN(SELECT Entity_ID, Entity_Name "
-                                                 + "FROM G_Callen.ENTITY) AS E "
-                                           + " ON IAI.Peer = E.Entity_ID) AS IAIE "
-                                        + "JOIN(SELECT Entity_ID, Entity_Name "
-                                            + " FROM G_Callen.ENTITY) AS EE "
-                                        + "ON IAIE.Sponsor = EE.Entity_ID; ";
+                string Get_Data = "SELECT * FROM G_Callen.ITEMS_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

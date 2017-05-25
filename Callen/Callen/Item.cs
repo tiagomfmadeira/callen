@@ -21,7 +21,21 @@ namespace Callen
             this.peer = peer;
             this.sponsor = sponsor;
             this.other = "";
-            image_path = "";
+            this.image_path = "";
+        }
+
+        public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor,String note, String img)
+        {
+            this.name = name;
+            this.id = ID;
+            this.desc = Desc;
+            this.year = year;
+            this.theme = Theme;
+            this.folder = folder;
+            this.peer = peer;
+            this.sponsor = sponsor;
+            this.other = note;
+            this.image_path = img;
         }
 
         public String getName()

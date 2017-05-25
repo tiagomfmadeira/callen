@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Callen.Windows;
 
+using System.Data;
+using System.Data.SqlClient;
+
 namespace Callen.Pages
 {
     /// <summary>
@@ -21,9 +24,57 @@ namespace Callen.Pages
     /// </summary>
     public partial class picSearch : UserControl
     {
+        private DataTable dt;
+        private List<PicItem> items; 
+        private double pageCnt;
+
         public picSearch()
         {
             InitializeComponent();
+
+            items = new List<PicItem>();
+
+            getItems();
+
+            fillList();
+
+            PicGrid.ItemsSource = items;
+        }
+
+        private void getItems()
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.ITEMS_PIC_MODE";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                dt = new DataTable("PicItems");
+                sda.Fill(dt);
+
+                pageCnt = Math.Ceiling((double)dt.Rows.Count / 16);
+
+                pageCount.Text = "1/" + pageCnt;
+                
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void fillList()
+        {
+            for(int i = 0; i < 16 && i < dt.Rows.Count; i++)
+                items.Add(new PicItem() { ID = dt.Rows[i]["Item_ID"].ToString(),
+                                            Name = dt.Rows[i]["Item_Name"].ToString(),
+                                                ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
         }
 
         private void formPage(object sender, RoutedEventArgs e) // Opens form window 
@@ -37,15 +88,62 @@ namespace Callen.Pages
             win.Opacity = 1;
         }
         
-        private void openDesc(object sender, RoutedEventArgs e) // Opens description window 
+        private void btn_open_desc(object sender, RoutedEventArgs e) // Opens description window 
+        {
+            getInstInfo((sender as Button).CommandParameter.ToString());
+        }
+
+        private void getInstInfo(String id) // Gets Selected item info 
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @Item_id";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter param = new SqlParameter();
+
+                param.ParameterName = "@Item_id";
+                param.Value = id;
+                cmd.Parameters.Add(param);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["Note"].ToString(), rdr["img_path"].ToString());
+
+                    openDesc(it);
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void openDesc(Item it) // Opens the description of the item given
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDesc popDesc = new winDesc();
+            winDesc popDesc = new winDesc(it);
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();
 
             win.Opacity = 1;
+        }
+
+        private class PicItem
+        {
+            public String ID { set; get; }
+            public String Name { set; get; }
+            public String ImgPath { set; get; }
         }
     }
 }

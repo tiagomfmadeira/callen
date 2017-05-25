@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
+
 using Callen.Pages;
 using Callen.Windows;
 
@@ -27,10 +28,15 @@ namespace Callen
         {
             InitializeComponent();
             MouseEventArgs e = new MouseEventArgs(Mouse.PrimaryDevice, 0);
-            menu_bar_MouseLeave(new object(), e);
+
+            menu_bar_MouseLeave(new object(), e); // Menu starts closed
+
+            // Starts in Home Page
+            checkedMenu(1); 
+            Switcher.Switch(this.Content_plane, new Stats());
         }
 
-        public void btn_close_Click(object sender, RoutedEventArgs e)
+        public void btn_close_Click(object sender, RoutedEventArgs e) 
         {
             this.Close();
         }
@@ -52,7 +58,7 @@ namespace Callen
             }
         }
 
-        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e) // Double click top bar to expand
         {
             if (this.WindowState == WindowState.Normal)
             {
@@ -67,7 +73,12 @@ namespace Callen
         private void menu_min_bar_MouseDown(object sender, MouseButtonEventArgs e) // Drag window 
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (this.WindowState == WindowState.Maximized) // If window is fullscreen when draged - set screen to normal 
+                    this.WindowState = WindowState.Normal;
+                
                 this.DragMove();
+            }
         }
 
         private void menu_bar_MouseEnter(object sender, MouseEventArgs e) // Expands Menu when entered 
@@ -102,7 +113,6 @@ namespace Callen
         {
             checkedMenu(1);
             Switcher.Switch(this.Content_plane, new Stats());
-            this.Opacity = 1;
         }
 
         public void btn_colec_Click(object sender, RoutedEventArgs e) // Switch to Collection Page 

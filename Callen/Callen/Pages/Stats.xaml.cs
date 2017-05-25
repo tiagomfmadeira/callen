@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Data;
+using System.Data.SqlClient;
+
+using Callen.Windows;
+
 namespace Callen.Pages
 {
     /// <summary>
@@ -23,16 +28,202 @@ namespace Callen.Pages
         public Stats()
         {
             InitializeComponent();
+
+            fillLastInst();
+            fillLastMod();
+            fillLastView();
+            fillFav();
         }
 
-        private void help(object sender, RoutedEventArgs e)
+        private void fillLastMod() // Fills LastMod DataGrid
         {
-            MessageBox.Show("Help in Stats");
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.LastModItems";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("LMOD");
+                sda.Fill(dt);
+
+                LastMod.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
         }
 
-        private void back(object sender, RoutedEventArgs e)
+        private void fillLastView() // Fills LastView DataGrid
         {
-            //Switcher.Switch(new picSearch());
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.LastVisItems";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("LVIEW");
+                sda.Fill(dt);
+
+                LastView.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void fillLastInst() // Fills LastInst DataGrid
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.LastInsertItems";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("LINST");
+                sda.Fill(dt);
+
+                LastInst.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void fillFav() // Fills Favorites DataGrid
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.FavouriteItems";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("LINST");
+                sda.Fill(dt);
+
+                favGrid.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
+        {
+            DataGridRow r = sender as DataGridRow;
+            DataRowView row = r.Item as DataRowView;
+            getInstInfo(row["Item_ID"].ToString());
+        }
+
+        private void KeyDown_Item(object sender, KeyEventArgs e) //Press enter to open desc
+        {
+            if(e.Key == Key.Enter)
+            {
+                DataGrid grid = sender as DataGrid;
+                DataRowView row = grid.SelectedItem as DataRowView;
+                getInstInfo(row["Item_ID"].ToString());
+            }
+            e.Handled = true;
+        }
+
+        private void Grid_LostFocus(object sender, RoutedEventArgs e) //Uncheck selected Item when datagrid loses focus
+        {
+            DataGrid grd = sender as DataGrid;
+            switch (grd.Name)
+            {
+                case "LastMod":
+                    LastMod.UnselectAll();
+                    break;
+
+                case "LastInst":
+                    LastInst.UnselectAll();
+                    break;
+
+                case "LastView":
+                    LastView.UnselectAll();
+                    break;
+
+                case "favGrid":
+                    favGrid.UnselectAll();
+                    break;
+            }
+        }
+
+        private void getInstInfo(String id) // Gets Selected item info 
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @Item_id";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter param = new SqlParameter();
+
+                param.ParameterName = "@Item_id";
+                param.Value = id;
+                cmd.Parameters.Add(param);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["Note"].ToString(), rdr["img_path"].ToString());
+
+                    openDesc(it);
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void openDesc(Item it) // Opens the description of the item given
+        {
+            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            winDesc popDesc = new winDesc(it);
+            popDesc.Owner = win;
+            win.Opacity = 0.5;
+            popDesc.ShowDialog();
+
+            win.Opacity = 1;
         }
     }
 }

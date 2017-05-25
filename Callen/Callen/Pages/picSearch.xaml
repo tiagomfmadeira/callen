@@ -15,45 +15,45 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="3.3*"/>
-            <RowDefinition Height="3.3*"/>
-            <RowDefinition Height="3.3*"/>
-            <RowDefinition Height="1.05*"/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <!--#region Items Grid -->
-        
-        <Grid  Grid.ColumnSpan="5" Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
+        <ItemsControl Name="PicGrid" Grid.ColumnSpan="5" Grid.RowSpan="3">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                <Button Click="openDesc" Style="{StaticResource defImageButton}"/>
-                <TextBlock Grid.Row="1" Text="Example - 1234" FontSize="18" Style="{StaticResource descTitle}"/>
-            </Grid>
-        </Grid>
-        
+                        <Button Height="125" Click="btn_open_desc" CommandParameter="{Binding ID}" Style="{DynamicResource menuMinButton}">
+                            <Image Source="{Binding ImgPath}" Style="{DynamicResource PicImage}"/>
+                        </Button>
+                        <StackPanel Grid.Row="1" Margin="3,0,0,0">
+                            <TextBlock Grid.Row="1" Text="{Binding ID}"   Style="{DynamicResource statsText}" FontSize="15" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Name}" Style="{DynamicResource statsText}" FontSize="16" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <!--#endregion-->
         
-        <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource prevPageButton}"/>
-        <Button Grid.Column="3" Grid.Row="4" Style="{StaticResource nextPageButton}"/>
-        <Button Click="formPage" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" Style="{StaticResource addButton}"/>
+        <Button Grid.Column="1" Grid.Row="4" Height="30" Style="{StaticResource prevPageButton}"/>
+        <Button Grid.Column="3" Grid.Row="4" Height="30" Style="{StaticResource nextPageButton}"/>
+
+        <TextBlock Name="pageCount" Grid.Column="2" Grid.Row="4" Text="1/?" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="{DynamicResource lightestHighLight}"/>
+
+        <Button Grid.Column="4" Grid.Row="4" Click="formPage" Style="{StaticResource addButton}"/>
     </Grid>
 </UserControl>

@@ -8,11 +8,11 @@
              d:DesignHeight="575" d:DesignWidth="800">
     <Grid Style="{StaticResource gridStyle}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"/>
+            <ColumnDefinition Width="0"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width=".5*"/>
+            <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -24,9 +24,20 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Modificados Recentemente" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Modificados Recentemente" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+                <DataGrid Name="LastMod" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" 
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Border>
         </Grid>
 
@@ -35,9 +46,20 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Inseridos recentemente" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Inseridos recentemente" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+                <DataGrid Name="LastInst" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Border>
         </Grid>
 
@@ -46,9 +68,20 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Visualizados recentemente" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Visualizados recentemente" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+                <DataGrid Name="LastView" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Border>
         </Grid>
 
@@ -57,7 +90,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Fornecedores" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Fornecedores" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
                 <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>
@@ -68,9 +101,20 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Favoritos" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Favoritos" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+                <DataGrid Name="favGrid" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Border>
         </Grid>
 
@@ -79,7 +123,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Outro" Foreground="{DynamicResource lightestHighLight}"/>
+            <TextBlock Text="Ofertas recentes" Style="{DynamicResource statsText}"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
                 <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
             </Border>

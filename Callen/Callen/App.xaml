@@ -229,6 +229,14 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        
+        <!-- Stats Page -->
+        <Style x:Key="statsText" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Margin" Value="0,0,0,2"/>
+            <Setter Property="Foreground" Value="{DynamicResource lightestHighLight}"/>
+        </Style>
 
         <!-- Main Grid -->
         <Style x:Key="gridStyle" TargetType="Grid">
@@ -252,6 +260,15 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        
+        <!-- Pic Mode Image -->
+        <Style x:Key="PicImage" TargetType="Image">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- menu Button -->
@@ -618,7 +635,8 @@
         <Style x:Key="addButton" TargetType="Button">
             <Setter Property="Height" Value="40"/>
             <Setter Property="Width" Value="40"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,10,10,0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
