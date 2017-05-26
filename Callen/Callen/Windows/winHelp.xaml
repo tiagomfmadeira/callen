@@ -9,29 +9,31 @@
     <Grid>
         <Border Name="closeBorder" Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
-        <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-            <Border Height="270" Width="479" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+        <Viewbox Stretch="Uniform">
+            <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
+                <Border Height="270" Width="479" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-            <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="605" Canvas.Top="165">
-                <Image>
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="../Icons/Fat/menu/close.png"/>
-                            <Setter Property="Width" Value="15"/>
-                            <Setter Property="Height" Value="auto"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Source" Value="../Icons/Fat/menu/closeWhite.png"/>
-                                    <Setter Property="Width" Value="17.5"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Button>
+                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="605" Canvas.Top="165">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/menu/close.png"/>
+                                <Setter Property="Width" Value="15"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Source" Value="../Icons/Fat/menu/closeWhite.png"/>
+                                        <Setter Property="Width" Value="17.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
 
-            <TextBox Text="Para mais informações contacte: &#x0a; &#x0a; Diogo Duarte - deduarte@ua.pt &#x0a; Tiago Madeira - tiagomadeira@ua.pt" BorderBrush="Transparent" HorizontalContentAlignment="Center"  IsEnabled="False" AcceptsReturn="True" Style="{DynamicResource formTextBox}" Canvas.Left="292" Canvas.Top="260">
-            </TextBox>
-        </Canvas>
+                <TextBox Text="Para mais informações contacte: &#x0a; &#x0a; Diogo Duarte - deduarte@ua.pt &#x0a; Tiago Madeira - tiagomadeira@ua.pt" BorderBrush="Transparent" HorizontalContentAlignment="Center"  IsEnabled="False" AcceptsReturn="True" Style="{DynamicResource formTextBox}" Canvas.Left="292" Canvas.Top="260">
+                </TextBox>
+            </Canvas>
+        </Viewbox>
     </Grid>
 </Window>

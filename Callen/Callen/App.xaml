@@ -197,6 +197,14 @@
             <Setter Property="ColumnHeaderHeight" Value="22"/>
         </Style>
 
+        <Style x:Key="DGElemntCenter" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="DGElemntWrap" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
         <Style x:Key="DGColumnHeader" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource darkestHighLight}"/>
             <Setter Property="Foreground" Value="{DynamicResource lightestHighLight}"/>
@@ -205,9 +213,12 @@
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                         <DockPanel Background="Transparent">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <Image Name="img" Margin="0,2,0,0" RenderOptions.BitmapScalingMode="HighQuality" Source="Icons/Fat/sort.png" Width="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <Image Name="img" Margin="0,2,0,0" RenderOptions.BitmapScalingMode="HighQuality" Width="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </DockPanel>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="img" Property="Source" Value="Icons/Fat/sort.png"/>
+                            </Trigger>
                             <Trigger Property="SortDirection" Value="Descending">
                                 <Setter TargetName="img" Property="Source" Value="Icons/Fat/sortUp.png"/>
                             </Trigger>

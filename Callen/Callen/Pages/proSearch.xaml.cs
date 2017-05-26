@@ -140,5 +140,33 @@ namespace Callen.Pages
 
             win.Opacity = 1;
         }
+
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            String id = (grdColec.SelectedItem as DataRowView)["ID"].ToString();
+
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.SET_FAVOURITE @ItemID";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@ItemID";
+                param.Value = id;
+                cmd.Parameters.Add(param);
+
+                cmd.ExecuteNonQuery();
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
     }
 }

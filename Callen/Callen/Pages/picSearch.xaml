@@ -37,7 +37,7 @@
                         </Grid.RowDefinitions>
 
                         <Button Height="125" Click="btn_open_desc" CommandParameter="{Binding ID}" Style="{DynamicResource menuMinButton}">
-                            <Image Source="{Binding ImgPath}" Style="{DynamicResource PicImage}"/>
+                            <Image Source="{Binding ImgPath}" Style="{DynamicResource PicImage}" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Button>
                         <StackPanel Grid.Row="1" Margin="3,0,0,0">
                             <TextBlock Grid.Row="1" Text="{Binding ID}"   Style="{DynamicResource statsText}" FontSize="15" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -49,8 +49,8 @@
         </ItemsControl>
         <!--#endregion-->
         
-        <Button Grid.Column="1" Grid.Row="4" Height="30" Style="{StaticResource prevPageButton}"/>
-        <Button Grid.Column="3" Grid.Row="4" Height="30" Style="{StaticResource nextPageButton}"/>
+        <Button Click="btn_prev_page" Grid.Column="1" Grid.Row="4" Height="30" Style="{StaticResource prevPageButton}"/>
+        <Button Click="btn_next_page" Grid.Column="3" Grid.Row="4" Height="30" Style="{StaticResource nextPageButton}"/>
 
         <TextBlock Name="pageCount" Grid.Column="2" Grid.Row="4" Text="1/?" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="{DynamicResource lightestHighLight}"/>
 

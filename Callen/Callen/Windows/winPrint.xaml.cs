@@ -24,6 +24,8 @@ namespace Callen.Windows
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
+            YourListBox.ItemsSource = (App.Current.Properties["PrintList"] as List<String>);
+
             Window parent = Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {

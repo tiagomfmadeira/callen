@@ -25,7 +25,9 @@ namespace Callen.Pages
     public partial class picSearch : UserControl
     {
         private DataTable dt;
-        private List<PicItem> items; 
+        private List<PicItem> items;
+
+        private int current_page;
         private double pageCnt;
 
         public picSearch()
@@ -33,10 +35,11 @@ namespace Callen.Pages
             InitializeComponent();
 
             items = new List<PicItem>();
+            current_page = 1;
 
-            getItems();
+            getItems(); // saves items in data table 
 
-            fillList();
+            fillList(); // fills 
 
             PicGrid.ItemsSource = items;
         }
@@ -59,7 +62,7 @@ namespace Callen.Pages
 
                 pageCnt = Math.Ceiling((double)dt.Rows.Count / 16);
 
-                pageCount.Text = "1/" + pageCnt;
+                pageCount.Text = current_page + "/" + pageCnt;
                 
                 thisConnection.Close();
             }
@@ -75,6 +78,16 @@ namespace Callen.Pages
                 items.Add(new PicItem() { ID = dt.Rows[i]["Item_ID"].ToString(),
                                             Name = dt.Rows[i]["Item_Name"].ToString(),
                                                 ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
+        }
+
+        private void btn_next_page(object sender, RoutedEventArgs e) // Opens description window 
+        {
+
+        }
+
+        private void btn_prev_page(object sender, RoutedEventArgs e) // Opens description window 
+        {
+
         }
 
         private void formPage(object sender, RoutedEventArgs e) // Opens form window 

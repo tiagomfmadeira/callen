@@ -101,5 +101,29 @@ AS
             FROM G_Callen.ENTITY) AS EE 
         ON IAIE.Sponsor = EE.Entity_ID;
 
-	UPDATE G_Callen.INST SET Date_View = GETDATE() WHERE Item_ID = @ItemID;
-go*/
+	UPDATE G_Callen.INST SET Date_View = GETDATE() WHERE Inst_Number = @ItemID; -- "Trigger"
+go
+
+-- sets an inst to favourite
+CREATE PROCEDURE G_Callen.SET_FAVOURITE @ItemID INT
+AS
+	UPDATE G_Callen.INST SET Favorite = ~Favorite WHERE Inst_Number = @ItemID;
+GO
+
+-- Dá update as infos de um item ESTÁ MAL (A DAR UPDATE AO ITEM TAMBEM)
+CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @ItemName VARCHAR(255), @ItemYear VARCHAR(255), @ItemOther VARCHAR(255), @ItemDesc VARCHAR(255)
+AS
+	DECLARE @itemID as INT;
+	SELECT @itemID = Item_ID FROM G_Callen.INST WHERE Inst_Number = @InstID;
+
+	UPDATE G_Callen.ITEM 
+	SET Item_Name =  @ItemName , Item_Descr = @ItemOther, Item_Year = @ItemYear
+	WHERE Item_ID = @ItemID;
+
+	UPDATE G_Callen.INST
+	SET Note = @ItemOther WHERE Inst_Number = @InstID;
+
+	UPDATE G_Callen.INST SET Date_Mod = GETDATE() WHERE Inst_Number = @ItemID; -- "Trigger"
+GO*/
+
+-------- TRIGGER --------

@@ -9,24 +9,26 @@
     <Grid>
         <Border Name="closeBorder" Background="Black" Height="600" Width="800" Opacity="0.75" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
-        <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Name="btn_close" Click="btn_close_Click" Canvas.Left="600" Canvas.Top="123" Style="{DynamicResource menuMinButton}">
-                <Image RenderOptions.BitmapScalingMode="HighQuality" Height="28" Width="29">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="../../Icons/Fat/menu/CloseWhite.png"/>
-                            <Setter Property="Width" Value="15"/>
-                            <Setter Property="Height" Value="auto"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Cursor" Value="Hand"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Button>
-            <Image Name="img" Stretch="Fill" Canvas.Left="212" Canvas.Top="152" Height="270" Width="386"/>
-        </Canvas>
+        <Viewbox Stretch="Uniform">
+            <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Name="btn_close" Click="btn_close_Click" Canvas.Left="600" Canvas.Top="123" Style="{DynamicResource menuMinButton}">
+                    <Image RenderOptions.BitmapScalingMode="HighQuality" Height="28" Width="29">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../../Icons/Fat/menu/CloseWhite.png"/>
+                                <Setter Property="Width" Value="15"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Image Name="img" Stretch="Fill" Canvas.Left="212" Canvas.Top="152" Height="270" Width="386"/>
+            </Canvas>
+        </Viewbox>
     </Grid>
 </Window>

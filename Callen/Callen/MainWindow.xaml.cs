@@ -29,6 +29,8 @@ namespace Callen
             InitializeComponent();
             MouseEventArgs e = new MouseEventArgs(Mouse.PrimaryDevice, 0);
 
+            App.Current.Properties["PrintList"] = new List<String>();
+
             menu_bar_MouseLeave(new object(), e); // Menu starts closed
 
             // Starts in Home Page

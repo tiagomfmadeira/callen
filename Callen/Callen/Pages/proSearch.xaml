@@ -24,6 +24,7 @@
                         <DataGridCheckBoxColumn Binding="{Binding Path=favourite}" IsReadOnly="False" Header="Fav" CellStyle="{DynamicResource DGCell}">
                             <DataGridCheckBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type CheckBox}">
+                                    <EventSetter Event="CheckBox.Click" Handler="OnClick"/>
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                     <Setter Property="Template">
@@ -44,14 +45,14 @@
                             </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
 
-                        <DataGridTextColumn Binding="{Binding Path=ID}" IsReadOnly="True" Header="ID"/>
-                        <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome" MinWidth="50"/>
-                        <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição"  MaxWidth="500"/>
-                        <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano" MinWidth="50"/>
-                        <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" MinWidth="50"/>
-                        <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema" MinWidth="50"/>
-                        <DataGridTextColumn Binding="{Binding Path=peer}" IsReadOnly="True" Header="Patrocinador" MinWidth="100"/>
-                        <DataGridTextColumn Binding="{Binding Path=sponsor}" IsReadOnly="True" Header="Fornecedor" MinWidth="50"/>
+                        <DataGridTextColumn Binding="{Binding Path=ID}" IsReadOnly="True" Header="ID" ElementStyle="{DynamicResource DGElemntCenter}"/>
+                        <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome"/>
+                        <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano"/>
+                        <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}"/>
+                        <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema" Width="50"/>
+                        <DataGridTextColumn Binding="{Binding Path=peer}" IsReadOnly="True" Header="Patrocinador"/>
+                        <DataGridTextColumn Binding="{Binding Path=sponsor}" IsReadOnly="True" Header="Fornecedor"/>
+                        <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>
