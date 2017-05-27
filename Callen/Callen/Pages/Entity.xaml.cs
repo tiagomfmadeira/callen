@@ -26,7 +26,9 @@ namespace Callen.Pages
         public Entity()
         {
             InitializeComponent();
-            combo_entity_view.SelectedIndex = 0;
+
+            peer_toggle.IsChecked = true;
+            FillDataGridPeer();
         }
 
         private void FillDataGridPeer() // Fills data grid with peers information 
@@ -83,12 +85,26 @@ namespace Callen.Pages
             }
         }
 
-        private void combo_entity_view_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void peer_toggle_Click(object sender, RoutedEventArgs e)
         {
-            if (combo_entity_view.SelectedValue.ToString() == "Fornecedor")
-                FillDataGridSponsor();
-            if (combo_entity_view.SelectedValue.ToString() == "Patrocinador")
+            if(peer_toggle.IsChecked == true)
+            {
                 FillDataGridPeer();
+                sponsor_toggle.IsChecked = false;
+                return;
+            }
+            peer_toggle.IsChecked = true;
+        }
+
+        private void sponsor_toggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (sponsor_toggle.IsChecked == true)
+            {
+                FillDataGridSponsor();
+                peer_toggle.IsChecked = false;
+                return;
+            }
+            sponsor_toggle.IsChecked = true;
         }
     }
 }

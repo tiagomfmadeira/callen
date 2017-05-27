@@ -17,6 +17,7 @@ public partial class winNotification
         Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
         {
             var workingArea = System.Windows.SystemParameters.WorkArea;
+
             var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
             var corner = transform.Transform(new Point(workingArea.Right, workingArea.Bottom));
 
@@ -27,10 +28,5 @@ public partial class winNotification
         TimedAction.ExecuteWithDelay(new Action(delegate {
             this.Close();
         }), TimeSpan.FromMilliseconds(4000));
-    }
-
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        
     }
 }

@@ -195,8 +195,8 @@ AS
 
 	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
 
-	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Date_Mod,Date_View,Favorite)
-		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),GETDATE(),GETDATE(),0);
+	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite)
+		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),0);
 
 	SELECT IDENT_CURRENT('G_Callen.INST');
 GO

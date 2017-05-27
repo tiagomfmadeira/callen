@@ -213,6 +213,8 @@ namespace Callen.Pages
             {
                 MessageBox.Show(ee.ToString());
             }
+
+            fillLastView(); //Refresh last view grid
         }
 
         private void openDesc(Item it) // Opens the description of the item given
@@ -222,6 +224,9 @@ namespace Callen.Pages
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();
+
+            if (popDesc.wasEdited())
+                fillLastMod();
 
             win.Opacity = 1;
         }

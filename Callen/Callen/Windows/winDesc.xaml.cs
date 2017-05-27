@@ -27,6 +27,8 @@ namespace Callen.Windows
     public partial class winDesc : Window
     {
         int id;
+        bool edited;
+
         public winDesc()
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace Callen.Windows
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
+
+            edited = false;
         }
 
         public winDesc(Item it)  // sets the text Boxes with information from an given Item 
@@ -273,8 +277,20 @@ namespace Callen.Windows
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
             updateInfo();
-            winNotification noti = new winNotification("Update Item",id + " - " + item_name.Text,"foi modificado com sucesso");
+            winNotification noti = new winNotification("Update Item", id + " - " + item_name.Text, "foi modificado com sucesso");
             noti.Show();
+            edited = true;
+
+            btn_save.IsEnabled = false;
+
+            TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
+                btn_save.IsEnabled = true;
+            }), TimeSpan.FromMilliseconds(1000));
+        }
+
+        public bool wasEdited()
+        {
+            return edited;
         }
     }
 }

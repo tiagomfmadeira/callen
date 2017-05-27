@@ -13,15 +13,16 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ComboBox Name="combo_entity_view" Width="60" HorizontalAlignment="Left" Style="{DynamicResource customCombo}" ItemContainerStyle="{DynamicResource comboItem}" SelectionChanged="combo_entity_view_SelectionChanged" SelectedValuePath="Content">
-                <ComboBoxItem Content="Fornecedor"/>
-                <ComboBoxItem Content="Patrocinador"/>
-            </ComboBox>
+            <DockPanel Width="180"  HorizontalAlignment="Right">
+                <ToggleButton Content="Fornecedor" Name="peer_toggle" Click="peer_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
+                <ToggleButton Content="Patrocinador" Name="sponsor_toggle" Click="sponsor_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
+            </DockPanel>
+            
 
-            <Grid Width="380" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
-                <TextBlock  Width="380" Margin="5,2" Text="Search" Foreground="{StaticResource brushWatermarkForeground}"
+            <Grid Width="300" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                <TextBlock  Width="260" Margin="5,2" Text="Search" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                <TextBox  Width="300" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
                 <ToggleButton HorizontalAlignment="Right"  Name="advanceSearch" Style="{DynamicResource dropDownButton}"/>
             </Grid>
 
