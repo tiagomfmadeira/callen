@@ -71,9 +71,9 @@ AS
 	FROM (SELECT Item_Name, Item_ID 
 		  FROM G_Callen.ITEM ) AS I
 		  JOIN (SELECT Item_ID, Inst_PicPath
-				FROM G_Callen.INST) AS IT
+				FROM G_Callen.INST
+				WHERE NOT ISNULL(Inst_PicPath,'') = '') AS IT
 		  ON I.Item_ID = IT.Item_ID;
-;
 go
 
 ---------- PROCEDURES ----------
@@ -111,19 +111,108 @@ AS
 GO
 
 -- Dá update as infos de um item ESTÁ MAL (A DAR UPDATE AO ITEM TAMBEM)
-CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @ItemName VARCHAR(255), @ItemYear VARCHAR(255), @ItemOther VARCHAR(255), @ItemDesc VARCHAR(255)
+CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @ItemName VARCHAR(100), @ItemYear VARCHAR(10), @ItemOther VARCHAR(255), @ItemDesc VARCHAR(255)
 AS
 	DECLARE @itemID as INT;
 	SELECT @itemID = Item_ID FROM G_Callen.INST WHERE Inst_Number = @InstID;
 
 	UPDATE G_Callen.ITEM 
-	SET Item_Name =  @ItemName , Item_Descr = @ItemOther, Item_Year = @ItemYear
+	SET Item_Name =  @ItemName , Item_Descr = @ItemDesc, Item_Year = @ItemYear
 	WHERE Item_ID = @ItemID;
 
 	UPDATE G_Callen.INST
 	SET Note = @ItemOther WHERE Inst_Number = @InstID;
 
 	UPDATE G_Callen.INST SET Date_Mod = GETDATE() WHERE Inst_Number = @ItemID; -- "Trigger"
-GO*/
+GO
 
+-- Cria um novo folder
+CREATE PROCEDURE G_Callen.CREATE_FOLDER @Code VARCHAR(50), @Theme VARCHAR(50)
+AS
+	INSERT INTO G_Callen.ARQUIVE(Code, Theme_Descr) VALUES(@Code,@Theme)
+GO
+
+-- Create Address
+CREATE PROCEDURE G_Callen.CREATE_ADDRESS @Entity INT, @Street VARCHAR(150),	@City VARCHAR(50),@State VARCHAR(50),
+													@Country VARCHAR(50), @PostalCode VARCHAR(50)
+AS
+	DECLARE @ID AS INT;
+
+	INSERT INTO G_CALLEN.ADDRESS(Street, City, State, Country, PostalCode) 
+				VALUES (@Street, @City, @State, @Country, @PostalCode) 
+	
+	SELECT @ID = IDENT_CURRENT('G_CALLEN.ADDRESS')
+
+	INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@Entity,@ID);
+GO
+
+-- Create entity - returns Entity id
+CREATE PROCEDURE G_Callen.CREATE_ENTITY @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15)
+AS
+	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+				VALUES (@Name, @Email, @Phone);
+
+	RETURN IDENT_CURRENT('G_CALLEN.ADDRESS')
+GO
+
+CREATE PROCEDURE G_Callen.CREATE_PEER @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15)
+AS
+	DECLARE @ENTITY_ID AS INT;
+
+	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+				VALUES (@Name, @Email, @Phone);
+
+	SELECT @ENTITY_ID = IDENT_CURRENT('G_CALLEN.ENTITY');
+
+	INSERT INTO G_Callen.PEER(Peer_ID,QuantityOffered) VALUES (@ENTITY_ID,0);
+
+	RETURN @ENTITY_ID;
+GO
+
+CREATE PROCEDURE G_Callen.CREATE_SPONSOR @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15), @WebSite VARCHAR(100)
+AS
+	DECLARE @ENTITY_ID AS INT;
+
+	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+				VALUES (@Name, @Email, @Phone);
+
+	SELECT @ENTITY_ID = IDENT_CURRENT('G_CALLEN.ENTITY');
+
+	INSERT INTO G_Callen.SPONSOR(Sponsor_ID,Website) VALUES (@ENTITY_ID,@WebSite);
+
+	RETURN @ENTITY_ID
+GO
+
+-- OTHER & NOTE
+CREATE PROCEDURE G_Callen.ADD_ITEM @Name VARCHAR(100), @Sponsor INT, @Peer INT, @Desc VARCHAR(255), @Year VARCHAR(10),
+										@Folder INT, @Other VARCHAR(150), @Img_Path VARCHAR(255)
+AS
+
+	DECLARE @ITEM_ID AS INT;
+
+	INSERT INTO G_Callen.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
+
+	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
+
+	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Date_Mod,Date_View,Favorite)
+		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),GETDATE(),GETDATE(),0);
+
+	SELECT IDENT_CURRENT('G_Callen.INST');
+GO
 -------- TRIGGER --------
+
+CREATE TRIGGER G_Callen.SET_IMG_PATH ON G_Callen.INST
+AFTER INSERT
+AS
+	DECLARE @SUB_IMG_PATH AS VARCHAR(255);
+	DECLARE @ID AS INT;
+
+
+	SELECT @SUB_IMG_PATH = Inst_PicPath, @ID = Inst_Number FROM inserted;
+
+	IF ISNULL(@SUB_IMG_PATH,'') = ''
+		RETURN;
+	ELSE
+		UPDATE G_Callen.INST SET Inst_PicPath = CONCAT(@SUB_IMG_PATH,@ID) WHERE Inst_Number = @ID
+GO*/

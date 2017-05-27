@@ -37,7 +37,7 @@
                         </Grid.RowDefinitions>
 
                         <Button Height="125" Click="btn_open_desc" CommandParameter="{Binding ID}" Style="{DynamicResource menuMinButton}">
-                            <Image Source="{Binding ImgPath}" Style="{DynamicResource PicImage}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="{Binding ImgPath}" Height="125" Stretch="Uniform" Style="{DynamicResource PicImage}" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Button>
                         <StackPanel Grid.Row="1" Margin="3,0,0,0">
                             <TextBlock Grid.Row="1" Text="{Binding ID}"   Style="{DynamicResource statsText}" FontSize="15" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>

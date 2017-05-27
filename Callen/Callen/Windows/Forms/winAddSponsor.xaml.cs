@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Data.SqlClient;
+using System.Data;
+
 namespace Callen.Windows.Forms
 {
     /// <summary>
@@ -66,6 +69,50 @@ namespace Callen.Windows.Forms
 
         private void btn_submit_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(name_box.Text.ToString()))
+            {
+                MessageBox.Show("Necessita de ambos os atributos");
+                return;
+            }
+
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "G_Callen.CREATE_SPONSOR @Name, @Email, @Phone, @WebSite";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@Name";
+                param.Value = name_box.Text.ToString();
+                cmd.Parameters.Add(param);
+
+                SqlParameter param2 = new SqlParameter();
+                param2.ParameterName = "@Email";
+                param2.Value = mail_box.Text.ToString();
+                cmd.Parameters.Add(param2);
+
+                SqlParameter param3 = new SqlParameter();
+                param3.ParameterName = "@Phone";
+                param3.Value = phone_box.Text.ToString();
+                cmd.Parameters.Add(param3);
+
+                SqlParameter param4 = new SqlParameter();
+                param4.ParameterName = "@WebSite";
+                param4.Value = site_box.Text.ToString();
+                cmd.Parameters.Add(param4);
+
+                cmd.ExecuteNonQuery();
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+
             this.Close();
         }
     }

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Callen.Windows.Forms
 {
@@ -22,8 +23,6 @@ namespace Callen.Windows.Forms
     /// </summary>
     public partial class winAddPeer : Window
     {
-        private bool address;
-
         public winAddPeer()
         {
             InitializeComponent();
@@ -36,8 +35,6 @@ namespace Callen.Windows.Forms
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
-
-            address = false;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -70,45 +67,37 @@ namespace Callen.Windows.Forms
             street_postal.Visibility = Visibility.Visible;
             divider.Visibility = Visibility.Visible;
 
-            address = true;
         }
 
         private void btn_submit_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            int addID = 0;
-            if (address)
-                addID = add_Address();
-
-            if (addID == -1) // Fail in adding address to dataBase
+            if (string.IsNullOrEmpty(name_box.Text.ToString()))
             {
-                MessageBox.Show("Morada mal submtida");
+                MessageBox.Show("Necessita de ambos os atributos");
                 return;
             }
-
 
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "INSERT INTO G_Callen.ENTITY(Entity_Name, Email, Phone) "
-                                  +"VALUES(@Name, @email, @Phone);";
+                string Get_Data = "G_Callen.CREATE_PEER @Name, @Email, @Phone";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
                 SqlParameter param = new SqlParameter();
-                param.ParameterName = "@Code";
+                param.ParameterName = "@Name";
                 param.Value = name_box.Text.ToString();
                 cmd.Parameters.Add(param);
 
                 SqlParameter param2 = new SqlParameter();
-                param2.ParameterName = "@Theme";
+                param2.ParameterName = "@Email";
                 param2.Value = mail_box.Text.ToString();
                 cmd.Parameters.Add(param2);
 
                 SqlParameter param3 = new SqlParameter();
-                param3.ParameterName = "@Theme";
+                param3.ParameterName = "@Phone";
                 param3.Value = phone_box.Text.ToString();
                 cmd.Parameters.Add(param3);
 
@@ -119,23 +108,26 @@ namespace Callen.Windows.Forms
             catch (Exception ee)
             {
                 MessageBox.Show(ee.ToString());
-            }*/
+            }
 
             this.Close();
-
         }
 
-        private int add_Address()
+        private void add_Address(String entityID)
         {
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "INSERT INTO G_Callen.ADDRESS(Street, City, State, Country, PostalCode) "
-                                 +"VALUES(@Street, @City, @State, @Country, @Postal);";
+                string Get_Data = "EXEC CREATE_ADDRESS @Entity, @Street, @City, @State, @Country, @PostalCode";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter paramEntity = new SqlParameter();
+                paramEntity.ParameterName = "@Entity";
+                paramEntity.Value = street_box.Text.ToString();
+                cmd.Parameters.Add(paramEntity);
 
                 SqlParameter param = new SqlParameter();
                 param.ParameterName = "@Street";
@@ -158,20 +150,17 @@ namespace Callen.Windows.Forms
                 cmd.Parameters.Add(param4);
 
                 SqlParameter param5 = new SqlParameter();
-                param5.ParameterName = "@Postal";
+                param5.ParameterName = "@PostalCode";
                 param5.Value = postal_box.Text.ToString();
                 cmd.Parameters.Add(param5);
 
                 cmd.ExecuteNonQuery();
 
                 thisConnection.Close();
-
-                return 0;
             }
             catch (Exception ee)
             {
                 MessageBox.Show(ee.ToString());
-                return -1;
             }
         }
 

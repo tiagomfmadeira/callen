@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Callen
 {
-    public class Folders //Used to define a folder (Code, Theme) 
+    class Entities
     {
         public String id { get; set; }
-        public String folder { get; set; }
-        public String theme { get; set; }
+        public String name { get; set; }
     }
 }

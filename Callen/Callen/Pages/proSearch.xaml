@@ -24,7 +24,7 @@
                         <DataGridCheckBoxColumn Binding="{Binding Path=favourite}" IsReadOnly="False" Header="Fav" CellStyle="{DynamicResource DGCell}">
                             <DataGridCheckBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type CheckBox}">
-                                    <EventSetter Event="CheckBox.Click" Handler="OnClick"/>
+                                    <EventSetter Event="CheckBox.Click" Handler="check_fav"/>
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                     <Setter Property="Template">

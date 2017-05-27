@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using System.Data.SqlClient;
-using System.Data;
 
 namespace Callen.Windows.Forms
 {
@@ -65,13 +64,11 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "INSERT INTO G_Callen.ARQUIVE(Code, Theme_Descr) "
-                                 +"VALUES(@Code ,@Theme )";
+                string Get_Data = "EXEC G_Callen.CREATE_FOLDER @Code, @Theme";
 
                 SqlCommand cmd = new SqlCommand(Get_Data,thisConnection);
 
                 SqlParameter param = new SqlParameter();
-
                 param.ParameterName = "@Code";
                 param.Value = folder_box.Text.ToString();
                 cmd.Parameters.Add(param);
@@ -92,6 +89,5 @@ namespace Callen.Windows.Forms
 
             this.Close();
         }
-
     }
 }

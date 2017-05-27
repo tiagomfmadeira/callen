@@ -50,6 +50,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBConnect.cs" />
+    <Compile Include="Entities.cs" />
     <Compile Include="Folders.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Pages\Colec.xaml.cs">
@@ -99,6 +101,7 @@
       <DependentUpon>Stats.xaml</DependentUpon>
     </Compile>
     <Compile Include="Switcher.cs" />
+    <Compile Include="TimedAction.cs" />
     <Compile Include="Windows\Forms\winAddFolder.xaml.cs">
       <DependentUpon>winAddFolder.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,9 @@
     </Compile>
     <Compile Include="Windows\Forms\winAddSponsor.xaml.cs">
       <DependentUpon>winAddSponsor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\winNotification.xaml.cs">
+      <DependentUpon>winNotification.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Other\winZoomImage.xaml.cs">
       <DependentUpon>winZoomImage.xaml</DependentUpon>
@@ -175,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Forms\winAddSponsor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\winNotification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -357,6 +367,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\CallenIc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Fat\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Fat\add_print.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />

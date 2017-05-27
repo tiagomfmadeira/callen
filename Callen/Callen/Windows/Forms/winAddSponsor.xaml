@@ -17,16 +17,16 @@
                 <Border Name="divider" Visibility="Hidden" Height="1" Width="219"  Background="{DynamicResource lightHighLight}" Canvas.Left="284" Canvas.Top="355" />
 
                 <Label Content="Nome" Canvas.Left="290" Canvas.Top="228" Style="{DynamicResource formLabel}" Width="54"/>
-                <TextBox Width="130" Canvas.Left="349" Canvas.Top="228" Height="26" Style="{DynamicResource formTextBox}"/>
+                <TextBox Name="name_box" Width="130" Canvas.Left="349" Canvas.Top="228" Height="26" Style="{DynamicResource formTextBox}"/>
 
                 <Label Content="Email" Canvas.Left="291" Canvas.Top="259" Style="{DynamicResource formLabel}" Width="54"/>
-                <TextBox Width="130" Canvas.Left="349" Canvas.Top="259" Height="26" Style="{DynamicResource formTextBox}"/>
+                <TextBox Name="mail_box" Width="130" Canvas.Left="349" Canvas.Top="259" Height="26" Style="{DynamicResource formTextBox}"/>
 
                 <Label Content="Nº Tel." Canvas.Left="291" Canvas.Top="290" Style="{DynamicResource formLabel}" Width="54"/>
-                <TextBox Width="130" Canvas.Left="348" Canvas.Top="290" Height="26" Style="{DynamicResource formTextBox}"/>
+                <TextBox Name="phone_box" Width="130" Canvas.Left="348" Canvas.Top="290" Height="26" Style="{DynamicResource formTextBox}"/>
 
                 <Label Content="WebSite" Canvas.Left="291" Canvas.Top="321" Style="{DynamicResource formLabel}" Width="54"/>
-                <TextBox Width="130" Canvas.Left="348" Canvas.Top="321" Height="26" Style="{DynamicResource formTextBox}"/>
+                <TextBox Name="site_box" Width="130" Canvas.Left="348" Canvas.Top="321" Height="26" Style="{DynamicResource formTextBox}"/>
 
                 <Button Name="btn_submit" Click="btn_submit_Click" Content="Submeter" Canvas.Left="423" Canvas.Top="361" />
                 <Button Name="btn_add_address" Click="btn_add_address_Click" Content="Avançadas" Canvas.Left="291" Canvas.Top="358">

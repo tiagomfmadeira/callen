@@ -27,7 +27,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Image Name="img" Stretch="Fill" Canvas.Left="212" Canvas.Top="152" Height="270" Width="386"/>
+                <Image Name="img" Stretch="Fill" Canvas.Left="212" Canvas.Top="152" Height="270" Width="386" RenderOptions.BitmapScalingMode="HighQuality"/>
             </Canvas>
         </Viewbox>
     </Grid>

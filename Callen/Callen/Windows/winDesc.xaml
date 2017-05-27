@@ -10,27 +10,61 @@
     <Grid Height="auto" Width="auto">
         <Border Name="closeBorder" Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
-        <Viewbox Stretch="Uniform">
+        <Viewbox Stretch="Uniform" Margin="-3,1,3,-1">
             <Canvas Height="600" Width="800"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
                 <Border Height="270" Width="479" Canvas.Left="151" Canvas.Top="165" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-                <Button Width="25" Height="25" x:Name="btn_print" Click="btn_print_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="555" Canvas.Top="165">
+                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="417" Canvas.Top="78">
+                    <Popup Placement="Center" Name="pop_print" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
+                        <Border Background="{DynamicResource lightHighLight}" Width="115" Height="35" CornerRadius="7,7,0,7">
+                            <TextBlock Margin="5,0,0,0" Text="Adiciona à lista de etiquetas a imprimir" Width="110" Height="38" TextWrapping="WrapWithOverflow" />
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <Grid Width="173" Height="148" Name="grd_pop_edit" Canvas.Left="568" Canvas.Top="72">
+                    <Popup Placement="Center" Name="pop_edit" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
+                        <Border Background="{DynamicResource lightHighLight}" Width="120" Height="45" CornerRadius="7,7,7,0">
+                            <TextBlock Width="110" Height="60" FontSize="10" TextWrapping="WrapWithOverflow">
+                                <Bold>Modo de Editar</Bold>   Necesita de salvar para guardar alterações
+                            </TextBlock>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="555" Canvas.Top="165">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
-                                <Setter Property="Source" Value="../Icons/Fat/print.png"/>
-                                <Setter Property="Width" Value="12"/>
+                                <Setter Property="Source" Value="../Icons/Fat/add_print.png"/>
+                                <Setter Property="Width" Value="14"/>
                                 <Setter Property="Height" Value="auto"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Width" Value="14"/>
+                                        <Setter Property="Width" Value="16"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" x:Name="btn_edit" Click="btn_edit_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="580" Canvas.Top="165">
+                <Button Width="25" Height="25" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="555" Canvas.Top="165">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/save.png"/>
+                                <Setter Property="Width" Value="11"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Width" Value="13"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button Width="25" Height="25" x:Name="btn_edit" Click="btn_edit_Click" MouseEnter="btn_edit_MouseEnter" MouseLeave="btn_edit_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="580" Canvas.Top="165">
                     <Image Margin="0,-1,0,0">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -63,7 +97,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                
+
                 <TextBox Name="item_name" IsEnabled="False" Width="178" Canvas.Left="174" Canvas.Top="220" Height="26" Style="{StaticResource descTextBox}"/>
                 <TextBox Name="item_year" IsEnabled="False" Width="51" Canvas.Left="244" Canvas.Top="251" Height="26" Style="{StaticResource descTextBox}"/>
 

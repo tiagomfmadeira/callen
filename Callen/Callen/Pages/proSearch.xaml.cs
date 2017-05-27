@@ -141,7 +141,7 @@ namespace Callen.Pages
             win.Opacity = 1;
         }
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        private void check_fav(object sender, RoutedEventArgs e)
         {
             String id = (grdColec.SelectedItem as DataRowView)["ID"].ToString();
 

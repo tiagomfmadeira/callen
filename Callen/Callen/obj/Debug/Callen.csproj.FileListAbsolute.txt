@@ -182,3 +182,5 @@ C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Ca
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\bin\Debug\WPFToolkit.Extended.dll
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\Other\winZoomImage.g.cs
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\Other\winZoomImage.baml
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winNotification.baml
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winNotification.g.cs

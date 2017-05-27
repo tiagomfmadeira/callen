@@ -12,11 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Text.RegularExpressions;
+
 using System.Data;
 using System.Data.SqlClient;
+
 using Microsoft.Win32;
+
 using Callen.Windows.Forms;
-using System.Text.RegularExpressions;
 
 namespace Callen.Windows
 {
@@ -34,7 +37,7 @@ namespace Callen.Windows
             Window parent = Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
-                this.WindowState = WindowState.Maximized;
+                this.WindowState = WindowState.Maximized; // Maximize window and close border
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
@@ -80,7 +83,7 @@ namespace Callen.Windows
                 List<Folders> ft = new List<Folders>();
                 foreach(DataRow row in dt.Rows)
                 {
-                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString() });
+                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString(),id = row["Arquive_ID"].ToString()});
                 }
 
                 combo_folder.ItemsSource = ft;
@@ -103,7 +106,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Entity_Name AS Nome "
+                string Get_Data = "SELECT Entity_Name AS Nome, Sponsor_ID as ID "
                                  +"FROM G_Callen.ENTITY "
                                  +"INNER JOIN G_Callen.SPONSOR "
                                  +"on Entity_ID = Sponsor_ID";
@@ -115,13 +118,15 @@ namespace Callen.Windows
                 DataTable dt = new DataTable("desc");
                 sda.Fill(dt);
 
-                List<String> ft = new List<String>();
+                List<Entities> ft = new List<Entities>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(row["Nome"].ToString());
+                    ft.Add(new Entities { name = row["Nome"].ToString(),id = row["ID"].ToString()});
                 }
 
                 combo_sponsor.ItemsSource = ft;
+                combo_sponsor.DisplayMemberPath = "name";
+                combo_sponsor.SelectedValuePath = "id";
 
                 thisConnection.Close();
             }
@@ -139,7 +144,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Entity_Name AS Nome "
+                string Get_Data = "SELECT Entity_Name AS Nome, Peer_ID AS ID "
                                  +"FROM G_Callen.ENTITY "
                                  +"INNER JOIN G_Callen.PEER "
                                  +"on Entity_ID = Peer_ID";
@@ -151,13 +156,15 @@ namespace Callen.Windows
                 DataTable dt = new DataTable("desc");
                 sda.Fill(dt);
 
-                List<String> ft = new List<String>();
+                List<Entities> ft = new List<Entities>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(row["Nome"].ToString());
+                    ft.Add(new Entities { name = row["Nome"].ToString(), id = row["ID"].ToString() });
                 }
 
                 combo_peer.ItemsSource = ft;
+                combo_peer.DisplayMemberPath = "name";
+                combo_peer.SelectedValuePath = "id";
 
                 thisConnection.Close();
             }
@@ -210,39 +217,131 @@ namespace Callen.Windows
 
         private void btn_insert_Click(object sender, RoutedEventArgs e) // inserts information in data base 
         {
+            if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
+                        || string.IsNullOrEmpty(desc_box.Text.ToString()) || string.IsNullOrEmpty(year_box.Text.ToString())
+                            || (combo_folder.SelectedItem == null) || (combo_peer.SelectedItem == null))
+            {
+                MessageBox.Show("Necessita de nome, Patrocinador,Fornecedor, Descrição, Ano e Pasta");
+                return;
+            }
 
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.ADD_ITEM @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Img_Path";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Name";
+                paramName.Value = name_box.Text.ToString();
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramSpon = new SqlParameter();
+                paramSpon.ParameterName = "@Sponsor";
+                paramSpon.Value = combo_sponsor.SelectedValue.ToString();
+                cmd.Parameters.Add(paramSpon);
+
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@Peer";
+                paramPeer.Value = combo_peer.SelectedValue.ToString();
+                cmd.Parameters.Add(paramPeer);
+
+                SqlParameter paramDesc = new SqlParameter();
+                paramDesc.ParameterName = "@Desc";
+                paramDesc.Value = desc_box.Text.ToString();
+                cmd.Parameters.Add(paramDesc);
+
+                SqlParameter paramYear = new SqlParameter();
+                paramYear.ParameterName = "@Year";
+                paramYear.Value = year_box.Text.ToString();
+                cmd.Parameters.Add(paramYear);
+
+                SqlParameter paramFolder = new SqlParameter();
+                paramFolder.ParameterName = "@Folder";
+                paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
+                cmd.Parameters.Add(paramFolder);
+
+                // Other
+                SqlParameter paramOther = new SqlParameter();
+                paramOther.ParameterName = "@Other";
+                if (string.IsNullOrEmpty(name_box.Text.ToString()))
+                    paramOther.Value = "";
+                else
+                    paramOther.Value = other_box.Text.ToString();
+                cmd.Parameters.Add(paramOther);
+
+                // Image Path
+                SqlParameter paramImg = new SqlParameter();
+                paramImg.ParameterName = "@Img_Path";
+                if (img.Source != null) // Theres an img
+                {
+                    var img_path = "C:\\Callen_Pics\\Instance_"; // gets filled in database trigger
+                    paramImg.Value = img_path;
+                }
+                else
+                {
+                    paramImg.Value = "";
+                }
+                cmd.Parameters.Add(paramImg);
+
+                // Execute
+                var inst_id = cmd.ExecuteScalar();
+
+                if (img.Source != null) // Theres an img
+                {
+                    var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
+                    System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + inst_id.ToString() + ".jpeg");
+                }
+
+                thisConnection.Close();
+             }
+             catch (Exception ee)
+             {
+                 MessageBox.Show(ee.ToString());
+
+             }
+
+            this.Close();
         }
 
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
-            text_theme.Text = combo_folder.SelectedValue.ToString();
+            if (combo_folder.SelectedItem != null)
+                text_theme.Text = combo_folder.SelectedValue.ToString();
+            else
+                text_theme.Text = "";
         }
 
         private void btn_add_sponsor_Click(object sender, RoutedEventArgs e)
         {
             winAddSponsor popAddSpon = new winAddSponsor();
             popAddSpon.Owner = this;
-            this.Opacity = 0.5;
+            this.Opacity = 0.85;
             popAddSpon.ShowDialog();
 
             this.Opacity = 1; // turn opacity back to 1
+            fillSponsorCombo();
         }
 
         private void btn_add_peer_Click(object sender, RoutedEventArgs e)
         {
             winAddPeer popAddPerr = new winAddPeer();
             popAddPerr.Owner = this;
-            this.Opacity = 0.5;
+            this.Opacity = 0.85;
             popAddPerr.ShowDialog();
 
             this.Opacity = 1; // turn opacity back to 1
+            fillPeerCombo();
         }
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
             winAddFolder popAddFol = new winAddFolder();
             popAddFol.Owner = this;
-            this.Opacity = 0.5;
+            this.Opacity = 0.85;
             popAddFol.ShowDialog();
 
             this.Opacity = 1; // turn opacity back to 1
