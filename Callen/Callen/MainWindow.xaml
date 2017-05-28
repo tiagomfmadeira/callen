@@ -98,8 +98,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Left">
                     <DockPanel >
-                        <Image Source="Icons/CallenIC.png" Margin="13,0,0,0" Width="17"/>
-                        <Label Margin="5,0,0,0" Content="Callen" Foreground="{DynamicResource lightHighLight}"/>
+                        <Label Margin="35,0,0,0" Content="Callen" Foreground="{DynamicResource lightHighLight}"/>
                     </DockPanel>
                     <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left" x:Name="btn_callen" Click="btn_callen_Click">
                         <DockPanel Width="145" Margin="5,0,0,0">

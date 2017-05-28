@@ -20,13 +20,16 @@ public partial class winNotification
 
             var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
             var corner = transform.Transform(new Point(workingArea.Right, workingArea.Bottom));
-
-            this.Left = workingArea.Right - this.Width;
-            this.Top = workingArea.Bottom - this.Height;
         }));
 
         TimedAction.ExecuteWithDelay(new Action(delegate {
             this.Close();
         }), TimeSpan.FromMilliseconds(4000));
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width;
+        this.Top = System.Windows.SystemParameters.WorkArea.Bottom - this.Height;
     }
 }

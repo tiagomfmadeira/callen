@@ -285,7 +285,7 @@ namespace Callen.Windows
 
             TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
                 btn_save.IsEnabled = true;
-            }), TimeSpan.FromMilliseconds(1000));
+            }), TimeSpan.FromMilliseconds(2250));
         }
 
         public bool wasEdited()
