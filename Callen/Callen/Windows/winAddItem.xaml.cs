@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Diagnostics;
+
 using System.Text.RegularExpressions;
 
 using System.Data;
@@ -28,7 +30,7 @@ namespace Callen.Windows
     /// </summary>
     public partial class winAddItem : Window
     {
-
+        public bool inserted; // tell if a item was inserted
         public winAddItem()
         {
             InitializeComponent();
@@ -45,6 +47,13 @@ namespace Callen.Windows
             fillFolderCombo();
             fillSponsorCombo();
             fillPeerCombo();
+
+            inserted = false;
+        }
+
+        public bool getInserted()
+        {
+            return inserted;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -184,34 +193,43 @@ namespace Callen.Windows
               "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                ImageSource src = new BitmapImage(new Uri(op.FileName));
-                if (src.Width < 127)
+                try
                 {
-                    if(src.Height < 90)
-                    {
-                        img_border.Height = src.Height;
-                        img_border.Width = src.Width;
-                    }
-                    else
-                    {
-                        img_border.Height = 90;
-                    }
-                }
-                else
-                {
-                    if(src.Height < 90)
-                    {
-                        img_border.Height = src.Height;
-                    }
-                    else
-                    {
-                        img_border.Width = 127;
-                        img_border.Height = 90;
-                    }
-                }
+                    ImageSource src = new BitmapImage(new Uri(op.FileName));
 
-                img_border.Visibility = Visibility.Visible;
-                img.Source = src;
+                    if (src.Width < 127)
+                    {
+                        if (src.Height < 90)
+                        {
+                            img_border.Height = src.Height;
+                            img_border.Width = src.Width;
+                        }
+                        else
+                        {
+                            img_border.Height = 90;
+                        }
+                    }
+                    else
+                    {
+                        if (src.Height < 90)
+                        {
+                            img_border.Height = src.Height;
+                        }
+                        else
+                        {
+                            img_border.Width = 127;
+                            img_border.Height = 90;
+                        }
+                    }
+
+                    img_border.Visibility = Visibility.Visible;
+                    img.Source = src;
+                }
+                catch(Exception ee)
+                {
+                    MessageBox.Show("Ficheiro " + op.FileName + " não pode ser aberto");
+                    Debug.WriteLine("File Error: " + ee.ToString());
+                }
             }
         }
 
@@ -303,7 +321,7 @@ namespace Callen.Windows
                  MessageBox.Show(ee.ToString());
 
              }
-
+            inserted = true;
             this.Close();
         }
 

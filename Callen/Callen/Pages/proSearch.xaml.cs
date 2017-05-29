@@ -138,6 +138,9 @@ namespace Callen.Pages
             win.Opacity = 0.5;
             popForm.ShowDialog();
 
+            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
+                FillDataGrid();
+
             win.Opacity = 1;
         }
 

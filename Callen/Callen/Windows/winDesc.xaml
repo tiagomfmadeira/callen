@@ -26,7 +26,7 @@
                     <Popup Placement="Center" Name="pop_edit" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="120" Height="45" CornerRadius="7,7,7,0">
                             <TextBlock Width="110" Height="60" FontSize="10" TextWrapping="WrapWithOverflow">
-                                <Bold>Modo de Editar</Bold>   Necesita de salvar para guardar alterações
+                                <Bold>Modo de Editar</Bold>   Necessita de salvar para guardar alterações
                             </TextBlock>
                         </Border>
                     </Popup>

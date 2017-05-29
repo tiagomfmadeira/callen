@@ -35,7 +35,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Label Content="Adicionar Morada" Style="{StaticResource menuFont}" FontSize="10"/>
+                                        <Label Content="Adicionar Morada" Style="{StaticResource menuFont}" FontSize="10" Foreground="{DynamicResource mainColor}"/>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Cursor" Value="Hand"/>

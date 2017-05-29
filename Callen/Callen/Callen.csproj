@@ -248,9 +248,6 @@
     <Resource Include="Icons\Fat\menu\help.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Fat\menu\settings.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Fat\home.png" />
   </ItemGroup>
   <ItemGroup>
@@ -264,22 +261,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\nextPage.png" />
-    <Resource Include="Icons\Fat\print.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\upload.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Fat\image.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Fat\menu\close.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\folders.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Fat\back.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\menu\maximize.png" />
@@ -307,8 +294,6 @@
     <Resource Include="Icons\Fat\menu\helpWhite.png" />
     <Resource Include="Icons\Fat\menu\homeGray.png" />
     <Resource Include="Icons\Fat\menu\homeWhite.png" />
-    <Resource Include="Icons\Fat\menu\printGray.png" />
-    <Resource Include="Icons\Fat\menu\printWhite.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\menu\giftGray.png" />
@@ -319,9 +304,6 @@
     <Resource Include="Icons\Fat\menu\collectionWhite.png" />
     <Resource Include="Icons\Fat\menu\settingsGray.png" />
     <Resource Include="Icons\Fat\menu\settingsWhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Callen2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\gridGray.png" />
@@ -366,13 +348,17 @@
     <Resource Include="Icons\Fat\sortUp.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\CallenIc.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Fat\save.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Fat\add_print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Fat\menu\printGray.png" />
+    <Resource Include="Icons\Fat\menu\printWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Callen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />

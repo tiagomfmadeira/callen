@@ -12,7 +12,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800"
-        Background="{x:Null}"  Icon="Icons/Callen2.png"
+        Background="{x:Null}"  Icon="Icons/Callen.png"
         >
     <Grid Background="{DynamicResource mainColor}">
         <Grid.RowDefinitions>

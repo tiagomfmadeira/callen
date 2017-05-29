@@ -39,9 +39,7 @@ namespace Callen.Pages
 
             getItems(); // saves items in data table 
 
-            fillList(); // fills 
-
-            PicGrid.ItemsSource = items;
+            fillList(current_page); // fills 
         }
 
         private void getItems()
@@ -72,20 +70,24 @@ namespace Callen.Pages
             }
         }
 
-        private void fillList()
+        private void fillList(int page)
         {
+            items.Clear();
+
             for(int i = 0; i < 16 && i < dt.Rows.Count; i++)
                 items.Add(new PicItem() { ID = dt.Rows[i]["Item_ID"].ToString(),
                                             Name = dt.Rows[i]["Item_Name"].ToString(),
                                                 ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
+
+            PicGrid.ItemsSource = items;
         }
 
-        private void btn_next_page(object sender, RoutedEventArgs e) // Opens description window 
+        private void btn_next_page(object sender, RoutedEventArgs e) // TODO goes to the next page 
         {
 
         }
 
-        private void btn_prev_page(object sender, RoutedEventArgs e) // Opens description window 
+        private void btn_prev_page(object sender, RoutedEventArgs e) // TODO goes to the prev page 
         {
 
         }
@@ -99,6 +101,12 @@ namespace Callen.Pages
             popForm.ShowDialog();
 
             win.Opacity = 1;
+
+            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
+            {
+                getItems();
+                fillList(current_page);
+            }
         }
         
         private void btn_open_desc(object sender, RoutedEventArgs e) // Opens description window 
