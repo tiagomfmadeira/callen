@@ -85,6 +85,9 @@
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 

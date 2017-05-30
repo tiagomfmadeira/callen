@@ -13,18 +13,19 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <DockPanel Width="180"  HorizontalAlignment="Right">
-                <ToggleButton Content="Fornecedor" Name="peer_toggle" Click="peer_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
-                <ToggleButton Content="Patrocinador" Name="sponsor_toggle" Click="sponsor_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
-            </DockPanel>
-            
+            <DockPanel Margin="160,0,0,0"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Grid Width="380" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
+                    <TextBlock  Width="380" Margin="5,2" Text="Procura" Foreground="{StaticResource brushWatermarkForeground}"
+                           Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+                    <ToggleButton HorizontalAlignment="Right"  Name="advanceSearch" Style="{DynamicResource dropDownButton}"/>
+                </Grid>
 
-            <Grid Width="300" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
-                <TextBlock  Width="260" Margin="5,2" Text="Search" Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox  Width="300" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
-                <ToggleButton HorizontalAlignment="Right"  Name="advanceSearch" Style="{DynamicResource dropDownButton}"/>
-            </Grid>
+                <DockPanel Width="180" HorizontalAlignment="Left" Margin="-15,0,0,0">
+                    <ToggleButton Content="Fornecedor" Name="peer_toggle" Click="peer_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
+                    <ToggleButton Content="Patrocinador" Name="sponsor_toggle" Click="sponsor_toggle_Click" FontSize="16" Style="{DynamicResource entityToggle}"/>
+                </DockPanel>
+            </DockPanel>
 
             <Border Margin="0,5,0,0" Grid.Row="1" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
                 <DataGrid Name="grdColec" IsReadOnly="True" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}">
