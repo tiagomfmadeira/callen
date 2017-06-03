@@ -18,7 +18,6 @@ CREATE TABLE G_CALLEN.COLLECTION(
 	Collection_ID INT IDENTITY(1,1) PRIMARY KEY,
 	Collection_Name VARCHAR(50) NOT NULL,
 	Collection_Descr VARCHAR(150) NOT NULL,
-	Collection_PicPath VARCHAR(255),
 	Collection_Type INT REFERENCES G_CALLEN.COLLECTIONTYPE(T_ID) NOT NULL
 );
 go
@@ -34,7 +33,6 @@ go
 CREATE TABLE G_CALLEN.ENTITY(
 	Entity_ID INT IDENTITY(1,1) PRIMARY KEY,
 	Entity_Name VARCHAR(50) NOT NULL,
-	Entity_PicPath VARCHAR(255),
 	Email VARCHAR(150),
 	Phone VARCHAR(15)
 );
@@ -81,7 +79,6 @@ CREATE TABLE G_CALLEN.ITEM(
 );
 go
 
-
 CREATE TABLE G_CALLEN.SERIES(
 	Series_ID INT IDENTITY(1,1) PRIMARY KEY,
 	Series_Name VARCHAR(50) NOT NULL,
@@ -90,7 +87,7 @@ CREATE TABLE G_CALLEN.SERIES(
 go
 
 CREATE TABLE G_CALLEN.SERIESITEMS(
-	Series INT REFERENCES G_CALLEN.SERIES(Series_ID),
+	Series INT REFERENCES G_CALLEN.SERIES(Series_ID),	
 	Item INT REFERENCES G_CALLEN.ITEM(Item_ID),
 	NumberInSeries INT IDENTITY(1,1),
 	PRIMARY KEY(Series, Item)
@@ -152,28 +149,28 @@ INSERT INTO G_CALLEN.COLLECTIONTYPE(T_Designation)
 VALUES ('Calendários');
 
 --Coleção
-INSERT INTO G_CALLEN.COLLECTION(Collection_Name, Collection_Descr, Collection_PicPath, Collection_Type) 
-VALUES ('Teste', 'Coleção de calendários para testes', 'C:\Callen_Pics\Collec_1', 1);
+INSERT INTO G_CALLEN.COLLECTION(Collection_Name, Collection_Descr, Collection_Type) 
+VALUES ('Teste', 'Coleção de calendários para testes', 1);
 
 --Pasta
 INSERT INTO G_CALLEN.ARQUIVE(Code,Theme_Descr) 
 VALUES ('A1','Laboratório');
 
 --Entidades - Sponsor e Peers
-INSERT INTO G_CALLEN.ENTITY(Entity_Name,Entity_PicPath, Email, Phone) 
-VALUES ('MEDH','C:\Callen_Pics\Entity_1','contato@medh.com.br','(11)4513-5067');
+INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+VALUES ('MEDH','contato@medh.com.br','(11)4513-5067');
 
-INSERT INTO G_CALLEN.ENTITY(Entity_Name,Entity_PicPath, Email, Phone) 
-VALUES ('John Doe','C:\Callen_Pics\Entity_2', 'johndoe@anymail.com', '912345678');
+INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+VALUES ('John Doe', 'johndoe@anymail.com', '912345678');
 
-INSERT INTO G_CALLEN.ENTITY(Entity_Name,Entity_PicPath, Email, Phone) 
-VALUES ('SkyMax','C:\Callen_Pics\Entity_3',NULL,'0800-761-5064');
+INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+VALUES ('SkyMax',NULL,'0800-761-5064');
 
-INSERT INTO G_CALLEN.ENTITY(Entity_Name,Entity_PicPath, Email, Phone) 
-VALUES ('Coca-Cola','C:\Callen_Pics\Entity_4', NULL, NULL);
+INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+VALUES ('Coca-Cola', NULL, NULL);
 
-INSERT INTO G_CALLEN.ENTITY(Entity_Name,Entity_PicPath, Email, Phone) 
-VALUES ('Dan Cake','C:\Callen_Pics\Entity_5', NULL, NULL);
+INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+VALUES ('Dan Cake', NULL, NULL);
 
 --Morada
 INSERT INTO G_CALLEN.ADDRESS(Street, City, State, Country, PostalCode) 
