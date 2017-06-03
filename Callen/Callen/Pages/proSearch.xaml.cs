@@ -42,7 +42,7 @@ namespace Callen.Pages
         private void HandleEnter(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                openDesc();
+                getInstInfo((grdColec.SelectedItem as DataRowView)["ID"].ToString());
 
             e.Handled = true;
         }
@@ -73,54 +73,48 @@ namespace Callen.Pages
             }
         }
 
-        private String[] getExtra(String id) // Gets Note and Image Path for specific Item 
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)  
+        {
+            getInstInfo((grdColec.SelectedItem as DataRowView)["ID"].ToString());
+        }
+
+        private void getInstInfo(String id) // Gets Selected item info 
         {
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Note, Inst_PicPath "
-                                 +"FROM G_Callen.INST "
-                                 +"WHERE Inst_Number = " + id;
+                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @Item_id";
 
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("descr");
-                sda.Fill(dt);
+                SqlParameter param = new SqlParameter();
 
-                String tmp = string.Join(", ", dt.Rows[0].ItemArray);
+                param.ParameterName = "@Item_id";
+                param.Value = id;
+                cmd.Parameters.Add(param);
 
-                return tmp.Split(',');
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(), rdr["note"].ToString());
+
+                    openDesc(it);
+                }
+
+                thisConnection.Close();
             }
             catch (Exception ee)
             {
                 MessageBox.Show(ee.ToString());
-                return new string[2];
             }
-        } 
-
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)  
-        {
-            openDesc();
         }
 
-        private void openDesc() // Opens the description of specific item in Row
+        private void openDesc(Item it) // Opens the description of specific item in Row
         {
-            DataRowView row = (DataRowView)grdColec.SelectedItem;
-
-            Item it = new Item(row["name"].ToString(), row["ID"].ToString(), row["descr"].ToString(), row["year"].ToString(),
-                 row["theme"].ToString(), row["folder"].ToString(), row["sponsor"].ToString(), row["peer"].ToString()); ;
-
-            // Get Other and Image Path
-            String[] extra = getExtra(row["ID"].ToString());
-            if (extra[0] != "")
-                it.setOther(extra[0]);
-            if (extra[1] != "")
-                it.setImagePath(extra[1]);
-
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             winDesc popDesc = new winDesc(it);
             popDesc.Owner = win;

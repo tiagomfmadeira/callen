@@ -139,11 +139,11 @@ go
 
 /* INSERTS IN TABLE */
 /*
-INSERT INTO  () 
+INSERT INTO() 
 VALUES ();
 */
 
-
+/*
 --Tipp de coleção
 INSERT INTO G_CALLEN.COLLECTIONTYPE(T_Designation) 
 VALUES ('Calendários');
@@ -256,3 +256,4 @@ VALUES (4,1);
 
 INSERT INTO G_CALLEN.INSTINCOLLECTION(Inst, Collection) 
 VALUES (5,1); 
+*/

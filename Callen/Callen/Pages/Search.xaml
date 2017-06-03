@@ -15,10 +15,11 @@
         <Grid Width="380" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
             <TextBlock  Width="380" Margin="5,2" Text="Procura" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
-            <ToggleButton  HorizontalAlignment="Right"  Name="advanceSearch" Click="advanceSearch_Click" Style="{DynamicResource dropDownButton}"/>
+            <TextBox IsEnabled="False"  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
+            <ToggleButton Width="380" Name="advanceSearch" Click="advanceSearch_Click" Style="{DynamicResource dropDownButton}"/>
         </Grid>
-        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource brushWatermarkBackground}" BorderBrush="{StaticResource brushWatermarkBorder}" Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}" Style="{StaticResource advanceSearchBorder}">
+        
+        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource brushWatermarkBackground}" Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}" BorderBrush="{StaticResource brushWatermarkBorder}" Style="{StaticResource advanceSearchBorder}">
             <Grid Style="{StaticResource advanceSearchForm}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -45,44 +46,41 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <!-- Não me lembrei que existiam StackPanels... -->
-                <TextBlock Text="Nome contém" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="1" Grid.ColumnSpan="5" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Text="Nome" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="name_box" Grid.Row="1" Grid.ColumnSpan="5" Style="{StaticResource advanceSearchInput}"/>
 
                 <TextBlock Grid.Column="5" Text="ID"  Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource advanceSearchInput}"/>
+                <TextBox Name="id_box" Grid.Row="1" Grid.Column="5" Style="{StaticResource advanceSearchInput}"/>
 
                 <TextBlock Grid.Row="2" Text="Patrocinador" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="3" Grid.ColumnSpan="6" Style="{StaticResource advanceSearchInput}"/>
+                <TextBox Name="sponsor_box" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
                 <TextBlock Grid.Row="4" Text="Fornecedor" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="5" Grid.ColumnSpan="6" Style="{StaticResource advanceSearchInput}"/>
+                <TextBox Name="peer_box" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="6" Text="Coleção" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="7" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="4" Grid.Column="3" Text="Descrição" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="desc_box" Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="3" Grid.RowSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="6" Grid.Column="3" Text="Tema" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="6" Text="Série" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="series_box" Grid.Row="7" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="8" Text="Outro" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="9" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="Outro" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="other_box" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" Text="Descrição contém" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="9" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="10" Text="Tema" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="theme_box" Grid.Row="11" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="10" Text="Ano" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="year_box" PreviewTextInput="NumberValidationTextBox" Grid.Row="11" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" Text="Nota" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="note_box" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="9" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="10" Grid.Column="1" Text="Ano Fim" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="11" Grid.Column="1" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="8" Text="Ano" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="year_box" PreviewTextInput="NumberValidationTextBox" Grid.Row="9" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="10" Grid.Column="2" Text="Pasta" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Grid.Row="11" Grid.Column="2" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="8" Grid.Column="1" Text="Pasta" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="folder_box" Grid.Row="9" Grid.Column="1" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="12" Grid.ColumnSpan="2" Text="Data de Adição" Style="{StaticResource advanceSearchFont}"/>
-                <DatePicker Grid.Row="13" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchDatePicker}"/>
-
-                <TextBlock Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Text="Data de Adição" Style="{StaticResource advanceSearchFont}"/>
-                <DatePicker Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchDatePicker}"/>
+                <TextBlock Grid.Row="12" Grid.ColumnSpan="2" Text="Data de adição" Style="{StaticResource advanceSearchFont}"/>
+                <DatePicker Name="insert_box" Grid.Row="13" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchDatePicker}"/>
 
                 <Button Name="btn_adv_search" Click="btn_adv_search_Click" Margin="0,10,0,0" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="12" Grid.RowSpan="2" Width="70" Height="30">
                     <Button.Style>
@@ -130,7 +128,7 @@
                 </Style>
             </ToggleButton.Style>
         </ToggleButton>
-        
+
         <ToggleButton Name="btn_pic_mode" Click="btn_pic_mode_Click" Width="20" Margin="460,0,0,0">
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">

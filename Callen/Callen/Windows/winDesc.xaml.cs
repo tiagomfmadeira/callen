@@ -67,6 +67,9 @@ namespace Callen.Windows
             item_theme.Text = it.getTheme();
             item_desc.Text = it.getDesc();
 
+            if (it.getNote() != "")
+                item_note.Text = it.getNote();
+
             if (it.getOther() != "")
                 item_other.Text = it.getOther();
 
@@ -145,8 +148,8 @@ namespace Callen.Windows
 
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 414);
-                    Canvas.SetLeft(btn_print, 555);
+                    Canvas.SetLeft(grd_pop_print, 430);
+                    Canvas.SetLeft(btn_print, 568);
 
                     btn_save.IsEnabled = false;
 
@@ -183,8 +186,8 @@ namespace Callen.Windows
                 storyboard.Begin();
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 389);
-                    Canvas.SetLeft(btn_print, 530);
+                    Canvas.SetLeft(grd_pop_print, 405);
+                    Canvas.SetLeft(btn_print, 543);
 
                     item_name.IsEnabled = true;
                     item_year.IsEnabled = true;

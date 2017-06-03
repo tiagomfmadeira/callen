@@ -13,7 +13,7 @@
 
         <Viewbox Stretch="Uniform">
             <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-                <Border Height="285" Width="496" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+                <Border Height="285" Width="500" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
                 <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="622" Canvas.Top="164">
                     <Image>
@@ -33,12 +33,12 @@
                     </Image>
                 </Button>
 
-                <Label Content="Nome" Canvas.Left="162" Canvas.Top="208" Style="{DynamicResource formLabel}" />
-                <TextBox Name="name_box" Width="130" Canvas.Left="242" Canvas.Top="208" Height="26" Style="{DynamicResource formTextBox}" />
+                <Label Content="Nome" Canvas.Left="173" Canvas.Top="184" Style="{DynamicResource formLabel}" />
+                <TextBox Name="name_box" Width="151" Canvas.Left="253" Canvas.Top="184" Height="26" Style="{DynamicResource formTextBox}" />
 
-                <Label Content="Patrocinador" Canvas.Left="162" Canvas.Top="238" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="242" Canvas.Top="238" Height="26"/>
-                <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="240.5" Canvas.Left="373">
+                <Label Content="Patrocinador" Canvas.Left="173" Canvas.Top="214" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="253" Canvas.Top="214" Height="26"  IsTextSearchEnabled="True" IsEditable="True"/>
+                <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="216" Canvas.Left="385">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -60,9 +60,9 @@
                 </Button>
 
 
-                <Label Content="Fornecedor" Canvas.Left="162" Canvas.Top="269" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_peer" Width="130" Canvas.Left="242" Canvas.Top="269" Height="26"/>
-                <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="271.5" Canvas.Left="373">
+                <Label Content="Fornecedor" Canvas.Left="173" Canvas.Top="244" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_peer" Width="130" Canvas.Left="253" Canvas.Top="244" Height="26"/>
+                <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="247" Canvas.Left="385">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -83,9 +83,9 @@
                     </Button.Style>
                 </Button>
 
-                <Label Content="Série" Canvas.Left="162" Canvas.Top="298" Style="{DynamicResource formLabel}" />
-                <ComboBox Width="130" Canvas.Left="242" Canvas.Top="298" Height="26"/>
-                <Button FontFamily="20" Width="20" Height="20" Canvas.Top="300.5" Canvas.Left="373">
+                <Label Content="Série" Canvas.Left="173" Canvas.Top="273" Style="{DynamicResource formLabel}" />
+                <ComboBox Width="130" Canvas.Left="253" Canvas.Top="273" Height="26"/>
+                <Button FontFamily="20" Width="20" Height="20" Canvas.Top="276" Canvas.Left="385">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -106,12 +106,12 @@
                     </Button.Style>
                 </Button>
 
-                <Label Content="Tema" Canvas.Left="410" Canvas.Top="269" Style="{DynamicResource formLabel}" />
-                <TextBox Name="text_theme" IsEnabled="False" Width="130" Canvas.Left="490" Canvas.Top="270" Height="26" Style="{DynamicResource formTextBox}"/>
+                <Label Content="Tema" Canvas.Left="410" Canvas.Top="242" Style="{DynamicResource formLabel}" />
+                <TextBox Name="text_theme" IsEnabled="False" Width="151" Canvas.Left="490" Canvas.Top="242" Height="26" Style="{DynamicResource formTextBox}"/>
 
-                <Label Content="Pasta" Canvas.Left="410" Canvas.Top="239" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_folder" Width="130" Canvas.Left="490" Canvas.Top="239" Height="26" SelectionChanged="combo_folder_SelectionChanged"/>
-                <Button Name="btn_add_folder" Click="btn_add_folder_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="242" Canvas.Left="621">
+                <Label Content="Pasta" Canvas.Left="410" Canvas.Top="213" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_folder" Width="130" Canvas.Left="490" Canvas.Top="213" Height="26" SelectionChanged="combo_folder_SelectionChanged"/>
+                <Button Name="btn_add_folder" Click="btn_add_folder_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="214" Canvas.Left="621">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -133,16 +133,16 @@
                 </Button>
 
 
-                <Label Content="Ano" Canvas.Left="410" Canvas.Top="208" Style="{DynamicResource formLabel}" />
-                <TextBox Name="year_box" Width="130" PreviewTextInput="NumberValidationTextBox"  Canvas.Left="490" Canvas.Top="209" Height="26" Style="{DynamicResource formTextBox}"/>
+                <Label Content="Ano" Canvas.Left="410" Canvas.Top="182" Style="{DynamicResource formLabel}" />
+                <TextBox Name="year_box" Width="127" PreviewTextInput="NumberValidationTextBox"  Canvas.Left="490" Canvas.Top="183" Height="26" Style="{DynamicResource formTextBox}"/>
 
-                <Label Content="Outro" Canvas.Left="410" Canvas.Top="300" Style="{DynamicResource formLabel}" />
-                <TextBox Name="other_box" Width="130" Canvas.Left="490" Canvas.Top="301" Height="26" Style="{DynamicResource formTextBox}"/>
+                <Label Content="Outro" Canvas.Left="173" Canvas.Top="302" Style="{DynamicResource formLabel}" />
+                <TextBox Name="other_box" Width="149" Canvas.Left="255" Canvas.Top="304" Height="26" Style="{DynamicResource formTextBox}"/>
 
-                <Label Content="Descrição" Canvas.Left="162" Canvas.Top="328" Style="{DynamicResource formLabel}" />
-                <TextBox Name="desc_box" Width="151" VerticalContentAlignment="Top" Canvas.Left="242" Canvas.Top="328" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
+                <Label Content="Descrição" Canvas.Left="173" Canvas.Top="332" Style="{DynamicResource formLabel}" Width="77" />
+                <TextBox Name="desc_box" Width="149" VerticalContentAlignment="Top" Canvas.Left="255" Canvas.Top="332" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
 
-                <Label Content="Foto" Canvas.Left="410" Canvas.Top="332" Style="{DynamicResource formLabel}" />
+                <Label Content="Foto" Canvas.Left="409" Canvas.Top="334" Style="{DynamicResource formLabel}" />
                 <Border Name="img_border"  Height="Auto" Width="Auto" Visibility="Hidden" Canvas.Left="490" Canvas.Top="332" Style="{DynamicResource simpleBorder}">
                     <Image Name="img" Style="{DynamicResource imgForm}" Canvas.Left="432" Canvas.Top="292"/>
                 </Border>
@@ -164,6 +164,8 @@
                 </Button>
 
                 <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="604" Canvas.Top="425" />
+                <Label Content="Nota" Canvas.Left="410" Canvas.Top="273" Style="{DynamicResource formLabel}" />
+                <TextBox x:Name="note_box" Width="151" VerticalContentAlignment="Top" Canvas.Left="490" Canvas.Top="273" Height="55" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
 
             </Canvas>
         </Viewbox>

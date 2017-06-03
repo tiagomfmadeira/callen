@@ -184,3 +184,5 @@ C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Wi
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\Other\winZoomImage.baml
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winNotification.baml
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winNotification.g.cs
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winAddGift.g.cs
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winAddGift.baml

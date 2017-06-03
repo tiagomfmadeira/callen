@@ -55,53 +55,87 @@ namespace Callen.Pages
 
         private void advanceSearch_Click(object sender, RoutedEventArgs e) // rotates arrow in search bar when clicked 
         {
-            if(advanceSearch.IsChecked == true)
+            /*if(advanceSearch.IsChecked == true)
             {
                 RotateTransform rotateTransform = new RotateTransform(90,advanceSearch.Height/2,advanceSearch.Width/2);
                 advanceSearch.RenderTransform = rotateTransform;
             }
             else
             {
-                RotateTransform rotateTransform = new RotateTransform(0, advanceSearch.Height / 2, advanceSearch.Width / 2);
+                RotateTransform rotateTransform = new RotateTransform(0, advanceSearch.Height/2, advanceSearch.Width/2);
                 advanceSearch.RenderTransform = rotateTransform;
-            }
-
+            }*/
         }
 
         private void btn_adv_search_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(year_box.Text.ToString()))
-            {
+            // if all textbox are empty, don't search
+            if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(peer_box.Text)
+                  && String.IsNullOrEmpty(sponsor_box.Text))
                 return;
-            }
-
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Favorite AS Favorito,Inst_Number AS ID,Item_Name AS Nome,Item_Descr AS Descrição,Item_Year AS Ano ,Theme_Descr AS Tema,Code AS Pasta,Peer_name AS Fornecedor,Entity_Name AS Patrocinador "
-                                  + "FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor "
-                                        + "FROM(SELECT Favorite, Inst_Number, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor "
-                                           + "FROM(SELECT Favorite, Inst_Number, Item_ID, Code, Peer, Theme_Descr "
-                                               + "FROM(SELECT Item_ID, Inst_Number, Favorite, Arquive, Peer "
-                                                    + "FROM G_Callen.INST) AS IT "
-                                                    + "JOIN(SELECT * "
-                                                         + "FROM G_Callen.ARQUIVE) AS A "
-                                                    + "ON IT.Arquive = A.Arquive_ID) AS IA "
-                                                + "JOIN(SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor "
-                                                     + "FROM G_Callen.ITEM) AS I "
-                                                + "ON IA.Item_ID = I.Item_ID) AS IAI "
-                                            + "JOIN(SELECT Entity_ID, Entity_Name "
-                                                 + "FROM G_Callen.ENTITY) AS E "
-                                           + " ON IAI.Peer = E.Entity_ID) AS IAIE "
-                                        + "JOIN(SELECT Entity_ID, Entity_Name "
-                                            + " FROM G_Callen.ENTITY) AS EE "
-                                        + "ON IAIE.Sponsor = EE.Entity_ID "
-                                + "WHERE Item_Year LIKE  '%" + year_box.Text.ToString()+ "%';";
+                string Get_Data = "";
+                if (btn_pic_mode.IsChecked == false) { 
+                    Get_Data = "EXEC G_Callen.SEARCH_ITEMS_PRO_VIEW @Item_ID, @Item_Name, @Item_Desc, @Item_Year, "
+                                + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor;";
+                }
+                else {
+                    Get_Data = "EXEC G_Callen.SEARCH_ITEMS_PIC @Item_ID, @Item_Name, @Item_Desc, @Item_Year, "
+                                                                + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor;";
+                }
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
+
+                SqlParameter paramID = new SqlParameter();
+                paramID.ParameterName = "@Item_id";
+                paramID.Value = id_box.Text;
+                cmd.Parameters.Add(paramID);
+
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Item_Name";
+                paramName.Value = name_box.Text;
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramDesc = new SqlParameter();
+                paramDesc.ParameterName = "@Item_Desc";
+                paramDesc.Value = desc_box.Text;
+                cmd.Parameters.Add(paramDesc);
+
+                SqlParameter paramYear = new SqlParameter();
+                paramYear.ParameterName = "@Item_Year";
+                paramYear.Value = year_box.Text;
+                cmd.Parameters.Add(paramYear);
+
+                SqlParameter paramNote = new SqlParameter();
+                paramNote.ParameterName = "@Item_Note";
+                paramNote.Value = note_box.Text;
+                cmd.Parameters.Add(paramNote);
+
+                SqlParameter paramTheme = new SqlParameter();
+                paramTheme.ParameterName = "@Item_Theme";
+                paramTheme.Value = theme_box.Text;
+                cmd.Parameters.Add(paramTheme);
+
+                SqlParameter paramFolder = new SqlParameter();
+                paramFolder.ParameterName = "@Item_Folder";
+                paramFolder.Value = folder_box.Text;
+                cmd.Parameters.Add(paramFolder);
+
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@Item_Peer";
+                paramPeer.Value = peer_box.Text;
+                cmd.Parameters.Add(paramPeer);
+
+                SqlParameter paramSponsor = new SqlParameter();
+                paramSponsor.ParameterName = "@Item_Sponsor";
+                paramSponsor.Value = sponsor_box.Text;
+                cmd.Parameters.Add(paramSponsor);
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable("INST");
@@ -109,6 +143,8 @@ namespace Callen.Pages
 
                 if (btn_pic_mode.IsChecked == false)
                     Switcher.Switch(this.Search_mode, new proSearch(dt));
+                else
+                    Switcher.Switch(this.Search_mode, new picSearch(dt));
 
                 thisConnection.Close();
             }

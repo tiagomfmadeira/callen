@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Callen.Windows;
+
 namespace Callen.Pages
 {
     /// <summary>
@@ -23,6 +25,17 @@ namespace Callen.Pages
         public Gifts()
         {
             InitializeComponent();
+        }
+
+        private void btn_gift_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            winAddGift popGift = new winAddGift();
+            popGift.Owner = win;
+            win.Opacity = 0.5;
+            popGift.ShowDialog();
+
+            win.Opacity = 1;
         }
     }
 }

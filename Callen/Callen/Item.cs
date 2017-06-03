@@ -8,7 +8,7 @@ namespace Callen
 {
     public class Item // Used to define an Item in a Collection 
     {
-        String name, desc, theme, folder, peer, sponsor, id, year , other, image_path;
+        String name, desc, theme, folder, peer, sponsor, id, year, other, image_path, note;
 
         public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor)
         {
@@ -21,10 +21,11 @@ namespace Callen
             this.peer = peer;
             this.sponsor = sponsor;
             this.other = "";
+            this.note = "";
             this.image_path = "";
         }
 
-        public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor,String note, String img)
+        public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor,String other, String img, String note)
         {
             this.name = name;
             this.id = ID;
@@ -34,8 +35,9 @@ namespace Callen
             this.folder = folder;
             this.peer = peer;
             this.sponsor = sponsor;
-            this.other = note;
+            this.other = other;
             this.image_path = img;
+            this.note = note;
         }
 
         public String getName()
@@ -98,5 +100,14 @@ namespace Callen
             return image_path;
         }
 
+        public void setNote(String note)
+        {
+            this.note = note;
+        }
+
+        public String getNote()
+        {
+            return note;
+        }
     }
 }

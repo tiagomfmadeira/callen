@@ -31,6 +31,7 @@ namespace Callen.Windows
     public partial class winAddItem : Window
     {
         public bool inserted; // tell if a item was inserted
+
         public winAddItem()
         {
             InitializeComponent();

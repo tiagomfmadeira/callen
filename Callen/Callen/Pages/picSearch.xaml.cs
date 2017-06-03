@@ -42,6 +42,18 @@ namespace Callen.Pages
             fillList(current_page); // fills 
         }
 
+        public picSearch(DataTable tmpdt)
+        {
+            InitializeComponent();
+
+            items = new List<PicItem>();
+            current_page = 1;
+
+            dt = tmpdt;
+
+            fillList(current_page); // fills 
+        }
+
         private void getItems()
         {
             try
@@ -57,10 +69,6 @@ namespace Callen.Pages
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 dt = new DataTable("PicItems");
                 sda.Fill(dt);
-
-                pageCnt = Math.Ceiling((double)dt.Rows.Count / 16);
-
-                pageCount.Text = current_page + "/" + pageCnt;
                 
                 thisConnection.Close();
             }
@@ -72,12 +80,17 @@ namespace Callen.Pages
 
         private void fillList(int page)
         {
+            pageCnt = Math.Ceiling((double)dt.Rows.Count / 16);
+
+            pageCount.Text = current_page + "/" + pageCnt;
+
             items.Clear();
 
-            for(int i = 0; i < 16 && i < dt.Rows.Count; i++)
+            for (int i = 0; i < 16 && i < dt.Rows.Count; i++)
                 items.Add(new PicItem() { ID = dt.Rows[i]["Item_ID"].ToString(),
                                             Name = dt.Rows[i]["Item_Name"].ToString(),
                                                 ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
+
 
             PicGrid.ItemsSource = items;
         }
@@ -101,12 +114,6 @@ namespace Callen.Pages
             popForm.ShowDialog();
 
             win.Opacity = 1;
-
-            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
-            {
-                getItems();
-                fillList(current_page);
-            }
         }
         
         private void btn_open_desc(object sender, RoutedEventArgs e) // Opens description window 
@@ -136,7 +143,7 @@ namespace Callen.Pages
                 while (rdr.Read())
                 {
                     Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["Note"].ToString(), rdr["img_path"].ToString());
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString());
 
                     openDesc(it);
                 }

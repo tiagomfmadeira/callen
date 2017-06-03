@@ -7,8 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="575" d:DesignWidth="800">
     <Grid Style="{StaticResource gridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
         <Border Margin="10" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
-            <DataGrid Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+            <DataGrid Name="grdGifts" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
         </Border>
+
+        <Button Name="btn_gift" Click="btn_gift_Click" Grid.Row="1" Style="{StaticResource addButton}"/>
     </Grid>
 </UserControl>

@@ -12,9 +12,9 @@
 
         <Viewbox Stretch="Uniform" Margin="-3,1,3,-1">
             <Canvas Height="600" Width="800"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-                <Border Height="270" Width="479" Canvas.Left="151" Canvas.Top="165" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+                <Border Height="309" Width="480" Canvas.Left="164" Canvas.Top="153" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="417" Canvas.Top="78">
+                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="430" Canvas.Top="66">
                     <Popup Placement="Center" Name="pop_print" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="115" Height="35" CornerRadius="7,7,0,7">
                             <TextBlock Margin="5,0,0,0" Text="Adiciona à lista de etiquetas a imprimir" Width="110" Height="38" TextWrapping="WrapWithOverflow" />
@@ -22,7 +22,7 @@
                     </Popup>
                 </Grid>
 
-                <Grid Width="173" Height="148" Name="grd_pop_edit" Canvas.Left="568" Canvas.Top="72">
+                <Grid Width="173" Height="148" Name="grd_pop_edit" Canvas.Left="581" Canvas.Top="60">
                     <Popup Placement="Center" Name="pop_edit" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="120" Height="45" CornerRadius="7,7,7,0">
                             <TextBlock Width="110" Height="60" FontSize="10" TextWrapping="WrapWithOverflow">
@@ -32,7 +32,7 @@
                     </Popup>
                 </Grid>
 
-                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="555" Canvas.Top="165">
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -48,7 +48,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="555" Canvas.Top="165">
+                <Button Width="25" Height="25" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -64,7 +64,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" x:Name="btn_edit" Click="btn_edit_Click" MouseEnter="btn_edit_MouseEnter" MouseLeave="btn_edit_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="580" Canvas.Top="165">
+                <Button Width="25" Height="25" x:Name="btn_edit" Click="btn_edit_Click" MouseEnter="btn_edit_MouseEnter" MouseLeave="btn_edit_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="593" Canvas.Top="153">
                     <Image Margin="0,-1,0,0">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -80,7 +80,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="605" Canvas.Top="165">
+                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="618" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -98,31 +98,31 @@
                     </Image>
                 </Button>
 
-                <TextBox Name="item_name" IsEnabled="False" Width="178" Canvas.Left="174" Canvas.Top="220" Height="26" Style="{StaticResource descTextBox}"/>
-                <TextBox Name="item_year" IsEnabled="False" Width="51" Canvas.Left="244" Canvas.Top="251" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_name" IsEnabled="False" Width="294" Canvas.Left="249" Canvas.Top="156" Height="26" FontWeight="Bold" FontSize="14" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_year" IsEnabled="False" Width="100" Canvas.Left="356" Canvas.Top="187" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
 
 
-                <Label Content="Patrocinador" Canvas.Left="373" Canvas.Top="233" Style="{DynamicResource formLabel}" />
-                <TextBox Name="item_sponsor" IsEnabled="False" Width="149" Canvas.Left="455" Canvas.Top="233" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Patrocinador" Canvas.Left="177" Canvas.Top="220" Style="{DynamicResource formLabel}" Width="82" />
+                <TextBox Name="item_sponsor" IsEnabled="False" Width="134" Canvas.Left="264" Canvas.Top="220" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Label Content="Fornecedor" Canvas.Left="373" Canvas.Top="279" Style="{DynamicResource formLabel}" Width="77" />
-                <TextBox Name="item_peer" IsEnabled="False" Width="149" Canvas.Left="455" Canvas.Top="279" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Fornecedor" Canvas.Left="415" Canvas.Top="222" Style="{DynamicResource formLabel}" Width="73" />
+                <TextBox Name="item_peer" IsEnabled="False" Width="145" Canvas.Left="493" Canvas.Top="222" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Label Content="Série" Canvas.Left="244" Canvas.Top="180" Style="{DynamicResource formLabel}" Width="54" />
-                <TextBox Name="item_colec" IsEnabled="False" Width="80" Canvas.Left="303" Canvas.Top="180" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Série" Canvas.Left="176" Canvas.Top="259" Style="{DynamicResource formLabel}" Width="41" />
+                <TextBox Name="item_colec" IsEnabled="False" Width="124" Canvas.Left="224" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Label Content="Tema" Canvas.Left="174" Canvas.Top="342" Style="{DynamicResource formLabel}" Width="41" />
-                <TextBox Name="item_theme" IsEnabled="False" Width="132" Canvas.Left="220" Canvas.Top="342" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Tema" Canvas.Left="416" Canvas.Top="297" Style="{DynamicResource formLabel}" Width="41" />
+                <TextBox Name="item_theme" IsEnabled="False" Width="175" Canvas.Left="461" Canvas.Top="297" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Label Content="Pasta" Canvas.Left="174" Canvas.Top="311" Style="{DynamicResource formLabel}" Width="41" />
-                <TextBox Name="item_folder" IsEnabled="False" Width="51" Canvas.Left="220" Canvas.Top="311" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Pasta" Canvas.Left="415" Canvas.Top="258" Style="{DynamicResource formLabel}" Width="41" />
+                <TextBox Name="item_folder" IsEnabled="False" Width="60" Canvas.Left="462" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Label Content="Outro" Canvas.Left="174" Canvas.Top="390" Style="{DynamicResource formLabel}" Width="41" />
-                <TextBox Name="item_other" IsEnabled="False" Width="130" Canvas.Left="222" Canvas.Top="390" Height="26" Style="{StaticResource descTextBox}"/>
+                <Label Content="Outro" Canvas.Left="176" Canvas.Top="295" Style="{DynamicResource formLabel}" Width="41" />
+                <TextBox Name="item_other" IsEnabled="False" Width="174" Canvas.Left="224" Canvas.Top="295" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <TextBox Name="item_desc" IsEnabled="False" VerticalContentAlignment="Top" Width="205" Canvas.Left="399" Canvas.Top="333" Height="83" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_desc" IsEnabled="False" VerticalContentAlignment="Center" Width="221" Canvas.Left="177" Canvas.Top="369" Height="85" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
 
-                <Border CornerRadius="3,3,3,3" Background="{DynamicResource lightestHighLight}" Name="img_border"  Height="90" Width="127" Visibility="Visible" Canvas.Left="88" Canvas.Top="120" Style="{StaticResource simpleBorder}">
+                <Border CornerRadius="3,3,3,3" Background="{DynamicResource lightestHighLight}" Name="img_border"  Height="90" Width="127" Visibility="Visible" Canvas.Left="101" Canvas.Top="108" Style="{StaticResource simpleBorder}">
                     <Button Name="btn_img" Click="btn_img_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Height="90" Width="127" BorderBrush="{x:Null}">
                         <Image Name="img" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Button.Style>
@@ -148,7 +148,10 @@
                         </Button.Style>
                     </Button>
                 </Border>
-                <TextBox IsEnabled="False" Width="27" Canvas.Left="399" Canvas.Top="180" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox IsEnabled="False" Width="36" Canvas.Left="362" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox x:Name="item_note" IsEnabled="False" VerticalContentAlignment="Center" Width="220" Canvas.Left="416" Canvas.Top="368" Height="86" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
+                <Label Content="Descrição" Canvas.Left="176" Canvas.Top="338" Style="{DynamicResource formLabel}" Width="69" Height="28" />
+                <Label Content="Nota" Canvas.Left="416" Canvas.Top="341" Style="{DynamicResource formLabel}" Width="41" />
             </Canvas>
         </Viewbox>
     </Grid>

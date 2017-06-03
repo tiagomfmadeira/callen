@@ -111,6 +111,9 @@
     <Compile Include="Windows\Forms\winAddSponsor.xaml.cs">
       <DependentUpon>winAddSponsor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\winAddGift.xaml.cs">
+      <DependentUpon>winAddGift.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\winNotification.xaml.cs">
       <DependentUpon>winNotification.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Forms\winAddSponsor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\winAddGift.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

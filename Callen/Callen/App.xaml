@@ -281,9 +281,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Grid>
-                            <Image Source="Icons/Fat/dropDown.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Grid>
+                        <Border Name="border" Background="Transparent">
+                            <Image Width="20" Height="20" Source="Icons/Fat/dropDown.png" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Right"/>
+                        </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Cursor" Value="Hand"/>

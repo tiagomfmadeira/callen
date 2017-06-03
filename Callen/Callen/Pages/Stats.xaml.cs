@@ -202,7 +202,7 @@ namespace Callen.Pages
                 while (rdr.Read())
                 {
                     Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["Note"].ToString(), rdr["img_path"].ToString());
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString());
 
                     openDesc(it);
                 }
