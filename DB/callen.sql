@@ -103,6 +103,7 @@ CREATE TABLE G_CALLEN.INST(
 	Date_Insert DATETIME,
 	Date_Mod DATETIME,
 	Date_View DATETIME,
+	State Bit, -- 0 - Belongs to Colection | 1 - Gifted
 	Arquive INT REFERENCES G_CALLEN.ARQUIVE(Arquive_ID),
 	Peer INT REFERENCES G_CALLEN.PEER(Peer_ID)
 );
@@ -116,12 +117,6 @@ CREATE TABLE G_CALLEN.INSTINCOLLECTION(
 go
 
 CREATE TABLE G_CALLEN.GIFTPLAN(
-	Peer INT REFERENCES G_CALLEN.PEER(Peer_ID) PRIMARY KEY,
-	Item INT REFERENCES G_CALLEN.ITEM(Item_ID),
-);
-go
-
-CREATE TABLE G_CALLEN.GIFTPLANINST(
 	Peer INT REFERENCES G_CALLEN.PEER(Peer_ID),
 	Item INT REFERENCES G_CALLEN.ITEM(Item_ID),
 	Inst INT REFERENCES G_CALLEN.INST(Inst_number),
@@ -130,9 +125,11 @@ CREATE TABLE G_CALLEN.GIFTPLANINST(
 go
 
 CREATE TABLE G_CALLEN.GIFT(
-	Peer INT REFERENCES G_CALLEN.PEER(Peer_ID) PRIMARY KEY,
+	Peer INT REFERENCES G_CALLEN.PEER(Peer_ID),
+	Item INT REFERENCES G_CALLEN.ITEM(Item_ID),
 	Inst INT REFERENCES G_CALLEN.INST(Inst_number),
-	Gift_Date DATE
+	Gift_Date DATE,
+	PRIMARY KEY(Peer,Item)
 );
 go
 */
@@ -226,20 +223,20 @@ INSERT INTO G_CALLEN.ITEM(Item_Name,Item_Descr,Item_Year,Other,Type,Sponsor)
 VALUES ('o que eu gosto','Calendário castanho e amarelo com logo da Dan Cake. Vertical de bolso.', 1983, NULL, 1, 5);
 
 --Instancias
-INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer) 
-VALUES (1,'not real', 0, 'C:\Callen_Pics\Instance_1', '01-01-2017', '01-01-2017', '01-01-2017', 1, 1);
+INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
+VALUES (1,'not real', 0, 'C:\Callen_Pics\Instance_1', '01-01-2017', '01-01-2017', '01-01-2017', 1, 1, 0);
 
-INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer) 
-VALUES (2,'not real', 0, 'C:\Callen_Pics\Instance_2', '02-02-2017', '02-02-2017', '02-02-2017', 1, 3);
+INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
+VALUES (2,'not real', 0, 'C:\Callen_Pics\Instance_2', '02-02-2017', '02-02-2017', '02-02-2017', 1, 3, 0);
 
-INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer) 
-VALUES (3,'not real', 1, 'C:\Callen_Pics\Instance_3', '03-03-2017', '03-03-2017', '03-03-2017', 1, 2);
+INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
+VALUES (3,'not real', 1, 'C:\Callen_Pics\Instance_3', '03-03-2017', '03-03-2017', '03-03-2017', 1, 2, 0);
 
-INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer) 
-VALUES (4,  'not real', 0, 'C:\Callen_Pics\Instance_4', '04-04-2017', '04-04-2017', '04-04-2017', 1, 2);
+INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
+VALUES (4,  'not real', 0, 'C:\Callen_Pics\Instance_4', '04-04-2017', '04-04-2017', '04-04-2017', 1, 2, 0);
 
-INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer) 
-VALUES (5, 'not real', 0, 'C:\Callen_Pics\Instance_5', '05-05-2017', '05-05-2017', '05-05-2017', 1, 2);
+INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
+VALUES (5, 'not real', 0, 'C:\Callen_Pics\Instance_5', '05-05-2017', '05-05-2017', '05-05-2017', 1, 2, 0);
 
 --Relação entre instancias e coleção
 INSERT INTO G_CALLEN.INSTINCOLLECTION(Inst, Collection) 

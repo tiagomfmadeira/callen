@@ -249,7 +249,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_ITEM @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Img_Path";
+                string Get_Data = "EXEC G_Callen.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -306,7 +306,6 @@ namespace Callen.Windows
                 }
                 cmd.Parameters.Add(paramImg);
 
-                // Execute
                 var inst_id = cmd.ExecuteScalar();
 
                 if (img.Source != null) // Theres an img
@@ -320,7 +319,6 @@ namespace Callen.Windows
              catch (Exception ee)
              {
                  MessageBox.Show(ee.ToString());
-
              }
             inserted = true;
             this.Close();

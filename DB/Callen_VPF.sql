@@ -9,7 +9,8 @@ SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS d
         FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
             FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
                 FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
-                     FROM G_Callen.INST) AS INST
+                     FROM G_Callen.INST
+					 WHERE State = '0') AS INST
 				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
 							FROM G_Callen.ITEM) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
@@ -33,7 +34,8 @@ AS
 	SELECT I.Item_ID, Item_Name, Inst_PicPath
 	FROM (SELECT Item_ID, Inst_PicPath
 				FROM G_Callen.INST
-				WHERE NOT ISNULL(Inst_PicPath,'') = '') AS IT
+				WHERE NOT ISNULL(Inst_PicPath,'') = ''
+				   AND State = '0') AS IT
 		  LEFT OUTER JOIN (SELECT Item_Name, Item_ID 
 						   FROM G_Callen.ITEM ) AS I
 		  ON I.Item_ID = IT.Item_ID;
@@ -46,7 +48,7 @@ CREATE VIEW G_Callen.LastInsertItems
 AS
 	SELECT TOP 25 I.Item_ID, Item_Name
 	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID, Date_Insert FROM G_Callen.INST) AS IT
+		 JOIN (SELECT Item_ID, Date_Insert FROM G_Callen.INST WHERE State = '0') AS IT
 		 ON I.Item_ID = IT.Item_ID
 	ORDER BY Date_Insert DESC;
 ;
@@ -59,7 +61,7 @@ CREATE VIEW G_Callen.LastModItems
 AS
 	SELECT TOP 25 I.Item_ID, Item_Name
 	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID, Date_Mod FROM G_Callen.INST) AS IT
+		 JOIN (SELECT Item_ID, Date_Mod FROM G_Callen.INST WHERE State = '0') AS IT
 		 ON I.Item_ID = IT.Item_ID
 	ORDER BY Date_Mod DESC;
 ;
@@ -72,7 +74,7 @@ CREATE VIEW G_Callen.LastVisItems
 AS
 	SELECT TOP 25 I.Item_ID, Item_Name
 	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID, Date_View FROM G_Callen.INST) AS IT
+		 JOIN (SELECT Item_ID, Date_View FROM G_Callen.INST WHERE State = '0') AS IT
 		 ON I.Item_ID = IT.Item_ID
 	ORDER BY Date_View DESC;
 ;
@@ -85,7 +87,7 @@ CREATE VIEW G_Callen.FavouriteItems
 AS
 	SELECT TOP 25 Item_ID, Item_Name
 	FROM G_Callen.ITEM
-	WHERE Item_ID IN (SELECT Item_ID FROM G_Callen.INST WHERE Favorite = '1');
+	WHERE Item_ID IN (SELECT Item_ID FROM G_Callen.INST WHERE Favorite = '1' AND State = '0');
 ;
 go
 
@@ -103,7 +105,8 @@ AS
             FROM(SELECT Favorite, Inst_Number, Item_ID, Code, Peer, Theme_Descr ,Note, Inst_PicPath
                 FROM(SELECT Item_ID, Inst_Number, Favorite, Arquive, Peer , Note, Inst_PicPath 
                     FROM G_Callen.INST
-					WHERE Item_ID = @ItemID) AS IT 
+					WHERE State = '0' 
+					  AND Item_ID = @ItemID) AS IT 
                     JOIN(SELECT * 
 						FROM G_Callen.ARQUIVE) AS A 
                     ON IT.Arquive = A.Arquive_ID) AS IA 
@@ -153,7 +156,8 @@ SELECT Item_ID, Item_Name,Inst_PicPath
             FROM(SELECT INST.Item_ID,Peer, Arquive , Item_Name,Inst_PicPath,Sponsor
                 FROM(SELECT Item_ID, Arquive, Peer,Inst_PicPath
                      FROM G_Callen.INST
-					 WHERE NOT ISNULL(Inst_PicPath,'') = ''
+					 WHERE State = '0'
+						   AND NOT ISNULL(Inst_PicPath,'') = ''
 						   AND (ISNULL (@Item_ID, '') = '' OR Inst_Number = @Item_ID)
 						   AND (ISNULL (@Item_Note, '') = '' OR Note LIKE '%'+@Item_Note+'%')) AS INST
 				INNER JOIN (SELECT Item_ID, Item_Name,Sponsor
@@ -272,10 +276,10 @@ AS
 	RETURN @ENTITY_ID
 GO
 
--- Adds a new Item
-DROP PROCEDURE G_Callen.ADD_ITEM;
+-- Adds a new Inst
+DROP PROCEDURE G_Callen.ADD_INST;
 go
-CREATE PROCEDURE G_Callen.ADD_ITEM @Name VARCHAR(100), @Sponsor INT, @Peer INT, @Desc VARCHAR(255), @Year VARCHAR(10),
+CREATE PROCEDURE G_Callen.ADD_INST @Name VARCHAR(100), @Sponsor INT, @Peer INT, @Desc VARCHAR(255), @Year VARCHAR(10),
 										@Folder INT, @Other VARCHAR(150), @Img_Path VARCHAR(255)
 AS
 
@@ -286,11 +290,32 @@ AS
 
 	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
 
-	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite)
-		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),0);
+	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),0,0);
 
 	SELECT IDENT_CURRENT('G_Callen.INST');
 GO
+
+-- Adds a new Inst
+DROP PROCEDURE G_Callen.ADD_GIFT;
+go
+CREATE PROCEDURE G_Callen.ADD_GIFT @Name VARCHAR(100), @Sponsor INT, @Peer INT, @Desc VARCHAR(255), @Year VARCHAR(10),
+										@Folder INT, @Other VARCHAR(150), @Img_Path VARCHAR(255)
+AS
+
+	DECLARE @ITEM_ID AS INT;
+
+	INSERT INTO G_Callen.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
+
+	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
+
+	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,'not real',GETDATE(),0,1);
+
+	SELECT IDENT_CURRENT('G_Callen.INST');
+GO
+
 -------- TRIGGER --------
 
 -- Updares Image path to have correct Inst ID

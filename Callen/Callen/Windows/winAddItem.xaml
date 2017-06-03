@@ -13,9 +13,9 @@
 
         <Viewbox Stretch="Uniform">
             <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-                <Border Height="285" Width="500" Canvas.Left="151" Canvas.Top="164" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+                <Border Height="309" Width="500" Canvas.Left="151" Canvas.Top="140" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="622" Canvas.Top="164">
+                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="626" Canvas.Top="140">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -32,6 +32,9 @@
                         </Image.Style>
                     </Image>
                 </Button>
+                
+                <Label Content="Item" Canvas.Left="173" Canvas.Top="153" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_item" Width="151" Canvas.Left="253" Canvas.Top="153" Height="26"/>
 
                 <Label Content="Nome" Canvas.Left="173" Canvas.Top="184" Style="{DynamicResource formLabel}" />
                 <TextBox Name="name_box" Width="151" Canvas.Left="253" Canvas.Top="184" Height="26" Style="{DynamicResource formTextBox}" />
@@ -58,7 +61,6 @@
                         </Style>
                     </Button.Style>
                 </Button>
-
 
                 <Label Content="Fornecedor" Canvas.Left="173" Canvas.Top="244" Style="{DynamicResource formLabel}" />
                 <ComboBox Name="combo_peer" Width="130" Canvas.Left="253" Canvas.Top="244" Height="26"/>
