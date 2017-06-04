@@ -85,13 +85,13 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @Item_id";
+                string Get_Data = "EXEC G_Callen.GET_INST_INFO @InstID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
                 SqlParameter param = new SqlParameter();
 
-                param.ParameterName = "@Item_id";
+                param.ParameterName = "@InstID";
                 param.Value = id;
                 cmd.Parameters.Add(param);
 
@@ -99,8 +99,8 @@ namespace Callen.Pages
 
                 while (rdr.Read())
                 {
-                    Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(), rdr["note"].ToString());
+                    Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(), rdr["note"].ToString());
 
                     openDesc(it);
                 }
@@ -113,7 +113,7 @@ namespace Callen.Pages
             }
         }
 
-        private void openDesc(Item it) // Opens the description of specific item in Row
+        private void openDesc(Instance it) // Opens the description of specific item in Row
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             winDesc popDesc = new winDesc(it);

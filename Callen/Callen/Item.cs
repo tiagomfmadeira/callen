@@ -6,38 +6,24 @@ using System.Threading.Tasks;
 
 namespace Callen
 {
-    public class Item // Used to define an Item in a Collection 
+    public class Item  // Used to define an Item in a Collection 
     {
-        String name, desc, theme, folder, peer, sponsor, id, year, other, image_path, note;
+        public String Name { set; get; }
+        public String ID { set; get; }
 
-        public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor)
+        private String name, id, desc, year, sponsor, other;
+
+        public Item(String name, String ID, String Desc, String year, String sponsor, String other)
         {
+            this.Name = name;
+            this.ID = ID;
+
             this.name = name;
             this.id = ID;
             this.desc = Desc;
             this.year = year;
-            this.theme = Theme;
-            this.folder = folder;
-            this.peer = peer;
-            this.sponsor = sponsor;
-            this.other = "";
-            this.note = "";
-            this.image_path = "";
-        }
-
-        public Item(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor,String other, String img, String note)
-        {
-            this.name = name;
-            this.id = ID;
-            this.desc = Desc;
-            this.year = year;
-            this.theme = Theme;
-            this.folder = folder;
-            this.peer = peer;
             this.sponsor = sponsor;
             this.other = other;
-            this.image_path = img;
-            this.note = note;
         }
 
         public String getName()
@@ -60,6 +46,32 @@ namespace Callen
             return year;
         }
 
+        public String getSponsor()
+        {
+            return sponsor;
+        }
+
+        public String getOther()
+        {
+            return other;
+        }
+    }
+
+    public class Instance : Item
+    {
+        private String theme, folder, peer, inst_num, image_path, note;
+
+        public Instance(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor, String other, String img, String note)
+                                    : base (name, "0", Desc, year, sponsor, other)
+        {
+            this.inst_num = ID;
+            this.theme = Theme;
+            this.folder = folder;
+            this.peer = peer;
+            this.image_path = img;
+            this.note = note;
+        }
+
         public String getTheme()
         {
             return theme;
@@ -75,39 +87,19 @@ namespace Callen
             return peer;
         }
 
-        public String getSponsor()
-        {
-            return sponsor;
-        }
-
-        public void setOther(String o)
-        {
-            other = o;
-        }
-
-        public String getOther()
-        {
-            return other;
-        }
-
-        public void setImagePath(String path)
-        {
-            image_path = path;
-        }
-
         public String getImagePath()
         {
             return image_path;
         }
 
-        public void setNote(String note)
-        {
-            this.note = note;
-        }
-
         public String getNote()
         {
             return note;
+        }
+
+        public String getInstID()
+        {
+            return inst_num;
         }
     }
 }

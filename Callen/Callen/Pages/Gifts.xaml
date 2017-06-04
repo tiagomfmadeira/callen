@@ -12,7 +12,22 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Border Margin="10" BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
-            <DataGrid Name="grdGifts" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" />
+            <DataGrid Name="grdGifts" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" AutoGenerateColumns="False">
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=date}" IsReadOnly="True" Header="Data" ElementStyle="{DynamicResource DGElemntCenter}"/>
+                    <DataGridTextColumn Binding="{Binding Path=dest}" IsReadOnly="True" Header="Destinatário"/>
+                    <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome"/>
+                    <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano" ElementStyle="{DynamicResource DGElemntCenter}"/>
+                    <DataGridTextColumn Binding="{Binding Path=sponsor}" IsReadOnly="True" Header="Fornecedor"/>
+                    <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="*"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
         </Border>
 
         <Button Name="btn_gift" Click="btn_gift_Click" Grid.Row="1" Style="{StaticResource addButton}"/>

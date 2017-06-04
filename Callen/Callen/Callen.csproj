@@ -114,6 +114,9 @@
     <Compile Include="Windows\winAddGift.xaml.cs">
       <DependentUpon>winAddGift.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\winDescGift.xaml.cs">
+      <DependentUpon>winDescGift.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\winNotification.xaml.cs">
       <DependentUpon>winNotification.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\winAddGift.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\winDescGift.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

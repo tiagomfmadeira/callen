@@ -34,7 +34,7 @@
                         </Style>
                     </DataGrid.ItemContainerStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
                         <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -56,7 +56,7 @@
                         </Style>
                     </DataGrid.ItemContainerStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
                         <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -78,7 +78,7 @@
                         </Style>
                     </DataGrid.ItemContainerStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
                         <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -111,7 +111,7 @@
                         </Style>
                     </DataGrid.ItemContainerStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Item_ID}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
                         <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

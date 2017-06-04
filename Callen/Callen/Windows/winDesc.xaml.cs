@@ -26,10 +26,10 @@ namespace Callen.Windows
     /// </summary>
     public partial class winDesc : Window
     {
-        int id;
         bool edited;
+        Instance inst;
 
-        public winDesc()
+        public winDesc(Instance it)  // sets the text Boxes with information from an given Item 
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
@@ -43,21 +43,11 @@ namespace Callen.Windows
             }
 
             edited = false;
-        }
 
-        public winDesc(Item it)  // sets the text Boxes with information from an given Item 
-        {
-            InitializeComponent();
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            inst = it;
 
-            Window parent = Application.Current.MainWindow;
-            if (parent.WindowState == WindowState.Maximized) {
-                this.WindowState = WindowState.Maximized;
-                closeBorder.Width = parent.Width;
-                closeBorder.Height = parent.Height;
-            }
-
-            id = Int32.Parse(it.getID());
+            fillPeerCombo();
+            fillFolderCombo();
 
             item_name.Text = it.getName();
             item_year.Text = it.getYear();
@@ -122,7 +112,7 @@ namespace Callen.Windows
             da_print_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_print_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
-            if (item_name.IsEnabled)
+            if (item_note.IsEnabled)
             {
                 var storyboard = new Storyboard();
 
@@ -153,10 +143,10 @@ namespace Callen.Windows
 
                     btn_save.IsEnabled = false;
 
-                    item_name.IsEnabled = false;
-                    item_year.IsEnabled = false;
-                    item_other.IsEnabled = false;
-                    item_desc.IsEnabled = false;
+                    item_note.IsEnabled = false;
+                    combo_folder.Visibility = Visibility.Hidden;
+                    item_theme.Text = inst.getTheme();
+                    combo_peer.Visibility = Visibility.Hidden;
 
                 }), TimeSpan.FromMilliseconds(500));
             }
@@ -189,10 +179,9 @@ namespace Callen.Windows
                     Canvas.SetLeft(grd_pop_print, 405);
                     Canvas.SetLeft(btn_print, 543);
 
-                    item_name.IsEnabled = true;
-                    item_year.IsEnabled = true;
-                    item_other.IsEnabled = true;
-                    item_desc.IsEnabled = true;
+                    item_note.IsEnabled = true;
+                    combo_folder.Visibility = Visibility.Visible;
+                    combo_peer.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = true;
                 }), TimeSpan.FromMilliseconds(500));
@@ -206,36 +195,33 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.UPDATE_INST_INFO @InstID, @ItemName, @ItemYear, @ItemOther, @ItemDesc";
+                string Get_Data = "EXEC G_Callen.UPDATE_INST_INFO @InstID, @InstNote, @InstPeer, @InstFolder";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@InstID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
+                SqlParameter paramInst = new SqlParameter();
+                paramInst.ParameterName = "@InstID";
+                paramInst.Value = inst.getInstID();
+                cmd.Parameters.Add(paramInst);
 
-                SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@ItemName";
-                paramName.Value = item_name.Text;
-                cmd.Parameters.Add(paramName);
+                SqlParameter paramNote = new SqlParameter();
+                paramNote.ParameterName = "@InstNote";
+                paramNote.Value = item_note.Text;
+                cmd.Parameters.Add(paramNote);
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@InstPeer";
+                paramPeer.Value = combo_peer.SelectedValue.ToString();
+                cmd.Parameters.Add(paramPeer);
 
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@ItemYear";
-                paramYear.Value = item_year.Text;
-                cmd.Parameters.Add(paramYear);
-
-                SqlParameter paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@ItemOther";
-                paramDesc.Value = item_other.Text;
-                cmd.Parameters.Add(paramDesc);
-
-                SqlParameter paramOth = new SqlParameter();
-                paramOth.ParameterName = "@ItemDesc";
-                paramOth.Value = item_desc.Text;
-                cmd.Parameters.Add(paramOth);
+                SqlParameter paramFolder = new SqlParameter();
+                paramFolder.ParameterName = "@InstFolder";
+                paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
+                cmd.Parameters.Add(paramFolder);
 
                 cmd.ExecuteNonQuery();
+
+                winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
+                noti.Show();
 
                 thisConnection.Close();
             }
@@ -247,14 +233,112 @@ namespace Callen.Windows
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            String inst = id + " - " + item_name.Text;
+            String inst = this.inst.getInstID() + " - " + item_name.Text;
 
             if (!(App.Current.Properties["PrintList"] as List<String>).Contains(inst))
             {
                 (App.Current.Properties["PrintList"] as List<String>).Add(inst);
-                winNotification noti = new winNotification("Print List", id + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
+                winNotification noti = new winNotification("Print List", this.inst.getInstID() + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
                 noti.Show();
             }
+        }
+
+        public void fillPeerCombo() // gets info about the peer and sets the respoective combo box 
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT Entity_Name AS Nome, Peer_ID AS ID "
+                                 + "FROM G_Callen.ENTITY "
+                                 + "INNER JOIN G_Callen.PEER "
+                                 + "on Entity_ID = Peer_ID";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("desc");
+                sda.Fill(dt);
+
+                List<Entities> ft = new List<Entities>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Entities { name = row["Nome"].ToString(), id = row["ID"].ToString() });
+                }
+
+                combo_peer.ItemsSource = ft;
+                combo_peer.DisplayMemberPath = "name";
+                combo_peer.SelectedValuePath = "id";
+
+                foreach (Entities peer in combo_peer.Items)
+                {
+                    if (peer.name == inst.getPeer())
+                    {
+                        combo_peer.SelectedItem = peer;
+                        break;
+                    }
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
+        public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * "
+                                 + "FROM G_Callen.ARQUIVE";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("desc");
+                sda.Fill(dt);
+
+                List<Folders> ft = new List<Folders>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                }
+
+                combo_folder.ItemsSource = ft;
+                combo_folder.DisplayMemberPath = "folder";
+                combo_folder.SelectedValuePath = "theme";
+
+                foreach (Folders folder in combo_folder.Items)
+                {
+                    if (folder.folder == inst.getFolder())
+                    {
+                        combo_folder.SelectedItem = folder;
+                        break;
+                    }
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
+        private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
+        {
+            if (combo_folder.SelectedItem != null)
+                item_theme.Text = combo_folder.SelectedValue.ToString();
         }
 
         private void btn_print_MouseEnter(object sender, MouseEventArgs e) // Show print popup
@@ -280,8 +364,6 @@ namespace Callen.Windows
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
             updateInfo();
-            winNotification noti = new winNotification("Update Item", id + " - " + item_name.Text, "foi modificado com sucesso");
-            noti.Show();
             edited = true;
 
             btn_save.IsEnabled = false;

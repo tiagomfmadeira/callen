@@ -30,7 +30,8 @@ namespace Callen.Windows
     /// </summary>
     public partial class winAddItem : Window
     {
-        public bool inserted; // tell if a item was inserted
+        private bool inserted; // tell if a item was inserted
+        private bool oldItem;
 
         public winAddItem()
         {
@@ -45,11 +46,13 @@ namespace Callen.Windows
                 closeBorder.Height = parent.Height;
             }
 
+            fillItemCombo();
             fillFolderCombo();
             fillSponsorCombo();
             fillPeerCombo();
 
             inserted = false;
+            oldItem = false;
         }
 
         public bool getInserted()
@@ -73,6 +76,43 @@ namespace Callen.Windows
             this.Close();
         }
 
+        private void fillItemCombo()
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * "
+                                 + "FROM G_Callen.ITEM";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("desc");
+                sda.Fill(dt);
+
+                List<Item> items = new List<Item>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    items.Add(new Item(row["Item_Name"].ToString(),row["Item_ID"].ToString(),row["Item_Descr"].ToString(),row["Item_Year"].ToString(),
+                                                row["Sponsor"].ToString(),row["Other"].ToString()));
+                }
+
+                combo_item.ItemsSource = items;
+                combo_item.DisplayMemberPath = "Name";
+                combo_item.SelectedValuePath = "ID";
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
             try
@@ -81,7 +121,7 @@ namespace Callen.Windows
                 thisConnection.Open();
 
                 string Get_Data = "SELECT * "
-                                 + "FROM G_Callen.ARQUIVE ";
+                                 + "FROM G_Callen.ARQUIVE";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -249,48 +289,68 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Img_Path";
+                string Get_Data = "";
+
+                if (oldItem)
+                    Get_Data = "EXEC G_Callen.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
+                else
+                    Get_Data = "EXEC G_Callen.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Note, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
-                SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@Name";
-                paramName.Value = name_box.Text.ToString();
-                cmd.Parameters.Add(paramName);
+                if (oldItem)
+                {
+                    SqlParameter paramItem = new SqlParameter();
+                    paramItem.ParameterName = "@ItemID";
+                    paramItem.Value = combo_item.SelectedValue.ToString();
+                    cmd.Parameters.Add(paramItem);
+                }
+                else
+                { 
+                    SqlParameter paramName = new SqlParameter();
+                    paramName.ParameterName = "@Name";
+                    paramName.Value = name_box.Text.ToString();
+                    cmd.Parameters.Add(paramName);
 
-                SqlParameter paramSpon = new SqlParameter();
-                paramSpon.ParameterName = "@Sponsor";
-                paramSpon.Value = combo_sponsor.SelectedValue.ToString();
-                cmd.Parameters.Add(paramSpon);
+                    SqlParameter paramSpon = new SqlParameter();
+                    paramSpon.ParameterName = "@Sponsor";
+                    paramSpon.Value = combo_sponsor.SelectedValue.ToString();
+                    cmd.Parameters.Add(paramSpon);
+
+                    SqlParameter paramDesc = new SqlParameter();
+                    paramDesc.ParameterName = "@Desc";
+                    paramDesc.Value = desc_box.Text.ToString();
+                    cmd.Parameters.Add(paramDesc);
+
+                    SqlParameter paramYear = new SqlParameter();
+                    paramYear.ParameterName = "@Year";
+                    paramYear.Value = year_box.Text.ToString();
+                    cmd.Parameters.Add(paramYear);
+
+                    // Other
+                    SqlParameter paramOther = new SqlParameter();
+                    paramOther.ParameterName = "@Other";
+                    if (string.IsNullOrEmpty(name_box.Text.ToString()))
+                        paramOther.Value = "";
+                    else
+                        paramOther.Value = other_box.Text.ToString();
+                    cmd.Parameters.Add(paramOther);
+                }
 
                 SqlParameter paramPeer = new SqlParameter();
                 paramPeer.ParameterName = "@Peer";
                 paramPeer.Value = combo_peer.SelectedValue.ToString();
                 cmd.Parameters.Add(paramPeer);
 
-                SqlParameter paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Desc";
-                paramDesc.Value = desc_box.Text.ToString();
-                cmd.Parameters.Add(paramDesc);
-
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Year";
-                paramYear.Value = year_box.Text.ToString();
-                cmd.Parameters.Add(paramYear);
-
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Folder";
                 paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
-                // Other
-                SqlParameter paramOther = new SqlParameter();
-                paramOther.ParameterName = "@Other";
-                if (string.IsNullOrEmpty(name_box.Text.ToString()))
-                    paramOther.Value = "";
-                else
-                    paramOther.Value = other_box.Text.ToString();
-                cmd.Parameters.Add(paramOther);
+                SqlParameter paramNote = new SqlParameter();
+                paramNote.ParameterName = "@Note";
+                paramNote.Value = note_box.Text.ToString();
+                cmd.Parameters.Add(paramNote);
 
                 // Image Path
                 SqlParameter paramImg = new SqlParameter();
@@ -330,6 +390,47 @@ namespace Callen.Windows
                 text_theme.Text = combo_folder.SelectedValue.ToString();
             else
                 text_theme.Text = "";
+        }
+
+        private void combo_item_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
+        {
+            if (combo_item.SelectedItem != null)
+            {
+                oldItem = true;
+
+                Item it = (Item) combo_item.SelectedItem;
+
+                name_box.Text = it.getName();
+                desc_box.Text = it.getDesc();
+                other_box.Text = it.getOther();
+                year_box.Text = it.getYear();
+                foreach(Entities sponsor in combo_sponsor.Items)
+                {
+                    if(sponsor.id == it.getSponsor())
+                    {
+                        combo_sponsor.SelectedItem = sponsor;
+                        break;
+                    }
+                }
+
+                name_box.IsEnabled = false;
+                desc_box.IsEnabled = false;
+                other_box.IsEnabled = false;
+                year_box.IsEnabled = false;
+                combo_sponsor.IsEnabled = false;
+                btn_add_sponsor.IsEnabled = false;
+            }
+            else
+            {
+                oldItem = false;
+
+                name_box.IsEnabled = true;
+                desc_box.IsEnabled = true;
+                other_box.IsEnabled = true;
+                year_box.IsEnabled = true;
+                combo_sponsor.IsEnabled = true;
+                btn_add_sponsor.IsEnabled = true;
+            }
         }
 
         private void btn_add_sponsor_Click(object sender, RoutedEventArgs e)

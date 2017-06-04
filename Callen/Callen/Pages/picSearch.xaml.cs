@@ -142,8 +142,8 @@ namespace Callen.Pages
 
                 while (rdr.Read())
                 {
-                    Item it = new Item(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["sponsor"].ToString(), rdr["peer"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString());
+                    Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString());
 
                     openDesc(it);
                 }
@@ -156,7 +156,7 @@ namespace Callen.Pages
             }
         }
 
-        private void openDesc(Item it) // Opens the description of the item given
+        private void openDesc(Instance it) // Opens the description of the item given
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             winDesc popDesc = new winDesc(it);

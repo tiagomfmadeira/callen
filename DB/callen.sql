@@ -227,7 +227,7 @@ INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Da
 VALUES (1,'not real', 0, 'C:\Callen_Pics\Instance_1', '01-01-2017', '01-01-2017', '01-01-2017', 1, 1, 0);
 
 INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
-VALUES (2,'not real', 0, 'C:\Callen_Pics\Instance_2', '02-02-2017', '02-02-2017', '02-02-2017', 1, 3, 0);
+VALUES (2,'not real', 0, 'C:\Callen_Pics\Instance_2', '02-02-2017', '02-02-2017', '02-02-2017', 1, 3, 1);
 
 INSERT INTO G_CALLEN.INST(Item_ID, Note, Favorite, Inst_PicPath, Date_Insert, Date_Mod, Date_View, Arquive, Peer, State) 
 VALUES (3,'not real', 1, 'C:\Callen_Pics\Instance_3', '03-03-2017', '03-03-2017', '03-03-2017', 1, 2, 0);
@@ -252,5 +252,9 @@ INSERT INTO G_CALLEN.INSTINCOLLECTION(Inst, Collection)
 VALUES (4,1);
 
 INSERT INTO G_CALLEN.INSTINCOLLECTION(Inst, Collection) 
-VALUES (5,1); 
+VALUES (5,1);
+
+--Ofertas 
+INSERT INTO G_CALLEN.GIFT(Peer, Item, Inst, Gift_Date)
+VALUES (2, 2, 2, '03-06-2017');
 */

@@ -34,13 +34,13 @@
                 </Button>
                 
                 <Label Content="Item" Canvas.Left="173" Canvas.Top="153" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_item" Width="151" Canvas.Left="253" Canvas.Top="153" Height="26"/>
+                <ComboBox Name="combo_item" Width="233" Canvas.Left="253" Canvas.Top="153" Height="26" SelectionChanged="combo_item_SelectionChanged"/>
 
                 <Label Content="Nome" Canvas.Left="173" Canvas.Top="184" Style="{DynamicResource formLabel}" />
                 <TextBox Name="name_box" Width="151" Canvas.Left="253" Canvas.Top="184" Height="26" Style="{DynamicResource formTextBox}" />
 
                 <Label Content="Patrocinador" Canvas.Left="173" Canvas.Top="214" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="253" Canvas.Top="214" Height="26"  IsTextSearchEnabled="True" IsEditable="True"/>
+                <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="253" Canvas.Top="214" Height="26"/>
                 <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="216" Canvas.Left="385">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">

@@ -30,6 +30,7 @@ namespace Callen.Windows
     /// </summary>
     public partial class winAddGift : Window
     {
+        private bool oldItem;
         public winAddGift()
         {
             InitializeComponent();
@@ -42,6 +43,10 @@ namespace Callen.Windows
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
+
+            oldItem = false;
+
+            fillItemCombo();
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -60,7 +65,7 @@ namespace Callen.Windows
             this.Close();
         }
 
-        public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
+        private void fillItemCombo()
         {
             try
             {
@@ -68,7 +73,7 @@ namespace Callen.Windows
                 thisConnection.Open();
 
                 string Get_Data = "SELECT * "
-                                 + "FROM G_Callen.ARQUIVE ";
+                                 + "FROM G_Callen.ITEM";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -77,15 +82,16 @@ namespace Callen.Windows
                 DataTable dt = new DataTable("desc");
                 sda.Fill(dt);
 
-                List<Folders> ft = new List<Folders>();
+                List<Item> items = new List<Item>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                    items.Add(new Item(row["Item_Name"].ToString(), row["Item_ID"].ToString(), row["Item_Descr"].ToString(), row["Item_Year"].ToString(),
+                                                row["Sponsor"].ToString(), row["Other"].ToString()));
                 }
 
-                combo_folder.ItemsSource = ft;
-                combo_folder.DisplayMemberPath = "folder";
-                combo_folder.SelectedValuePath = "theme";
+                combo_item.ItemsSource = items;
+                combo_item.DisplayMemberPath = "Name";
+                combo_item.SelectedValuePath = "ID";
 
                 thisConnection.Close();
             }
@@ -131,93 +137,6 @@ namespace Callen.Windows
             {
                 MessageBox.Show(ee.ToString());
 
-            }
-        }
-
-        public void fillPeerCombo() // gets info about the peer and sets the respoective combo box 
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "SELECT Entity_Name AS Nome, Peer_ID AS ID "
-                                 + "FROM G_Callen.ENTITY "
-                                 + "INNER JOIN G_Callen.PEER "
-                                 + "on Entity_ID = Peer_ID";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
-                sda.Fill(dt);
-
-                List<Entities> ft = new List<Entities>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    ft.Add(new Entities { name = row["Nome"].ToString(), id = row["ID"].ToString() });
-                }
-
-                combo_peer.ItemsSource = ft;
-                combo_peer.DisplayMemberPath = "name";
-                combo_peer.SelectedValuePath = "id";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
-        }
-
-        public void btn_upload_Click(object sender, RoutedEventArgs e) // Uploads a image from the users system and sets image to respective border  
-        {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-              "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-            {
-                try
-                {
-                    ImageSource src = new BitmapImage(new Uri(op.FileName));
-
-                    if (src.Width < 127)
-                    {
-                        if (src.Height < 90)
-                        {
-                            img_border.Height = src.Height;
-                            img_border.Width = src.Width;
-                        }
-                        else
-                        {
-                            img_border.Height = 90;
-                        }
-                    }
-                    else
-                    {
-                        if (src.Height < 90)
-                        {
-                            img_border.Height = src.Height;
-                        }
-                        else
-                        {
-                            img_border.Width = 127;
-                            img_border.Height = 90;
-                        }
-                    }
-
-                    img_border.Visibility = Visibility.Visible;
-                    img.Source = src;
-                }
-                catch (Exception ee)
-                {
-                    MessageBox.Show("Ficheiro " + op.FileName + " não pode ser aberto");
-                    Debug.WriteLine("File Error: " + ee.ToString());
-                }
             }
         }
 
@@ -312,12 +231,45 @@ namespace Callen.Windows
             this.Close();*/
         }
 
-        private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
+        private void combo_item_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
-            if (combo_folder.SelectedItem != null)
-                text_theme.Text = combo_folder.SelectedValue.ToString();
+            if (combo_item.SelectedItem != null)
+            {
+                oldItem = true;
+
+                Item it = (Item)combo_item.SelectedItem;
+
+                name_box.Text = it.getName();
+                desc_box.Text = it.getDesc();
+                other_box.Text = it.getOther();
+                year_box.Text = it.getYear();
+                foreach (Entities sponsor in combo_sponsor.Items)
+                {
+                    if (sponsor.id == it.getSponsor())
+                    {
+                        combo_sponsor.SelectedItem = sponsor;
+                        break;
+                    }
+                }
+
+                name_box.IsEnabled = false;
+                desc_box.IsEnabled = false;
+                other_box.IsEnabled = false;
+                year_box.IsEnabled = false;
+                combo_sponsor.IsEnabled = false;
+                btn_add_sponsor.IsEnabled = false;
+            }
             else
-                text_theme.Text = "";
+            {
+                oldItem = false;
+
+                name_box.IsEnabled = true;
+                desc_box.IsEnabled = true;
+                other_box.IsEnabled = true;
+                year_box.IsEnabled = true;
+                combo_sponsor.IsEnabled = true;
+                btn_add_sponsor.IsEnabled = true;
+            }
         }
 
         private void btn_add_sponsor_Click(object sender, RoutedEventArgs e)
@@ -329,28 +281,6 @@ namespace Callen.Windows
 
             this.Opacity = 1; // turn opacity back to 1
             fillSponsorCombo();
-        }
-
-        private void btn_add_peer_Click(object sender, RoutedEventArgs e)
-        {
-            winAddPeer popAddPerr = new winAddPeer();
-            popAddPerr.Owner = this;
-            this.Opacity = 0.85;
-            popAddPerr.ShowDialog();
-
-            this.Opacity = 1; // turn opacity back to 1
-            fillPeerCombo();
-        }
-
-        private void btn_add_folder_Click(object sender, RoutedEventArgs e)
-        {
-            winAddFolder popAddFol = new winAddFolder();
-            popAddFol.Owner = this;
-            this.Opacity = 0.85;
-            popAddFol.ShowDialog();
-
-            this.Opacity = 1; // turn opacity back to 1
-            fillFolderCombo();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
