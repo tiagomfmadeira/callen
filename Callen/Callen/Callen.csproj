@@ -108,6 +108,9 @@
     <Compile Include="Windows\Forms\winAddPeer.xaml.cs">
       <DependentUpon>winAddPeer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Forms\winAddSeries.xaml.cs">
+      <DependentUpon>winAddSeries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Forms\winAddSponsor.xaml.cs">
       <DependentUpon>winAddSponsor.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Forms\winAddPeer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Forms\winAddSeries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

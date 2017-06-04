@@ -31,6 +31,7 @@ namespace Callen.Windows
     public partial class winAddGift : Window
     {
         private bool oldItem;
+
         public winAddGift()
         {
             InitializeComponent();
@@ -47,6 +48,9 @@ namespace Callen.Windows
             oldItem = false;
 
             fillItemCombo();
+            fillSponsorCombo();
+            fillPeerCombo();
+            fillSeriesCombo();
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -72,21 +76,20 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * "
-                                 + "FROM G_Callen.ITEM";
+                string Get_Data = "SELECT * FROM G_Callen.ITEMS_VIEW";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("items");
                 sda.Fill(dt);
 
                 List<Item> items = new List<Item>();
                 foreach (DataRow row in dt.Rows)
                 {
                     items.Add(new Item(row["Item_Name"].ToString(), row["Item_ID"].ToString(), row["Item_Descr"].ToString(), row["Item_Year"].ToString(),
-                                                row["Sponsor"].ToString(), row["Other"].ToString()));
+                                                row["Sponsor"].ToString(), row["Other"].ToString(),row["Series"].ToString(),row["NumberInSeries"].ToString()));
                 }
 
                 combo_item.ItemsSource = items;
@@ -109,10 +112,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Entity_Name AS Nome, Sponsor_ID as ID "
-                                 + "FROM G_Callen.ENTITY "
-                                 + "INNER JOIN G_Callen.SPONSOR "
-                                 + "on Entity_ID = Sponsor_ID";
+                string Get_Data = "SELECT * FROM G_Callen.SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -124,7 +124,7 @@ namespace Callen.Windows
                 List<Entities> ft = new List<Entities>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(new Entities { name = row["Nome"].ToString(), id = row["ID"].ToString() });
+                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
                 }
 
                 combo_sponsor.ItemsSource = ft;
@@ -140,22 +140,99 @@ namespace Callen.Windows
             }
         }
 
-        private void btn_insert_Click(object sender, RoutedEventArgs e) // inserts information in data base 
-        {                
-            /*if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
-                        || string.IsNullOrEmpty(desc_box.Text.ToString()) || string.IsNullOrEmpty(year_box.Text.ToString())
-                            || (combo_folder.SelectedItem == null) || (combo_peer.SelectedItem == null))
-            {
-                MessageBox.Show("Necessita de nome, Patrocinador,Fornecedor, Descrição, Ano e Pasta");
-                return;
-            }
-
+        public void fillPeerCombo() // gets info about the peer and sets the respoective combo box 
+        {
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_ITEM @Name, @Sponsor, @Peer, @Desc, @Year, @Folder, @Other, @Img_Path";
+                string Get_Data = "SELECT * FROM G_Callen.PEER_BOX";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("desc");
+                sda.Fill(dt);
+
+                List<Entities> ft = new List<Entities>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
+                }
+
+                combo_peer.ItemsSource = ft;
+                combo_peer.DisplayMemberPath = "name";
+                combo_peer.SelectedValuePath = "id";
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
+        public void fillSeriesCombo() // gets info about the the series and sets the respective combo box 
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "SELECT * FROM G_Callen.SERIES_BOX";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("series");
+                sda.Fill(dt);
+
+                List<Entities> ft = new List<Entities>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
+                }
+
+                combo_series.ItemsSource = ft;
+                combo_series.DisplayMemberPath = "name";
+                combo_series.SelectedValuePath = "id";
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
+        private void btn_insert_Click(object sender, RoutedEventArgs e) // inserts information in data base 
+        {
+            if (combo_item.SelectedIndex > -1)
+                insert_gift_old();
+            else
+                insert_gift_new();
+        }
+
+        private void insert_gift_new()
+        {
+            if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
+                       ||  (combo_peer.SelectedItem == null))
+           {
+               MessageBox.Show("Necessita de Nome, Patrocinador e Destinatário");
+               return;
+           }
+
+           try
+           {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.ADD_GIFT @Name, @Sponsor, @Desc, @Year, @Other, @Series, @SeriesNum, @Dest";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -169,11 +246,6 @@ namespace Callen.Windows
                 paramSpon.Value = combo_sponsor.SelectedValue.ToString();
                 cmd.Parameters.Add(paramSpon);
 
-                SqlParameter paramPeer = new SqlParameter();
-                paramPeer.ParameterName = "@Peer";
-                paramPeer.Value = combo_peer.SelectedValue.ToString();
-                cmd.Parameters.Add(paramPeer);
-
                 SqlParameter paramDesc = new SqlParameter();
                 paramDesc.ParameterName = "@Desc";
                 paramDesc.Value = desc_box.Text.ToString();
@@ -184,42 +256,69 @@ namespace Callen.Windows
                 paramYear.Value = year_box.Text.ToString();
                 cmd.Parameters.Add(paramYear);
 
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Folder";
-                paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
-                cmd.Parameters.Add(paramFolder);
-
-                // Other
                 SqlParameter paramOther = new SqlParameter();
                 paramOther.ParameterName = "@Other";
-                if (string.IsNullOrEmpty(name_box.Text.ToString()))
-                    paramOther.Value = "";
-                else
-                    paramOther.Value = other_box.Text.ToString();
+                paramOther.Value = other_box.Text.ToString();
                 cmd.Parameters.Add(paramOther);
 
-                // Image Path
-                SqlParameter paramImg = new SqlParameter();
-                paramImg.ParameterName = "@Img_Path";
-                if (img.Source != null) // Theres an img
-                {
-                    var img_path = "C:\\Callen_Pics\\Instance_"; // gets filled in database trigger
-                    paramImg.Value = img_path;
-                }
+                SqlParameter paramSeries = new SqlParameter();
+                paramSeries.ParameterName = "@Series";
+                if(combo_series.SelectedIndex > -1)
+                    paramSeries.Value = combo_series.SelectedValue.ToString();
                 else
-                {
-                    paramImg.Value = "";
-                }
-                cmd.Parameters.Add(paramImg);
+                    paramSeries.Value = -1;
+                cmd.Parameters.Add(paramSeries);
 
-                // Execute
+                SqlParameter paramSeriesNum = new SqlParameter();
+                paramSeriesNum.ParameterName = "@SeriesNum";
+                paramSeriesNum.Value = series_num_box.Text.ToString();
+                cmd.Parameters.Add(paramSeriesNum);
+
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@Dest";
+                paramPeer.Value = combo_peer.SelectedValue.ToString();
+                cmd.Parameters.Add(paramPeer);
+
                 var inst_id = cmd.ExecuteScalar();
 
-                if (img.Source != null) // Theres an img
-                {
-                    var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
-                    System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + inst_id.ToString() + ".jpeg");
-                }
+                thisConnection.Close();
+           }
+           catch (Exception ee)
+           {
+               MessageBox.Show(ee.ToString());
+
+           }
+           this.Close();
+        }
+
+        private void insert_gift_old()
+        {
+            if (combo_peer.SelectedItem == null)
+            {
+                MessageBox.Show("Necessita de Item e Destinatário");
+                return;
+            }
+
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.ADD_GIFT_WITH_ITEM @ItemID, @Dest";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@ItemID";
+                paramName.Value = combo_item.SelectedValue.ToString();
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@Dest";
+                paramPeer.Value = combo_peer.SelectedValue.ToString();
+                cmd.Parameters.Add(paramPeer);
+
+                var inst_id = cmd.ExecuteScalar();
 
                 thisConnection.Close();
             }
@@ -228,7 +327,7 @@ namespace Callen.Windows
                 MessageBox.Show(ee.ToString());
 
             }
-            this.Close();*/
+            this.Close();
         }
 
         private void combo_item_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
@@ -243,11 +342,24 @@ namespace Callen.Windows
                 desc_box.Text = it.getDesc();
                 other_box.Text = it.getOther();
                 year_box.Text = it.getYear();
+                series_num_box.Text = it.getSeriesNumber();
+
+                combo_sponsor.SelectedIndex = -1;
                 foreach (Entities sponsor in combo_sponsor.Items)
                 {
                     if (sponsor.id == it.getSponsor())
                     {
                         combo_sponsor.SelectedItem = sponsor;
+                        break;
+                    }
+                }
+
+                combo_series.SelectedIndex = -1; // reset
+                foreach (Entities serie in combo_series.Items)
+                {
+                    if (serie.id == it.getSeries())
+                    {
+                        combo_series.SelectedItem = serie;
                         break;
                     }
                 }
@@ -258,6 +370,9 @@ namespace Callen.Windows
                 year_box.IsEnabled = false;
                 combo_sponsor.IsEnabled = false;
                 btn_add_sponsor.IsEnabled = false;
+                combo_series.IsEnabled = false;
+                btn_add_series.IsEnabled = false;
+                series_num_box.IsEnabled = false;
             }
             else
             {
@@ -269,7 +384,17 @@ namespace Callen.Windows
                 year_box.IsEnabled = true;
                 combo_sponsor.IsEnabled = true;
                 btn_add_sponsor.IsEnabled = true;
+                combo_series.IsEnabled = true;
+                btn_add_series.IsEnabled = true;
             }
+        }
+
+        private void combo_series_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (combo_series.SelectedIndex > -1)
+                series_num_box.IsEnabled = true;
+            else
+                series_num_box.IsEnabled = false;
         }
 
         private void btn_add_sponsor_Click(object sender, RoutedEventArgs e)
@@ -281,6 +406,28 @@ namespace Callen.Windows
 
             this.Opacity = 1; // turn opacity back to 1
             fillSponsorCombo();
+        }
+
+        private void btn_add_peer_Click(object sender, RoutedEventArgs e)
+        {
+            winAddPeer popAddSpon = new winAddPeer();
+            popAddSpon.Owner = this;
+            this.Opacity = 0.85;
+            popAddSpon.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+            fillPeerCombo();
+        }
+
+        private void btn_add_series_Click(object sender, RoutedEventArgs e)
+        {
+            winAddSeries popAddSe = new winAddSeries();
+            popAddSe.Owner = this;
+            this.Opacity = 0.85;
+            popAddSe.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+            fillSeriesCombo();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

@@ -56,12 +56,10 @@ namespace Callen.Windows
             item_folder.Text = it.getFolder();
             item_theme.Text = it.getTheme();
             item_desc.Text = it.getDesc();
-
-            if (it.getNote() != "")
-                item_note.Text = it.getNote();
-
-            if (it.getOther() != "")
-                item_other.Text = it.getOther();
+            item_note.Text = it.getNote();
+            item_other.Text = it.getOther();
+            item_series.Text = it.getSeries();
+            item_series_num.Text = it.getSeriesNumber();
 
             if (it.getImagePath() != "")
             {
@@ -250,10 +248,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT Entity_Name AS Nome, Peer_ID AS ID "
-                                 + "FROM G_Callen.ENTITY "
-                                 + "INNER JOIN G_Callen.PEER "
-                                 + "on Entity_ID = Peer_ID";
+                string Get_Data = "SELECT * FROM G_Callen.PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -265,7 +260,7 @@ namespace Callen.Windows
                 List<Entities> ft = new List<Entities>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(new Entities { name = row["Nome"].ToString(), id = row["ID"].ToString() });
+                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
                 }
 
                 combo_peer.ItemsSource = ft;
@@ -297,8 +292,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * "
-                                 + "FROM G_Callen.ARQUIVE";
+                string Get_Data = "SELECT * FROM G_Callen.FOLDER_VIEW";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

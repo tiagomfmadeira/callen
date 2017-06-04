@@ -202,7 +202,8 @@ namespace Callen.Pages
                 while (rdr.Read())
                 {
                     Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString());
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(),
+                    rdr["sponsor"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["Series_Name"].ToString(), rdr["NumberInSeries"].ToString());
 
                     openDesc(it);
                 }

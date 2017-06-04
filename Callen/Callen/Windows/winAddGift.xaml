@@ -10,90 +10,117 @@
         <Border Name="closeBorder" Background="Black" Opacity="0.1" Height="600" Width="800" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
         <Viewbox Stretch="Uniform">
-        <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-            <Border Height="209" Width="500" Canvas.Left="159" Canvas.Top="171" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+            <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
+                <Border Height="209" Width="500" Canvas.Left="159" Canvas.Top="171" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-            <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="634" Canvas.Top="171">
-                <Image>
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="../Icons/Fat/menu/close.png"/>
-                            <Setter Property="Width" Value="15"/>
-                            <Setter Property="Height" Value="auto"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Source" Value="../Icons/Fat/menu/closeWhite.png"/>
-                                    <Setter Property="Width" Value="17.5"/>
-                                </Trigger>
-                            </Style.Triggers>
+                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="634" Canvas.Top="171">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/menu/close.png"/>
+                                <Setter Property="Width" Value="15"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Source" Value="../Icons/Fat/menu/closeWhite.png"/>
+                                        <Setter Property="Width" Value="17.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+
+                <Label Content="Item" Canvas.Left="181" Canvas.Top="185" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_item" Width="233" Canvas.Left="261" Canvas.Top="185" Height="26" SelectionChanged="combo_item_SelectionChanged"/>
+
+                <Label Content="Nome" Canvas.Left="181" Canvas.Top="216" Style="{DynamicResource formLabel}" />
+                <TextBox Name="name_box" Width="151" Canvas.Left="261" Canvas.Top="216" Height="26" Style="{DynamicResource formTextBox}" />
+
+                <Label Content="Patrocinador" Canvas.Left="181" Canvas.Top="246" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="261" Canvas.Top="246" Height="26"/>
+                <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="248" Canvas.Left="393">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Image Name="img" Source="../Icons/Fat/plus.png" Height="15" Width="15"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="img" Property="Width" Value="20"/>
+                                                <Setter TargetName="img" Property="Height" Value="20"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
-                    </Image.Style>
-                </Image>
-            </Button>
+                    </Button.Style>
+                </Button>
 
-            <Label Content="Item" Canvas.Left="181" Canvas.Top="185" Style="{DynamicResource formLabel}" />
-            <ComboBox Name="combo_item" Width="233" Canvas.Left="261" Canvas.Top="185" Height="26" SelectionChanged="combo_item_SelectionChanged"/>
+                <Label Content="Série" Canvas.Left="181" Canvas.Top="277" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_series" Width="130" Canvas.Left="261" Canvas.Top="277" Height="26" SelectionChanged="combo_series_SelectionChanged"/>
+                <Button Name="btn_add_series" Click="btn_add_series_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="281" Canvas.Left="393">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Image Name="img" Source="../Icons/Fat/plus.png" Height="15" Width="15"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="img" Property="Width" Value="20"/>
+                                                <Setter TargetName="img" Property="Height" Value="20"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                
+                <Label Content="Nº de Série" Canvas.Left="181" Canvas.Top="308" Style="{DynamicResource formLabel}" />
+                <TextBox x:Name="series_num_box" IsEnabled="False" PreviewTextInput="NumberValidationTextBox" Width="151" Canvas.Left="261" Canvas.Top="308" Height="26" Style="{DynamicResource formTextBox}"/>
+                
+                <Label Content="Ano" Canvas.Left="418" Canvas.Top="214" Style="{DynamicResource formLabel}" />
+                <TextBox Name="year_box" Width="147" PreviewTextInput="NumberValidationTextBox" Canvas.Left="501" Canvas.Top="215" Height="26" Style="{DynamicResource formTextBox}"/>
 
-            <Label Content="Nome" Canvas.Left="181" Canvas.Top="216" Style="{DynamicResource formLabel}" />
-            <TextBox Name="name_box" Width="151" Canvas.Left="261" Canvas.Top="216" Height="26" Style="{DynamicResource formTextBox}" />
+                <Label Content="Outro" Canvas.Left="418" Canvas.Top="245" Style="{DynamicResource formLabel}" />
+                <TextBox Name="other_box" Width="149" Canvas.Left="501" Canvas.Top="247" Height="26" Style="{DynamicResource formTextBox}"/>
 
-            <Label Content="Patrocinador" Canvas.Left="181" Canvas.Top="246" Style="{DynamicResource formLabel}" />
-            <ComboBox Name="combo_sponsor" Width="130" Canvas.Left="261" Canvas.Top="246" Height="26"/>
-            <Button Name="btn_add_sponsor" Click="btn_add_sponsor_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="248" Canvas.Left="393">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Image Name="img" Source="../Icons/Fat/plus.png" Height="15" Width="15"/>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="img" Property="Width" Value="20"/>
-                                            <Setter TargetName="img" Property="Height" Value="20"/>
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
+                <Label Content="Descrição" Canvas.Left="417" Canvas.Top="277" Style="{DynamicResource formLabel}" Width="77" />
+                <TextBox Name="desc_box" Width="147" VerticalContentAlignment="Top" Canvas.Left="501" Canvas.Top="277" Height="57" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
 
-            <Label Content="Série" Canvas.Left="181" Canvas.Top="277" Style="{DynamicResource formLabel}" />
-            <ComboBox Width="130" Canvas.Left="261" Canvas.Top="277" Height="26"/>
-            <Button FontFamily="20" Width="20" Height="20" Canvas.Top="281" Canvas.Left="393">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Image Name="img" Source="../Icons/Fat/plus.png" Height="15" Width="15"/>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="img" Property="Width" Value="20"/>
-                                            <Setter TargetName="img" Property="Height" Value="20"/>
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
+                <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="611" Canvas.Top="354" />
+                <Label Content="Destinatário" Canvas.Left="181" Canvas.Top="344" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_peer" Width="130" Canvas.Left="261" Canvas.Top="344" Height="26"/>
+                <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="347" Canvas.Left="393">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Image Name="img" Source="../Icons/Fat/plus.png" Height="15" Width="15"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="img" Property="Width" Value="20"/>
+                                                <Setter TargetName="img" Property="Height" Value="20"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                
 
-            <Label Content="Ano" Canvas.Left="418" Canvas.Top="214" Style="{DynamicResource formLabel}" />
-            <TextBox Name="year_box" Width="150" PreviewTextInput="NumberValidationTextBox"  Canvas.Left="498" Canvas.Top="215" Height="26" Style="{DynamicResource formTextBox}"/>
-
-            <Label Content="Outro" Canvas.Left="181" Canvas.Top="306" Style="{DynamicResource formLabel}" />
-            <TextBox Name="other_box" Width="149" Canvas.Left="264" Canvas.Top="308" Height="26" Style="{DynamicResource formTextBox}"/>
-
-            <Label Content="Descrição" Canvas.Left="417" Canvas.Top="246" Style="{DynamicResource formLabel}" Width="77" />
-            <TextBox Name="desc_box" Width="149" VerticalContentAlignment="Top" Canvas.Left="499" Canvas.Top="246" Height="88" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
-
-            <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="611" Canvas.Top="354" />
-        </Canvas>
+            </Canvas>
         </Viewbox>
     </Grid>
 </Window>

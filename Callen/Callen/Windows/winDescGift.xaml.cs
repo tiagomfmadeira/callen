@@ -41,12 +41,10 @@ namespace Callen.Windows
             item_folder.Text = "";
             item_theme.Text = inst.getTheme();
             item_desc.Text = inst.getDesc();
-
-            if (inst.getNote() != "")
-                item_note.Text = inst.getNote();
-
-            if (inst.getOther() != "")
-                item_other.Text = inst.getOther();
+            item_note.Text = inst.getNote();
+            item_other.Text = inst.getOther();
+            item_series.Text = inst.getSeries();
+            item_series_num.Text = inst.getSeriesNumber();
 
             if (inst.getImagePath() != "")
             {
@@ -80,6 +78,9 @@ namespace Callen.Windows
             item_year.Text = it.getYear();
             item_sponsor.Text = it.getSponsor();
             item_desc.Text = it.getDesc();
+            item_other.Text = it.getOther();
+            item_series.Text = it.getSeries();
+            item_series_num.Text = it.getSeriesNumber();
 
             btn_img.IsEnabled = false;
         }

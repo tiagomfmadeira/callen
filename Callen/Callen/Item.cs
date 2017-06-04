@@ -11,19 +11,37 @@ namespace Callen
         public String Name { set; get; }
         public String ID { set; get; }
 
-        private String name, id, desc, year, sponsor, other;
+        private String name, id, desc, year, sponsor, other, series, seriesNumber;
 
         public Item(String name, String ID, String Desc, String year, String sponsor, String other)
         {
             this.Name = name;
             this.ID = ID;
 
-            this.name = name;
             this.id = ID;
+            this.name = name;
             this.desc = Desc;
             this.year = year;
-            this.sponsor = sponsor;
             this.other = other;
+            this.sponsor = sponsor;
+
+            this.series = "";
+            this.seriesNumber = "";
+        }
+
+        public Item(String name, String ID, String Desc, String year, String sponsor, String other, String series, String seriesNum)
+        {
+            this.Name = name;
+            this.ID = ID;
+
+            this.id = ID;
+            this.name = name;
+            this.desc = Desc;
+            this.year = year;
+            this.other = other;
+            this.series = series;
+            this.sponsor = sponsor;
+            this.seriesNumber = seriesNum;
         }
 
         public String getName()
@@ -55,14 +73,25 @@ namespace Callen
         {
             return other;
         }
+
+        public String getSeries()
+        {
+            return series;
+        }
+
+        public String getSeriesNumber()
+        {
+            return seriesNumber;
+        }
     }
 
     public class Instance : Item
     {
         private String theme, folder, peer, inst_num, image_path, note;
 
-        public Instance(String name, String ID, String Desc, String year, String Theme, String folder, String peer, String sponsor, String other, String img, String note)
-                                    : base (name, "0", Desc, year, sponsor, other)
+        public Instance(String name, String ID, String Desc, String year, String Theme, String folder, String peer,
+                            String sponsor, String other, String img, String note, String series, String seriesNum)
+                                    : base (name, "0", Desc, year, sponsor, other, series, seriesNum)
         {
             this.inst_num = ID;
             this.theme = Theme;

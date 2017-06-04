@@ -40,7 +40,7 @@
                 <TextBox Name="item_peer" IsEnabled="False" Width="145" Canvas.Left="493" Canvas.Top="222" Height="26" Style="{StaticResource descTextBox}"/>
 
                 <Label Content="Série" Canvas.Left="176" Canvas.Top="259" Style="{DynamicResource formLabel}" Width="41" />
-                <TextBox Name="item_colec" IsEnabled="False" Width="124" Canvas.Left="224" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_series" IsEnabled="False" Width="124" Canvas.Left="224" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
 
                 <Label Content="Tema" Canvas.Left="416" Canvas.Top="297" Style="{DynamicResource formLabel}" Width="41" />
                 <TextBox Name="item_theme" IsEnabled="False" Width="175" Canvas.Left="461" Canvas.Top="297" Height="26" Style="{StaticResource descTextBox}"/>
@@ -79,7 +79,7 @@
                         </Button.Style>
                     </Button>
                 </Border>
-                <TextBox IsEnabled="False" Width="36" Canvas.Left="362" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_series_num" IsEnabled="False" Width="36" Canvas.Left="362" Canvas.Top="259" Height="26" Style="{StaticResource descTextBox}"/>
                 <TextBox x:Name="item_note" IsEnabled="False" VerticalContentAlignment="Center" Width="220" Canvas.Left="416" Canvas.Top="368" Height="86" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
                 <Label Content="Descrição" Canvas.Left="176" Canvas.Top="338" Style="{DynamicResource formLabel}" Width="69" Height="28" />
                 <Label Content="Nota" Canvas.Left="416" Canvas.Top="341" Style="{DynamicResource formLabel}" Width="41" />
