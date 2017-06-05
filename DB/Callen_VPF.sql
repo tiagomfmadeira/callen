@@ -1,88 +1,23 @@
--------- VIEWS --------
--- Returns Items info
-/*DROP VIEW G_CALLEN.ITEMS_INFO_VIEW
-go
-CREATE VIEW G_CALLEN.ITEMS_INFO_VIEW
-AS
-SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
-    FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
-        FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
-            FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
-                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
-                     FROM G_Callen.INST
-					 WHERE State = '0') AS INST
-				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
-							FROM G_Callen.ITEM) AS IT
-				ON INST.Item_ID = IT.Item_ID) AS ITEMS
-			LEFT OUTER JOIN(SELECT *
-							FROM G_Callen.ARQUIVE) AS A
-			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
-        LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
-						FROM G_Callen.ENTITY) AS E 
-        ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
-    LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
-					FROM G_Callen.ENTITY) AS EE 
-    ON ITEMS_E.Sponsor = EE.Entity_ID;
-go
-
--- Returns Item ID + Name by Insert
-DROP VIEW G_Callen.LastInsertItems;
+---------- PROCEDURES ----------
+/*
+-- Returns Items info (used to fill combo box)
+DROP PROCEDURE G_Callen.ITEMS_BOX;
 GO
-CREATE VIEW G_Callen.LastInsertItems
-AS
-	SELECT TOP 25 Inst_Number, Item_Name
-	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID,Inst_Number, Date_Insert FROM G_Callen.INST WHERE State = '0') AS IT
-		 ON I.Item_ID = IT.Item_ID
-	ORDER BY Date_Insert DESC;
-;
-go
-
--- Returns Item ID + Name by Modify
-DROP VIEW G_Callen.LastModItems;
-GO
-CREATE VIEW G_Callen.LastModItems
-AS
-	SELECT TOP 25 Inst_Number, Item_Name
-	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID,Inst_Number, Date_Mod FROM G_Callen.INST WHERE State = '0') AS IT
-		 ON I.Item_ID = IT.Item_ID
-	ORDER BY Date_Mod DESC;
-;
-go
-
--- Returns Item ID + Name by View
-DROP VIEW G_Callen.LastVisItems;
-GO
-CREATE VIEW G_Callen.LastVisItems
-AS
-	SELECT TOP 25 Inst_Number, Item_Name
-	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID,Inst_Number, Date_View FROM G_Callen.INST WHERE State = '0') AS IT
-		 ON I.Item_ID = IT.Item_ID
-	ORDER BY Date_View DESC;
-;
-go
-
--- Returns Series info (used to fill combo box)
-DROP VIEW G_Callen.SERIES_BOX;
-GO
-CREATE VIEW G_Callen.SERIES_BOX
-AS
-	SELECT Series_ID AS ID,Series_Name AS name FROM G_Callen.SERIES;
-GO
-
--- Returns Series info (used to fill combo box)
-DROP VIEW G_Callen.ITEMS_VIEW;
-GO
-CREATE VIEW G_Callen.ITEMS_VIEW
+CREATE PROCEDURE G_Callen.ITEMS_BOX
 AS
 	SELECT Item_ID, Item_Name,Item_Descr,Item_Year,Sponsor,Other,Series,NumberInSeries 
 	FROM G_Callen.ITEM AS I
 	LEFT JOIN G_Callen.SERIESITEMS AS S
 	ON I.Item_ID = S.Item;
 GO
----------- PROCEDURES ----------
+
+-- Returns Series info (used to fill combo box)
+DROP PROCEDURE G_Callen.FILL_SERIES_BOX;
+GO
+CREATE PROCEDURE G_Callen.FILL_SERIES_BOX
+AS
+	SELECT Series_ID AS ID,Series_Name AS name FROM G_Callen.SERIES;
+GO
 
 -- Returns list of gifted items
 DROP PROCEDURE G_CALLEN.GIFT_INST
@@ -103,6 +38,19 @@ SELECT dest, CONVERT(VARCHAR(10),Gift_Date,110) AS date, Item_Name AS name, Item
 		LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name as dest
 						FROM G_Callen.ENTITY) AS Offer_E 
 		ON ITEMS.Peer = Offer_E.Entity_ID) as smth;
+go
+
+-- Returns Item ID + Name by View
+DROP PROCEDURE G_Callen.LastVisItems;
+GO
+CREATE PROCEDURE G_Callen.LastVisItems
+AS
+	SELECT TOP 25 Inst_Number, Item_Name
+	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
+		 JOIN (SELECT Item_ID,Inst_Number, Date_View FROM G_Callen.INST WHERE State = '0') AS IT
+		 ON I.Item_ID = IT.Item_ID
+	ORDER BY Date_View DESC;
+;
 go
 
 -- GETS SPECIFIC ITEM INFO
@@ -189,29 +137,50 @@ GO
 -- Used to search the table in pro mode
 DROP PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW;
 go
-CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW @Item_ID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
+CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
 											@Item_Year AS VARCHAR(10), @Item_Note AS VARCHAR(150), @Item_Theme AS VARCHAR(50),
-												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50)
+												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
+													@Item_Other AS VARCHAR(255)
 AS
-	SELECT favourite,ID,name,descr,year,note,theme,folder,peer,sponsor
-	FROM G_Callen.ITEMS_INFO_VIEW
-	WHERE	(ISNULL (@Item_ID, '') = '' OR ID = @Item_ID)
-		AND	(ISNULL (@Item_Name, '') = '' OR Name LIKE  '%'+@Item_Name+'%')
-		AND	(ISNULL (@Item_Desc, '') = '' OR descr  LIKE '%'+@Item_Desc+'%')
-		AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')
-		AND	(ISNULL (@Item_Folder, '') = '' OR folder = @Item_Folder)
-		AND	(ISNULL (@Item_Theme, '') = '' OR theme  = @Item_Theme)
-		AND	(ISNULL (@Item_Sponsor, '') = '' OR sponsor LIKE '%'+@Item_Sponsor+'%')
-		AND	(ISNULL (@Item_Peer, '') = '' OR peer LIKE  '%'+@Item_Peer+'%')
-		AND	(ISNULL (@Item_Year, '') = '' OR year = @Item_Year)	
+SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
+    FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
+        FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
+            FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
+                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
+                     FROM G_Callen.INST
+					 WHERE State = '0'
+					   AND (ISNULL (@InstID, '') = '' OR Inst_Number = @InstID)
+					   AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')) AS INST
+				INNER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
+							FROM G_Callen.ITEM
+							WHERE (ISNULL (@Item_Name, '') = '' OR Item_Name LIKE  '%'+@Item_Name+'%')
+							  AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
+							  AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr  LIKE '%'+@Item_Desc+'%')
+							  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
+				ON INST.Item_ID = IT.Item_ID) AS ITEMS
+			INNER JOIN(SELECT *
+					   FROM G_Callen.ARQUIVE
+					   WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
+						 AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  = @Item_Theme)) AS A
+			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+        INNER JOIN(SELECT Entity_ID, Entity_Name 
+				   FROM G_Callen.ENTITY
+				   WHERE (ISNULL (@Item_Sponsor, '') = '' OR 
+							Entity_Name LIKE '%'+@Item_Sponsor+'%')) AS E 
+        ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
+    INNER JOIN(SELECT Entity_ID, Entity_Name 
+			   FROM G_Callen.ENTITY
+			   WHERE (ISNULL (@Item_Peer, '') = '' OR Entity_Name LIKE  '%'+@Item_Peer+'%')) AS EE 
+    ON ITEMS_E.Sponsor = EE.Entity_ID;
 GO
 
 -- Used to search the table in pic mode
 DROP PROCEDURE G_Callen.SEARCH_ITEMS_PIC;
 GO
-CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PIC @Item_ID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
+CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PIC @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
 													@Item_Year AS VARCHAR(10), @Item_Note AS VARCHAR(150), @Item_Theme AS VARCHAR(50),
-														@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50)
+														@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
+															@Item_Other AS VARCHAR(255)
 AS
 SELECT Item_ID, Item_Name,Inst_PicPath
     FROM(SELECT Item_ID,Item_Name,Inst_PicPath,Sponsor
@@ -221,11 +190,12 @@ SELECT Item_ID, Item_Name,Inst_PicPath
                      FROM G_Callen.INST
 					 WHERE State = '0'
 						   AND NOT ISNULL(Inst_PicPath,'') = ''
-						   AND (ISNULL (@Item_ID, '') = '' OR Inst_Number = @Item_ID)
+						   AND (ISNULL (@InstID, '') = '' OR Inst_Number = @InstID)
 						   AND (ISNULL (@Item_Note, '') = '' OR Note LIKE '%'+@Item_Note+'%')) AS INST
 				INNER JOIN (SELECT Item_ID, Item_Name,Sponsor
 								 FROM G_Callen.ITEM
 								 WHERE (ISNULL (@Item_Name, '') = '' OR Item_Name LIKE  '%'+@Item_Name+'%')
+								   AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
 								   AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr LIKE '%'+@Item_Desc+'%')
 								   AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
@@ -243,7 +213,7 @@ SELECT Item_ID, Item_Name,Inst_PicPath
 					WHERE (ISNULL (@Item_Sponsor, '') = '' OR Entity_Name LIKE '%'+@Item_Sponsor+'%')) AS EE 
     ON ITEMS_E.Sponsor = EE.Entity_ID;
 go
-
+/*
 -- returns list of Items Id, name and pic_path of inst with pics only
 DROP PROCEDURE G_Callen.ITEMS_PIC_MODE;
 GO
@@ -281,7 +251,33 @@ AS
 	UPDATE G_Callen.INST SET Favorite = ~Favorite WHERE Inst_Number = @ItemID;
 GO
 
--- Dá update as infos de um item ESTÁ MAL (A DAR UPDATE AO ITEM TAMBEM)
+-- Returns Item ID + Name by Modify
+DROP VIEW G_Callen.LastModItems;
+GO
+CREATE VIEW G_Callen.LastModItems
+AS
+	SELECT TOP 25 Inst_Number, Item_Name
+	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
+		 JOIN (SELECT Item_ID,Inst_Number, Date_Mod FROM G_Callen.INST WHERE State = '0') AS IT
+		 ON I.Item_ID = IT.Item_ID
+	ORDER BY Date_Mod DESC;
+;
+go
+
+-- Returns Item ID + Name by Modify
+DROP PROCEDURE G_Callen.LastModItems;
+GO
+CREATE PROCEDURE G_Callen.LastModItems
+AS
+	SELECT TOP 25 Inst_Number, Item_Name
+	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
+		 JOIN (SELECT Item_ID,Inst_Number, Date_Mod FROM G_Callen.INST WHERE State = '0') AS IT
+		 ON I.Item_ID = IT.Item_ID
+	ORDER BY Date_Mod DESC;
+;
+go
+
+-- Dá update as infos de uma inst
 DROP PROCEDURE G_Callen.UPDATE_INST_INFO;
 go
 CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @InstNote VARCHAR(150), @InstPeer INT, @InstFolder INT
@@ -427,6 +423,19 @@ AS
 	IF(@address_id > -1)
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
+
+-- Returns Item ID + Name by Insert
+DROP PROCEDURE G_Callen.LastInsertItems;
+GO
+CREATE PROCEDURE G_Callen.LastInsertItems
+AS
+	SELECT TOP 25 Inst_Number, Item_Name
+	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
+		 JOIN (SELECT Item_ID,Inst_Number, Date_Insert FROM G_Callen.INST WHERE State = '0') AS IT
+		 ON I.Item_ID = IT.Item_ID
+	ORDER BY Date_Insert DESC;
+;
+go
 
 -- Adds a new Inst
 DROP PROCEDURE G_Callen.ADD_INST;

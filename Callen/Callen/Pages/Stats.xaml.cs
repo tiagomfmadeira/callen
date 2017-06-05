@@ -42,7 +42,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.LastModItems";
+                string Get_Data = "EXEC G_Callen.LastModItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -68,7 +68,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.LastVisItems";
+                string Get_Data = "EXEC G_Callen.LastVisItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -94,7 +94,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.LastInsertItems";
+                string Get_Data = "EXEC G_Callen.LastInsertItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

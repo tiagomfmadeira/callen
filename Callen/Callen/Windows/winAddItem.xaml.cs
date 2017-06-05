@@ -84,7 +84,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.ITEMS_VIEW";
+                string Get_Data = "EXEC G_Callen.ITEMS_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -225,7 +225,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.SERIES_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_SERIES_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
