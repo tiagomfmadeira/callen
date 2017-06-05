@@ -95,7 +95,6 @@
                 <Label Content="Descrição" Canvas.Left="417" Canvas.Top="277" Style="{DynamicResource formLabel}" Width="77" />
                 <TextBox Name="desc_box" Width="147" VerticalContentAlignment="Top" Canvas.Left="501" Canvas.Top="277" Height="57" TextWrapping="Wrap" AcceptsReturn="True" Style="{DynamicResource formTextBox}"/>
 
-                <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="611" Canvas.Top="354" />
                 <Label Content="Destinatário" Canvas.Left="181" Canvas.Top="344" Style="{DynamicResource formLabel}" />
                 <ComboBox Name="combo_peer" Width="130" Canvas.Left="261" Canvas.Top="344" Height="26"/>
                 <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="347" Canvas.Left="393">
@@ -119,7 +118,7 @@
                     </Button.Style>
                 </Button>
                 
-
+                <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="611" Canvas.Top="354" />
             </Canvas>
         </Viewbox>
     </Grid>

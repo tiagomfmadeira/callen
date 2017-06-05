@@ -82,24 +82,49 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "G_Callen.CREATE_PEER @Name, @Email, @Phone";
+                string Get_Data = "EXEC G_Callen.ADD_PEER @Name, @Email, @Phone, @Street, @City, @State,@Country, @PostalCode;";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@Name";
-                param.Value = name_box.Text.ToString();
-                cmd.Parameters.Add(param);
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Name";
+                paramName.Value = name_box.Text.ToString();
+                cmd.Parameters.Add(paramName);
 
-                SqlParameter param2 = new SqlParameter();
-                param2.ParameterName = "@Email";
-                param2.Value = mail_box.Text.ToString();
-                cmd.Parameters.Add(param2);
+                SqlParameter paramEmail = new SqlParameter();
+                paramEmail.ParameterName = "@Email";
+                paramEmail.Value = mail_box.Text.ToString();
+                cmd.Parameters.Add(paramEmail);
 
-                SqlParameter param3 = new SqlParameter();
-                param3.ParameterName = "@Phone";
-                param3.Value = phone_box.Text.ToString();
-                cmd.Parameters.Add(param3);
+                SqlParameter paramPhone = new SqlParameter();
+                paramPhone.ParameterName = "@Phone";
+                paramPhone.Value = phone_box.Text.ToString();
+                cmd.Parameters.Add(paramPhone);
+
+                SqlParameter paramStreet = new SqlParameter();
+                paramStreet.ParameterName = "@Street";
+                paramStreet.Value = street_box.Text.ToString();
+                cmd.Parameters.Add(paramStreet);
+
+                SqlParameter paramCity = new SqlParameter();
+                paramCity.ParameterName = "@City";
+                paramCity.Value = city_box.Text.ToString();
+                cmd.Parameters.Add(paramCity);
+
+                SqlParameter paramState = new SqlParameter();
+                paramState.ParameterName = "@State";
+                paramState.Value = state_box.Text.ToString();
+                cmd.Parameters.Add(paramState);
+
+                SqlParameter paramCountry = new SqlParameter();
+                paramCountry.ParameterName = "@Country";
+                paramCountry.Value = country_box.Text.ToString();
+                cmd.Parameters.Add(paramCountry);
+
+                SqlParameter paramPostalCode = new SqlParameter();
+                paramPostalCode.ParameterName = "@PostalCode";
+                paramPostalCode.Value = postal_box.Text.ToString();
+                cmd.Parameters.Add(paramPostalCode);
 
                 cmd.ExecuteNonQuery();
 
@@ -111,57 +136,6 @@ namespace Callen.Windows.Forms
             }
 
             this.Close();
-        }
-
-        private void add_Address(String entityID)
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC CREATE_ADDRESS @Entity, @Street, @City, @State, @Country, @PostalCode";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter paramEntity = new SqlParameter();
-                paramEntity.ParameterName = "@Entity";
-                paramEntity.Value = street_box.Text.ToString();
-                cmd.Parameters.Add(paramEntity);
-
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@Street";
-                param.Value = street_box.Text.ToString();
-                cmd.Parameters.Add(param);
-
-                SqlParameter param2 = new SqlParameter();
-                param2.ParameterName = "@City";
-                param2.Value = city_box.Text.ToString();
-                cmd.Parameters.Add(param2);
-
-                SqlParameter param3 = new SqlParameter();
-                param3.ParameterName = "@State";
-                param3.Value = state_box.Text.ToString();
-                cmd.Parameters.Add(param3);
-
-                SqlParameter param4 = new SqlParameter();
-                param4.ParameterName = "@Country";
-                param4.Value = country_box.Text.ToString();
-                cmd.Parameters.Add(param4);
-
-                SqlParameter param5 = new SqlParameter();
-                param5.ParameterName = "@PostalCode";
-                param5.Value = postal_box.Text.ToString();
-                cmd.Parameters.Add(param5);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

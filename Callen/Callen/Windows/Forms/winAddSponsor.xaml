@@ -68,27 +68,27 @@
 
                 <DockPanel Name="street_dock" Visibility="Hidden" Canvas.Left="291" Canvas.Top="360">            
                     <Label Content="Rua"  Style="{DynamicResource formLabel}" Width="54"/>
-                    <TextBox Width="130"  Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
+                    <TextBox Name="street_box" Width="130"  Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
                 </DockPanel>
 
                 <DockPanel Name="street_city" Visibility="Hidden" Canvas.Left="291" Canvas.Top="391" >
                     <Label Content="Cidade" Style="{DynamicResource formLabel}" Width="54"/>
-                    <TextBox Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
+                    <TextBox Name="city_box" Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
                 </DockPanel>
 
                 <DockPanel Name="street_state" Visibility="Hidden" Canvas.Left="291" Canvas.Top="422">
                     <Label Content="Distrito" Style="{DynamicResource formLabel}" Width="54"/>
-                    <TextBox Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
+                    <TextBox Name="state_box" Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
                 </DockPanel>
 
                 <DockPanel Name="street_country" Visibility="Hidden" Canvas.Left="291" Canvas.Top="454">
                     <Label Content="País" Style="{DynamicResource formLabel}" Width="54"/>
-                    <TextBox Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
+                    <TextBox Name="country_box" Width="130" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
                 </DockPanel>
 
                 <DockPanel Name="street_postal" Visibility="Hidden" Canvas.Left="292" Canvas.Top="487">
                     <Label Content="Código Postal" Style="{DynamicResource formLabel}" Width="89"/>
-                    <TextBox Width="90" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
+                    <TextBox Name="postal_box" Width="90" Height="26" Margin="2,0,0,0" Style="{DynamicResource formTextBox}"/>
                 </DockPanel>
             </Canvas>
         </Viewbox>

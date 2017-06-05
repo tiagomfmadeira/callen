@@ -14,6 +14,14 @@
             <Canvas Height="600" Width="800"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
                 <Border Height="309" Width="480" Canvas.Left="164" Canvas.Top="153" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
+                <Grid Width="173" Height="148" Name="grd_pop_gift" Canvas.Left="420" Canvas.Top="74">
+                    <Popup Placement="Center" Name="pop_gift" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
+                        <Border Background="{DynamicResource lightHighLight}" Width="85" Height="20" CornerRadius="7,7,0,7">
+                            <TextBlock Margin="5,0,0,0" Text="Oferecer item" Width="80" Height="20" TextWrapping="WrapWithOverflow" />
+                        </Border>
+                    </Popup>
+                </Grid>
+
                 <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="430" Canvas.Top="66">
                     <Popup Placement="Center" Name="pop_print" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="115" Height="35" CornerRadius="7,7,0,7">
@@ -31,6 +39,23 @@
                         </Border>
                     </Popup>
                 </Grid>
+
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_gift" Click="btn_gift_Click" MouseEnter="btn_gift_MouseEnter" MouseLeave="btn_gift_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="543" Canvas.Top="153">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/add_gift.png"/>
+                                <Setter Property="Width" Value="14"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Width" Value="16"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
 
                 <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
                     <Image>
@@ -98,8 +123,8 @@
                     </Image>
                 </Button>
 
-                <TextBox Name="item_name" IsEnabled="False" Width="294" Canvas.Left="249" Canvas.Top="156" Height="26" FontWeight="Bold" FontSize="14" Style="{StaticResource descTextBox}"/>
-                <TextBox Name="item_year" IsEnabled="False" Width="100" Canvas.Left="356" Canvas.Top="187" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_name" IsEnabled="False" Width="273" Canvas.Left="249" Canvas.Top="156" Height="26" FontWeight="Bold" FontSize="14" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_year" IsEnabled="False" Width="100" Canvas.Left="336" Canvas.Top="187" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
 
 
                 <Label Content="Patrocinador" Canvas.Left="177" Canvas.Top="220" Style="{DynamicResource formLabel}" Width="82" />

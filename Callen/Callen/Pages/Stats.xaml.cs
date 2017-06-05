@@ -120,7 +120,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.FavouriteItems";
+                string Get_Data = "EXEC G_Callen.FavouriteItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

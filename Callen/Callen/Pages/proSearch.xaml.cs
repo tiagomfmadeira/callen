@@ -54,13 +54,13 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.ITEMS_INFO";
+                string Get_Data = "EXEC G_Callen.ITEMS_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("INST");
+                DataTable dt = new DataTable("Items");
                 sda.Fill(dt);
 
                 grdColec.ItemsSource = dt.DefaultView;

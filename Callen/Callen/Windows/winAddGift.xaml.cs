@@ -82,7 +82,7 @@ namespace Callen.Windows
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("items");
+                DataTable dt = new DataTable("Items");
                 sda.Fill(dt);
 
                 List<Item> items = new List<Item>();
@@ -112,13 +112,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.SPONSOR_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Sponsor");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -147,13 +147,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.PEER_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Peer");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -188,7 +188,7 @@ namespace Callen.Windows
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("series");
+                DataTable dt = new DataTable("Series");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();

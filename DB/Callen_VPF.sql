@@ -1,8 +1,8 @@
 -------- VIEWS --------
 -- Returns Items info
-/*DROP VIEW G_CALLEN.ITEMS_INFO
+/*DROP VIEW G_CALLEN.ITEMS_INFO_VIEW
 go
-CREATE VIEW G_CALLEN.ITEMS_INFO
+CREATE VIEW G_CALLEN.ITEMS_INFO_VIEW
 AS
 SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
     FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
@@ -23,22 +23,6 @@ SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS d
     LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
 					FROM G_Callen.ENTITY) AS EE 
     ON ITEMS_E.Sponsor = EE.Entity_ID;
-;
-go
-
--- returns list of Items Id, name and pic_path of inst with pics only
-DROP VIEW G_Callen.ITEMS_PIC_MODE;
-GO
-CREATE VIEW G_Callen.ITEMS_PIC_MODE
-AS
-	SELECT I.Item_ID, Item_Name, Inst_PicPath
-	FROM (SELECT Item_ID, Inst_PicPath
-				FROM G_Callen.INST
-				WHERE NOT ISNULL(Inst_PicPath,'') = ''
-				   AND State = '0') AS IT
-		  LEFT OUTER JOIN (SELECT Item_Name, Item_ID 
-						   FROM G_Callen.ITEM ) AS I
-		  ON I.Item_ID = IT.Item_ID;
 go
 
 -- Returns Item ID + Name by Insert
@@ -80,51 +64,6 @@ AS
 ;
 go
 
--- returns list of favourite items
-DROP VIEW G_Callen.FavouriteItems;
-GO
-CREATE VIEW G_Callen.FavouriteItems
-AS
-	SELECT TOP 25 Inst_Number, Item_Name
-	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I
-		 JOIN (SELECT Item_ID,Inst_Number 
-			   FROM G_Callen.INST 
-			   WHERE State = '0'
-				 AND Favorite = '1') AS IT
-		 ON I.Item_ID = IT.Item_ID
-;
-go
-
--- Returns Sponsor info (used to fill combo box)
-DROP VIEW G_Callen.SPONSOR_BOX;
-GO
-CREATE VIEW G_Callen.SPONSOR_BOX
-AS
-	SELECT Entity_Name AS name, Sponsor_ID as ID
-	FROM G_Callen.ENTITY 
-	INNER JOIN G_Callen.SPONSOR 
-	on Entity_ID = Sponsor_ID;
-GO
-
--- Returns peer info (used to fill combo box)
-DROP VIEW G_Callen.PEER_BOX;
-GO
-CREATE VIEW G_Callen.PEER_BOX
-AS
-	SELECT Entity_Name AS name, Peer_ID AS ID
-	FROM G_Callen.ENTITY
-	INNER JOIN G_Callen.PEER
-	on Entity_ID = Peer_ID;
-GO
-
--- Returns folder info (used to fill combo box)
-DROP VIEW G_Callen.FOLDER_VIEW;
-GO
-CREATE VIEW G_Callen.FOLDER_VIEW
-AS
-	SELECT * FROM G_Callen.ARQUIVE;
-GO
-
 -- Returns Series info (used to fill combo box)
 DROP VIEW G_Callen.SERIES_BOX;
 GO
@@ -143,11 +82,12 @@ AS
 	LEFT JOIN G_Callen.SERIESITEMS AS S
 	ON I.Item_ID = S.Item;
 GO
+---------- PROCEDURES ----------
 
 -- Returns list of gifted items
-DROP VIEW G_CALLEN.GIFT_INST
+DROP PROCEDURE G_CALLEN.GIFT_INST
 GO
-CREATE VIEW G_CALLEN.GIFT_INST
+CREATE PROCEDURE G_CALLEN.GIFT_INST
 AS
 SELECT dest, CONVERT(VARCHAR(10),Gift_Date,110) AS date, Item_Name AS name, Item_Year AS year, sponsor,Item_Descr AS descr,Inst,Item
 		FROM(SELECT dest,Gift_Date,  Item_Name, Item_Descr, Item_Year, EE.Entity_name as Sponsor,Inst,Item
@@ -165,10 +105,7 @@ SELECT dest, CONVERT(VARCHAR(10),Gift_Date,110) AS date, Item_Name AS name, Item
 		ON ITEMS.Peer = Offer_E.Entity_ID) as smth;
 go
 
----------- PROCEDURES ----------
-
 -- GETS SPECIFIC ITEM INFO
-
 DROP PROCEDURE G_Callen.GET_INST_INFO;
 go
 CREATE PROCEDURE G_Callen.GET_INST_INFO @InstID INT
@@ -203,6 +140,52 @@ AS
 	UPDATE G_Callen.INST SET Date_View = GETDATE() WHERE Inst_Number = @InstID; -- "Trigger"
 go
 
+-- GETS SPECIFIC ITEM INFO
+DROP PROCEDURE G_Callen.GET_ITEM_INFO;
+go
+CREATE PROCEDURE G_Callen.GET_ITEM_INFO @ItemID INT
+AS
+SELECT Item_ID, Item_Name,Item_Descr,Item_Year,Entity_Name AS Sponsor,Other,Series_Name AS Series,NumberInSeries
+FROM(SELECT Item_ID, Item_Name,Item_Descr,Item_Year,Sponsor,Other,Series_Name,NumberInSeries
+	 FROM(SELECT Item_ID, Item_Name,Item_Descr,Item_Year,Sponsor,Other,Series,NumberInSeries 
+		 FROM (SELECT *
+			   FROM G_Callen.ITEM 
+	 		   WHERE Item_ID = @ItemID)AS I
+		 LEFT JOIN G_Callen.SERIESITEMS AS SI
+		 ON I.Item_ID = SI.Item) AS SS
+	 LEFT JOIN G_Callen.SERIES AS S
+	 ON S.Series_ID = SS.Series) AS SSS
+LEFT JOIN (SELECT Entity_ID,Entity_Name
+		   FROM G_Callen.ENTITY) AS E
+ON E.Entity_ID = SSS.Sponsor;
+go
+
+--Return Items Info
+DROP PROCEDURE G_Callen.ITEMS_INFO;
+GO
+CREATE PROCEDURE G_Callen.ITEMS_INFO
+AS
+	SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
+    FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
+        FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
+            FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
+                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
+                     FROM G_Callen.INST
+					 WHERE State = '0') AS INST
+				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
+							FROM G_Callen.ITEM) AS IT
+				ON INST.Item_ID = IT.Item_ID) AS ITEMS
+			LEFT OUTER JOIN(SELECT *
+							FROM G_Callen.ARQUIVE) AS A
+			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+        LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
+						FROM G_Callen.ENTITY) AS E 
+        ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
+    LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
+					FROM G_Callen.ENTITY) AS EE 
+    ON ITEMS_E.Sponsor = EE.Entity_ID;
+GO
+
 -- Used to search the table in pro mode
 DROP PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW;
 go
@@ -211,7 +194,7 @@ CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW @Item_ID AS INT, @Item_Name AS V
 												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50)
 AS
 	SELECT favourite,ID,name,descr,year,note,theme,folder,peer,sponsor
-	FROM G_Callen.ITEMS_INFO
+	FROM G_Callen.ITEMS_INFO_VIEW
 	WHERE	(ISNULL (@Item_ID, '') = '' OR ID = @Item_ID)
 		AND	(ISNULL (@Item_Name, '') = '' OR Name LIKE  '%'+@Item_Name+'%')
 		AND	(ISNULL (@Item_Desc, '') = '' OR descr  LIKE '%'+@Item_Desc+'%')
@@ -261,6 +244,35 @@ SELECT Item_ID, Item_Name,Inst_PicPath
     ON ITEMS_E.Sponsor = EE.Entity_ID;
 go
 
+-- returns list of Items Id, name and pic_path of inst with pics only
+DROP PROCEDURE G_Callen.ITEMS_PIC_MODE;
+GO
+CREATE PROCEDURE G_Callen.ITEMS_PIC_MODE
+AS
+	SELECT I.Item_ID, Item_Name, Inst_PicPath
+	FROM (SELECT Item_ID, Inst_PicPath
+				FROM G_Callen.INST
+				WHERE NOT ISNULL(Inst_PicPath,'') = ''
+				   AND State = '0') AS IT
+		  LEFT OUTER JOIN (SELECT Item_Name, Item_ID 
+						   FROM G_Callen.ITEM ) AS I
+		  ON I.Item_ID = IT.Item_ID;
+go
+
+-- returns list of favourite items
+DROP PROCEDURE G_Callen.FavouriteItems;
+GO
+CREATE PROCEDURE G_Callen.FavouriteItems
+AS
+	SELECT TOP 25 Inst_Number, Item_Name
+	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I
+		 JOIN (SELECT Item_ID,Inst_Number 
+			   FROM G_Callen.INST 
+			   WHERE State = '0'
+				 AND Favorite = '1') AS IT
+		 ON I.Item_ID = IT.Item_ID;
+go
+
 -- sets an inst to favourite
 DROP PROCEDURE G_Callen.SET_FAVOURITE;
 go
@@ -274,16 +286,53 @@ DROP PROCEDURE G_Callen.UPDATE_INST_INFO;
 go
 CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @InstNote VARCHAR(150), @InstPeer INT, @InstFolder INT
 AS
-	UPDATE G_Callen.INST
-	SET Note = @InstNote WHERE Inst_Number = @InstID;
 
-	UPDATE G_Callen.INST
-	SET Peer = @InstPeer WHERE Inst_Number = @InstID;
+	DECLARE @oldPeer INT;
+	DECLARE @oldNote VARCHAR(150);
+	DECLARE @oldFolder INT;
+	DECLARE @updated BIT;
 
-	UPDATE G_Callen.INST
-	SET Arquive = @InstFolder WHERE Inst_Number = @InstID;
+	SET @updated = 0;
 
-	UPDATE G_Callen.INST SET Date_Mod = GETDATE() WHERE Inst_Number = @InstID; -- "Trigger"
+	SELECT @oldPeer = Peer, @oldNote = Note, @oldFolder = Arquive FROM G_Callen.INST WHERE Inst_Number = @InstID;
+
+	IF @oldNote != @InstNote
+	BEGIN
+		UPDATE G_Callen.INST
+			SET Note = @InstNote WHERE Inst_Number = @InstID;
+		
+		SET @updated = 1;
+	END
+	IF(@oldPeer != @InstPeer)
+	BEGIN
+		UPDATE G_Callen.PEER SET QuantityOffered -= 1 WHERE Peer_ID = @oldPeer;
+
+		UPDATE G_Callen.INST
+			SET Peer = @InstPeer WHERE Inst_Number = @InstID;
+
+		SET @updated = 1;
+	END
+	
+	IF(@oldFolder != @InstFolder) 
+	BEGIN
+		UPDATE G_Callen.INST
+			SET Arquive = @InstFolder WHERE Inst_Number = @InstID;
+
+		SET @updated = 1;
+	END
+
+	IF(@updated = 1)
+		UPDATE G_Callen.INST SET Date_Mod = GETDATE() WHERE Inst_Number = @InstID; -- "Trigger"
+
+	SELECT @updated;
+GO
+
+-- Returns folder info (used to fill combo box)
+DROP PROCEDURE G_Callen.FOLDER_INFO;
+GO
+CREATE PROCEDURE G_Callen.FOLDER_INFO
+AS
+	SELECT * FROM G_Callen.ARQUIVE;
 GO
 
 -- Cria um novo folder
@@ -305,62 +354,78 @@ GO
 -- Create Address
 DROP PROCEDURE G_Callen.CREATE_ADDRESS;
 go
-CREATE PROCEDURE G_Callen.CREATE_ADDRESS @Entity INT, @Street VARCHAR(150),	@City VARCHAR(50),@State VARCHAR(50),
+CREATE PROCEDURE G_Callen.CREATE_ADDRESS @Street VARCHAR(150),	@City VARCHAR(50),@State VARCHAR(50),
 													@Country VARCHAR(50), @PostalCode VARCHAR(50)
 AS
-	DECLARE @ID AS INT;
+	DECLARE @address_id INT;
+	DECLARE @Out TABLE(id INT);
+
+	IF(@Street = '' AND @City = '' AND @State = '' AND @Country = '' AND @PostalCode = '')
+		RETURN -1;
 
 	INSERT INTO G_CALLEN.ADDRESS(Street, City, State, Country, PostalCode) 
+				OUTPUT INSERTED.Address_ID INTO @Out(id)
 				VALUES (@Street, @City, @State, @Country, @PostalCode) 
 	
-	SELECT @ID = IDENT_CURRENT('G_CALLEN.ADDRESS')
+	SELECT @address_id = id FROM @Out;
 
-	INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@Entity,@ID);
+	RETURN @address_id;
 GO
 
--- Create entity - returns Entity id
-DROP PROCEDURE G_Callen.CREATE_ENTITY;
-go
-CREATE PROCEDURE G_Callen.CREATE_ENTITY @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15)
-AS
-	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
-				VALUES (@Name, @Email, @Phone);
-
-	RETURN IDENT_CURRENT('G_CALLEN.ADDRESS')
+-- Add Peer and Address
+DROP PROCEDURE G_Callen.ADD_PEER;
 GO
-
--- Creates a peer entity
-DROP PROCEDURE G_Callen.CREATE_PEER;
-go
-CREATE PROCEDURE G_Callen.CREATE_PEER @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15)
+CREATE PROCEDURE G_Callen.ADD_PEER @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15),
+									 @Street VARCHAR(150),	@City VARCHAR(50),@State VARCHAR(50),
+										@Country VARCHAR(50), @PostalCode VARCHAR(50)
 AS
 	DECLARE @ENTITY_ID AS INT;
+	DECLARE @out TABLE(id INT);
 
-	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+	DECLARE @address_id INT;
+	DECLARE @AddOut TABLE(id INT);
+
+	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone)
+				OUTPUT INSERTED.Entity_ID INTO @out(id) 
 				VALUES (@Name, @Email, @Phone);
 
-	SELECT @ENTITY_ID = IDENT_CURRENT('G_CALLEN.ENTITY');
+	SELECT @ENTITY_ID = id FROM @out;
 
 	INSERT INTO G_Callen.PEER(Peer_ID,QuantityOffered) VALUES (@ENTITY_ID,0);
 
-	RETURN @ENTITY_ID;
+	EXEC @address_id = G_Callen.CREATE_ADDRESS @Street, @City, @State, @Country, @PostalCode;
+
+	IF(@address_id > -1)
+		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
 
 -- Creates a Sponsor entiry
-DROP PROCEDURE G_Callen.CREATE_SPONSOR;
+
+DROP PROCEDURE G_Callen.ADD_SPONSOR;
 go
-CREATE PROCEDURE G_Callen.CREATE_SPONSOR @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15), @WebSite VARCHAR(100)
+CREATE PROCEDURE G_Callen.ADD_SPONSOR @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15), 
+										@WebSite VARCHAR(100), @Street VARCHAR(150), @City VARCHAR(50),
+											@State VARCHAR(50), @Country VARCHAR(50), @PostalCode VARCHAR(50)
+											
 AS
 	DECLARE @ENTITY_ID AS INT;
+	DECLARE @out TABLE (id INT);
+
+	DECLARE @address_id INT;
+	DECLARE @AddOut TABLE(id INT);
 
 	INSERT INTO G_CALLEN.ENTITY(Entity_Name, Email, Phone) 
+				OUTPUT INSERTED.Entity_ID INTO @out(id)
 				VALUES (@Name, @Email, @Phone);
 
-	SELECT @ENTITY_ID = IDENT_CURRENT('G_CALLEN.ENTITY');
+	SELECT @ENTITY_ID = id FROM @out;
 
 	INSERT INTO G_Callen.SPONSOR(Sponsor_ID,Website) VALUES (@ENTITY_ID,@WebSite);
 
-	RETURN @ENTITY_ID
+	EXEC @address_id = G_Callen.CREATE_ADDRESS @Street, @City, @State, @Country, @PostalCode;
+	
+	IF(@address_id > -1)
+		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
 
 -- Adds a new Inst
@@ -371,17 +436,23 @@ CREATE PROCEDURE G_Callen.ADD_INST @Name VARCHAR(100), @Sponsor INT, @Peer INT, 
 AS
 
 	DECLARE @ITEM_ID AS INT;
+	DECLARE @out TABLE(id INT);
 
 	INSERT INTO G_Callen.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+		OUTPUT INSERTED.Item_ID INTO @out(id)
 		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
 
-	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
+	SELECT @ITEM_ID = id FROM @out;
 
 	IF(@Series > 0)
 		INSERT INTO G_Callen.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
-	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
-		VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
+	IF @Peer > 0
+		INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
+	ELSE
+		INSERT INTO G_Callen.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 
 	SELECT IDENT_CURRENT('G_Callen.INST');
 GO
@@ -392,8 +463,12 @@ go
 CREATE PROCEDURE G_Callen.ADD_INST_WITH_ITEM @ItemID INT, @Peer INT,@Folder INT,
 												@Note VARCHAR(150), @Img_Path VARCHAR(255)
 AS
-	INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
-		VALUES(@ItemID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
+	IF(@Peer > 0)
+		INSERT INTO G_Callen.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			VALUES(@ItemID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
+	ELSE
+		INSERT INTO G_Callen.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			VALUES(@ItemID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 
 	SELECT IDENT_CURRENT('G_Callen.INST');
 GO
@@ -406,11 +481,13 @@ CREATE PROCEDURE G_Callen.ADD_GIFT @Name VARCHAR(100), @Sponsor INT, @Desc VARCH
 AS
 
 	DECLARE @ITEM_ID AS INT;
+	DECLARE @out TABLE(id INT);
 
 	INSERT INTO G_Callen.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+		OUTPUT INSERTED.Item_ID INTO @out(id)
 		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
 
-	SELECT @ITEM_ID = IDENT_CURRENT('G_CALLEN.ITEM');
+	SELECT @ITEM_ID = id FROM @out;
 
 	IF(@Series > 0)
 		INSERT INTO G_Callen.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
@@ -430,6 +507,62 @@ AS
 	SELECT IDENT_CURRENT('G_Callen.GIFT');
 GO
 
+-- Returns Sponsor info (used to fill combo box)
+DROP PROCEDURE G_Callen.FILL_SPONSOR_BOX;
+GO
+CREATE PROCEDURE G_Callen.FILL_SPONSOR_BOX
+AS
+	SELECT Entity_Name AS name, Sponsor_ID as ID
+	FROM G_Callen.ENTITY 
+	INNER JOIN G_Callen.SPONSOR 
+	on Entity_ID = Sponsor_ID;
+GO
+
+-- Returns peer info (used to fill combo box)
+DROP PROCEDURE G_Callen.FILL_PEER_BOX;
+GO
+CREATE PROCEDURE G_Callen.FILL_PEER_BOX
+AS
+	SELECT Entity_Name AS name, Peer_ID AS ID
+	FROM G_Callen.ENTITY
+	INNER JOIN G_Callen.PEER
+	on Entity_ID = Peer_ID;
+GO
+
+-- Returns full list of peers
+DROP PROCEDURE FILL_PEER 
+GO
+CREATE PROCEDURE FILL_PEER 
+AS
+SELECT ID,Nome,Email,Telefone,Ofertas,Street AS Rua, City AS Cidade, State AS Estado, Country AS País, PostalCode As CódPostal
+FROM(SELECT ID,Nome,Email,Telefone,Ofertas,Address
+	 FROM (SELECT Entity_ID AS ID, Entity_Name AS Nome, Email, Phone AS Telefone, QuantityOffered as Ofertas
+		  FROM G_Callen.ENTITY 
+		  INNER JOIN G_Callen.PEER 
+		  on Entity_ID = Peer_ID) AS ENT
+ 	 LEFT JOIN G_Callen.ENTITYADRESS AS EA
+	 ON ENT.ID = EA.Entity) AS ENTA
+LEFT JOIN G_Callen.ADDRESS AS A
+ON ENTA.Address = A.Address_ID;
+GO
+
+-- Returns full list of sponsors
+DROP PROCEDURE FILL_SPONSOR 
+GO
+CREATE PROCEDURE FILL_SPONSOR
+AS	
+SELECT ID,Nome,Email,Telefone,Website,Street AS Rua, City AS Cidade, State AS Estado, Country AS País, PostalCode As CódPostal
+FROM(SELECT ID,Nome,Email,Telefone,Website,Address
+	 FROM (SELECT Entity_ID AS ID, Entity_Name AS Nome, Email, Phone AS Telefone, Website
+		   FROM G_Callen.ENTITY
+		   INNER JOIN G_Callen.SPONSOR
+		   on Entity_ID = Sponsor_ID) AS ENT
+	 LEFT JOIN G_Callen.ENTITYADRESS AS EA
+	 ON ENT.ID = EA.Entity) AS ENTA
+LEFT JOIN G_Callen.ADDRESS AS A
+ON ENTA.Address = A.Address_ID;
+GO
+
 -------- TRIGGER --------
 
 -- Updares Image path to have correct Inst ID
@@ -440,8 +573,11 @@ AFTER INSERT
 AS
 	DECLARE @SUB_IMG_PATH AS VARCHAR(255);
 	DECLARE @ID AS INT;
+	DECLARE @peerID INT;
 
-	SELECT @SUB_IMG_PATH = Inst_PicPath, @ID = Inst_Number FROM inserted;
+	SELECT @SUB_IMG_PATH = Inst_PicPath, @ID = Inst_Number, @peerID = Peer FROM inserted;
+
+	UPDATE G_Callen.PEER SET QuantityOffered += 1 WHERE Peer_ID = @peerID;
 
 	IF ISNULL(@SUB_IMG_PATH,'') = ''
 		RETURN;

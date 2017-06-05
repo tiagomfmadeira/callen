@@ -80,7 +80,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "G_Callen.CREATE_SPONSOR @Name, @Email, @Phone, @WebSite";
+                string Get_Data = "G_Callen.ADD_SPONSOR @Name, @Email, @Phone, @WebSite, @Street, @City, @State,@Country, @PostalCode;";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -103,6 +103,31 @@ namespace Callen.Windows.Forms
                 param4.ParameterName = "@WebSite";
                 param4.Value = site_box.Text.ToString();
                 cmd.Parameters.Add(param4);
+
+                SqlParameter paramStreet = new SqlParameter();
+                paramStreet.ParameterName = "@Street";
+                paramStreet.Value = street_box.Text.ToString();
+                cmd.Parameters.Add(paramStreet);
+
+                SqlParameter paramCity = new SqlParameter();
+                paramCity.ParameterName = "@City";
+                paramCity.Value = city_box.Text.ToString();
+                cmd.Parameters.Add(paramCity);
+
+                SqlParameter paramState = new SqlParameter();
+                paramState.ParameterName = "@State";
+                paramState.Value = state_box.Text.ToString();
+                cmd.Parameters.Add(paramState);
+
+                SqlParameter paramCountry = new SqlParameter();
+                paramCountry.ParameterName = "@Country";
+                paramCountry.Value = country_box.Text.ToString();
+                cmd.Parameters.Add(paramCountry);
+
+                SqlParameter paramPostalCode = new SqlParameter();
+                paramPostalCode.ParameterName = "@PostalCode";
+                paramPostalCode.Value = postal_box.Text.ToString();
+                cmd.Parameters.Add(paramPostalCode);
 
                 cmd.ExecuteNonQuery();
 

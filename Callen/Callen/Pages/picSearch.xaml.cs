@@ -61,7 +61,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.ITEMS_PIC_MODE";
+                string Get_Data = "EXEC G_Callen.ITEMS_PIC_MODE";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -128,13 +128,13 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @Item_id";
+                string Get_Data = "EXEC G_Callen.GET_INST_INFO @InstID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
                 SqlParameter param = new SqlParameter();
 
-                param.ParameterName = "@Item_id";
+                param.ParameterName = "@InstID";
                 param.Value = id;
                 cmd.Parameters.Add(param);
 

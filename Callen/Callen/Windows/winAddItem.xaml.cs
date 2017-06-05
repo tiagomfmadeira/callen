@@ -90,7 +90,7 @@ namespace Callen.Windows
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("items");
+                DataTable dt = new DataTable("Items");
                 sda.Fill(dt);
 
                 List<Item> items = new List<Item>();
@@ -120,13 +120,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.FOLDER_VIEW";
+                string Get_Data = "EXEC G_Callen.FOLDER_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Folder");
                 sda.Fill(dt);
 
                 List<Folders> ft = new List<Folders>();
@@ -155,13 +155,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.SPONSOR_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Sponsor");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -190,13 +190,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.PEER_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Peer");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -231,7 +231,7 @@ namespace Callen.Windows
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("series");
+                DataTable dt = new DataTable("Series");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -306,9 +306,9 @@ namespace Callen.Windows
         {
             if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
                         || string.IsNullOrEmpty(desc_box.Text.ToString()) || string.IsNullOrEmpty(year_box.Text.ToString())
-                            || (combo_folder.SelectedItem == null) || (combo_peer.SelectedItem == null))
+                            || (combo_folder.SelectedItem == null))
             {
-                MessageBox.Show("Necessita de nome, Patrocinador,Fornecedor, Descrição, Ano e Pasta");
+                MessageBox.Show("Necessita de nome, Patrocinador, Descrição, Ano e Pasta");
                 return;
             }
 
@@ -376,7 +376,10 @@ namespace Callen.Windows
 
                 SqlParameter paramPeer = new SqlParameter();
                 paramPeer.ParameterName = "@Peer";
-                paramPeer.Value = combo_peer.SelectedValue.ToString();
+                if (combo_peer.SelectedIndex > -1)
+                    paramPeer.Value = combo_peer.SelectedValue.ToString();
+                else
+                    paramPeer.Value = -1;
                 cmd.Parameters.Add(paramPeer);
 
                 SqlParameter paramFolder = new SqlParameter();

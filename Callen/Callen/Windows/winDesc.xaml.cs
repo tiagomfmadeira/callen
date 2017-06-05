@@ -110,6 +110,17 @@ namespace Callen.Windows
             da_print_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_print_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
+            DoubleAnimation da_gift_dis = new DoubleAnimation();
+            da_gift_dis.From = 1;
+            da_gift_dis.To = 0;
+            da_gift_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+
+            DoubleAnimation da_gift_app = new DoubleAnimation();
+            da_gift_app.From = 0;
+            da_gift_app.To = 1;
+            da_gift_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            da_gift_app.BeginTime = TimeSpan.FromMilliseconds(500);
+
             if (item_note.IsEnabled)
             {
                 var storyboard = new Storyboard();
@@ -118,6 +129,12 @@ namespace Callen.Windows
                 da_save_dis.From = 1;
                 da_save_dis.To = 0;
                 da_save_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+
+                Storyboard.SetTarget(da_gift_dis, btn_gift);
+                Storyboard.SetTargetProperty(da_gift_dis, new PropertyPath(Button.OpacityProperty));
+
+                Storyboard.SetTarget(da_gift_app, btn_gift);
+                Storyboard.SetTargetProperty(da_gift_app, new PropertyPath(Button.OpacityProperty));
 
                 Storyboard.SetTarget(da_print_dis, btn_print);
                 Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
@@ -128,6 +145,8 @@ namespace Callen.Windows
                 Storyboard.SetTarget(da_save_dis, btn_save);
                 Storyboard.SetTargetProperty(da_save_dis, new PropertyPath(Button.OpacityProperty));
 
+                storyboard.Children.Add(da_gift_dis);
+                storyboard.Children.Add(da_gift_app);
                 storyboard.Children.Add(da_print_dis);
                 storyboard.Children.Add(da_print_app);
                 storyboard.Children.Add(da_save_dis);
@@ -138,6 +157,9 @@ namespace Callen.Windows
                 TimedAction.ExecuteWithDelay(new Action(delegate {
                     Canvas.SetLeft(grd_pop_print, 430);
                     Canvas.SetLeft(btn_print, 568);
+
+                    Canvas.SetLeft(grd_pop_gift, 420);
+                    Canvas.SetLeft(btn_gift, 543);
 
                     btn_save.IsEnabled = false;
 
@@ -158,6 +180,12 @@ namespace Callen.Windows
                 da_save_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
                 da_save_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
+                Storyboard.SetTarget(da_gift_dis, btn_gift);
+                Storyboard.SetTargetProperty(da_gift_dis, new PropertyPath(Button.OpacityProperty));
+
+                Storyboard.SetTarget(da_gift_app, btn_gift);
+                Storyboard.SetTargetProperty(da_gift_app, new PropertyPath(Button.OpacityProperty));
+
                 Storyboard.SetTarget(da_print_dis, btn_print);
                 Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
 
@@ -167,6 +195,8 @@ namespace Callen.Windows
                 Storyboard.SetTarget(da_save_app, btn_save);
                 Storyboard.SetTargetProperty(da_save_app, new PropertyPath(Button.OpacityProperty));
 
+                storyboard.Children.Add(da_gift_dis);
+                storyboard.Children.Add(da_gift_app);
                 storyboard.Children.Add(da_print_dis);
                 storyboard.Children.Add(da_print_app);
                 storyboard.Children.Add(da_save_app);
@@ -176,6 +206,9 @@ namespace Callen.Windows
                 TimedAction.ExecuteWithDelay(new Action(delegate {
                     Canvas.SetLeft(grd_pop_print, 405);
                     Canvas.SetLeft(btn_print, 543);
+
+                    Canvas.SetLeft(grd_pop_gift, 395);
+                    Canvas.SetLeft(btn_gift, 518);
 
                     item_note.IsEnabled = true;
                     combo_folder.Visibility = Visibility.Visible;
@@ -206,6 +239,7 @@ namespace Callen.Windows
                 paramNote.ParameterName = "@InstNote";
                 paramNote.Value = item_note.Text;
                 cmd.Parameters.Add(paramNote);
+
                 SqlParameter paramPeer = new SqlParameter();
                 paramPeer.ParameterName = "@InstPeer";
                 paramPeer.Value = combo_peer.SelectedValue.ToString();
@@ -216,10 +250,13 @@ namespace Callen.Windows
                 paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
-                cmd.ExecuteNonQuery();
+                bool updated = (bool) cmd.ExecuteScalar();
 
-                winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
-                noti.Show();
+                if (updated)
+                {
+                    winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
+                    noti.Show();
+                }
 
                 thisConnection.Close();
             }
@@ -248,13 +285,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.PEER_BOX";
+                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Peer");
                 sda.Fill(dt);
 
                 List<Entities> ft = new List<Entities>();
@@ -292,13 +329,13 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.FOLDER_VIEW";
+                string Get_Data = "EXEC G_Callen.FOLDER_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("desc");
+                DataTable dt = new DataTable("Folder");
                 sda.Fill(dt);
 
                 List<Folders> ft = new List<Folders>();
@@ -333,6 +370,26 @@ namespace Callen.Windows
         {
             if (combo_folder.SelectedItem != null)
                 item_theme.Text = combo_folder.SelectedValue.ToString();
+        }
+
+        private void btn_gift_Click(object sender, RoutedEventArgs e)
+        {
+            winAddGiftInst popAddGiftInst = new winAddGiftInst(inst.getInstID());
+            popAddGiftInst.Owner = this;
+            this.Opacity = 0.85;
+            popAddGiftInst.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+        }
+
+        private void btn_gift_MouseEnter(object sender, MouseEventArgs e) // Show gift popup
+        {
+            pop_gift.IsOpen = true;
+        }
+
+        private void btn_gift_MouseLeave(object sender, MouseEventArgs e) // Hide gift popup
+        {
+            pop_gift.IsOpen = false;
         }
 
         private void btn_print_MouseEnter(object sender, MouseEventArgs e) // Show print popup

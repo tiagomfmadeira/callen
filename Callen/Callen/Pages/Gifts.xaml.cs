@@ -49,7 +49,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "SELECT * FROM G_Callen.GIFT_INST";
+                string Get_Data = "EXEC G_Callen.GIFT_INST";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -73,8 +73,7 @@ namespace Callen.Pages
             if (!String.IsNullOrEmpty((grdGifts.SelectedItem as DataRowView)["Inst"].ToString()))
                 getInstInfo((grdGifts.SelectedItem as DataRowView)["Inst"].ToString());
             else {
-                DataRowView row = (grdGifts.SelectedItem as DataRowView);
-                openDesc(new Item(row["name"].ToString(),row["Item"].ToString(),row["descr"].ToString(),row["year"].ToString(),row["sponsor"].ToString(),""));
+                getItemInfo((grdGifts.SelectedItem as DataRowView)["Item"].ToString());
             }
         }
 
@@ -102,6 +101,42 @@ namespace Callen.Pages
                     Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
                     rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(), rdr["other"].ToString(),
                                         rdr["img_path"].ToString(), rdr["note"].ToString(),rdr["Series_Name"].ToString(),rdr["NumberInSeries"].ToString());
+
+                    openDesc(it);
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
+        private void getItemInfo(String id)
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @ItemID";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter param = new SqlParameter();
+
+                param.ParameterName = "@ItemID";
+                param.Value = id;
+                cmd.Parameters.Add(param);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Item it = new Item(rdr["Item_Name"].ToString(),rdr["Item_ID"].ToString(),
+                        rdr["Item_Descr"].ToString(),rdr["Item_Year"].ToString(),rdr["Sponsor"].ToString(),
+                        rdr["Other"].ToString(),rdr["Series"].ToString(),rdr["NumberInSeries"].ToString());
 
                     openDesc(it);
                 }
