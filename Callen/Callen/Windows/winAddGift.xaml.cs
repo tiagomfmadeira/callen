@@ -220,10 +220,11 @@ namespace Callen.Windows
 
         private void insert_gift_new()
         {
-            if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
+           if (string.IsNullOrEmpty(name_box.Text.ToString()) || string.IsNullOrEmpty(desc_box.Text.ToString()) 
+                || (combo_sponsor.SelectedItem == null) || string.IsNullOrEmpty(year_box.Text.ToString())
                        ||  (combo_peer.SelectedItem == null))
            {
-               MessageBox.Show("Necessita de Nome, Patrocinador e Destinatário");
+               MessageBox.Show("Necessita de Nome, Descrição, Ano, Patrocinador e Destinatário");
                return;
            }
 
@@ -232,7 +233,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_GIFT @Name, @Sponsor, @Desc, @Year, @Other, @Series, @SeriesNum, @Dest";
+                string Get_Data = "EXEC G_Callen.ADD_GIFT @Name, @Sponsor, @Desc, @Year, @Other, @Series, @SeriesNum, @Dest, @Offered";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -279,6 +280,14 @@ namespace Callen.Windows
                 paramPeer.Value = combo_peer.SelectedValue.ToString();
                 cmd.Parameters.Add(paramPeer);
 
+                SqlParameter paramOffered = new SqlParameter();
+                paramOffered.ParameterName = "@Offered";
+                if(check_offer.IsChecked == true)
+                    paramOffered.Value = 1;
+                else
+                    paramOffered.Value = 0;
+                cmd.Parameters.Add(paramOffered);
+
                 var inst_id = cmd.ExecuteScalar();
 
                 thisConnection.Close();
@@ -304,7 +313,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_GIFT_WITH_ITEM @ItemID, @Dest";
+                string Get_Data = "EXEC G_Callen.ADD_GIFT_WITH_ITEM @ItemID, @Dest, @Offered";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -317,6 +326,14 @@ namespace Callen.Windows
                 paramPeer.ParameterName = "@Dest";
                 paramPeer.Value = combo_peer.SelectedValue.ToString();
                 cmd.Parameters.Add(paramPeer);
+
+                SqlParameter paramOffered = new SqlParameter();
+                paramOffered.ParameterName = "@Offered";
+                if (check_offer.IsChecked == true)
+                    paramOffered.Value = 1;
+                else
+                    paramOffered.Value = 0;
+                cmd.Parameters.Add(paramOffered);
 
                 var inst_id = cmd.ExecuteScalar();
 

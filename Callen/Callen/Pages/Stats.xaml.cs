@@ -32,7 +32,9 @@ namespace Callen.Pages
             fillLastInst();
             fillLastMod();
             fillLastView();
+            fillCountPeers();
             fillFav();
+            fillRecentGifts();
         }
 
         private void fillLastMod() // Fills LastMod DataGrid
@@ -113,6 +115,32 @@ namespace Callen.Pages
             }
         }
 
+        private void fillCountPeers() // Fills LastMod DataGrid
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.COUNT_PEERS";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("CntPeer");
+                sda.Fill(dt);
+
+                cPeergrid.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+
         private void fillFav() // Fills Favorites DataGrid
         {
             try
@@ -139,11 +167,55 @@ namespace Callen.Pages
             }
         }
 
+        private void fillRecentGifts() // Fills Favorites DataGrid
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_Callen.RECENT_GIFTS";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("RECGIFTS");
+                sda.Fill(dt);
+
+                recGiftGrid.ItemsSource = dt.DefaultView;
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+        }
+        
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
         {
             DataGridRow r = sender as DataGridRow;
             DataRowView row = r.Item as DataRowView;
             getInstInfo(row["Inst_Number"].ToString());
+        }
+
+        private void Row_Gift_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
+        {
+            DataGridRow r = sender as DataGridRow;
+            DataRowView row = r.Item as DataRowView;
+            if (!String.IsNullOrEmpty((recGiftGrid.SelectedItem as DataRowView)["Inst"].ToString()))
+            {
+                Instance tmp = GiftsSupp.getInstInfo((recGiftGrid.SelectedItem as DataRowView)["Inst"].ToString());
+                if (tmp != null)
+                    openDesc(tmp);
+            }
+            else
+            {
+                Item tmp = GiftsSupp.getItemInfo((recGiftGrid.SelectedItem as DataRowView)["Item"].ToString());
+                if (tmp != null)
+                    openDesc(tmp);
+            }
         }
 
         private void KeyDown_Item(object sender, KeyEventArgs e) //Press enter to open desc
@@ -228,6 +300,17 @@ namespace Callen.Pages
 
             if (popDesc.wasEdited())
                 fillLastMod();
+
+            win.Opacity = 1;
+        }
+
+        private void openDesc(Item it) // Opens the description of specific item in Row
+        {
+            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            winDescGift popDesc = new winDescGift(it);
+            popDesc.Owner = win;
+            win.Opacity = 0.5;
+            popDesc.ShowDialog();
 
             win.Opacity = 1;
         }

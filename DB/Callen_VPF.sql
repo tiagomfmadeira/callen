@@ -22,23 +22,50 @@ GO
 -- Returns list of gifted items
 DROP PROCEDURE G_CALLEN.GIFT_INST
 GO
-CREATE PROCEDURE G_CALLEN.GIFT_INST
+CREATE PROCEDURE G_CALLEN.GIFT_INST @Offer INT
 AS
-SELECT dest, CONVERT(VARCHAR(10),Gift_Date,110) AS date, Item_Name AS name, Item_Year AS year, sponsor,Item_Descr AS descr,Inst,Item
-		FROM(SELECT dest,Gift_Date,  Item_Name, Item_Descr, Item_Year, EE.Entity_name as Sponsor,Inst,Item
-				FROM(SELECT Gift_Date,Item_Name, Item_Descr, Item_Year, Sponsor,Inst,Item,Peer
-						FROM(SELECT Item, Inst, Peer, Gift_Date
-							 FROM G_Callen.GIFT) AS Offer
-						LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
-										FROM G_Callen.ITEM) AS IT
-						ON Offer.Item = IT.Item_ID) AS ITEMS
-				LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
-								FROM G_Callen.ENTITY) AS EE 
-				ON ITEMS.Sponsor = EE.Entity_ID
-		LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name as dest
-						FROM G_Callen.ENTITY) AS Offer_E 
-		ON ITEMS.Peer = Offer_E.Entity_ID) as smth;
+SELECT dest, CONVERT(VARCHAR(10),Gift_Date,110) AS date, Item_Name AS name, Item_Year AS year, sponsor,Item_Descr AS descr,Inst,Item,Gift_ID
+		FROM(SELECT dest,Gift_Date,  Item_Name, Item_Descr, Item_Year, EE.Entity_name as Sponsor,Inst,Item,Gift_ID
+				FROM(SELECT Gift_Date,Item_Name, Item_Descr, Item_Year, Sponsor,Inst,Item,Peer,Gift_ID
+					FROM(SELECT Offered.Item, Offered.Peer, Gift_Date,Inst,Gift_ID
+						FROM(SELECT Gift_ID, Item, Peer, Gift_Date
+							 FROM G_Callen.GIFT
+							 WHERE Offered = @Offer) AS Offered
+						LEFT OUTER JOIN G_Callen.GIFTINST AS OfferInst
+						ON Offered.Gift_ID = OfferInst.Gift) AS Offer
+					LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
+									FROM G_Callen.ITEM) AS IT
+					ON Offer.Item = IT.Item_ID) AS ITEMS
+			LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
+							FROM G_Callen.ENTITY) AS EE 
+			ON ITEMS.Sponsor = EE.Entity_ID
+	LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name as dest
+					FROM G_Callen.ENTITY) AS Offer_E 
+	ON ITEMS.Peer = Offer_E.Entity_ID) as smth;
 go
+
+-- changes gift plan to gifted
+DROP PROCEDURE G_CALLEN.ADD_PLAN_TO_GIFTS;
+GO
+CREATE PROCEDURE G_CALLEN.ADD_PLAN_TO_GIFTS @GiftPlan INT
+AS
+	UPDATE G_Callen.GIFT SET Offered = 1 WHERE Gift_ID = @GiftPlan;
+
+	DECLARE @instID INT;
+	EXEC @instID = G_Callen.fInstGift @GiftPlan;
+	
+	IF @instID > -1
+		UPDATE G_Callen.INST SET State = 1 WHERE Inst_Number = @instID;
+GO
+
+-- Removes plan (doesnt change instance/item in any way)
+DROP PROCEDURE G_CALLEN.REMOVE_PLAN;
+GO
+CREATE PROCEDURE G_CALLEN.REMOVE_PLAN @GiftPlan INT
+AS
+	DELETE FROM G_Callen.GIFTINST WHERE Gift = @GiftPlan;
+	DELETE FROM G_Callen.GIFT WHERE Gift_ID = @GiftPlan;
+GO
 
 -- Returns Item ID + Name by View
 DROP PROCEDURE G_Callen.LastVisItems;
@@ -213,7 +240,7 @@ SELECT Item_ID, Item_Name,Inst_PicPath
 					WHERE (ISNULL (@Item_Sponsor, '') = '' OR Entity_Name LIKE '%'+@Item_Sponsor+'%')) AS EE 
     ON ITEMS_E.Sponsor = EE.Entity_ID;
 go
-/*
+
 -- returns list of Items Id, name and pic_path of inst with pics only
 DROP PROCEDURE G_Callen.ITEMS_PIC_MODE;
 GO
@@ -250,19 +277,6 @@ CREATE PROCEDURE G_Callen.SET_FAVOURITE @ItemID INT
 AS
 	UPDATE G_Callen.INST SET Favorite = ~Favorite WHERE Inst_Number = @ItemID;
 GO
-
--- Returns Item ID + Name by Modify
-DROP VIEW G_Callen.LastModItems;
-GO
-CREATE VIEW G_Callen.LastModItems
-AS
-	SELECT TOP 25 Inst_Number, Item_Name
-	FROM (SELECT Item_ID, Item_Name FROM G_Callen.ITEM) AS I 
-		 JOIN (SELECT Item_ID,Inst_Number, Date_Mod FROM G_Callen.INST WHERE State = '0') AS IT
-		 ON I.Item_ID = IT.Item_ID
-	ORDER BY Date_Mod DESC;
-;
-go
 
 -- Returns Item ID + Name by Modify
 DROP PROCEDURE G_Callen.LastModItems;
@@ -395,6 +409,21 @@ AS
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
 
+-- Returns Item ID + Name by Insert
+DROP PROCEDURE G_Callen.COUNT_PEERS;
+GO
+CREATE PROCEDURE G_Callen.COUNT_PEERS
+AS
+	SELECT Entity_Name AS peer,QuantityOffered AS count
+	FROM (SELECT TOP 25 *
+		  FROM G_Callen.PEER
+		  ORDER BY QuantityOffered DESC) AS P
+	LEFT JOIN (SELECT Entity_ID,Entity_Name 
+			   FROM G_Callen.ENTITY) AS E
+	ON P.Peer_ID = E.Entity_ID;
+;
+go
+
 -- Creates a Sponsor entiry
 
 DROP PROCEDURE G_Callen.ADD_SPONSOR;
@@ -486,7 +515,7 @@ GO
 DROP PROCEDURE G_Callen.ADD_GIFT;
 go
 CREATE PROCEDURE G_Callen.ADD_GIFT @Name VARCHAR(100), @Sponsor INT, @Desc VARCHAR(255), @Year VARCHAR(10),
-										 @Other VARCHAR(150), @Series INT, @SeriesNum INT, @Dest INT
+										 @Other VARCHAR(150), @Series INT, @SeriesNum INT, @Dest INT, @Offered INT
 AS
 
 	DECLARE @ITEM_ID AS INT;
@@ -501,7 +530,7 @@ AS
 	IF(@Series > 0)
 		INSERT INTO G_Callen.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
-	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date) VALUES (@Dest,@ITEM_ID,GETDATE());
+	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ITEM_ID,GETDATE(),@Offered);
 
 	SELECT IDENT_CURRENT('G_Callen.GIFT');
 GO
@@ -509,12 +538,108 @@ GO
 -- Adds a new gift
 DROP PROCEDURE G_Callen.ADD_GIFT_WITH_ITEM;
 go
-CREATE PROCEDURE G_Callen.ADD_GIFT_WITH_ITEM @ItemID INT, @Dest INT
+CREATE PROCEDURE G_Callen.ADD_GIFT_WITH_ITEM @ItemID INT, @Dest INT, @Offered INT
 AS
-	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date) VALUES (@Dest,@ItemID,GETDATE());
+	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ItemID,GETDATE(),@Offered);
 
 	SELECT IDENT_CURRENT('G_Callen.GIFT');
 GO
+
+-- Adds a new gift
+DROP PROCEDURE G_Callen.ADD_GIFT_WITH_INST;
+go
+CREATE PROCEDURE G_Callen.ADD_GIFT_WITH_INST @InstID INT, @Dest INT, @Offered INT
+AS
+	DECLARE @ItemID INT;
+	DECLARE @out TABLE (id INT);
+	DECLARE @Gift INT;
+	SELECT @ItemID = Item_ID FROM G_Callen.INST WHERE Inst_Number = @InstID;
+
+	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date,Offered)
+				OUTPUT INSERTED.Gift_ID INTO @Out(id)
+				VALUES (@Dest,@ItemID,GETDATE(),@Offered);
+
+	SELECT @Gift = id FROM @out;
+
+	INSERT INTO G_Callen.GIFTINST(Gift,Inst) VALUES (@Gift,@InstID);
+
+	IF @Offered = 1
+		UPDATE G_Callen.INST SET State = 1 WHERE Inst_Number = @InstID;
+
+	SELECT IDENT_CURRENT('G_Callen.GIFT');
+GO
+
+-- Used to search the table in pro mode
+DROP PROCEDURE G_Callen.SEARCH_GIFTS;
+go
+CREATE PROCEDURE G_Callen.SEARCH_GIFTS @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
+											@Item_Year AS VARCHAR(10), @Item_Note AS VARCHAR(150), @Item_Theme AS VARCHAR(50),
+												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
+													@Item_Other AS VARCHAR(255), @Offer INT
+AS
+	SELECT name, descr, year, sponsor, Inst, Item,Gift_ID, date,dest
+	FROM(SELECT Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Entity_Name AS sponsor,Inst_Number AS Inst,Item_ID AS Item,Gift_ID,CONVERT(VARCHAR(10),Gift_Date,110) AS date,dest,SponsorID
+		 FROM(SELECT Inst_Number, Item_Name, Item_Descr, Item_Year, SponsorID,Item_ID,dest,Gift_ID,Gift_Date,Peer
+			FROM(SELECT  Inst_Number, Item_Name, Item_Descr, Item_Year,dest ,INST.Item_ID,Arquive,Gift_ID,Gift_Date,Peer,IT.Sponsor AS SponsorID
+				FROM(SELECT Inst_Number,dest, Arquive, Item_ID,Gift_ID,Gift_Date,Peer
+					FROM(SELECT Offered.Item, dest, Gift_Date,Inst,Gift_ID
+						FROM(SELECT Gift_ID, Item, Peer AS dest, Gift_Date
+								FROM G_Callen.GIFT
+								WHERE Offered = @Offer) AS Offered
+						INNER JOIN (SELECT * 
+										FROM G_Callen.GIFTINST
+										WHERE (ISNULL (@InstID, '') = '' OR Inst = @InstID)) AS OfferInst
+						ON Offered.Gift_ID = OfferInst.Gift) AS Offer
+					INNER JOIN(SELECT Item_ID, Inst_Number, Arquive, Peer
+									FROM G_Callen.INST
+									WHERE State = '1'
+									AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')) AS I
+					ON Offer.Inst = I.Inst_Number) AS INST
+			INNER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
+						FROM G_Callen.ITEM
+						WHERE (ISNULL (@Item_Name, '') = '' OR Item_Name LIKE  '%'+@Item_Name+'%')
+							AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
+							AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr  LIKE '%'+@Item_Desc+'%')
+							AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
+			ON INST.Item_ID = IT.Item_ID) AS ITEMS
+		INNER JOIN(SELECT *
+					FROM G_Callen.ARQUIVE
+					WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
+						AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  = @Item_Theme)) AS A
+		ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+	INNER JOIN(SELECT Entity_ID, Entity_Name 
+				FROM G_Callen.ENTITY
+				WHERE (ISNULL (@Item_Sponsor, '') = '' OR 
+						Entity_Name LIKE '%'+@Item_Sponsor+'%')) AS E 
+	ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
+INNER JOIN(SELECT Entity_ID, Entity_Name 
+			FROM G_Callen.ENTITY
+			WHERE (ISNULL (@Item_Peer, '') = '' OR Entity_Name LIKE  '%'+@Item_Peer+'%')) AS EE 
+ON ITEMS_E.SponsorID = EE.Entity_ID;
+GO
+
+-- Returns Item ID + Name by Insert
+DROP PROCEDURE G_Callen.RECENT_GIFTS;
+GO
+CREATE PROCEDURE G_Callen.RECENT_GIFTS
+AS
+	SELECT Entity_Name AS Entity, Item_Name,Item, Inst
+	FROM(	SELECT Entity_Name,Item,Inst
+			FROM(	SELECT Peer, Item, Inst
+					FROM(	SELECT DISTINCT TOP 25  * 
+							FROM G_Callen.GIFT
+							WHERE Offered = 1
+							ORDER BY Gift_Date DESC) AS G
+					LEFT JOIN G_Callen.GIFTINST AS GI
+					ON G.Gift_ID = GI.Gift) AS GIF
+			LEFT JOIN (SELECT Entity_ID, Entity_Name
+					   FROM G_Callen.ENTITY) AS E
+			ON GIF.Peer = E.Entity_ID) AS ENT
+	LEFT JOIN (SELECT *
+			   FROM G_Callen.ITEM) AS I
+	ON ENT.Item = I.Item_ID;
+;
+go
 
 -- Returns Sponsor info (used to fill combo box)
 DROP PROCEDURE G_Callen.FILL_SPONSOR_BOX;
@@ -555,6 +680,35 @@ LEFT JOIN G_Callen.ADDRESS AS A
 ON ENTA.Address = A.Address_ID;
 GO
 
+-- Returns searched list of peers
+DROP PROCEDURE SEARCH_PEER 
+GO
+CREATE PROCEDURE SEARCH_PEER @PeerID INT, @PeerName VARCHAR(50), @PeerEmail VARCHAR(150),@PeerPhone VARCHAR(15),@PeerStreet VARCHAR(150),
+								@PeerCity VARCHAR(50),@PeerState VARCHAR(50),@PeerCountry VARCHAR(50),@PeerPostalCode VARCHAR(50)
+AS
+	SELECT ID,Nome,Email,Telefone,Ofertas,Street AS Rua, City AS Cidade, State AS Estado, Country AS País, PostalCode As CódPostal
+	FROM(SELECT ID,Nome,Email,Telefone,Ofertas,Address
+		 FROM (SELECT Entity_ID AS ID, Entity_Name AS Nome, Email, Phone AS Telefone, QuantityOffered as Ofertas
+			  FROM (SELECT *  
+					FROM G_Callen.ENTITY
+					WHERE (ISNULL (@PeerID, '') = '' OR Entity_ID = @PeerID)
+					  AND (ISNULL (@PeerName, '') = '' OR Entity_Name LIKE '%'+@PeerName+'%')
+					  AND (ISNULL (@PeerEmail, '') = '' OR Email LIKE '%'+@PeerEmail+'%')
+					  AND (ISNULL (@PeerPhone, '') = '' OR Phone LIKE '%'+@PeerPhone+'%')) AS E
+			  INNER JOIN G_Callen.PEER 
+			  on E.Entity_ID = Peer_ID) AS ENT
+ 		 LEFT JOIN G_Callen.ENTITYADRESS AS EA
+		 ON ENT.ID = EA.Entity) AS ENTA
+	INNER JOIN (SELECT *
+			   FROM G_Callen.ADDRESS
+			   WHERE (ISNULL (@PeerPostalCode, '') = '' OR PostalCode LIKE '%'+@PeerPostalCode+'%')
+			     AND (ISNULL (@PeerStreet, '') = '' OR Street LIKE '%'+@PeerStreet+'%')
+				 AND (ISNULL (@PeerCity, '') = '' OR City LIKE '%'+@PeerCity+'%')
+				 AND (ISNULL (@PeerState, '') = '' OR State LIKE '%'+@PeerState+'%')
+				 AND (ISNULL (@PeerCountry, '') = '' OR Country LIKE '%'+@PeerCountry+'%')) AS A
+	ON ENTA.Address = A.Address_ID;
+GO
+
 -- Returns full list of sponsors
 DROP PROCEDURE FILL_SPONSOR 
 GO
@@ -570,6 +724,35 @@ FROM(SELECT ID,Nome,Email,Telefone,Website,Address
 	 ON ENT.ID = EA.Entity) AS ENTA
 LEFT JOIN G_Callen.ADDRESS AS A
 ON ENTA.Address = A.Address_ID;
+GO
+
+-- Returns searched list of peers
+DROP PROCEDURE G_Callen.SEARCH_SPONSOR
+GO
+CREATE PROCEDURE G_Callen.SEARCH_SPONSOR @SponsorID INT, @SponsorName VARCHAR(50), @SponsorEmail VARCHAR(150),@SponsorPhone VARCHAR(15),@SponsorStreet VARCHAR(150),
+								@SponsorCity VARCHAR(50),@SponsorState VARCHAR(50),@SponsorCountry VARCHAR(50),@SponsorPostalCode VARCHAR(50)
+AS
+	SELECT ID,Nome,Email,Telefone,Website,Street AS Rua, City AS Cidade, State AS Estado, Country AS País, PostalCode As CódPostal
+	FROM(SELECT ID,Nome,Email,Telefone,Website,Address
+		 FROM (SELECT Entity_ID AS ID, Entity_Name AS Nome, Email, Phone AS Telefone, Website
+			  FROM (SELECT *  
+					FROM G_Callen.ENTITY
+					WHERE (ISNULL (@SponsorID, '') = '' OR Entity_ID = @SponsorID)
+					  AND (ISNULL (@SponsorName, '') = '' OR Entity_Name LIKE '%'+@SponsorName+'%')
+					  AND (ISNULL (@SponsorEmail, '') = '' OR Email LIKE '%'+@SponsorEmail+'%')
+					  AND (ISNULL (@SponsorPhone, '') = '' OR Phone LIKE '%'+@SponsorPhone+'%')) AS E
+			  INNER JOIN G_Callen.SPONSOR 
+			  on E.Entity_ID = Sponsor_ID) AS ENT
+ 		 LEFT JOIN G_Callen.ENTITYADRESS AS EA
+		 ON ENT.ID = EA.Entity) AS ENTA
+	INNER JOIN (SELECT *
+			   FROM G_Callen.ADDRESS
+			   WHERE (ISNULL (@SponsorPostalCode, '') = '' OR PostalCode LIKE '%'+@SponsorPostalCode+'%')
+			     AND (ISNULL (@SponsorStreet, '') = '' OR Street LIKE '%'+@SponsorStreet+'%')
+				 AND (ISNULL (@SponsorCity, '') = '' OR City LIKE '%'+@SponsorCity+'%')
+				 AND (ISNULL (@SponsorState, '') = '' OR State LIKE '%'+@SponsorState+'%')
+				 AND (ISNULL (@SponsorCountry, '') = '' OR Country LIKE '%'+@SponsorCountry+'%')) AS A
+	ON ENTA.Address = A.Address_ID;
 GO
 
 -------- TRIGGER --------
@@ -592,5 +775,22 @@ AS
 		RETURN;
 	ELSE
 		UPDATE G_Callen.INST SET Inst_PicPath = CONCAT(@SUB_IMG_PATH,@ID) WHERE Inst_Number = @ID
+GO
+
+------- FUNCTIONS ---------
+DROP FUNCTION G_Callen.fInstGift
+GO
+CREATE FUNCTION G_Callen.fInstGift (@GiftPlan INT) 
+RETURNS INT
+AS
+BEGIN
+	DECLARE @instID INT;
+	SELECT @instID = Inst FROM G_Callen.GIFTINST WHERE Gift = @GiftPlan;
+
+	IF @instID IS NOT NULL
+		RETURN @instID;
+	
+	RETURN -1;
+END
 GO
 */

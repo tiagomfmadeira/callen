@@ -192,3 +192,7 @@ C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Wi
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\Forms\winAddSeries.baml
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winAddGiftInst.g.cs
 C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Windows\winAddGiftInst.baml
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Pages\Gifted.g.cs
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Pages\Planned.g.cs
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Pages\Gifted.baml
+C:\Users\D\Desktop\UA\3Ano\2Semestre\CalenProj\callen\Callen\Callen\obj\Debug\Pages\Planned.baml

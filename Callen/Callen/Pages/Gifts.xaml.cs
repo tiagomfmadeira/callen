@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 using Callen.Windows;
 
+using System.Text.RegularExpressions;
+
 using System.Data;
 using System.Data.SqlClient;
 
@@ -28,7 +30,8 @@ namespace Callen.Pages
         public Gifts()
         {
             InitializeComponent();
-            FillDataGrid();
+            gifted_toggle.IsChecked = true;
+            Switcher.Switch(this.Gift_zone, new Gifted());
         }
 
         private void btn_gift_Click(object sender, RoutedEventArgs e)
@@ -38,27 +41,118 @@ namespace Callen.Pages
             popGift.Owner = win;
             win.Opacity = 0.5;
             popGift.ShowDialog();
-
+            
             win.Opacity = 1;
         }
 
-        private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Peer, Sponsor) 
+        private void gifted_toggle_Click(object sender, RoutedEventArgs e)
         {
+            if (gifted_toggle.IsChecked == true)
+            {
+                Switcher.Switch(this.Gift_zone, new Gifted());
+                planned_toggle.IsChecked = false;
+                return;
+            }
+            gifted_toggle.IsChecked = true;
+        }
+
+        private void planned_toggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (planned_toggle.IsChecked == true)
+            {
+                Switcher.Switch(this.Gift_zone, new Planned());
+                gifted_toggle.IsChecked = false;
+                return;
+            }
+            planned_toggle.IsChecked = true;
+        }
+
+        private void btn_adv_search_Click(object sender, RoutedEventArgs e)
+        {
+            // if all textbox are empty, don't search
+            if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(peer_box.Text)
+                  && String.IsNullOrEmpty(sponsor_box.Text))
+                return;
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.GIFT_INST";
+                string Get_Data = "";
+
+                Get_Data = "EXEC G_Callen.SEARCH_GIFTS @InstID, @Item_Name, @Item_Desc, @Item_Year, "
+                            + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor,@Item_Other,@Offer;";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
+                SqlParameter paramID = new SqlParameter();
+                paramID.ParameterName = "@InstID";
+                paramID.Value = id_box.Text;
+                cmd.Parameters.Add(paramID);
+
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Item_Name";
+                paramName.Value = name_box.Text;
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramDesc = new SqlParameter();
+                paramDesc.ParameterName = "@Item_Desc";
+                paramDesc.Value = desc_box.Text;
+                cmd.Parameters.Add(paramDesc);
+
+                SqlParameter paramYear = new SqlParameter();
+                paramYear.ParameterName = "@Item_Year";
+                paramYear.Value = year_box.Text;
+                cmd.Parameters.Add(paramYear);
+
+                SqlParameter paramNote = new SqlParameter();
+                paramNote.ParameterName = "@Item_Note";
+                paramNote.Value = note_box.Text;
+                cmd.Parameters.Add(paramNote);
+
+                SqlParameter paramTheme = new SqlParameter();
+                paramTheme.ParameterName = "@Item_Theme";
+                paramTheme.Value = theme_box.Text;
+                cmd.Parameters.Add(paramTheme);
+
+                SqlParameter paramFolder = new SqlParameter();
+                paramFolder.ParameterName = "@Item_Folder";
+                paramFolder.Value = folder_box.Text;
+                cmd.Parameters.Add(paramFolder);
+
+                SqlParameter paramPeer = new SqlParameter();
+                paramPeer.ParameterName = "@Item_Peer";
+                paramPeer.Value = peer_box.Text;
+                cmd.Parameters.Add(paramPeer);
+
+                SqlParameter paramSponsor = new SqlParameter();
+                paramSponsor.ParameterName = "@Item_Sponsor";
+                paramSponsor.Value = sponsor_box.Text;
+                cmd.Parameters.Add(paramSponsor);
+
+                SqlParameter paramOther = new SqlParameter();
+                paramOther.ParameterName = "@Item_Other";
+                paramOther.Value = other_box.Text;
+                cmd.Parameters.Add(paramOther);
+
+                SqlParameter paramOffer = new SqlParameter();
+                paramOffer.ParameterName = "@Offer";
+                if (gifted_toggle.IsChecked == true)
+                    paramOffer.Value = 1;
+                else
+                    paramOffer.Value = 0;
+                cmd.Parameters.Add(paramOffer);
+
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Gifts");
+                DataTable dt = new DataTable("INST");
                 sda.Fill(dt);
 
-                grdGifts.ItemsSource = dt.DefaultView;
+                if (gifted_toggle.IsChecked == true)
+                    Switcher.Switch(this.Gift_zone, new Gifted(dt));
+                else
+                    Switcher.Switch(this.Gift_zone, new Planned(dt));
 
                 thisConnection.Close();
             }
@@ -68,107 +162,15 @@ namespace Callen.Pages
             }
         }
 
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        private void advanceSearch_Click(object sender, RoutedEventArgs e) // rotates arrow in search bar when clicked 
         {
-            if (!String.IsNullOrEmpty((grdGifts.SelectedItem as DataRowView)["Inst"].ToString()))
-                getInstInfo((grdGifts.SelectedItem as DataRowView)["Inst"].ToString());
-            else {
-                getItemInfo((grdGifts.SelectedItem as DataRowView)["Item"].ToString());
-            }
+
         }
 
-        private void getInstInfo(String id) // Gets Selected item info 
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_Callen.GET_INST_INFO @InstID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter param = new SqlParameter();
-
-                param.ParameterName = "@InstID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(), rdr["other"].ToString(),
-                                        rdr["img_path"].ToString(), rdr["note"].ToString(),rdr["Series_Name"].ToString(),rdr["NumberInSeries"].ToString());
-
-                    openDesc(it);
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
-
-        private void getItemInfo(String id)
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_Callen.GET_ITEM_INFO @ItemID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter param = new SqlParameter();
-
-                param.ParameterName = "@ItemID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    Item it = new Item(rdr["Item_Name"].ToString(),rdr["Item_ID"].ToString(),
-                        rdr["Item_Descr"].ToString(),rdr["Item_Year"].ToString(),rdr["Sponsor"].ToString(),
-                        rdr["Other"].ToString(),rdr["Series"].ToString(),rdr["NumberInSeries"].ToString());
-
-                    openDesc(it);
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
-
-        private void openDesc(Instance it) // Opens the description of specific item in Row
-        {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDescGift popDesc = new winDescGift(it);
-            popDesc.Owner = win;
-            win.Opacity = 0.5;
-            popDesc.ShowDialog();
-
-            win.Opacity = 1;
-        }
-
-        private void openDesc(Item it) // Opens the description of specific item in Row
-        {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDescGift popDesc = new winDescGift(it);
-            popDesc.Owner = win;
-            win.Opacity = 0.5;
-            popDesc.ShowDialog();
-
-            win.Opacity = 1;
+            Regex regex = new Regex("[^(0-9)0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

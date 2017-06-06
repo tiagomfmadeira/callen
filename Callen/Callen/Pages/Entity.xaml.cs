@@ -105,12 +105,6 @@ namespace Callen.Pages
 
         private void btn_adv_search_Click(object sender, RoutedEventArgs e)
         {
-            return;
-            // if all textbox are empty, don't search
-            if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
-                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(peer_box.Text)
-                  && String.IsNullOrEmpty(sponsor_box.Text))
-                return;
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
@@ -118,61 +112,64 @@ namespace Callen.Pages
 
                 string Get_Data = "";
                 
-                Get_Data = "EXEC G_Callen.SEARCH_ITEMS_PRO_VIEW @Item_ID, @Item_Name, @Item_Desc, @Item_Year, "
-                            + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor;";
+                if(peer_toggle.IsChecked == true)
+                    Get_Data = "EXEC SEARCH_PEER @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
+                else
+                    Get_Data = "EXEC G_Callen.SEARCH_SPONSOR @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
                 SqlParameter paramID = new SqlParameter();
-                paramID.ParameterName = "@Item_id";
+                paramID.ParameterName = "@PeerID";
                 paramID.Value = id_box.Text;
                 cmd.Parameters.Add(paramID);
 
                 SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@Item_Name";
+                paramName.ParameterName = "@PeerName";
                 paramName.Value = name_box.Text;
                 cmd.Parameters.Add(paramName);
 
-                SqlParameter paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Item_Desc";
-                paramDesc.Value = desc_box.Text;
-                cmd.Parameters.Add(paramDesc);
+                SqlParameter paramEmail = new SqlParameter();
+                paramEmail.ParameterName = "@PeerEmail";
+                paramEmail.Value = email_box.Text;
+                cmd.Parameters.Add(paramEmail);
 
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Item_Year";
-                paramYear.Value = year_box.Text;
-                cmd.Parameters.Add(paramYear);
+                SqlParameter paramPhone = new SqlParameter();
+                paramPhone.ParameterName = "@PeerPhone";
+                paramPhone.Value = phone_box.Text;
+                cmd.Parameters.Add(paramPhone);
 
-                SqlParameter paramNote = new SqlParameter();
-                paramNote.ParameterName = "@Item_Note";
-                paramNote.Value = note_box.Text;
-                cmd.Parameters.Add(paramNote);
+                SqlParameter paramStreet = new SqlParameter();
+                paramStreet.ParameterName = "@PeerStreet";
+                paramStreet.Value = street_box.Text;
+                cmd.Parameters.Add(paramStreet);
 
-                SqlParameter paramTheme = new SqlParameter();
-                paramTheme.ParameterName = "@Item_Theme";
-                paramTheme.Value = theme_box.Text;
-                cmd.Parameters.Add(paramTheme);
+                SqlParameter paramCity = new SqlParameter();
+                paramCity.ParameterName = "@PeerCity";
+                paramCity.Value = city_box.Text;
+                cmd.Parameters.Add(paramCity);
 
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Item_Folder";
-                paramFolder.Value = folder_box.Text;
-                cmd.Parameters.Add(paramFolder);
+                SqlParameter paramState = new SqlParameter();
+                paramState.ParameterName = "@PeerState";
+                paramState.Value = state_box.Text;
+                cmd.Parameters.Add(paramState);
 
-                SqlParameter paramPeer = new SqlParameter();
-                paramPeer.ParameterName = "@Item_Peer";
-                paramPeer.Value = peer_box.Text;
-                cmd.Parameters.Add(paramPeer);
+                SqlParameter paramCountry = new SqlParameter();
+                paramCountry.ParameterName = "@PeerCountry";
+                paramCountry.Value = country_box.Text;
+                cmd.Parameters.Add(paramCountry);
 
-                SqlParameter paramSponsor = new SqlParameter();
-                paramSponsor.ParameterName = "@Item_Sponsor";
-                paramSponsor.Value = sponsor_box.Text;
-                cmd.Parameters.Add(paramSponsor);
+                SqlParameter paramPC = new SqlParameter();
+                paramPC.ParameterName = "@PeerPostalCode";
+                paramPC.Value = postal_code_box.Text;
+                cmd.Parameters.Add(paramPC);
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("INST");
+                DataTable dt = new DataTable("Entities");
                 sda.Fill(dt);
 
+                grdColec.ItemsSource = dt.DefaultView;
 
                 thisConnection.Close();
             }
@@ -180,6 +177,7 @@ namespace Callen.Pages
             {
                 MessageBox.Show(ee.ToString());
             }
+            
         }
 
         private void advanceSearch_Click(object sender, RoutedEventArgs e) // rotates arrow in search bar when clicked 

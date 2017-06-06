@@ -107,16 +107,38 @@ namespace Callen.Windows
 
         private void btn_insert_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (combo_peer.SelectedItem == null)
+            {
+                MessageBox.Show("Necessita de Item e Destinatário");
+                return;
+            }
 
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.CREATE_FOLDER @Code, @Theme";
+                string Get_Data = "EXEC G_Callen.G_Callen.ADD_GIFT_WITH_INST @InstID, @Dest, @Offered";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter paramInst = new SqlParameter();
+                paramInst.ParameterName = "@InstID";
+                paramInst.Value = instId;
+                cmd.Parameters.Add(paramInst);
+
+                SqlParameter paramDest = new SqlParameter();
+                paramDest.ParameterName = "@Dest";
+                paramDest.Value = combo_peer.SelectedValue.ToString();
+                cmd.Parameters.Add(paramDest);
+
+                SqlParameter paramOffered = new SqlParameter();
+                paramOffered.ParameterName = "@Offered";
+                if (check_offer.IsChecked == true)
+                    paramOffered.Value = 1;
+                else
+                    paramOffered.Value = 0;
+                cmd.Parameters.Add(paramOffered);
 
                 cmd.ExecuteNonQuery();
 

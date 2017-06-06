@@ -11,11 +11,11 @@
 
         <Viewbox Stretch="Uniform">
             <Canvas Height="600" Width="800" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
-                <Border Height="127" Width="253" Canvas.Left="270" Canvas.Top="196" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
+                <Border Height="129" Width="253" Canvas.Left="293" Canvas.Top="244" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-                <Label Content="Adicionar ás Ofertas" Canvas.Left="333" Canvas.Top="214" Style="{DynamicResource menuFont}" FontSize="15" Panel.ZIndex="2" Foreground="{DynamicResource highLight}" />
+                <Label Content="Adicionar ás Ofertas" Canvas.Left="355" Canvas.Top="262" Style="{DynamicResource menuFont}" FontSize="15" Panel.ZIndex="2" Foreground="{DynamicResource highLight}" />
 
-                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="498" Canvas.Top="196">
+                <Button Width="25" Height="25" x:Name="btn_close" Click="btn_close_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="520" Canvas.Top="244">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -33,9 +33,9 @@
                     </Image>
                 </Button>
 
-                <Label Content="Destinatário" Canvas.Left="285" Canvas.Top="253" Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_peer" Width="130" Canvas.Left="365" Canvas.Top="253" Height="26"/>
-                <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="256" Canvas.Left="498">
+                <Label Content="Destinatário" Canvas.Left="307" Canvas.Top="301" Style="{DynamicResource formLabel}" />
+                <ComboBox Name="combo_peer" Width="130" Canvas.Left="387" Canvas.Top="301" Height="26"/>
+                <Button Name="btn_add_peer" Click="btn_add_peer_Click" FontFamily="20" Width="20" Height="20" Canvas.Top="304" Canvas.Left="520">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -56,7 +56,10 @@
                     </Button.Style>
                 </Button>
 
-                <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="381" Canvas.Top="292" />
+                <Label Content="Oferecido" Canvas.Left="322" Canvas.Top="339" Style="{DynamicResource formLabel}" Width="63" />
+                <CheckBox Name="check_offer" Canvas.Left="386" Canvas.Top="345"/>
+
+                <Button Name="btn_insert" Click="btn_insert_Click" Content="Inserir" Canvas.Left="480" Canvas.Top="346" />
             </Canvas>
         </Viewbox>
     </Grid>
