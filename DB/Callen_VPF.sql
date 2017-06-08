@@ -1,6 +1,7 @@
 ---------- PROCEDURES ----------
 /*
 -- Returns Items info (used to fill combo box)
+-- The rest of the info is used to auto fill the other parameters if an item is choosen
 DROP PROCEDURE G_Callen.ITEMS_BOX;
 GO
 CREATE PROCEDURE G_Callen.ITEMS_BOX
@@ -19,7 +20,7 @@ AS
 	SELECT Series_ID AS ID,Series_Name AS name FROM G_Callen.SERIES;
 GO
 
--- Returns list of gifted items
+-- Returns list of gifted or planned items 
 DROP PROCEDURE G_CALLEN.GIFT_INST
 GO
 CREATE PROCEDURE G_CALLEN.GIFT_INST @Offer INT
@@ -67,7 +68,7 @@ AS
 	DELETE FROM G_Callen.GIFT WHERE Gift_ID = @GiftPlan;
 GO
 
--- Returns Item ID + Name by View
+-- Returns Top 25 last visualized items
 DROP PROCEDURE G_Callen.LastVisItems;
 GO
 CREATE PROCEDURE G_Callen.LastVisItems
@@ -80,7 +81,7 @@ AS
 ;
 go
 
--- GETS SPECIFIC ITEM INFO
+-- Returns information about a specific instance (used to fill description)
 DROP PROCEDURE G_Callen.GET_INST_INFO;
 go
 CREATE PROCEDURE G_Callen.GET_INST_INFO @InstID INT
@@ -115,7 +116,7 @@ AS
 	UPDATE G_Callen.INST SET Date_View = GETDATE() WHERE Inst_Number = @InstID; -- "Trigger"
 go
 
--- GETS SPECIFIC ITEM INFO
+-- GETS SPECIFIC ITEM INFO (used to fill description)
 DROP PROCEDURE G_Callen.GET_ITEM_INFO;
 go
 CREATE PROCEDURE G_Callen.GET_ITEM_INFO @ItemID INT
@@ -135,7 +136,7 @@ LEFT JOIN (SELECT Entity_ID,Entity_Name
 ON E.Entity_ID = SSS.Sponsor;
 go
 
---Return Items Info
+--Return Items Info (Used to fill datagrid)
 DROP PROCEDURE G_Callen.ITEMS_INFO;
 GO
 CREATE PROCEDURE G_Callen.ITEMS_INFO
@@ -161,10 +162,10 @@ AS
     ON ITEMS_E.Sponsor = EE.Entity_ID;
 GO
 
--- Used to search the table in pro mode
-DROP PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW;
+-- Used to search the table in pro mode (datagrid mode)
+DROP PROCEDURE G_Callen.SEARCH_ITEMS_PRO;
 go
-CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PRO_VIEW @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
+CREATE PROCEDURE G_Callen.SEARCH_ITEMS_PRO @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
 											@Item_Year AS VARCHAR(10), @Item_Note AS VARCHAR(150), @Item_Theme AS VARCHAR(50),
 												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
 													@Item_Other AS VARCHAR(255)
@@ -250,13 +251,13 @@ AS
 	FROM (SELECT Item_ID, Inst_PicPath
 				FROM G_Callen.INST
 				WHERE NOT ISNULL(Inst_PicPath,'') = ''
-				   AND State = '0') AS IT
+				  AND State = '0') AS IT
 		  LEFT OUTER JOIN (SELECT Item_Name, Item_ID 
 						   FROM G_Callen.ITEM ) AS I
 		  ON I.Item_ID = IT.Item_ID;
 go
 
--- returns list of favourite items
+-- returns Top 25 list of favourite items
 DROP PROCEDURE G_Callen.FavouriteItems;
 GO
 CREATE PROCEDURE G_Callen.FavouriteItems
@@ -271,14 +272,14 @@ AS
 go
 
 -- sets an inst to favourite
-DROP PROCEDURE G_Callen.SET_FAVOURITE;
+DROP PROCEDURE G_Callen.TOGGLE_FAVOURITE;
 go
-CREATE PROCEDURE G_Callen.SET_FAVOURITE @ItemID INT
+CREATE PROCEDURE G_Callen.TOGGLE_FAVOURITE @ItemID INT
 AS
 	UPDATE G_Callen.INST SET Favorite = ~Favorite WHERE Inst_Number = @ItemID;
 GO
 
--- Returns Item ID + Name by Modify
+-- Returns Top 25 list of last modified Items (Item ID + Name)
 DROP PROCEDURE G_Callen.LastModItems;
 GO
 CREATE PROCEDURE G_Callen.LastModItems
@@ -291,7 +292,7 @@ AS
 ;
 go
 
--- Dá update as infos de uma inst
+-- Updates instance only information (returns 1 some info was updated)
 DROP PROCEDURE G_Callen.UPDATE_INST_INFO;
 go
 CREATE PROCEDURE G_Callen.UPDATE_INST_INFO @InstID INT, @InstNote VARCHAR(150), @InstPeer INT, @InstFolder INT
@@ -345,23 +346,41 @@ AS
 	SELECT * FROM G_Callen.ARQUIVE;
 GO
 
--- Cria um novo folder
+-- Creates a new folder (returns inserted row)
 DROP PROCEDURE G_Callen.CREATE_FOLDER;
 go
 CREATE PROCEDURE G_Callen.CREATE_FOLDER @Code VARCHAR(50), @Theme VARCHAR(50)
 AS
-	INSERT INTO G_Callen.ARQUIVE(Code, Theme_Descr) VALUES(@Code,@Theme)
+	DECLARE @out TABLE (id INT);
+	DECLARE @folderId INT;
+
+	INSERT INTO G_Callen.ARQUIVE(Code, Theme_Descr)
+	OUTPUT inserted.Arquive_ID into @out(id)
+	VALUES(@Code,@Theme)
+
+	SELECT @folderId = id FROM @out;
+
+	SELECT * FROM G_Callen.ARQUIVE WHERE Arquive_ID = @folderId;
 GO
 
--- Cria uma nova serie
+-- Created a new series (returns inserted row)
 DROP PROCEDURE G_Callen.CREATE_SERIES;
 go
 CREATE PROCEDURE G_Callen.CREATE_SERIES @Name VARCHAR(50), @Desc VARCHAR(50)
 AS
-	INSERT INTO G_Callen.SERIES(Series_Name, Descr) VALUES(@Name,@Desc);
+	DECLARE @out TABLE (id INT);
+	DECLARE @seriesId INT;
+
+	INSERT INTO G_Callen.SERIES(Series_Name, Descr)
+	OUTPUT inserted.Series_ID into @out(id)
+	VALUES(@Name,@Desc);
+
+	SELECT @seriesId = id FROM @out;
+
+	SELECT * FROM G_Callen.SERIES WHERE Series_ID = @seriesId;
 GO
 
--- Create Address
+-- Create a new Address (returns address id)
 DROP PROCEDURE G_Callen.CREATE_ADDRESS;
 go
 CREATE PROCEDURE G_Callen.CREATE_ADDRESS @Street VARCHAR(150),	@City VARCHAR(50),@State VARCHAR(50),
@@ -382,7 +401,7 @@ AS
 	RETURN @address_id;
 GO
 
--- Add Peer and Address
+-- Add Peer and Address (returns inserted row)
 DROP PROCEDURE G_Callen.ADD_PEER;
 GO
 CREATE PROCEDURE G_Callen.ADD_PEER @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15),
@@ -407,9 +426,16 @@ AS
 
 	IF(@address_id > -1)
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
+
+	SELECT *
+	FROM (SELECT * 
+	      FROM G_Callen.PEER 
+		  WHERE Peer_ID = @ENTITY_ID) AS P
+	LEFT OUTER JOIN ENTITY AS E
+	ON P.Peer_ID = E.Entity_ID;
 GO
 
--- Returns Item ID + Name by Insert
+-- Returns Top 25 Peers by quantity of items offered
 DROP PROCEDURE G_Callen.COUNT_PEERS;
 GO
 CREATE PROCEDURE G_Callen.COUNT_PEERS
@@ -424,7 +450,7 @@ AS
 ;
 go
 
--- Creates a Sponsor entiry
+-- Creates a Sponsor entiry (return inserted row)
 DROP PROCEDURE G_Callen.ADD_SPONSOR;
 go
 CREATE PROCEDURE G_Callen.ADD_SPONSOR @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15), 
@@ -450,9 +476,16 @@ AS
 	
 	IF(@address_id > -1)
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
+
+	SELECT *
+	FROM (SELECT * 
+	      FROM G_Callen.SPONSOR 
+		  WHERE Sponsor_ID = @ENTITY_ID) AS S
+	LEFT OUTER JOIN ENTITY AS E
+	ON S.Sponsor_ID = E.Entity_ID;
 GO
 
--- Returns Item ID + Name by Insert
+-- Returns the last 25 inserted items 
 DROP PROCEDURE G_Callen.LastInsertItems;
 GO
 CREATE PROCEDURE G_Callen.LastInsertItems
@@ -465,7 +498,7 @@ AS
 ;
 go
 
--- Adds a new Inst
+-- Adds a new Inst (returns inserted row)
 DROP PROCEDURE G_Callen.ADD_INST;
 go
 CREATE PROCEDURE G_Callen.ADD_INST @Name VARCHAR(100), @Sponsor INT, @Peer INT, @Desc VARCHAR(255), @Year VARCHAR(10),
@@ -491,7 +524,7 @@ AS
 		INSERT INTO G_Callen.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
 			VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 
-	SELECT IDENT_CURRENT('G_Callen.INST');
+	SELECT * FROM G_Callen.INST WHERE Inst_Number = IDENT_CURRENT('G_Callen.INST');
 GO
 
 -- Adds a new Inst with a old item
@@ -507,10 +540,10 @@ AS
 		INSERT INTO G_Callen.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
 			VALUES(@ItemID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 
-	SELECT IDENT_CURRENT('G_Callen.INST');
+	SELECT * FROM G_Callen.INST WHERE Inst_Number = IDENT_CURRENT('G_Callen.INST');
 GO
 
--- Adds a new gift
+-- Adds a new gift (returns inserted row)
 DROP PROCEDURE G_Callen.ADD_GIFT;
 go
 CREATE PROCEDURE G_Callen.ADD_GIFT @Name VARCHAR(100), @Sponsor INT, @Desc VARCHAR(255), @Year VARCHAR(10),
@@ -531,20 +564,20 @@ AS
 
 	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ITEM_ID,GETDATE(),@Offered);
 
-	SELECT IDENT_CURRENT('G_Callen.GIFT');
+	SELECT * FROM G_Callen.GIFT WHERE Gift_ID = IDENT_CURRENT('G_Callen.GIFT');
 GO
 
--- Adds a new gift
+-- Adds a new gift with old item (returns inserted row)
 DROP PROCEDURE G_Callen.ADD_GIFT_WITH_ITEM;
 go
 CREATE PROCEDURE G_Callen.ADD_GIFT_WITH_ITEM @ItemID INT, @Dest INT, @Offered INT
 AS
 	INSERT INTO G_Callen.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ItemID,GETDATE(),@Offered);
 
-	SELECT IDENT_CURRENT('G_Callen.GIFT');
+	SELECT * FROM G_Callen.GIFT WHERE Gift_ID = IDENT_CURRENT('G_Callen.GIFT');
 GO
 
--- Adds a new gift
+-- Adds a gift with an instance
 DROP PROCEDURE G_Callen.ADD_GIFT_WITH_INST;
 go
 CREATE PROCEDURE G_Callen.ADD_GIFT_WITH_INST @InstID INT, @Dest INT, @Offered INT
@@ -565,10 +598,10 @@ AS
 	IF @Offered = 1
 		UPDATE G_Callen.INST SET State = 1 WHERE Inst_Number = @InstID;
 
-	SELECT IDENT_CURRENT('G_Callen.GIFT');
+	SELECT * FROM G_Callen.GIFT WHERE Gift_ID = IDENT_CURRENT('G_Callen.GIFT');
 GO
 
--- Used to search the table in pro mode
+-- Used to search for gifts offered or planned
 DROP PROCEDURE G_Callen.SEARCH_GIFTS;
 go
 CREATE PROCEDURE G_Callen.SEARCH_GIFTS @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
@@ -617,7 +650,7 @@ INNER JOIN(SELECT Entity_ID, Entity_Name AS destName
 ON ITEMS_E.dest = EE.Entity_ID;
 GO
 
--- Returns Item ID + Name by Insert
+-- Returns Top 25 list of recent offered gifts
 DROP PROCEDURE G_Callen.RECENT_GIFTS;
 GO
 CREATE PROCEDURE G_Callen.RECENT_GIFTS
@@ -663,7 +696,7 @@ AS
 GO
 
 -- Returns full list of peers
-DROP PROCEDURE FILL_PEER 
+DROP PROCEDURE FILL_PEER (used to fill peers datagrid)
 GO
 CREATE PROCEDURE FILL_PEER 
 AS
@@ -708,7 +741,7 @@ AS
 	ON ENTA.Address = A.Address_ID;
 GO
 
--- Returns full list of sponsors
+-- Returns full list of sponsors (used to fill sponsor datagrid)
 DROP PROCEDURE FILL_SPONSOR 
 GO
 CREATE PROCEDURE FILL_SPONSOR
@@ -725,7 +758,7 @@ LEFT JOIN G_Callen.ADDRESS AS A
 ON ENTA.Address = A.Address_ID;
 GO
 
--- Returns searched list of peers
+-- Returns searched list of sponsors
 DROP PROCEDURE G_Callen.SEARCH_SPONSOR
 GO
 CREATE PROCEDURE G_Callen.SEARCH_SPONSOR @SponsorID INT, @SponsorName VARCHAR(50), @SponsorEmail VARCHAR(150),@SponsorPhone VARCHAR(15),@SponsorStreet VARCHAR(150),
@@ -755,7 +788,8 @@ AS
 GO
 
 -------- TRIGGER --------
--- Updates Image path to have correct Inst ID
+
+-- Updates Image path to have correct Inst ID And updates peer quantity offered
 DROP TRIGGER G_Callen.SET_IMG_PATH;
 go
 CREATE TRIGGER G_Callen.SET_IMG_PATH ON G_Callen.INST
@@ -767,7 +801,8 @@ AS
 
 	SELECT @SUB_IMG_PATH = Inst_PicPath, @ID = Inst_Number, @peerID = Peer FROM inserted;
 
-	UPDATE G_Callen.PEER SET QuantityOffered += 1 WHERE Peer_ID = @peerID;
+	IF(@peerID != null)
+		UPDATE G_Callen.PEER SET QuantityOffered += 1 WHERE Peer_ID = @peerID;
 
 	IF ISNULL(@SUB_IMG_PATH,'') = ''
 		RETURN;
@@ -776,6 +811,7 @@ AS
 GO
 
 ------- FUNCTIONS ---------
+--returns Instance number of gift or -1
 DROP FUNCTION G_Callen.fInstGift
 GO
 CREATE FUNCTION G_Callen.fInstGift (@GiftPlan INT) 
