@@ -71,7 +71,7 @@ namespace Callen.Pages
         {
             // if all textbox are empty, don't search
             if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
-                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(peer_box.Text)
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(dest_box.Text)
                   && String.IsNullOrEmpty(sponsor_box.Text))
                 return;
             try
@@ -82,7 +82,7 @@ namespace Callen.Pages
                 string Get_Data = "";
 
                 Get_Data = "EXEC G_Callen.SEARCH_GIFTS @InstID, @Item_Name, @Item_Desc, @Item_Year, "
-                            + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor,@Item_Other,@Offer;";
+                            + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Dest, @Item_Sponsor,@Item_Other,@Offer;";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -123,8 +123,8 @@ namespace Callen.Pages
                 cmd.Parameters.Add(paramFolder);
 
                 SqlParameter paramPeer = new SqlParameter();
-                paramPeer.ParameterName = "@Item_Peer";
-                paramPeer.Value = peer_box.Text;
+                paramPeer.ParameterName = "@Item_Dest";
+                paramPeer.Value = dest_box.Text;
                 cmd.Parameters.Add(paramPeer);
 
                 SqlParameter paramSponsor = new SqlParameter();

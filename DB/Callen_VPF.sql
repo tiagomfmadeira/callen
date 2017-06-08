@@ -381,6 +381,7 @@ AS
 
 	RETURN @address_id;
 GO
+*/
 
 -- Add Peer and Address
 DROP PROCEDURE G_Callen.ADD_PEER;
@@ -409,6 +410,7 @@ AS
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
 
+/*
 -- Returns Item ID + Name by Insert
 DROP PROCEDURE G_Callen.COUNT_PEERS;
 GO
@@ -574,48 +576,48 @@ DROP PROCEDURE G_Callen.SEARCH_GIFTS;
 go
 CREATE PROCEDURE G_Callen.SEARCH_GIFTS @InstID AS INT, @Item_Name AS VARCHAR(100), @Item_Desc AS VARCHAR(255),
 											@Item_Year AS VARCHAR(10), @Item_Note AS VARCHAR(150), @Item_Theme AS VARCHAR(50),
-												@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
+												@Item_Folder AS VARCHAR(50), @Item_Dest AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
 													@Item_Other AS VARCHAR(255), @Offer INT
 AS
-	SELECT name, descr, year, sponsor, Inst, Item,Gift_ID, date,dest
-	FROM(SELECT Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Entity_Name AS sponsor,Inst_Number AS Inst,Item_ID AS Item,Gift_ID,CONVERT(VARCHAR(10),Gift_Date,110) AS date,dest,SponsorID
-		 FROM(SELECT Inst_Number, Item_Name, Item_Descr, Item_Year, SponsorID,Item_ID,dest,Gift_ID,Gift_Date,Peer
-			FROM(SELECT  Inst_Number, Item_Name, Item_Descr, Item_Year,dest ,INST.Item_ID,Arquive,Gift_ID,Gift_Date,Peer,IT.Sponsor AS SponsorID
-				FROM(SELECT Inst_Number,dest, Arquive, Item_ID,Gift_ID,Gift_Date,Peer
+	SELECT name, descr, year, sponsor, Inst, Item,Gift_ID, date,destName AS dest
+	FROM(SELECT Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Entity_Name AS sponsor,Inst_Number AS Inst,Item,Gift_ID,CONVERT(VARCHAR(10),Gift_Date,110) AS date,dest,SponsorID
+		 FROM(SELECT Inst_Number, Item_Name, Item_Descr, Item_Year, SponsorID,Item,dest,Gift_ID,Gift_Date
+			FROM(SELECT  Inst_Number, Item_Name, Item_Descr, Item_Year,dest ,Item,Arquive,Gift_ID,Gift_Date,IT.Sponsor AS SponsorID
+				FROM(SELECT Inst_Number,dest, Arquive, Item,Gift_ID,Gift_Date
 					FROM(SELECT Offered.Item, dest, Gift_Date,Inst,Gift_ID
 						FROM(SELECT Gift_ID, Item, Peer AS dest, Gift_Date
 								FROM G_Callen.GIFT
 								WHERE Offered = @Offer) AS Offered
-						INNER JOIN (SELECT * 
-										FROM G_Callen.GIFTINST
-										WHERE (ISNULL (@InstID, '') = '' OR Inst = @InstID)) AS OfferInst
+						LEFT OUTER JOIN (SELECT * 
+									FROM G_Callen.GIFTINST
+									WHERE (ISNULL (@InstID, '') = '' OR Inst = @InstID)) AS OfferInst
 						ON Offered.Gift_ID = OfferInst.Gift) AS Offer
-					INNER JOIN(SELECT Item_ID, Inst_Number, Arquive, Peer
-									FROM G_Callen.INST
-									WHERE State = '1'
-									AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')) AS I
+					LEFT OUTER JOIN(SELECT Item_ID, Inst_Number, Arquive, Peer
+								FROM G_Callen.INST
+								WHERE State = '1'
+								AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')) AS I
 					ON Offer.Inst = I.Inst_Number) AS INST
 			INNER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
 						FROM G_Callen.ITEM
 						WHERE (ISNULL (@Item_Name, '') = '' OR Item_Name LIKE  '%'+@Item_Name+'%')
-							AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
-							AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr  LIKE '%'+@Item_Desc+'%')
-							AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
-			ON INST.Item_ID = IT.Item_ID) AS ITEMS
-		INNER JOIN(SELECT *
+						  AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
+						  AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr  LIKE '%'+@Item_Desc+'%')
+						  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
+			ON INST.Item = IT.Item_ID) AS ITEMS
+		LEFT OUTER JOIN(SELECT *
 					FROM G_Callen.ARQUIVE
 					WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
-						AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  = @Item_Theme)) AS A
+					  AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  LIKE '%'+@Item_Theme+'%')) AS A
 		ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
 	INNER JOIN(SELECT Entity_ID, Entity_Name 
 				FROM G_Callen.ENTITY
 				WHERE (ISNULL (@Item_Sponsor, '') = '' OR 
 						Entity_Name LIKE '%'+@Item_Sponsor+'%')) AS E 
-	ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
-INNER JOIN(SELECT Entity_ID, Entity_Name 
+	ON ITEMS_A.SponsorID = E.Entity_ID) AS ITEMS_E 
+INNER JOIN(SELECT Entity_ID, Entity_Name AS destName
 			FROM G_Callen.ENTITY
-			WHERE (ISNULL (@Item_Peer, '') = '' OR Entity_Name LIKE  '%'+@Item_Peer+'%')) AS EE 
-ON ITEMS_E.SponsorID = EE.Entity_ID;
+			WHERE (ISNULL (@Item_Dest, '') = '' OR Entity_Name LIKE  '%'+@Item_Dest+'%')) AS EE 
+ON ITEMS_E.dest = EE.Entity_ID;
 GO
 
 -- Returns Item ID + Name by Insert

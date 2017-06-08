@@ -63,8 +63,8 @@
                 <TextBlock Grid.Row="2" Text="Patrocinador" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
                 <TextBox Name="sponsor_box" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
-                <TextBlock Grid.Row="4" Text="Fornecedor" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="peer_box" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="4" Text="Destinatário" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
+                <TextBox Name="dest_box" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="3" Text="Descrição" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
                 <TextBox Name="desc_box" Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="3" Grid.RowSpan="3" Style="{StaticResource advanceSearchInput}"/>
