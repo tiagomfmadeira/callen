@@ -381,7 +381,6 @@ AS
 
 	RETURN @address_id;
 GO
-*/
 
 -- Add Peer and Address
 DROP PROCEDURE G_Callen.ADD_PEER;
@@ -410,7 +409,6 @@ AS
 		INSERT INTO G_Callen.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 GO
 
-/*
 -- Returns Item ID + Name by Insert
 DROP PROCEDURE G_Callen.COUNT_PEERS;
 GO
@@ -427,7 +425,6 @@ AS
 go
 
 -- Creates a Sponsor entiry
-
 DROP PROCEDURE G_Callen.ADD_SPONSOR;
 go
 CREATE PROCEDURE G_Callen.ADD_SPONSOR @Name VARCHAR(50), @Email VARCHAR(150), @Phone VARCHAR(15), 
@@ -758,8 +755,7 @@ AS
 GO
 
 -------- TRIGGER --------
-
--- Updares Image path to have correct Inst ID
+-- Updates Image path to have correct Inst ID
 DROP TRIGGER G_Callen.SET_IMG_PATH;
 go
 CREATE TRIGGER G_Callen.SET_IMG_PATH ON G_Callen.INST
