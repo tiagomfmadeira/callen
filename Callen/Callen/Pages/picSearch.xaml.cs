@@ -61,7 +61,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ITEMS_PIC_MODE";
+                string Get_Data = "EXEC CALLEN.ITEMS_PIC_MODE";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -128,7 +128,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.GET_INST_INFO @InstID";
+                string Get_Data = "EXEC CALLEN.GET_INST_INFO @InstID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

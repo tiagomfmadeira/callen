@@ -76,7 +76,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ITEMS_BOX";
+                string Get_Data = "EXEC CALLEN.ITEMS_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -112,7 +112,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_SPONSOR_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -147,7 +147,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -182,7 +182,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_SERIES_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_SERIES_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -233,7 +233,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_GIFT @Name, @Sponsor, @Desc, @Year, @Other, @Series, @SeriesNum, @Dest, @Offered";
+                string Get_Data = "EXEC CALLEN.ADD_GIFT @Name, @Sponsor, @Desc, @Year, @Other, @Series, @SeriesNum, @Dest, @Offered";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -313,7 +313,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ADD_GIFT_WITH_ITEM @ItemID, @Dest, @Offered";
+                string Get_Data = "EXEC CALLEN.ADD_GIFT_WITH_ITEM @ItemID, @Dest, @Offered";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

@@ -64,7 +64,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.CREATE_FOLDER @Code, @Theme";
+                string Get_Data = "EXEC CALLEN.CREATE_FOLDER @Code, @Theme";
 
                 SqlCommand cmd = new SqlCommand(Get_Data,thisConnection);
 

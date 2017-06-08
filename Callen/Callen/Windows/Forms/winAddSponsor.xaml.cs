@@ -80,7 +80,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "G_Callen.ADD_SPONSOR @Name, @Email, @Phone, @WebSite, @Street, @City, @State,@Country, @PostalCode;";
+                string Get_Data = "CALLEN.ADD_SPONSOR @Name, @Email, @Phone, @WebSite, @Street, @City, @State,@Country, @PostalCode;";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

@@ -226,7 +226,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.UPDATE_INST_INFO @InstID, @InstNote, @InstPeer, @InstFolder";
+                string Get_Data = "EXEC CALLEN.UPDATE_INST_INFO @InstID, @InstNote, @InstPeer, @InstFolder";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -285,7 +285,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -329,7 +329,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FOLDER_INFO";
+                string Get_Data = "EXEC CALLEN.FOLDER_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

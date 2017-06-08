@@ -84,7 +84,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.ITEMS_BOX";
+                string Get_Data = "EXEC CALLEN.ITEMS_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -120,7 +120,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FOLDER_INFO";
+                string Get_Data = "EXEC CALLEN.FOLDER_INFO";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -155,7 +155,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_SPONSOR_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -190,7 +190,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_PEER_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -225,7 +225,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC G_Callen.FILL_SERIES_BOX";
+                string Get_Data = "EXEC CALLEN.FILL_SERIES_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -320,9 +320,9 @@ namespace Callen.Windows
                 string Get_Data = "";
 
                 if (oldItem)
-                    Get_Data = "EXEC G_Callen.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
+                    Get_Data = "EXEC CALLEN.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
                 else
-                    Get_Data = "EXEC G_Callen.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Series, @SeriesNum, @Folder, @Other, @Note, @Img_Path";
+                    Get_Data = "EXEC CALLEN.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Series, @SeriesNum, @Folder, @Other, @Note, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
