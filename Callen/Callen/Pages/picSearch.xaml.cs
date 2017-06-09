@@ -87,7 +87,7 @@ namespace Callen.Pages
             items.Clear();
 
             for (int i = 0; i < 16 && i < dt.Rows.Count; i++)
-                items.Add(new PicItem() { ID = dt.Rows[i]["Item_ID"].ToString(),
+                items.Add(new PicItem() { ID = dt.Rows[i]["Inst_Number"].ToString(),
                                             Name = dt.Rows[i]["Item_Name"].ToString(),
                                                 ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
 

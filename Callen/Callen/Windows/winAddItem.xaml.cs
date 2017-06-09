@@ -406,12 +406,16 @@ namespace Callen.Windows
                 }
                 cmd.Parameters.Add(paramImg);
 
-                var inst_id = cmd.ExecuteScalar();
+                SqlDataReader rdr = cmd.ExecuteReader();
 
-                if (img.Source != null) // Theres an img
+                while (rdr.Read())
                 {
-                    var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
-                    System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + inst_id.ToString() + ".jpeg");
+                    if (img.Source != null) // Theres an img
+                    {
+                        var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
+                        System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + rdr["Inst_Number"].ToString() + ".jpeg");
+                    }
+                    break;
                 }
 
                 thisConnection.Close();

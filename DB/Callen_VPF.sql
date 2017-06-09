@@ -210,11 +210,11 @@ CREATE PROCEDURE CALLEN.SEARCH_ITEMS_PIC @InstID AS INT, @Item_Name AS VARCHAR(1
 														@Item_Folder AS VARCHAR(50), @Item_Peer AS VARCHAR(50), @Item_Sponsor AS VARCHAR(50),
 															@Item_Other AS VARCHAR(255)
 AS
-SELECT Item_ID, Item_Name,Inst_PicPath
-    FROM(SELECT Item_ID,Item_Name,Inst_PicPath,Sponsor
-        FROM(SELECT Item_ID,Item_Name, Peer,Inst_PicPath,Sponsor
-            FROM(SELECT INST.Item_ID,Peer, Arquive , Item_Name,Inst_PicPath,Sponsor
-                FROM(SELECT Item_ID, Arquive, Peer,Inst_PicPath
+SELECT Inst_Number,Item_Name,Inst_PicPath
+    FROM(SELECT Inst_Number,Item_Name,Inst_PicPath,Sponsor
+        FROM(SELECT Inst_Number,Item_Name, Peer,Inst_PicPath,Sponsor
+            FROM(SELECT Inst_Number,Peer, Arquive , Item_Name,Inst_PicPath,Sponsor
+                FROM(SELECT Item_ID,Inst_Number, Arquive, Peer,Inst_PicPath
                      FROM CALLEN.INST
 					 WHERE State = '0'
 						   AND NOT ISNULL(Inst_PicPath,'') = ''
@@ -247,8 +247,8 @@ DROP PROCEDURE CALLEN.ITEMS_PIC_MODE;
 GO
 CREATE PROCEDURE CALLEN.ITEMS_PIC_MODE
 AS
-	SELECT I.Item_ID, Item_Name, Inst_PicPath
-	FROM (SELECT Item_ID, Inst_PicPath
+	SELECT Inst_Number, Item_Name, Inst_PicPath
+	FROM (SELECT Item_ID,Inst_Number, Inst_PicPath
 				FROM CALLEN.INST
 				WHERE NOT ISNULL(Inst_PicPath,'') = ''
 				  AND State = '0') AS IT
@@ -317,6 +317,7 @@ AS
 	IF(@oldPeer != @InstPeer)
 	BEGIN
 		UPDATE CALLEN.PEER SET QuantityOffered -= 1 WHERE Peer_ID = @oldPeer;
+		UPDATE CALLEN.PEER SET QuantityOffered += 1 WHERE Peer_ID = @InstPeer;
 
 		UPDATE CALLEN.INST
 			SET Peer = @InstPeer WHERE Inst_Number = @InstID;
@@ -414,23 +415,26 @@ AS
 	DECLARE @address_id INT;
 	DECLARE @AddOut TABLE(id INT);
 
-	INSERT INTO CALLEN.ENTITY(Entity_Name, Email, Phone)
-				OUTPUT INSERTED.Entity_ID INTO @out(id) 
-				VALUES (@Name, @Email, @Phone);
+	BEGIN TRAN
+		INSERT INTO CALLEN.ENTITY(Entity_Name, Email, Phone)
+					OUTPUT INSERTED.Entity_ID INTO @out(id) 
+					VALUES (@Name, @Email, @Phone);
 
-	SELECT @ENTITY_ID = id FROM @out;
+		SELECT @ENTITY_ID = id FROM @out;
 
-	INSERT INTO CALLEN.PEER(Peer_ID,QuantityOffered) VALUES (@ENTITY_ID,0);
+		INSERT INTO CALLEN.PEER(Peer_ID,QuantityOffered) VALUES (@ENTITY_ID,0);
 
-	EXEC @address_id = CALLEN.CREATE_ADDRESS @Street, @City, @State, @Country, @PostalCode;
+		EXEC @address_id = CALLEN.CREATE_ADDRESS @Street, @City, @State, @Country, @PostalCode;
 
-	IF(@address_id > -1)
-		INSERT INTO CALLEN.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
+		IF(@address_id > -1)
+			INSERT INTO CALLEN.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
 
+	COMMIT TRAN;
+	
 	SELECT *
 	FROM (SELECT * 
-	      FROM CALLEN.PEER 
-		  WHERE Peer_ID = @ENTITY_ID) AS P
+			FROM CALLEN.PEER 
+			WHERE Peer_ID = @ENTITY_ID) AS P
 	LEFT OUTER JOIN ENTITY AS E
 	ON P.Peer_ID = E.Entity_ID;
 GO
@@ -464,6 +468,7 @@ AS
 	DECLARE @address_id INT;
 	DECLARE @AddOut TABLE(id INT);
 
+	BEGIN TRAN
 	INSERT INTO CALLEN.ENTITY(Entity_Name, Email, Phone) 
 				OUTPUT INSERTED.Entity_ID INTO @out(id)
 				VALUES (@Name, @Email, @Phone);
@@ -476,6 +481,7 @@ AS
 	
 	IF(@address_id > -1)
 		INSERT INTO CALLEN.ENTITYADRESS(Entity, Address) VALUES(@ENTITY_ID,@address_id);
+	COMMIT TRAN;
 
 	SELECT *
 	FROM (SELECT * 
@@ -508,21 +514,23 @@ AS
 	DECLARE @ITEM_ID AS INT;
 	DECLARE @out TABLE(id INT);
 
-	INSERT INTO CALLEN.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
-		OUTPUT INSERTED.Item_ID INTO @out(id)
-		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
+	BEGIN TRAN
+		INSERT INTO CALLEN.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+			OUTPUT INSERTED.Item_ID INTO @out(id)
+			VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
 
-	SELECT @ITEM_ID = id FROM @out;
+		SELECT @ITEM_ID = id FROM @out;
 
-	IF(@Series > 0)
-		INSERT INTO CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
+		IF(@Series > 0)
+			INSERT INTO CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
-	IF @Peer > 0
-		INSERT INTO CALLEN.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
-			VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
-	ELSE
-		INSERT INTO CALLEN.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
-			VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
+		IF @Peer > 0
+			INSERT INTO CALLEN.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+				VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
+		ELSE
+			INSERT INTO CALLEN.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
+				VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
+	COMMIT TRAN
 
 	SELECT * FROM CALLEN.INST WHERE Inst_Number = IDENT_CURRENT('CALLEN.INST');
 GO
@@ -553,17 +561,18 @@ AS
 	DECLARE @ITEM_ID AS INT;
 	DECLARE @out TABLE(id INT);
 
-	INSERT INTO CALLEN.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
-		OUTPUT INSERTED.Item_ID INTO @out(id)
-		VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
+	BEGIN TRAN
+		INSERT INTO CALLEN.ITEM(Item_Name,Item_Descr,Item_Year,Sponsor,Other,Type)
+			OUTPUT INSERTED.Item_ID INTO @out(id)
+			VALUES(@Name,@Desc,@Year,@Sponsor,@Other,1);
 
-	SELECT @ITEM_ID = id FROM @out;
+		SELECT @ITEM_ID = id FROM @out;
 
-	IF(@Series > 0)
-		INSERT INTO CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
+		IF(@Series > 0)
+			INSERT INTO CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
-	INSERT INTO CALLEN.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ITEM_ID,GETDATE(),@Offered);
-
+		INSERT INTO CALLEN.GIFT(Peer,Item,Gift_Date,Offered) VALUES (@Dest,@ITEM_ID,GETDATE(),@Offered);
+	COMMIT TRAN;
 	SELECT * FROM CALLEN.GIFT WHERE Gift_ID = IDENT_CURRENT('CALLEN.GIFT');
 GO
 
@@ -587,13 +596,15 @@ AS
 	DECLARE @Gift INT;
 	SELECT @ItemID = Item_ID FROM CALLEN.INST WHERE Inst_Number = @InstID;
 
-	INSERT INTO CALLEN.GIFT(Peer,Item,Gift_Date,Offered)
-				OUTPUT INSERTED.Gift_ID INTO @Out(id)
-				VALUES (@Dest,@ItemID,GETDATE(),@Offered);
+	BEGIN TRAN
+		INSERT INTO CALLEN.GIFT(Peer,Item,Gift_Date,Offered)
+					OUTPUT INSERTED.Gift_ID INTO @Out(id)
+					VALUES (@Dest,@ItemID,GETDATE(),@Offered);
 
-	SELECT @Gift = id FROM @out;
+		SELECT @Gift = id FROM @out;
 
-	INSERT INTO CALLEN.GIFTINST(Gift,Inst) VALUES (@Gift,@InstID);
+		INSERT INTO CALLEN.GIFTINST(Gift,Inst) VALUES (@Gift,@InstID);
+	COMMIT TRAN
 
 	IF @Offered = 1
 		UPDATE CALLEN.INST SET State = 1 WHERE Inst_Number = @InstID;
@@ -790,9 +801,9 @@ GO
 -------- TRIGGER --------
 
 -- Updates Image path to have correct Inst ID And updates peer quantity offered
-DROP TRIGGER CALLEN.SET_IMG_PATH;
+DROP TRIGGER CALLEN.INST_TRIGGER;
 go
-CREATE TRIGGER CALLEN.SET_IMG_PATH ON CALLEN.INST
+CREATE TRIGGER CALLEN.INST_TRIGGER ON CALLEN.INST
 AFTER INSERT
 AS
 	DECLARE @SUB_IMG_PATH AS VARCHAR(255);
@@ -801,13 +812,13 @@ AS
 
 	SELECT @SUB_IMG_PATH = Inst_PicPath, @ID = Inst_Number, @peerID = Peer FROM inserted;
 
-	IF(@peerID != null)
+	IF NOT (ISNULL(@peerID,'') = '')
 		UPDATE CALLEN.PEER SET QuantityOffered += 1 WHERE Peer_ID = @peerID;
 
 	IF ISNULL(@SUB_IMG_PATH,'') = ''
 		RETURN;
 	ELSE
-		UPDATE CALLEN.INST SET Inst_PicPath = CONCAT(@SUB_IMG_PATH,@ID) WHERE Inst_Number = @ID
+		UPDATE CALLEN.INST SET Inst_PicPath = CONCAT(@SUB_IMG_PATH,@ID) WHERE Inst_Number = @ID;
 GO
 
 ------- FUNCTIONS ---------
