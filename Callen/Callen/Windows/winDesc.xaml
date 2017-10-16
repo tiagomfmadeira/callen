@@ -131,19 +131,19 @@
 
                 <Label Content="Fornecedor" Canvas.Left="411" Canvas.Top="302" Style="{DynamicResource formLabel}" Width="73" />
                 <TextBox Name="item_peer" IsEnabled="False" Width="145" Canvas.Left="489" Canvas.Top="302" Height="26" Style="{StaticResource descTextBox}"/>
-                <ComboBox Name="combo_peer" Visibility="Hidden" Width="145" Canvas.Left="491" Canvas.Top="309" Height="26"/>
+                <ComboBox Name="combo_peer" Visibility="Hidden" Width="145" Canvas.Left="489" Canvas.Top="302" Height="26"/>
 
                 <Label Content="Série" Canvas.Left="173" Canvas.Top="231" Style="{DynamicResource formLabel}" Width="41" />
                 <TextBox Name="item_series" IsEnabled="False" Width="124" Canvas.Left="221" Canvas.Top="231" Height="26" Style="{StaticResource descTextBox}"/>
 
                 <Label Content="Tema" Canvas.Left="413" Canvas.Top="268" Style="{DynamicResource formLabel}" Width="41" />
                 <TextBox Name="item_theme" IsEnabled="False" Width="175" Canvas.Left="458" Canvas.Top="268" Height="26" Style="{StaticResource descTextBox}"/>
-                <ComboBox Name="combo_theme" Visibility="Hidden" Width="175" Canvas.Left="461" Canvas.Top="260" Height="26"/>
+                <ComboBox Name="combo_theme" Visibility="Hidden" Width="175" Canvas.Left="458" Canvas.Top="268" Height="26" SelectionChanged="combo_theme_SelectionChanged"/>
 
 
                 <Label Content="Pasta" Canvas.Left="412" Canvas.Top="231" Style="{DynamicResource formLabel}" Width="41" />
                 <TextBox Name="item_folder" IsEnabled="False" Width="60" Canvas.Left="459" Canvas.Top="231" Height="26" Style="{StaticResource descTextBox}"/>
-                <ComboBox Name="combo_folder" Visibility="Hidden" Width="60" Canvas.Left="462" Canvas.Top="222" Height="26" SelectionChanged="combo_folder_SelectionChanged"/>
+                <ComboBox Name="combo_folder" Visibility="Hidden" Width="60" Canvas.Left="459" Canvas.Top="231" Height="26" SelectionChanged="combo_folder_SelectionChanged"/>
 
                 <Label Content="Outro" Canvas.Left="173" Canvas.Top="266" Style="{DynamicResource formLabel}" Width="41" />
                 <TextBox Name="item_other" IsEnabled="False" Width="174" Canvas.Left="221" Canvas.Top="266" Height="26" Style="{StaticResource descTextBox}"/>

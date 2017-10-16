@@ -152,7 +152,8 @@ AS
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
 			LEFT OUTER JOIN(SELECT *
 							FROM G_CALLEN.ARQUIVE) AS A
-			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A
+	ORDER BY ID DESC 
 GO
 
 -- Used to search the table in pro mode (datagrid mode)

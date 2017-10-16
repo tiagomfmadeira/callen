@@ -258,6 +258,10 @@ namespace Callen.Windows
                 {
                     winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
                     noti.Show();
+                    //update folder, theme and peer text boxes
+                    item_folder.Text = combo_folder.Text;
+                    item_theme.Text = combo_theme.Text;
+                    item_peer.Text = combo_peer.Text;
                 }
 
                 thisConnection.Close();
@@ -474,6 +478,11 @@ namespace Callen.Windows
         public bool wasEdited()
         {
             return edited;
+        }
+
+        private void combo_theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
