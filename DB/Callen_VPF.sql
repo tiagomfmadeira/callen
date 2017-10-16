@@ -141,25 +141,18 @@ DROP PROCEDURE G_CALLEN.ITEMS_INFO;
 GO
 CREATE PROCEDURE G_CALLEN.ITEMS_INFO
 AS
-	SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
-    FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
-        FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
-            FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
-                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
+	SELECT Favorite as favourite, Inst_Number as ID, Item_Name as name,Note as note, Item_Descr as descr, Item_Year as year, Theme_Descr as theme, Code as folder, Other as other
+        FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Other
+            FROM(SELECT Favorite, Inst_Number,Note, Arquive , Item_Name, Item_Descr, Item_Year, Other
+                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive
                      FROM G_CALLEN.INST
 					 WHERE State = '0') AS INST
-				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor
+				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Other
 							FROM G_CALLEN.ITEM) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
 			LEFT OUTER JOIN(SELECT *
 							FROM G_CALLEN.ARQUIVE) AS A
 			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
-        LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
-						FROM G_CALLEN.ENTITY) AS E 
-        ON ITEMS_A.Peer = E.Entity_ID) AS ITEMS_E 
-    LEFT OUTER JOIN(SELECT Entity_ID, Entity_Name 
-					FROM G_CALLEN.ENTITY) AS EE 
-    ON ITEMS_E.Sponsor = EE.Entity_ID;
 GO
 
 -- Used to search the table in pro mode (datagrid mode)

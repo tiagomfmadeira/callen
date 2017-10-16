@@ -48,10 +48,9 @@
                         <DataGridTextColumn Binding="{Binding Path=ID}" IsReadOnly="True" Header="ID" ElementStyle="{DynamicResource DGElemntCenter}"/>
                         <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome"/>
                         <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano"/>
+                        <DataGridTextColumn Binding="{Binding Path=other}" IsReadOnly="True" Header="Other"/>
                         <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}"/>
                         <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema"/>
-                        <DataGridTextColumn Binding="{Binding Path=sponsor}" IsReadOnly="True" Header="Patrocinador"/>
-                        <DataGridTextColumn Binding="{Binding Path=peer}" IsReadOnly="True" Header="Fornecedor"/>
                         <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=note}" IsReadOnly="True" Header="Nota" Width="*"/>
                     </DataGrid.Columns>

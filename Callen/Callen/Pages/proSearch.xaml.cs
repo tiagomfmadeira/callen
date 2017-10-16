@@ -47,7 +47,7 @@ namespace Callen.Pages
             e.Handled = true;
         }
 
-        private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Peer, Sponsor) 
+        private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Other) 
         {
             try
             {
