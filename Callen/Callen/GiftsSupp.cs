@@ -19,7 +19,7 @@ namespace Callen
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.GET_INST_INFO @InstID";
+                string Get_Data = "EXEC G_CALLEN.GET_INST_INFO @InstID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -59,7 +59,7 @@ namespace Callen
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.GET_ITEM_INFO @ItemID";
+                string Get_Data = "EXEC G_CALLEN.GET_ITEM_INFO @ItemID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

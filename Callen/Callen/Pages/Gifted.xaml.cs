@@ -61,7 +61,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.GIFT_INST 1";
+                string Get_Data = "EXEC G_CALLEN.GIFT_INST 1";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

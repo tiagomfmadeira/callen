@@ -165,6 +165,7 @@ namespace Callen.Windows
 
                     item_note.IsEnabled = false;
                     combo_folder.Visibility = Visibility.Hidden;
+                    combo_theme.Visibility = Visibility.Hidden;
                     item_theme.Text = inst.getTheme();
                     combo_peer.Visibility = Visibility.Hidden;
 
@@ -212,6 +213,7 @@ namespace Callen.Windows
 
                     item_note.IsEnabled = true;
                     combo_folder.Visibility = Visibility.Visible;
+                    combo_theme.Visibility = Visibility.Visible;
                     combo_peer.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = true;
@@ -226,7 +228,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.UPDATE_INST_INFO @InstID, @InstNote, @InstPeer, @InstFolder";
+                string Get_Data = "EXEC G_CALLEN.UPDATE_INST_INFO @InstID, @InstNote, @InstPeer, @InstFolder";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -247,7 +249,7 @@ namespace Callen.Windows
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@InstFolder";
-                paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
+                paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
                 bool updated = (bool) cmd.ExecuteScalar();
@@ -285,7 +287,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_PEER_BOX";
+                string Get_Data = "EXEC G_CALLEN.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -329,7 +331,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FOLDER_INFO";
+                string Get_Data = "EXEC G_CALLEN.FOLDERS_NAMES";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -341,12 +343,12 @@ namespace Callen.Windows
                 List<Folders> ft = new List<Folders>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                    ft.Add(new Folders { folder = row["Code"].ToString() });
                 }
 
                 combo_folder.ItemsSource = ft;
                 combo_folder.DisplayMemberPath = "folder";
-                combo_folder.SelectedValuePath = "theme";
+                combo_folder.SelectedValuePath = "folder";
 
                 foreach (Folders folder in combo_folder.Items)
                 {
@@ -369,7 +371,52 @@ namespace Callen.Windows
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
             if (combo_folder.SelectedItem != null)
-                item_theme.Text = combo_folder.SelectedValue.ToString();
+                try
+                {
+                    SqlConnection thisConnection = DBConnect.getConnection();
+                    thisConnection.Open();
+
+                    string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
+
+                    SqlCommand cmd = thisConnection.CreateCommand();
+                    cmd.CommandText = Get_Data;
+
+                    SqlParameter paramItem = new SqlParameter();
+                    paramItem.ParameterName = "@Code";
+                    Console.WriteLine(combo_folder.SelectedValue.ToString());
+                    paramItem.Value = combo_folder.SelectedValue.ToString();
+                    cmd.Parameters.Add(paramItem);
+
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable("Folder");
+                    sda.Fill(dt);
+
+                    List<Folders> ft = new List<Folders>();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                    }
+
+                    combo_theme.ItemsSource = ft;
+                    combo_theme.DisplayMemberPath = "theme";
+                    combo_theme.SelectedValuePath = "id";
+
+                    foreach (Folders folder in combo_theme.Items)
+                    {
+                        if (folder.theme == inst.getTheme())
+                        {
+                            combo_theme.SelectedItem = folder;
+                            break;
+                        }
+                    }
+
+                    thisConnection.Close();
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.ToString());
+
+                }
         }
 
         private void btn_gift_Click(object sender, RoutedEventArgs e)

@@ -64,7 +64,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.CREATE_SERIES @Name, @Desc";
+                string Get_Data = "EXEC G_CALLEN.CREATE_SERIES @Name, @Desc";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

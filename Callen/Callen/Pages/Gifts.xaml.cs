@@ -81,7 +81,7 @@ namespace Callen.Pages
 
                 string Get_Data = "";
 
-                Get_Data = "EXEC CALLEN.SEARCH_GIFTS @InstID, @Item_Name, @Item_Desc, @Item_Year, "
+                Get_Data = "EXEC G_CALLEN.SEARCH_GIFTS @InstID, @Item_Name, @Item_Desc, @Item_Year, "
                             + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Dest, @Item_Sponsor,@Item_Other,@Offer;";
 
                 SqlCommand cmd = thisConnection.CreateCommand();

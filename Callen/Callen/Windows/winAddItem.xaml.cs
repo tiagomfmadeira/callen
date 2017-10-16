@@ -84,7 +84,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.ITEMS_BOX";
+                string Get_Data = "EXEC G_CALLEN.ITEMS_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -120,7 +120,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FOLDER_INFO";
+                string Get_Data = "EXEC G_CALLEN.FOLDERS_NAMES";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -132,12 +132,12 @@ namespace Callen.Windows
                 List<Folders> ft = new List<Folders>();
                 foreach(DataRow row in dt.Rows)
                 {
-                    ft.Add(new Folders { folder = row["Code"].ToString(), theme = row["Theme_Descr"].ToString(),id = row["Arquive_ID"].ToString()});
+                    ft.Add(new Folders { folder = row["Code"].ToString()});
                 }
 
                 combo_folder.ItemsSource = ft;
                 combo_folder.DisplayMemberPath = "folder";
-                combo_folder.SelectedValuePath = "theme";
+                combo_folder.SelectedValuePath = "folder";
 
                 thisConnection.Close();
             }
@@ -148,6 +148,46 @@ namespace Callen.Windows
             }
         }
 
+        private void fillThemeCombo()
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlParameter paramItem = new SqlParameter();
+                paramItem.ParameterName = "@Code";
+                paramItem.Value = combo_folder.SelectedValue.ToString();
+                cmd.Parameters.Add(paramItem);
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("Folder");
+                sda.Fill(dt);
+
+                List<Folders> ft = new List<Folders>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                }
+
+                combo_theme.ItemsSource = ft;
+                combo_theme.DisplayMemberPath = "theme";
+                combo_theme.SelectedValuePath = "id";
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
         public void fillSponsorCombo() // gets info about the the sponsor and sets the respective combo box 
         {
             try
@@ -155,7 +195,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_SPONSOR_BOX";
+                string Get_Data = "EXEC G_CALLEN.FILL_SPONSOR_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -190,7 +230,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_PEER_BOX";
+                string Get_Data = "EXEC G_CALLEN.FILL_PEER_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -225,7 +265,7 @@ namespace Callen.Windows
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_SERIES_BOX";
+                string Get_Data = "EXEC G_CALLEN.FILL_SERIES_BOX";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -320,9 +360,9 @@ namespace Callen.Windows
                 string Get_Data = "";
 
                 if (oldItem)
-                    Get_Data = "EXEC CALLEN.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
+                    Get_Data = "EXEC G_CALLEN.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
                 else
-                    Get_Data = "EXEC CALLEN.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Series, @SeriesNum, @Folder, @Other, @Note, @Img_Path";
+                    Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Series, @SeriesNum, @Folder, @Other, @Note, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -384,7 +424,7 @@ namespace Callen.Windows
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Folder";
-                paramFolder.Value = (combo_folder.SelectedItem as Folders).id.ToString();
+                paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
                 SqlParameter paramNote = new SqlParameter();
@@ -431,9 +471,17 @@ namespace Callen.Windows
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
             if (combo_folder.SelectedItem != null)
-                text_theme.Text = combo_folder.SelectedValue.ToString();
+            {
+                combo_theme.IsEnabled = true;
+                btn_add_theme.IsEnabled = true;
+
+                fillThemeCombo();
+            }
             else
-                text_theme.Text = "";
+            {
+                combo_theme.IsEnabled = false;
+                btn_add_theme.IsEnabled = false;
+            }
         }
 
         private void combo_item_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
@@ -534,6 +582,17 @@ namespace Callen.Windows
 
             this.Opacity = 1; // turn opacity back to 1
             fillFolderCombo();
+        }
+
+        private void btn_add_theme_Click(object sender, RoutedEventArgs e)
+        {
+            winAddFolder popAddFol = new winAddFolder(combo_folder.SelectedValue.ToString());
+            popAddFol.Owner = this;
+            this.Opacity = 0.85;
+            popAddFol.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+            fillThemeCombo();
         }
 
         private void btn_add_series_Click(object sender, RoutedEventArgs e)

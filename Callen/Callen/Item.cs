@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Data;
+using System.Data.SqlClient;
+
 namespace Callen
 {
     public class Item  // Used to define an Item in a Collection 
@@ -12,6 +15,10 @@ namespace Callen
         public String ID { set; get; }
 
         private String name, id, desc, year, sponsor, other, series, seriesNumber;
+
+        public Item()
+        {
+        }
 
         public Item(String name, String ID, String Desc, String year, String sponsor, String other)
         {
@@ -129,6 +136,45 @@ namespace Callen
         public String getInstID()
         {
             return inst_num;
+        }
+    }
+
+    public class ItemsName
+    {
+        public static IList<Item> CreateNamesList()
+        {
+            List<Item> names = new List<Item>();
+
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_CALLEN.ITEMS_BOX";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("Items");
+                sda.Fill(dt);
+
+                List<Item> items = new List<Item>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    items.Add(new Item() { Name = row["Item_Name"].ToString(), ID = row["Item_ID"].ToString() });
+                }
+
+                thisConnection.Close();
+
+                return items.ToList();
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.ToString());
+            }
+
+            return new List<Item>().ToList();
         }
     }
 }

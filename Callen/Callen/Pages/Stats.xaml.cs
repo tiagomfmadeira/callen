@@ -44,7 +44,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.LastModItems";
+                string Get_Data = "EXEC G_CALLEN.LastModItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -70,7 +70,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.LastVisItems";
+                string Get_Data = "EXEC G_CALLEN.LastVisItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -96,7 +96,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.LastInsertItems";
+                string Get_Data = "EXEC G_CALLEN.LastInsertItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -122,7 +122,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.COUNT_PEERS";
+                string Get_Data = "EXEC G_CALLEN.COUNT_PEERS";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -148,7 +148,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FavouriteItems";
+                string Get_Data = "EXEC G_CALLEN.FavouriteItems";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -174,7 +174,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.RECENT_GIFTS";
+                string Get_Data = "EXEC G_CALLEN.RECENT_GIFTS";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -259,7 +259,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.GET_INST_INFO @InstID";
+                string Get_Data = "EXEC G_CALLEN.GET_INST_INFO @InstID";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 

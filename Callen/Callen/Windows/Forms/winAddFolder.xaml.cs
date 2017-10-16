@@ -35,6 +35,24 @@ namespace Callen.Windows.Forms
             }
         }
 
+        public winAddFolder(string code)
+        {
+            InitializeComponent();
+            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized;
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
+
+            wind_name.Content = "Adicionar Tema";
+            folder_box.Text = code;
+            folder_box.IsEnabled = false;
+        }
+
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -64,7 +82,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.CREATE_FOLDER @Code, @Theme";
+                string Get_Data = "EXEC G_CALLEN.CREATE_FOLDER @Code, @Theme";
 
                 SqlCommand cmd = new SqlCommand(Get_Data,thisConnection);
 

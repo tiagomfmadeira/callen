@@ -40,7 +40,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_PEER;";
+                string Get_Data = "EXEC G_CALLEN.FILL_PEER";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -53,7 +53,7 @@ namespace Callen.Pages
             }
             catch
             {
-                MessageBox.Show("db error");
+                MessageBox.Show("db error - Peer");
             }
         }
 
@@ -64,7 +64,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.FILL_SPONSOR";
+                string Get_Data = "EXEC G_CALLEN.FILL_SPONSOR";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -77,7 +77,7 @@ namespace Callen.Pages
             }
             catch
             {
-                MessageBox.Show("db error");
+                MessageBox.Show("db error - Sponsor");
             }
         }
 
@@ -113,9 +113,9 @@ namespace Callen.Pages
                 string Get_Data = "";
                 
                 if(peer_toggle.IsChecked == true)
-                    Get_Data = "EXEC CALLEN.SEARCH_PEER @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
+                    Get_Data = "EXEC G_CALLEN.SEARCH_PEER @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
                 else
-                    Get_Data = "EXEC CALLEN.SEARCH_SPONSOR @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
+                    Get_Data = "EXEC G_CALLEN.SEARCH_SPONSOR @PeerID, @PeerName, @PeerEmail, @PeerPhone, @PeerStreet, @PeerCity, @PeerState, @PeerCountry, @PeerPostalCode;";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

@@ -61,7 +61,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.GIFT_INST 0";
+                string Get_Data = "EXEC G_CALLEN.GIFT_INST 0";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -109,7 +109,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.ADD_PLAN_TO_GIFTS @GiftPlan";
+                string Get_Data = "EXEC G_CALLEN.ADD_PLAN_TO_GIFTS @GiftPlan";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
@@ -138,7 +138,7 @@ namespace Callen.Pages
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.REMOVE_PLAN @GiftPlan";
+                string Get_Data = "EXEC G_CALLEN.REMOVE_PLAN @GiftPlan";
 
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;

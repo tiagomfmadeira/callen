@@ -30,7 +30,7 @@
                     </Image>
                 </Button>
 
-                <Label Content="Adicionar Pasta" Canvas.Left="354" Canvas.Top="240" Style="{DynamicResource menuFont}" FontSize="15" Panel.ZIndex="2" Foreground="{DynamicResource highLight}" />
+                <Label Name="wind_name" Content="Adicionar Pasta" Canvas.Left="354" Canvas.Top="240" Style="{DynamicResource menuFont}" FontSize="15" Panel.ZIndex="2" Foreground="{DynamicResource highLight}" />
 
 
                 <Label Content="Pasta" Canvas.Left="342" Canvas.Top="274" Style="{DynamicResource formLabel}" Width="40" />

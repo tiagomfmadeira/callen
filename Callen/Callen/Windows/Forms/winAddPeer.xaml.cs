@@ -82,7 +82,7 @@ namespace Callen.Windows.Forms
                 SqlConnection thisConnection = DBConnect.getConnection();
                 thisConnection.Open();
 
-                string Get_Data = "EXEC CALLEN.ADD_PEER @Name, @Email, @Phone, @Street, @City, @State,@Country, @PostalCode;";
+                string Get_Data = "EXEC G_CALLEN.ADD_PEER @Name, @Email, @Phone, @Street, @City, @State,@Country, @PostalCode;";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
