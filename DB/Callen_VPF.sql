@@ -92,12 +92,12 @@ AS
 			FROM(SELECT Favorite,Inst_Number, Item_Name, Item_Descr,Other, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor ,Note, Inst_PicPath,Item_ID
 				FROM(SELECT Favorite, Inst_Number, Item_Name,Other, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor ,Note, Inst_PicPath,I.Item_ID
 					FROM(SELECT Favorite, Inst_Number, Item_ID, Code, Peer, Theme_Descr ,Note, Inst_PicPath
-						FROM(SELECT Item_ID, Inst_Number, Favorite, Arquive, Peer , Note, Inst_PicPath 
+						FROM(SELECT Item_ID, Inst_Number, Favorite, Archive, Peer , Note, Inst_PicPath 
 							FROM G_CALLEN.INST
 							WHERE Inst_Number = @InstID) AS IT 
 							LEFT JOIN(SELECT * 
-									  FROM G_CALLEN.ARQUIVE) AS A 
-							ON IT.Arquive = A.Arquive_ID) AS IA 
+									  FROM G_CALLEN.ARCHIVE) AS A 
+							ON IT.Archive = A.Archive_ID) AS IA 
 						LEFT JOIN(SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Sponsor, Other
 							FROM G_CALLEN.ITEM) AS I 
 						ON IA.Item_ID = I.Item_ID) AS IAI
@@ -143,16 +143,16 @@ CREATE PROCEDURE G_CALLEN.ITEMS_INFO
 AS
 	SELECT Favorite as favourite, Inst_Number as ID, Item_Name as name,Note as note, Item_Descr as descr, Item_Year as year, Theme_Descr as theme, Code as folder, Other as other
         FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Other
-            FROM(SELECT Favorite, Inst_Number,Note, Arquive , Item_Name, Item_Descr, Item_Year, Other
-                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive
+            FROM(SELECT Favorite, Inst_Number,Note, Archive , Item_Name, Item_Descr, Item_Year, Other
+                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Archive
                      FROM G_CALLEN.INST
 					 WHERE State = '0') AS INST
 				LEFT OUTER JOIN (SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Other
 							FROM G_CALLEN.ITEM) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
 			LEFT OUTER JOIN(SELECT *
-							FROM G_CALLEN.ARQUIVE) AS A
-			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A
+							FROM G_CALLEN.ARCHIVE) AS A
+			ON ITEMS.Archive = A.Archive_ID) AS ITEMS_A
 	ORDER BY ID DESC 
 GO
 
@@ -167,8 +167,8 @@ AS
 SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Note AS note,Theme_Descr AS theme,Code AS folder,Peer_name AS peer,Entity_Name AS sponsor
     FROM(SELECT Favorite, Inst_Number, Item_Name,Note, Item_Descr, Item_Year, Theme_Descr, Code, Entity_Name AS Peer_name, Sponsor
         FROM(SELECT Favorite, Inst_Number,Note, Item_Name, Item_Descr, Item_Year, Theme_Descr, Code, Peer, Sponsor
-            FROM(SELECT Favorite, Inst_Number,Note, Peer, Arquive , Item_Name, Item_Descr, Item_Year, Sponsor
-                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Arquive, Peer
+            FROM(SELECT Favorite, Inst_Number,Note, Peer, Archive , Item_Name, Item_Descr, Item_Year, Sponsor
+                FROM(SELECT Item_ID, Inst_Number,Note, Favorite, Archive, Peer
                      FROM G_CALLEN.INST
 					 WHERE State = '0'
 					   AND (ISNULL (@InstID, '') = '' OR Inst_Number = @InstID)
@@ -181,10 +181,10 @@ SELECT Favorite AS favourite,Inst_Number AS ID,Item_Name AS name,Item_Descr AS d
 							  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
 			INNER JOIN(SELECT *
-					   FROM G_CALLEN.ARQUIVE
+					   FROM G_CALLEN.ARCHIVE
 					   WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
 						 AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  = @Item_Theme)) AS A
-			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+			ON ITEMS.Archive = A.Archive_ID) AS ITEMS_A 
         INNER JOIN(SELECT Entity_ID, Entity_Name 
 				   FROM G_CALLEN.ENTITY
 				   WHERE (ISNULL (@Item_Sponsor, '') = '' OR 
@@ -207,8 +207,8 @@ AS
 SELECT Inst_Number,Item_Name,Inst_PicPath
     FROM(SELECT Inst_Number,Item_Name,Inst_PicPath,Sponsor
         FROM(SELECT Inst_Number,Item_Name, Peer,Inst_PicPath,Sponsor
-            FROM(SELECT Inst_Number,Peer, Arquive , Item_Name,Inst_PicPath,Sponsor
-                FROM(SELECT Item_ID,Inst_Number, Arquive, Peer,Inst_PicPath
+            FROM(SELECT Inst_Number,Peer, Archive , Item_Name,Inst_PicPath,Sponsor
+                FROM(SELECT Item_ID,Inst_Number, Archive, Peer,Inst_PicPath
                      FROM G_CALLEN.INST
 					 WHERE State = '0'
 						   AND NOT ISNULL(Inst_PicPath,'') = ''
@@ -222,10 +222,10 @@ SELECT Inst_Number,Item_Name,Inst_PicPath
 								   AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
 				ON INST.Item_ID = IT.Item_ID) AS ITEMS
 			INNER JOIN(SELECT *
-							FROM G_CALLEN.ARQUIVE
+							FROM G_CALLEN.ARCHIVE
 							WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
 							  AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr = @Item_Theme)) AS A
-			ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+			ON ITEMS.Archive = A.Archive_ID) AS ITEMS_A 
         INNER JOIN(SELECT Entity_ID, Entity_Name 
 						FROM G_CALLEN.ENTITY
 						WHERE (ISNULL (@Item_Peer, '') = '' OR Entity_Name LIKE  '%'+@Item_Peer+'%')) AS E 
@@ -299,7 +299,7 @@ AS
 
 	SET @updated = 0;
 
-	SELECT @oldPeer = Peer, @oldNote = Note, @oldFolder = Arquive FROM G_CALLEN.INST WHERE Inst_Number = @InstID;
+	SELECT @oldPeer = Peer, @oldNote = Note, @oldFolder = Archive FROM G_CALLEN.INST WHERE Inst_Number = @InstID;
 
 	IF @oldNote != @InstNote
 	BEGIN
@@ -322,7 +322,7 @@ AS
 	IF(@oldFolder != @InstFolder) 
 	BEGIN
 		UPDATE G_CALLEN.INST
-			SET Arquive = @InstFolder WHERE Inst_Number = @InstID;
+			SET Archive = @InstFolder WHERE Inst_Number = @InstID;
 
 		SET @updated = 1;
 	END
@@ -338,7 +338,7 @@ DROP PROCEDURE G_CALLEN.FOLDER_INFO;
 GO
 CREATE PROCEDURE G_CALLEN.FOLDER_INFO
 AS
-	SELECT * FROM G_CALLEN.ARQUIVE ORDER BY Code;
+	SELECT * FROM G_CALLEN.ARCHIVE ORDER BY Code;
 GO
 
 -- Returns folder names
@@ -347,7 +347,7 @@ GO
 CREATE PROCEDURE G_CALLEN.FOLDERS_NAMES
 AS
 	SELECT Code
-	FROM G_CALLEN.ARQUIVE
+	FROM G_CALLEN.ARCHIVE
 	GROUP BY Code
 	ORDER BY Code;
 GO
@@ -357,8 +357,8 @@ DROP PROCEDURE G_CALLEN.FOLDERS_THEMES;
 GO
 CREATE PROCEDURE G_CALLEN.FOLDERS_THEMES @Code VARCHAR(50)
 AS 
-	SELECT Arquive_ID, Theme_Descr
-	FROM G_CALLEN.ARQUIVE
+	SELECT Archive_ID, Theme_Descr
+	FROM G_CALLEN.ARCHIVE
 	WHERE Code = @Code
 	ORDER BY Theme_Descr;
 GO
@@ -371,13 +371,13 @@ AS
 	DECLARE @out TABLE (id INT);
 	DECLARE @folderId INT;
 
-	INSERT INTO G_CALLEN.ARQUIVE(Code, Theme_Descr)
-	OUTPUT inserted.Arquive_ID into @out(id)
+	INSERT INTO G_CALLEN.ARCHIVE(Code, Theme_Descr)
+	OUTPUT inserted.Archive_ID into @out(id)
 	VALUES(@Code,@Theme)
 
 	SELECT @folderId = id FROM @out;
 
-	SELECT * FROM G_CALLEN.ARQUIVE WHERE Arquive_ID = @folderId;
+	SELECT * FROM G_CALLEN.ARCHIVE WHERE Archive_ID = @folderId;
 GO
 
 -- Created a new series (returns inserted row)
@@ -541,10 +541,10 @@ AS
 			INSERT INTO G_CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
 		IF @Peer > 0
-			INSERT INTO G_CALLEN.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			INSERT INTO G_CALLEN.INST(Item_ID,Archive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
 				VALUES(@ITEM_ID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
 		ELSE
-			INSERT INTO G_CALLEN.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
+			INSERT INTO G_CALLEN.INST(Item_ID,Archive,Inst_PicPath,Note,Date_Insert,Favorite,State)
 				VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 	COMMIT TRAN
 
@@ -558,10 +558,10 @@ CREATE PROCEDURE G_CALLEN.ADD_INST_WITH_ITEM @ItemID INT, @Peer INT,@Folder INT,
 												@Note VARCHAR(150), @Img_Path VARCHAR(255)
 AS
 	IF(@Peer > 0)
-		INSERT INTO G_CALLEN.INST(Item_ID,Arquive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
+		INSERT INTO G_CALLEN.INST(Item_ID,Archive,Peer,Inst_PicPath,Note,Date_Insert,Favorite,State)
 			VALUES(@ItemID,@Folder,@Peer,@Img_Path,@Note,GETDATE(),0,0);
 	ELSE
-		INSERT INTO G_CALLEN.INST(Item_ID,Arquive,Inst_PicPath,Note,Date_Insert,Favorite,State)
+		INSERT INTO G_CALLEN.INST(Item_ID,Archive,Inst_PicPath,Note,Date_Insert,Favorite,State)
 			VALUES(@ItemID,@Folder,@Img_Path,@Note,GETDATE(),0,0);
 
 	SELECT * FROM G_CALLEN.INST WHERE Inst_Number = IDENT_CURRENT('G_CALLEN.INST');
@@ -639,8 +639,8 @@ AS
 	SELECT name, descr, year, sponsor, Inst, Item,Gift_ID, date,destName AS dest
 	FROM(SELECT Item_Name AS name,Item_Descr AS descr,Item_Year AS year,Entity_Name AS sponsor,Inst_Number AS Inst,Item,Gift_ID,CONVERT(VARCHAR(10),Gift_Date,110) AS date,dest,SponsorID
 		 FROM(SELECT Inst_Number, Item_Name, Item_Descr, Item_Year, SponsorID,Item,dest,Gift_ID,Gift_Date
-			FROM(SELECT  Inst_Number, Item_Name, Item_Descr, Item_Year,dest ,Item,Arquive,Gift_ID,Gift_Date,IT.Sponsor AS SponsorID
-				FROM(SELECT Inst_Number,dest, Arquive, Item,Gift_ID,Gift_Date
+			FROM(SELECT  Inst_Number, Item_Name, Item_Descr, Item_Year,dest ,Item,Archive,Gift_ID,Gift_Date,IT.Sponsor AS SponsorID
+				FROM(SELECT Inst_Number,dest, Archive, Item,Gift_ID,Gift_Date
 					FROM(SELECT Offered.Item, dest, Gift_Date,Inst,Gift_ID
 						FROM(SELECT Gift_ID, Item, Peer AS dest, Gift_Date
 								FROM G_CALLEN.GIFT
@@ -649,7 +649,7 @@ AS
 									FROM G_CALLEN.GIFTINST
 									WHERE (ISNULL (@InstID, '') = '' OR Inst = @InstID)) AS OfferInst
 						ON Offered.Gift_ID = OfferInst.Gift) AS Offer
-					LEFT OUTER JOIN(SELECT Item_ID, Inst_Number, Arquive, Peer
+					LEFT OUTER JOIN(SELECT Item_ID, Inst_Number, Archive, Peer
 								FROM G_CALLEN.INST
 								WHERE State = '1'
 								AND	(ISNULL (@Item_Note, '') = '' OR note   LIKE '%'+@Item_Note+'%')) AS I
@@ -662,10 +662,10 @@ AS
 						  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS IT
 			ON INST.Item = IT.Item_ID) AS ITEMS
 		LEFT OUTER JOIN(SELECT *
-					FROM G_CALLEN.ARQUIVE
+					FROM G_CALLEN.ARCHIVE
 					WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
 					  AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  LIKE '%'+@Item_Theme+'%')) AS A
-		ON ITEMS.Arquive = A.Arquive_ID) AS ITEMS_A 
+		ON ITEMS.Archive = A.Archive_ID) AS ITEMS_A 
 	INNER JOIN(SELECT Entity_ID, Entity_Name 
 				FROM G_CALLEN.ENTITY
 				WHERE (ISNULL (@Item_Sponsor, '') = '' OR 
