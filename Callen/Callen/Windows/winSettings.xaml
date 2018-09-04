@@ -34,9 +34,16 @@
                 </Button>
 
                 <Label Content="Color Scheme" Canvas.Left="167" Canvas.Top="195" Style="{DynamicResource formLabel}" Width="84" />
-
                 <Button Name="btn_change_color" Content="Dark Mode" Click="btn_change_color_Click" Canvas.Left="256" Canvas.Top="195" Height="26"/>
+
                 <!-- <xctk:ColorPicker Width="100" Height="Auto"  Canvas.Left="183" Canvas.Top="300"/> -->
+
+                <Label Content="DB Connect" Canvas.Left="167" Canvas.Top="225" Style="{DynamicResource formLabel}" Width="84" />
+                <TextBox Name="db_string" IsEnabled="False" Width="351" Canvas.Left="256" Canvas.Top="226" Height="26" Style="{StaticResource descTextBox}"/>
+
+
+                <Button x:Name="btn_save_changes" Content="Save Changes" Click="btn_save_changes" Canvas.Left="362" Canvas.Top="387" Height="26"/>
+
             </Canvas>
         </Viewbox>
     </Grid>

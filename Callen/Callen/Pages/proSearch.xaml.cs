@@ -100,8 +100,8 @@ namespace Callen.Pages
                 while (rdr.Read())
                 {
                     Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(), rdr["sponsor"].ToString(),
-                    rdr["other"].ToString(), rdr["img_path"].ToString(), rdr["note"].ToString(), rdr["Series_Name"].ToString(), rdr["NumberInSeries"].ToString());
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(),
+                    rdr["img_path"].ToString(), rdr["note"].ToString(), rdr["collec"].ToString());
 
                     openDesc(it);
                 }
@@ -117,12 +117,26 @@ namespace Callen.Pages
         private void openDesc(Instance it) // Opens the description of specific item in Row
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDesc popDesc = new winDesc(it);
-            popDesc.Owner = win;
-            win.Opacity = 0.5;
-            popDesc.ShowDialog();
 
-            win.Opacity = 1;
+            // Check if there is a image
+            if (it.getImagePath() != "")
+            {
+                winDesc popDesc = new winDesc(it);
+                popDesc.Owner = win;
+                win.Opacity = 0.5;
+                popDesc.ShowDialog();
+
+                win.Opacity = 1;
+            }
+            else
+            {
+                winDescNoImg popDesc = new winDescNoImg(it);
+                popDesc.Owner = win;
+                win.Opacity = 0.5;
+                popDesc.ShowDialog();
+
+                win.Opacity = 1;
+            }
         }
 
         private void formPage(object sender, RoutedEventArgs e) // Opens the form to add a new item 

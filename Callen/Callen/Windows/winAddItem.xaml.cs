@@ -48,9 +48,6 @@ namespace Callen.Windows
 
             fillItemCombo();
             fillFolderCombo();
-            fillSponsorCombo();
-            fillPeerCombo();
-            fillSeriesCombo();
 
             inserted = false;
             oldItem = false;
@@ -97,7 +94,7 @@ namespace Callen.Windows
                 foreach (DataRow row in dt.Rows)
                 {
                     items.Add(new Item(row["Item_Name"].ToString(),row["Item_ID"].ToString(),row["Item_Descr"].ToString(),row["Item_Year"].ToString(),
-                                                row["Sponsor"].ToString(),row["Other"].ToString(),row["Series"].ToString(),row["NumberInSeries"].ToString()));
+                                                row["Other"].ToString(),row["Collec"].ToString()));
                 }
 
                 combo_item.ItemsSource = items;
@@ -188,111 +185,6 @@ namespace Callen.Windows
             }
         }
 
-        public void fillSponsorCombo() // gets info about the the sponsor and sets the respective combo box 
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FILL_SPONSOR_BOX";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Sponsor");
-                sda.Fill(dt);
-
-                List<Entities> ft = new List<Entities>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    ft.Add(new Entities { name = row["name"].ToString(),id = row["ID"].ToString()});
-                }
-
-                combo_sponsor.ItemsSource = ft;
-                combo_sponsor.DisplayMemberPath = "name";
-                combo_sponsor.SelectedValuePath = "id";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
-        }
-
-        public void fillPeerCombo() // gets info about the peer and sets the respective combo box 
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FILL_PEER_BOX";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Peer");
-                sda.Fill(dt);
-
-                List<Entities> ft = new List<Entities>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
-                }
-
-                combo_peer.ItemsSource = ft;
-                combo_peer.DisplayMemberPath = "name";
-                combo_peer.SelectedValuePath = "id";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
-        }
-
-        public void fillSeriesCombo() // gets info about the the series and sets the respective combo box 
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FILL_SERIES_BOX";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Series");
-                sda.Fill(dt);
-
-                List<Entities> ft = new List<Entities>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    ft.Add(new Entities { name = row["name"].ToString(), id = row["ID"].ToString() });
-                }
-
-                combo_series.ItemsSource = ft;
-                combo_series.DisplayMemberPath = "name";
-                combo_series.SelectedValuePath = "id";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
-        }
-
         public void btn_upload_Click(object sender, RoutedEventArgs e) // Uploads a image from the users system and sets image to respective border  
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -344,11 +236,11 @@ namespace Callen.Windows
 
         private void btn_insert_Click(object sender, RoutedEventArgs e) // inserts information in data base 
         {
-            if (string.IsNullOrEmpty(name_box.Text.ToString()) || (combo_sponsor.SelectedItem == null)
+            if (string.IsNullOrEmpty(name_box.Text.ToString())
                         || string.IsNullOrEmpty(desc_box.Text.ToString()) || string.IsNullOrEmpty(year_box.Text.ToString())
                             || (combo_folder.SelectedItem == null))
             {
-                MessageBox.Show("Necessita de nome, Patrocinador, Descrição, Ano e Pasta");
+                MessageBox.Show("Necessita de nome, Descrição, Ano e Pasta");
                 return;
             }
 
@@ -360,9 +252,9 @@ namespace Callen.Windows
                 string Get_Data = "";
 
                 if (oldItem)
-                    Get_Data = "EXEC G_CALLEN.ADD_INST_WITH_ITEM @ItemID, @Peer, @Folder, @Note, @Img_Path";
+                    Get_Data = "EXEC G_CALLEN.ADD_INST_WITH_ITEM @ItemID, @Folder, @Note, @Img_Path";
                 else
-                    Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Sponsor, @Peer, @Desc, @Year, @Series, @SeriesNum, @Folder, @Other, @Note, @Img_Path";
+                    Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Desc, @Year, @Collec, @Folder, @Other, @Note, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
@@ -380,11 +272,6 @@ namespace Callen.Windows
                     paramName.Value = name_box.Text.ToString();
                     cmd.Parameters.Add(paramName);
 
-                    SqlParameter paramSpon = new SqlParameter();
-                    paramSpon.ParameterName = "@Sponsor";
-                    paramSpon.Value = combo_sponsor.SelectedValue.ToString();
-                    cmd.Parameters.Add(paramSpon);
-
                     SqlParameter paramDesc = new SqlParameter();
                     paramDesc.ParameterName = "@Desc";
                     paramDesc.Value = desc_box.Text.ToString();
@@ -400,27 +287,11 @@ namespace Callen.Windows
                     paramOther.Value = other_box.Text.ToString();
                     cmd.Parameters.Add(paramOther);
 
-                    SqlParameter paramSeries = new SqlParameter();
-                    paramSeries.ParameterName = "@Series";
-                    if(combo_series.SelectedIndex > -1)
-                        paramSeries.Value = combo_series.SelectedValue.ToString();
-                    else
-                        paramSeries.Value = -1;
-                    cmd.Parameters.Add(paramSeries);
-
-                    SqlParameter paramSeriesNum = new SqlParameter();
-                    paramSeriesNum.ParameterName = "@SeriesNum";
-                    paramSeriesNum.Value = series_num_box.Text.ToString();
-                    cmd.Parameters.Add(paramSeriesNum);
+                    SqlParameter paramCollec = new SqlParameter();
+                    paramCollec.ParameterName = "@Collec";
+                    paramCollec.Value = collec_box.Text.ToString();
+                    cmd.Parameters.Add(paramCollec);
                 }
-
-                SqlParameter paramPeer = new SqlParameter();
-                paramPeer.ParameterName = "@Peer";
-                if (combo_peer.SelectedIndex > -1)
-                    paramPeer.Value = combo_peer.SelectedValue.ToString();
-                else
-                    paramPeer.Value = -1;
-                cmd.Parameters.Add(paramPeer);
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Folder";
@@ -496,37 +367,12 @@ namespace Callen.Windows
                 desc_box.Text = it.getDesc();
                 other_box.Text = it.getOther();
                 year_box.Text = it.getYear();
-                series_num_box.Text = it.getSeriesNumber();
-
-                combo_sponsor.SelectedIndex = -1;
-                foreach (Entities sponsor in combo_sponsor.Items)
-                {
-                    if(sponsor.id == it.getSponsor())
-                    {
-                        combo_sponsor.SelectedItem = sponsor;
-                        break;
-                    }
-                }
-
-                combo_series.SelectedIndex = -1; // reset
-                foreach (Entities serie in combo_series.Items)
-                {
-                    if (serie.id == it.getSeries())
-                    {
-                        combo_series.SelectedItem = serie;
-                        break;
-                    }
-                }
+                collec_box.Text = it.getCollec();
 
                 name_box.IsEnabled = false;
                 desc_box.IsEnabled = false;
                 other_box.IsEnabled = false;
                 year_box.IsEnabled = false;
-                combo_sponsor.IsEnabled = false;
-                btn_add_sponsor.IsEnabled = false;
-                combo_series.IsEnabled = false;
-                btn_add_series.IsEnabled = false;
-                series_num_box.IsEnabled = false;
             }
             else
             {
@@ -536,41 +382,7 @@ namespace Callen.Windows
                 desc_box.IsEnabled = true;
                 other_box.IsEnabled = true;
                 year_box.IsEnabled = true;
-                combo_sponsor.IsEnabled = true;
-                btn_add_sponsor.IsEnabled = true;
-                combo_series.IsEnabled = true;
-                btn_add_series.IsEnabled = true;
             }
-        }
-
-        private void combo_series_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (combo_series.SelectedIndex > -1)
-                series_num_box.IsEnabled = true;
-            else
-                series_num_box.IsEnabled = false;
-        }
-
-        private void btn_add_sponsor_Click(object sender, RoutedEventArgs e)
-        {
-            winAddSponsor popAddSpon = new winAddSponsor();
-            popAddSpon.Owner = this;
-            this.Opacity = 0.85;
-            popAddSpon.ShowDialog();
-
-            this.Opacity = 1; // turn opacity back to 1
-            fillSponsorCombo();
-        }
-
-        private void btn_add_peer_Click(object sender, RoutedEventArgs e)
-        {
-            winAddPeer popAddPerr = new winAddPeer();
-            popAddPerr.Owner = this;
-            this.Opacity = 0.85;
-            popAddPerr.ShowDialog();
-
-            this.Opacity = 1; // turn opacity back to 1
-            fillPeerCombo();
         }
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
@@ -593,17 +405,6 @@ namespace Callen.Windows
 
             this.Opacity = 1; // turn opacity back to 1
             fillThemeCombo();
-        }
-
-        private void btn_add_series_Click(object sender, RoutedEventArgs e)
-        {
-            winAddSeries popAddSe = new winAddSeries();
-            popAddSe.Owner = this;
-            this.Opacity = 0.85;
-            popAddSe.ShowDialog();
-
-            this.Opacity = 1; // turn opacity back to 1
-            fillSeriesCombo();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

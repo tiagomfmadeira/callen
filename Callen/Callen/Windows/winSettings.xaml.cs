@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace Callen.Windows
 {
@@ -34,6 +35,8 @@ namespace Callen.Windows
 
             if (Application.Current.Resources["mainColor"].ToString() == "#FFFFFFFF") // Check Color Scheme
                 btn_change_color.Content = "Light Mode";
+
+            db_string.Text = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)

@@ -22,14 +22,14 @@ using System.Windows.Media.Animation;
 namespace Callen.Windows
 {
     /// <summary>
-    /// Interaction logic for winDesc.xaml
+    /// Interaction logic for winDescNoImg.xaml
     /// </summary>
-    public partial class winDesc : Window
+    public partial class winDescNoImg : Window
     {
         bool edited;
         Instance inst;
 
-        public winDesc(Instance it)  // sets the text Boxes with information from an given Item 
+        public winDescNoImg(Instance it)  // sets the text Boxes with information from an given Item 
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
@@ -56,16 +56,6 @@ namespace Callen.Windows
             item_note.Text = it.getNote();
             item_other.Text = it.getOther();
             item_collec.Text = it.getCollec();
-
-            try
-            {
-                img.Source = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
-            }
-            catch
-            {
-                MessageBox.Show("File not found : " + it.getImagePath());
-            }
-
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -84,14 +74,7 @@ namespace Callen.Windows
             this.Close();
         }
 
-        private void btn_img_Click(object sender, RoutedEventArgs e)
-        {
-            winZoomImage popZoomImg = new winZoomImage(img.Source);
-            popZoomImg.Owner = this;
-            popZoomImg.ShowDialog();
-        }
-
-        private void btn_edit_Click(object sender, RoutedEventArgs e) 
+        private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
             DoubleAnimation da_print_dis = new DoubleAnimation();
             da_print_dis.From = 1;
@@ -206,7 +189,7 @@ namespace Callen.Windows
                 paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
-                bool updated = (bool) cmd.ExecuteScalar();
+                bool updated = (bool)cmd.ExecuteScalar();
 
                 if (updated)
                 {
@@ -237,6 +220,7 @@ namespace Callen.Windows
             }
         }
 
+       
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
             try
@@ -375,4 +359,3 @@ namespace Callen.Windows
         }
     }
 }
- 

@@ -72,8 +72,7 @@ namespace Callen.Pages
         {
             // if all textbox are empty, don't search
             if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
-                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(peer_box.Text)
-                  && String.IsNullOrEmpty(sponsor_box.Text) && String.IsNullOrEmpty(other_box.Text))
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(other_box.Text))
                 return;
             try
             {
@@ -83,11 +82,11 @@ namespace Callen.Pages
                 string Get_Data = "";
                 if (btn_pic_mode.IsChecked == false) { 
                     Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PRO @InstID, @Item_Name, @Item_Desc, @Item_Year, "
-                                + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor,@Other;";
+                                + "@Item_Note, @Item_Theme, @Item_Folder, @Collec, @Other;";
                 }
                 else {
                     Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PIC @InstID, @Item_Name, @Item_Desc, @Item_Year, "
-                                                                + "@Item_Note, @Item_Theme, @Item_Folder, @Item_Peer, @Item_Sponsor,@Other;";
+                                                                + "@Item_Note, @Item_Theme, @Item_Folder, @Collec, @Other;";
                 }
 
                 SqlCommand cmd = thisConnection.CreateCommand();
@@ -128,15 +127,10 @@ namespace Callen.Pages
                 paramFolder.Value = folder_box.Text;
                 cmd.Parameters.Add(paramFolder);
 
-                SqlParameter paramPeer = new SqlParameter();
-                paramPeer.ParameterName = "@Item_Peer";
-                paramPeer.Value = peer_box.Text;
-                cmd.Parameters.Add(paramPeer);
-
-                SqlParameter paramSponsor = new SqlParameter();
-                paramSponsor.ParameterName = "@Item_Sponsor";
-                paramSponsor.Value = sponsor_box.Text;
-                cmd.Parameters.Add(paramSponsor);
+                SqlParameter paramCollec = new SqlParameter();
+                paramCollec.ParameterName = "@Collec";
+                paramCollec.Value = collec_box.Text;
+                cmd.Parameters.Add(paramCollec);
 
                 SqlParameter paramOther = new SqlParameter();
                 paramOther.ParameterName = "@Other";

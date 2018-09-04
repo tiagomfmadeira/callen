@@ -136,20 +136,8 @@
     <Compile Include="Folders.cs" />
     <Compile Include="GiftsSupp.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Pages\Entity.xaml.cs">
-      <DependentUpon>Entity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Gifted.xaml.cs">
-      <DependentUpon>Gifted.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Gifts.xaml.cs">
-      <DependentUpon>Gifts.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\picSearch.xaml.cs">
       <DependentUpon>picSearch.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Planned.xaml.cs">
-      <DependentUpon>Planned.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\proSearch.xaml.cs">
       <DependentUpon>proSearch.xaml</DependentUpon>
@@ -166,24 +154,12 @@
     <Compile Include="Windows\Forms\winAddFolder.xaml.cs">
       <DependentUpon>winAddFolder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\winAddPeer.xaml.cs">
-      <DependentUpon>winAddPeer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Forms\winAddSeries.xaml.cs">
       <DependentUpon>winAddSeries.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\winAddSponsor.xaml.cs">
-      <DependentUpon>winAddSponsor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\winAddGift.xaml.cs">
-      <DependentUpon>winAddGift.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\winAddGiftInst.xaml.cs">
-      <DependentUpon>winAddGiftInst.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\windAddItemViewModel.cs" />
-    <Compile Include="Windows\winDescGift.xaml.cs">
-      <DependentUpon>winDescGift.xaml</DependentUpon>
+    <Compile Include="Windows\winDescNoImg.xaml.cs">
+      <DependentUpon>winDescNoImg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\winNotification.xaml.cs">
       <DependentUpon>winNotification.xaml</DependentUpon>
@@ -218,23 +194,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\Entity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Gifted.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Gifts.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\picSearch.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Planned.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,27 +214,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Forms\winAddPeer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\Forms\winAddSeries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Forms\winAddSponsor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\winAddGift.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\winAddGiftInst.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\winDescGift.xaml">
+    <Page Include="Windows\winDescNoImg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

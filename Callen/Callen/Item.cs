@@ -14,13 +14,13 @@ namespace Callen
         public String Name { set; get; }
         public String ID { set; get; }
 
-        private String name, id, desc, year, sponsor, other, series, seriesNumber;
+        private String name, id, desc, year, other, collec;
 
         public Item()
         {
         }
 
-        public Item(String name, String ID, String Desc, String year, String sponsor, String other)
+        public Item(String name, String ID, String Desc, String year,  String other)
         {
             this.Name = name;
             this.ID = ID;
@@ -30,13 +30,11 @@ namespace Callen
             this.desc = Desc;
             this.year = year;
             this.other = other;
-            this.sponsor = sponsor;
 
-            this.series = "";
-            this.seriesNumber = "";
+            this.collec = "";
         }
 
-        public Item(String name, String ID, String Desc, String year, String sponsor, String other, String series, String seriesNum)
+        public Item(String name, String ID, String Desc, String year, String other, String collec)
         {
             this.Name = name;
             this.ID = ID;
@@ -46,9 +44,7 @@ namespace Callen
             this.desc = Desc;
             this.year = year;
             this.other = other;
-            this.series = series;
-            this.sponsor = sponsor;
-            this.seriesNumber = seriesNum;
+            this.collec = collec;
         }
 
         public String getName()
@@ -71,39 +67,28 @@ namespace Callen
             return year;
         }
 
-        public String getSponsor()
-        {
-            return sponsor;
-        }
-
         public String getOther()
         {
             return other;
         }
 
-        public String getSeries()
+        public String getCollec()
         {
-            return series;
-        }
-
-        public String getSeriesNumber()
-        {
-            return seriesNumber;
+            return collec;
         }
     }
 
     public class Instance : Item
     {
-        private String theme, folder, peer, inst_num, image_path, note;
+        private String theme, folder, inst_num, image_path, note;
 
-        public Instance(String name, String ID, String Desc, String year, String Theme, String folder, String peer,
-                            String sponsor, String other, String img, String note, String series, String seriesNum)
-                                    : base (name, "0", Desc, year, sponsor, other, series, seriesNum)
+        public Instance(String name, String ID, String Desc, String year, String Theme, String folder,
+                            String other, String img, String note, String collec)
+                                    : base (name, "0", Desc, year, other, collec)
         {
             this.inst_num = ID;
             this.theme = Theme;
             this.folder = folder;
-            this.peer = peer;
             this.image_path = img;
             this.note = note;
         }
@@ -116,11 +101,6 @@ namespace Callen
         public String getFolder()
         {
             return folder;
-        }
-
-        public String getPeer()
-        {
-            return peer;
         }
 
         public String getImagePath()

@@ -32,9 +32,6 @@ namespace Callen.Pages
             fillLastInst();
             fillLastMod();
             fillLastView();
-            fillCountPeers();
-            fillFav();
-            fillRecentGifts();
         }
 
         private void fillLastMod() // Fills LastMod DataGrid
@@ -114,108 +111,12 @@ namespace Callen.Pages
                 MessageBox.Show(ee.ToString());
             }
         }
-
-        private void fillCountPeers() // Fills LastMod DataGrid
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.COUNT_PEERS";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("CntPeer");
-                sda.Fill(dt);
-
-                cPeergrid.ItemsSource = dt.DefaultView;
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
-
-        private void fillFav() // Fills Favorites DataGrid
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FavouriteItems";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("LINST");
-                sda.Fill(dt);
-
-                favGrid.ItemsSource = dt.DefaultView;
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
-
-        private void fillRecentGifts() // Fills Favorites DataGrid
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.RECENT_GIFTS";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("RECGIFTS");
-                sda.Fill(dt);
-
-                recGiftGrid.ItemsSource = dt.DefaultView;
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
         
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
         {
             DataGridRow r = sender as DataGridRow;
             DataRowView row = r.Item as DataRowView;
             getInstInfo(row["Inst_Number"].ToString());
-        }
-
-        private void Row_Gift_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
-        {
-            DataGridRow r = sender as DataGridRow;
-            DataRowView row = r.Item as DataRowView;
-            if (!String.IsNullOrEmpty((recGiftGrid.SelectedItem as DataRowView)["Inst"].ToString()))
-            {
-                Instance tmp = GiftsSupp.getInstInfo((recGiftGrid.SelectedItem as DataRowView)["Inst"].ToString());
-                if (tmp != null)
-                    openDesc(tmp);
-            }
-            else
-            {
-                Item tmp = GiftsSupp.getItemInfo((recGiftGrid.SelectedItem as DataRowView)["Item"].ToString());
-                if (tmp != null)
-                    openDesc(tmp);
-            }
         }
 
         private void KeyDown_Item(object sender, KeyEventArgs e) //Press enter to open desc
@@ -245,10 +146,6 @@ namespace Callen.Pages
                 case "LastView":
                     LastView.UnselectAll();
                     break;
-
-                case "favGrid":
-                    favGrid.UnselectAll();
-                    break;
             }
         }
 
@@ -274,8 +171,8 @@ namespace Callen.Pages
                 while (rdr.Read())
                 {
                     Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["peer"].ToString(),
-                    rdr["sponsor"].ToString(), rdr["other"].ToString(), rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["Series_Name"].ToString(), rdr["NumberInSeries"].ToString());
+                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(),
+                    rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["collec"].ToString());
 
                     openDesc(it);
                 }
@@ -293,26 +190,32 @@ namespace Callen.Pages
         private void openDesc(Instance it) // Opens the description of the item given
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDesc popDesc = new winDesc(it);
-            popDesc.Owner = win;
-            win.Opacity = 0.5;
-            popDesc.ShowDialog();
 
-            if (popDesc.wasEdited())
-                fillLastMod();
+            // Check if there is a image
+            if (it.getImagePath() != "")
+            {
+                winDesc popDesc = new winDesc(it);
+                popDesc.Owner = win;
+                win.Opacity = 0.5;
+                popDesc.ShowDialog();
+                
+                if (popDesc.wasEdited())
+                    fillLastMod();
 
-            win.Opacity = 1;
-        }
+                win.Opacity = 1;
+            }
+            else
+            {
+                winDescNoImg popDesc = new winDescNoImg(it);
+                popDesc.Owner = win;
+                win.Opacity = 0.5;
+                popDesc.ShowDialog();
 
-        private void openDesc(Item it) // Opens the description of specific item in Row
-        {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDescGift popDesc = new winDescGift(it);
-            popDesc.Owner = win;
-            win.Opacity = 0.5;
-            popDesc.ShowDialog();
+                if (popDesc.wasEdited())
+                    fillLastMod();
 
-            win.Opacity = 1;
+                win.Opacity = 1;
+            }
         }
     }
 }

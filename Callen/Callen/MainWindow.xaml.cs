@@ -123,18 +123,6 @@ namespace Callen
             Switcher.Switch(this.Content_plane, new Search());
         }
 
-        public void btn_entity_Click(object sender, RoutedEventArgs e) // Switch to Peer/Sponsor Page 
-        {
-            checkedMenu(3);
-            Switcher.Switch(this.Content_plane, new Entity());
-        }
-
-        public void btn_gift_Click(object sender, RoutedEventArgs e) // Switch to Gift Page 
-        {
-            checkedMenu(4);
-            Switcher.Switch(this.Content_plane, new Gifts());
-        }
-
         public void btn_print_Click(object sender, RoutedEventArgs e) // Opens Print List window 
         {
             btn_print.IsChecked = false;
