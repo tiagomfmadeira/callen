@@ -20,6 +20,9 @@ namespace Callen.Windows
     /// </summary>
     public partial class winSettings : Window
     {
+        //Create the object
+        Configuration config;
+
         public winSettings()
         {
             InitializeComponent();
@@ -36,7 +39,8 @@ namespace Callen.Windows
             if (Application.Current.Resources["mainColor"].ToString() == "#FFFFFFFF") // Check Color Scheme
                 btn_change_color.Content = "Light Mode";
 
-            db_string.Text = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            db_string.Text = config.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -68,6 +72,19 @@ namespace Callen.Windows
                 btn_change_color.Content = "Light Mode";
             }
 
+        }
+
+        private void btn_save_changes_Click(object sender, RoutedEventArgs e) // Save changes
+        {
+            // Save changes in the connection string
+            config.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString = db_string.Text;
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("ConnectionStrings");
+
+            // Saved Notification popup
+            winNotification noti = new winNotification("Settings Saved", "As modificações nas definições foram salvas com sucesso" , "");
+            noti.Show();
         }
     }
 }

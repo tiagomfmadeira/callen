@@ -1,0 +1,2055 @@
+SET IDENTITY_INSERT Callen.G_CALLEN.ARCHIVE ON
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(0, '1', 'CENTROS AGRICOLAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1, '1', 'VIVEIROS DE PLANTAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(2,'1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(3, '1', 'SEMENTES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(4, '1', 'PESTICIDAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(5, '1', 'FARINHAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(6, '1', 'PRODUTOS ALIMENTARES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(7, '1', 'CHOCOLATES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(8, '1', 'BOLACHAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(9, '1', 'GELADOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(10, '1', 'QUEIJOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(11, '1', 'BOLOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(12, '1', 'CONSERVAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(13, '1', 'FRANGOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(14, '1', 'SUPERMERCADOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(15, '1', 'MERCADOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(16, '1', 'LOJAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(17, '1', 'ARROZ (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(18, '35', 'SALSICHAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(19, '1', 'FLORISTAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(20, '1', 'FRUTOS ARTIFICIAIS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(21, '1', 'ADUBOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(22, '1', 'RATICIDAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(23, '1', 'RAÇÕES PARA ANIMAIS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(24, '1', 'GÉNEROS ALIMENTÍCIOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(25, '1', 'CARAMELOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(26, '1', 'CHICLETES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(27, '1', 'IOGURTES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(28, '1', 'LEITE (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(29, '1', 'PRODUTOS CONGELADOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(30, '1', 'MARISCOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(31, '1', 'OVOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(32, '35', 'MATADOUROS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(33,'35', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(34, '1', 'MERCEARIAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(35, '1', 'LEGUMES (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(36, '3', 'Esfregões (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(37, '35', 'TALHOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(38, '2', 'AGENTES DE SEGUROS (A/J)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(39, '46', 'BANCOS E SIMILARES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(40, '34', 'JOIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(41, '2', 'MEDIADORES DE SEGUROS (A/J)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(42,'2', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(43, '34', 'OURIVESARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(44,'34', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(45, '34', 'PRATAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(46, '34', 'RELOJOARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(47, '2', 'SEGUROS (A/J)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(48, '3', 'ADIS COLOR');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(49,'3', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(50, '3', 'ALARMES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(51, '3', 'ANILINAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(52, '37', 'Armazéns de Ferro e Aço (A/J)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(53, '37', 'Banheiras (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(54,'37', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(55, '3', 'CAIXOTARIA (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(56, '3', 'CARIMBOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(57, '3', 'CHAVES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(58, '3', 'COFRES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(59, '3', 'Comércio de Utilidades Domésticas (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(60, '3', 'CORREEIROS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(61, '3', 'DESPERDICIOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(62, '3', 'EQUIPAMENTO HOTELEIRO (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(63, '3', 'ESTORES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(64, '3', 'FECHADURAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(65, '3', 'FERRAMENTAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(66, '37', 'Fundição (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(67, '3', 'LAVA-MAOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(68, '37', 'Materiais para Indústria (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(69, '3', 'PALITOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(70, '37', 'Pavimentos Metálicos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(71, '3', 'PINCELARIA (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(72, '3', 'Porcelanas (Construção) (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(73, '3', 'PORTUCEL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(74, '3', 'RASTILHOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(75, '3', 'RECUPERADOS TEXTEIS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(76, '3', 'Sociedade Lisbonense de Papelarias');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(77, '37', 'Taças (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(78, '3', 'TOLDOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(79, '3', 'Utensílios (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(80, '37', 'Vedantes (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(81, '3', 'Acessórios Têxteis (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(82, '3', 'Afiação (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(83, '37', 'Alumínios (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(84, '3', 'APOIOS DE BORRACHA (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(85, '3', 'AUTO ADESIVOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(86, '37', 'Barões de Metal (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(87, '3', 'CANDEEIROS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(88, '37', 'Casquilhos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(89, '3', 'COBRES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(90, '3', 'COLAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(91, '3', 'CORREIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(92, '3', 'CUTELARIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(93, '3', 'DROGARIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(94, '3', 'ESTANHOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(95, '3', 'ESPELHOS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(96, '3', 'FERRAGENS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(97, '37', 'Forjados (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(98, '3', 'GRAVURAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(99, '3', 'LOUÇAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(100, '37', 'Metalúrgicos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(101, '37', 'Parafusos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(102, '3', 'PETROGAL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(103, '3', 'Pólvoras (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(104, '37', 'Portas Metálicas (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(105, '3', 'Produtos Químicos (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(106, '37', 'Rolamentos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(107, '37', 'Serralharias (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(108, '3', 'SOLDADURA (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(109, '3', 'TINTAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(110, '37', 'Trefilaria (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(111, '3', 'VASSOURAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(112, '3', 'VIDRARIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(113, '4', 'Venezuela (A/S)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(114, '5', 'AGENCIAS DE PUBLICIDADE (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(115, '5', 'AGENDAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(116,'5', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(117, '33', 'AMBAR');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(118, '33', 'ARQUIVADORES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(119,'33', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(120, '33', 'ARTIGOS ESCOLARES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(121, '5', 'ENCADERNAÇAO (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(122, '5', 'EMPRESAS GRAFICAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(123, '33', 'FOTOCOPIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(124, '33', 'FITAS PARA MAQUINAS DE ESCREVER,ETC.');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(125, '5', 'GRAFICAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(126, '5', 'LITOGRAFIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(127, '33', 'MANUFACTURAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(128, '5', 'MALCRIADINHOS DA RIBEIRA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(129, '33', 'MATERIAL DE ESCRITORIO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(130, '33', 'PASTAS DE ARQUIVO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(131, '5', 'QUIOSQUES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(132, '5', 'SENHORA 1959');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(133, '5', 'TIPOGRAFIAS (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(134, '6', 'Passamanarias (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(135, '6', 'Lingerie (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(136,'6', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(137, '6', 'Soutiens (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(138, '6', 'Biquinis (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(139, '6', 'Peúgas (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(140, '6', 'Artigos para Bébé (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(141, '6', 'Papéis Pintados (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(142, '6', 'Celophanes (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(143, '6', 'Tapeçarias (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(144, '6', 'Carpetes (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(145, '6', 'Kispo');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(146, '6', 'Cintas (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(147, '6', 'Slips (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(148, '6', 'Meias (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(149, '6', 'Collants (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(150, '6', 'Lanifícios (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(151, '6', 'Papéis de Parede (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(152, '6', 'Alcatifas (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(153, '6', 'Cordoarias (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(154, '6', 'Tapetes (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(155, '7', 'Religiosos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(156, '7', 'Associações de Deficientes (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(157,'7', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(158, '7', 'Aldeias de Crainças (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(159, '7', 'Seminários (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(160, '7', 'Associações Humanitárias (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(161, '7', 'Centros de Caridade (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(162, '7', 'Centros Sociais (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(163, '7', 'Congressos de Senhoras (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(164, '7A', 'Deocleciano Monteiro (Duque da Ribeira)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(165, '7', 'Lares (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(166, '7', 'Legado do Caixeiro Viajante e Similares (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(167, '32A', 'Liga dos Combatentes');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(168, '28', 'Defesa dos Animais (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(169, '7', 'Missionários (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(170, '7', 'Residências de Velhinhos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(171, '8', 'Estações de Rádio  (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(172, '7', 'Telemensagem (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(173, '7', 'Cobradores (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(174, '7B', 'BOMBEIROS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(175, '7-1', 'Colégio dos Orfãos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(176, '7', 'Creches (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(177, '8', 'CLUBES DE VIDEO (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(178,'8', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(179, '8', 'FESTIVAIS DE CINEMA (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(180, '8', 'FILMES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(181, '8', 'Programas de TV (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(182, '8', 'TELENOVELAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(183, '9', 'Acessórios para Automóveis (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(184, '9A', 'Acessórios para Automóveis (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(185, '9', 'Automóveis (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(186,'9', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(187, '9A', 'Automóveis (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(188,'9A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(189, '9', 'Baterias (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(190, '9A', 'Baterias (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(191, '9', 'Caminhos de Ferro');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(192, '9A', 'Caminhos de Ferro');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(193, '9', 'Carroçarias (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(194, '9A', 'Carroçarias (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(195, '9', 'Despachantes (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(196, '9A', 'Despachantes (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(197, '9', 'Estações de Serviço (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(198, '9A', 'Estações de Serviço (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(199, '9', 'Lubrificantes (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(200, '9A', 'Lubrificantes (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(201, '9', 'Motos (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(202, '9A', 'Motos (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(203, '9', 'Pintores Auto (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(204, '9A', 'Pintores Auto (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(205, '42', 'RECAUCHUTAGENS (A/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(206, '42', 'RECAUCHUTAGENS (A/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(207,'42', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(208, '9', 'Sucatas Auto (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(209, '9A', 'Sucatas Auto (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(210, '9', 'Transportes (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(211, '9A', 'Transportes (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(212, '9', 'Agências de Vaigens (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(213, '9A', 'Agências de Viagens (Auto M..(C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(214, '9', 'Bate-Chapas (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(215, '9A', 'Bate-Chapas (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(216, '9', 'Bicicletas (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(217, '9A', 'Bicicletas (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(218, '9', 'Caravanas (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(219, '9A', 'Caravanas (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(220, '42', 'CENTRAIS DE TAXIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(221, '42', 'CENTRAIS DE TAXIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(222, '42', 'ESCOLAS DE CONDUÇAO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(223, '42', 'ESCOLAS DE CONDUÇAO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(224, '9', 'Garagens (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(225, '9A', 'Garagens (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(226, '9', 'Motorizadas (A/Aut L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(227, '9A', 'Motorizadas (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(228, '9', 'Oficinas Auto (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(229, '9A', 'Oficinas Auto (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(230, '42', 'PNEUS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(231, '42', 'PNEUS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(232, '9', 'Stands (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(233, '9A', 'Stands (Auto M../C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(234, '42', 'TAXIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(235, '42', 'TAXIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(236, '42', 'TAXIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(237, '10', 'Sem Reclame até 1984');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(238, '10', 'SANICOL (SOUTO & OSORIO)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(239,'10', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(240, '36', 'AEROKIT-FABRICA DE AVIOES EM KIT');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(241, '10', 'M.PEREIRA PINTO - TINTAS E COLAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(242, '11', 'ADEGAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(243, '11B', 'ADEGAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(244, '11', 'BARES (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(245,'11', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(246, '11B', 'BARES (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(247,'11B', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(248, '11', 'CAFES (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(249, '11B', 'CAFES (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(250, '11', 'CERVEJARIAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(251, '11B', 'CERVEJARIAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(252, '11', 'CONFEITARIAS (A/Café G.)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(253, '11B', 'CONFEITARIAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(254, '11', 'CHURRASQUEIRAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(255, '11B', 'CHURRASQUEIRAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(256, '11', 'DOCES REGIONAIS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(257, '11B', 'DOCES REGIONAIS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(258, '11', 'HOTEIS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(259, '11B', 'HOTEIS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(260, '11', 'MARISQUEIRAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(261, '11B', 'MARISQUEIRAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(262, '11', 'PADARIAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(263, '11B', 'PADARIAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(264, '11', 'PASTELARIAS (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(265, '11B', 'PASTELARIAS (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(266, '11', 'PENSOES (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(267, '11B', 'PENSOES (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(268, '11', 'RESTAURANTES (A/Café G..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(269, '11B', 'RESTAURANTES (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(270, '11', 'SNACK-BARES (A/Café R..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(271, '11B', 'SNACK-BARES (Cf/K)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(272, '12', 'APRESTOS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(273, '12', 'ACESSORIOS PARA A INDUSTRIA (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(274,'12', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(275, '12', 'BRITAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(276, '12', 'CABOS MARITIMOS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(277, '12', 'CERAMICAS (VER QUAIS) (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(278, '12', 'COOPERATIVAS DE HABITAÇAO (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(279, '12', 'EFACEC');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(280, '43', 'Energia Solar A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(281, '12', 'F.RAMADA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(282, '12', 'IMPERMEABILIZAÇOES (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(283, '38', 'MADEIRAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(284, '38', 'MARCENARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(285,'38', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(286, '12', 'PEDREIRAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(287, '12', 'PROPRIEDADES (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(288, '12', 'RESINAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(289, '12', 'SANITARIAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(290, '38', 'ASCENSORES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(291, '12', 'CABOS INDUSTRIAIS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(292, '38', 'CARPINTARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(293, '12', 'CONSTRUÇÕES (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(294, '12', 'COMPACTADORES (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(295, '38', 'ELEVADORES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(296, '12', 'GRUAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(297, '12', 'INSTALAÇOES SANITARIAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(298, '12', 'MARMORISTAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(299, '12', 'PICHELARIAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(300, '12', 'REVESTIMENTOS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(301, '39', 'ATACADORES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(302, '13', 'ARQUITECTURA ?? A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(303, '13', 'CAUTELEIROS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(304,'13', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(305, '32', 'Convívios Militares (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(306, '32', 'Comemorações Militares (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(307,'32', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(308, '39', 'CARTEIRAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(309,'39', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(310, '13', 'CORREIOS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(311, '39', 'ARTIGOS DE VIAGEM (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(312, '13', 'EDITORES A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(313, '13', 'ESCOLAS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(314, '13', 'FICHAS ESCOLARES A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(315, '40', 'GRUTAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(316, '13', 'INATEL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(317, '13', 'MONUMENTOS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(318, '40', 'MUSEUS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(319,'40', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(320, '13', 'LIVROS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(321, '13', 'PAGINAS AMARELAS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(322, '39', 'SAPATARIAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(323, '13', 'TECNICOS DE CONTAS A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(324, '40', 'TRAJES DISNEY DE TODO O MUNDO (COLECÇAO DISVENDA)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(325, '40-1', 'TERRAS DE OVAR');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(326, '32', 'Autarquias (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(327, '39', 'CALÇADO (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(328, '13', 'CIRCULO DE LEITORES A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(329, '13', 'CONTABILIDADE A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(330, '13', 'CONTABILIDADE A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(331, '39', 'CHAPEUS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(332, '39', 'CINTOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(333, '13', 'AGENTES CIRCULOS LEITORES A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(334, '13', 'EDIÇOES A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(335, '32', 'Festas (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(336, '13', 'GUIAS (HOTELARIA) A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(337, '13', 'INFORMÁTICA (A/Ediç)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(338, '40', 'JORNAIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(339, '39', 'MARROQUINARIA (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(340, '32A', 'No Porto Aconteceu');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(341,'32A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(342, '32A', 'No Porto Aconteceu');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(343, '13', 'REVISTAS (1) A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(344, '13', 'TLP A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(345, '40', 'TRAJES REGIONAIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(346, '32A', '5ª AVENIDA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(347, '37', 'Abrasivos (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(348, '43', 'ALFAIAS AGRICOLAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(349,'43', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(350, '43', 'AR CONDICIONADO A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(351, '43', 'AQUECIMENTO A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(352, '43', 'BALANÇAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(353, '14', 'COLCHÕES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(354, '43', 'COMPRESSORES A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(355, '43', 'CONSTRUÇOES ELECTRICAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(356, '43', 'ELECTRICISTAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(357, '43', 'ESMALTAGEM A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(358, '43', 'ESQUENTADORES A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(359, '43', 'FECHOS DE CORRER A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(360, '29', 'Furas EFET-Ferreira Torres');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(361, '9', 'Gás (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(362, '43', 'ISQUEIROS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(363, '43', 'LAMPADAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(364, '14', 'MATERIAL APICOLA (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(365,'14', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(366, '43', 'MATERIAL ELECTRICO A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(367, '43', 'MAQUINAS DE DIVERSAO A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(368, '14', 'POLIDORES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(369, '43', 'RADIOACTIVIDADE A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(370, '43', 'RECLAMOS LUMINOSOS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(371, '43', 'MAQUINAS FERRAMENTAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(372, 'VER', 'VELHARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(373, '43', 'AGENCIAS DE TRESPASSES A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(374, '43', 'ANTENAS (TV) A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(375, 'VER', 'ARTIGOS USADOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(376,'VER', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(377, '43', 'APARELHOS DE CONTROLO DE MEDIDA A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(378, '43', 'CAPTAÇOES DE AGUA A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(379, '43', 'COMPONENTES HIDRAULICOS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(380, '43', 'CORTIÇAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(381, '14', 'DECORAÇÕES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(382, '43', 'ELECTRODOMESTICOS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(383, '14', 'ESTOFOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(384, '43', 'EXTINTORES A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(385, '43', 'FUROS DE AGUA (ARTESIANOS) A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(386, '43', 'ILUMINAÇAO A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(387, '43', 'JAMORAL A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(388, '43', 'LANTERNAS A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(389, '14', 'APICULTURA (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(390, '43', 'MÁQUINAS DE COSTURA A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(391, '14', 'MÓVEIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(392, '14', 'RÁDIO (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(393, '43', 'REDES A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(394, '43', 'Reparação de Electrodomesticos A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(395, '43', 'Tubos Flexíveis A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(396, '43', 'Ventilação A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(397, '15', 'Barcos de Recreio (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(398, '15', 'Brindes (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(399,'15', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(400, '15', 'Borrachas (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(401, '15', 'Cartão (Fabrico de) (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(402, '15', 'Central da Borracha');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(403, '15', 'Embalagens (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(404, '33', 'ESTOJOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(405, '15', 'Envelopes (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(406, '15', 'Eurospuma');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(407, '15', 'Jogos Educativos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(408, '15', 'Plásticos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(409, '15', 'Porta-Chaves (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(410, '15', 'Representações não Definidas(A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(411, '15', 'Revestimentos Plásticos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(412, '15', 'Sacos de papel (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(413, '15', 'Tabacos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(414, '15', 'Telas (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(415, '15', 'Brinquedos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(416, '15', 'Bijutarias (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(417, '15', 'Cinzeiros (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(418, '15', 'Cigarros (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(419, '15', 'Etiquetas (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(420, '33', 'EXPOSITORES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(421, '15', 'Novidades (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(422, '15', 'Papel (Fabrico de) (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(423, '15', 'Portucel');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(424, '15', 'Sacos Plásticos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(425, '15', 'Subscritos (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(426, '16', 'Espanha (A/Bar Anto..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(427, '16', 'Espanha (A/Bar Anto..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(428,'16', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(429, '16', 'Espanha (A/Bar Anto..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(430, '16', 'Espanha (A/Bar Anto..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(431, '17', 'Agências Funerárias (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(432, '17', 'Caixões (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(433,'17', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(434, '17', 'Farmácias (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(435, '17', 'Acessórios de Farmácia (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(436, '17', 'Ligaduras (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(437, '17', 'Pastas Dentífricas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(438, '17', 'Próteses (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(439, '17', 'Ortopedia (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(440, '17', 'Clínicas Veterinárias (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(441, '17', 'Consultórios Médicos (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(442, '17', 'Análises (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(443, '17', 'Naturistas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(444, '17', 'Hospitais (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(445, '17', 'Plantas Medicinais (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(446, '17', 'Medicina (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(447, '17', 'Armadores (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(448, '17', 'Urnas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(449, '17', 'Medicamentos (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(450, '17', 'Laboratórios Farmacêuticos (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(451, '17', 'Gaze (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(452, '17', 'Oculistas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(453, '17', 'Centros de Enfermagem (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(454, '17', 'Clínicas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(455, '17', 'Dentistas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(456, '17', 'Policlínicas (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(457, '17', 'Psicólogos (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(458, '17', 'Médicos (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(459, '17', 'Acumpuntura (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(460, '17', 'Ervanários (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(461, '17', 'Centros de Saúde (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(462, '17', 'Saúde (A/A)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(463, '18', 'Políticos excluindo PSD..e PCP..');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(464, '18', 'ELEIÇÕES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(465,'18', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(466, '18A', 'Políticos (PSD/AD../PCP/APU..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(467, '44', 'REFORMADOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(468, '18', 'COMEMORAÇÕES POLÍTICAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(469, '44', 'ESTALEIROS NAVAIS DE VIANA DO CASTELO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(470,'44', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(471, '44', 'SINDICATOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(472, '44', 'ASSOCIAÇÕES DE CLASSES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(473, '44', 'COMISSÕES DE TRABALHADORES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(474, '19', 'Futebol - A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(475, '19', 'Campeonatos Nacionais de Futebol A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(476,'19', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(477, '19', 'Campeonatos Internacionais de Futebol - A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(478, '19', 'Selecção Nacional de Futebol - A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(479, '19', 'Selecções Internacionais de Futebol - A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(480, '19', 'Futebol de Salão - A/CL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(481, '19', 'Chocolates La Española - Desportivos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(482, '19', 'Sporting C.P. (Todos os Desportos)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(483, '19', 'Boavista F.C. (Todos os Desportos)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(484, '19', 'F.C.Porto-Colecções c/Outros Clubes (A/CL)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(485, '19', 'S.L.Benfica Colecções c/Outros Clubes (A/CL)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(486, '20', 'Andebol (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(487, '20', 'Basquetebol (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(488,'20', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(489, '20', 'Ciclismo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(490, '20', 'Culturismo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(491, '20', 'Desporto Escolar (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(492, '20', 'Ginásios (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(493, '20', 'Grupos Culturais (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(494, '20', 'Hóquei em Campo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(495, '20', 'Jogos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(496, '20', 'Judo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(497, '20', 'Malha (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(498, '20', 'Paraquedismo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(499, '20', 'Ski (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(500, '20', 'Ténis de Mesa (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(501, '20', 'Totoloto (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(502, '20', 'Voleibol (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(503, '20', 'Atletismo (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(504, '20', 'Bingos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(505, '20', 'Clubes (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(506, '20', 'Desportos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(507, '20', 'Esgrima (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(508, '20', 'Grupos de Amigos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(509, '20', 'Grupos Excursionistas (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(510, '20', 'Hóquei em Patins (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(511, '20', 'Jogos Olímpicos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(512, '20', 'Lotarias (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(513, '20', 'Natação (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(514, '20', 'Skate (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(515, '20', 'Ténis (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(516, '20', 'Totobola (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(517, '20', 'Viet-Vo-Dau (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(518, '21', 'MARCUS-JOALHEIROS(CALENDARIO/MAÇÃ)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(519, '21', 'Cabeleireiros (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(520,'21', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(521, '21', 'Tratamentos de Cabelo (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(522, '21', 'Perfumaria (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(523, '21', 'Higiene e Limpesa (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(524, '21', 'Sabões (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(525, '21', 'Diapositivos a Côr (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(526, '21', 'Barbeiros (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(527, '21', 'Barbeiros (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(528, '21', 'Cosméticos (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(529, '21', 'Detergentes (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(530, '21', 'Fotografia (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(531, '21', 'Películas Fotográficas (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(532, '22', 'MODA (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(533, '22', 'PRONTO A VESTIR (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(534,'22', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(535, '22', 'COMERCIO GERAL (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(536, '22', 'MENAGE (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(537, '22', 'FORROS PARA CONFECÇAO (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(538, '22', 'AGENTES COMERCIAIS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(539, '22', 'ARMAZENS DE TECIDOS E SIMILARES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(540, '22', 'TECIDOS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(541, '22', 'BOUTIQUES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(542, '22B', 'CALENDARIO 1947 (NYMPHA)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(543, '22', 'ENTRETELAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(544, '22', 'LENÇOS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(545, '22', 'LENÇÓIS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(546, '22', 'EDREDÕES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(547, '22', 'CAMISAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(548, '22', 'COMÉRCIO DE VESTUÁRIO (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(549, '22', 'CASAS COMERCIAIS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(550, '22', 'BRICOLAGE (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(551, '22', 'SEDAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(552, '22', 'CONFECÇÃO (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(553, '22', 'BIJUTARIAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(554, '22', 'MALHAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(555, '22', 'BAZARES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(556, '22', 'ROUPAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(557, '22', 'CRIAÇÕES (MODA) (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(558, '22', 'BORDADOS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(559, '22', 'COLCHAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(560, '22', 'TÊXTEIS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(561, '23', 'ALFAIATARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(562, '23', 'ARTIGOS RELIGIOSOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(563,'23', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(564, '23', 'BOTOES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(565, '23', 'BRACELETES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(566, '23', 'CENTROS COMERCIAIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(567, '23', 'ENCERADOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(568, '23', 'FIOS PARA TAPEÇARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(569, '23', 'FITAS DE FRANZIR, ETC.');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(570, '23', 'GUARDA-CHUVAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(571, '23', 'GUARDA-SOIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(572, '23', 'LAVANDARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(573, '23', 'NAPAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(574, '23', 'OLEADOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(575, '23', 'PERGAMOIDES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(576, '23', 'RAFIA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(577, '23', 'TENDAS DE CAMPISMO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(578, '23', 'TINTURARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(579, '23', 'VELAS DE CERA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(580, '23', 'VELAS DECORATIVAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(581, '23', 'ARTIGOS DE PRAIA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(582, '24', 'LIVRARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(583, '24', 'PAPELARIAS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(584,'24', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(585, '25-1', 'FILATELIA (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(586, '25-1', 'NUMISMATICA (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(587,'25-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(588, '25-1', 'COLECCIONISMO (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(589, '25-1', 'COLECCIONADORES (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(590, '25-1', 'ARTIGOS USADOS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(591, '25-1', 'ARTESANATO (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(592, '25-1', 'FILUMINISMO (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(593, '13', 'C.T.T.');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(594, '25-1', 'CALENDARIOFILIA (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(595, '25-1', 'RESTAURO DE QUADROS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(596, '25-1', 'ANTIGUIDADES (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(597, '25-1', 'EXPOSIÇOES CULTURAIS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(598, '25-1', 'CROMOS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(599, '25-1', 'ARTE (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(600, '25-1', 'QUADROS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(601, '25-1', 'FAIANÇAS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(602, '25-1', 'CERAMICAS (ARTESANATO) (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(603, '25-1', 'PORCELANAS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(604, '26', 'BEBIDAS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(605, '27', 'Edições Cromogal "Tercena" - Futebol');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(606, '28', 'Animais (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(607,'28', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(608, '28', 'Clubes Ornitológicos (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(609, '28', 'Comidas para animais(Excepto Rações) (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(610, '28', 'Caça (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(611, '28', 'Aquarofilia (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(612, '28', 'Criadores de Cães (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(613, '28', 'Aves (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(614, '28', 'Parques Zoológicos (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(615, '28', 'Pássaros (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(616, '28', 'Pesca (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(617, '29', 'Não Difinidos (A/G)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(618,'29', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(619, '30', 'F.C. Porto (Todos os Desportos)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(620, '30', 'F.C. Porto (Todos os Desportos)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(621,'30', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(622, '31B', 'Automobilismo');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(623, '31A', 'Motociclismo');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(624, '32', 'Edições Cromogal - Terras e Brasões de Portugal');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(625, '32', 'CLARABOIAS E LANTERNINS DO PORTO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(626, '32A', 'Relógios Públicos do Porto');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(627, '32', 'Convívio s de Ex-Combatentes (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(628, '32', 'Comissões Municipais de Turismo (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(629, '20', 'Casinos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(630, '8', 'CINEMA (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(631, '8-1', 'CINEMA (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(632, '20', 'Artes Marciais (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(633, '20', 'Salas de Jogos (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(634, '3', 'ARTIGOS DE MENAGE (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(635, '28', 'Columbofilia (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(636, '20', 'Bilhares (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(637, '43', 'Electrónica  e Electrónica Computurizada A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(638, '7', 'Escutismo (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(639, '15', 'Publicidade (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(640, '15', 'Tabacarias (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(641, '21', 'Produtos de Beleza (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(642, '7', 'Rádios (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(643, '14', 'Marcenarias (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(644, '12', 'Abrasivos (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(645, '41', 'Passagens de Ano (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(646, '41', 'FONOGRAMAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(647,'41', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(648, '41', 'VIDEOGRAMASb (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(649, '41', 'DANCETARIAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(650, '41', 'BOITES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(651, '41', 'PUB''S (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(652, '41', 'NIGHT CLUBS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(653, '41', 'DISCOTECAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(654, '41', 'DISCOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(655, '41', 'CASSETES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(656, '41', 'CD''S (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(657, '41', 'INSTRUMENTOS MUSICAIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(658, '41', 'GRUPOS CORAIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(659, '41', 'MÚSICOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(660, '41', 'ARTISTAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(661, '41', 'ººACADEMIAS MUSICAIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(662, '41', 'CONJUNTOS MUSICAIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(663, '41', 'RANCHOS FOLCLÓRICOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(664, '41', 'TAUROMARQUIA (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(665, '41', 'ESPECTÁCULOS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(666, '41', 'MAREANTES DO RIO DOURO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(667, '41', 'Representações Discográfica (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(668, '41', 'SISTEMAS AUDIO VISUAIS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(669, '41', 'TEATRO (A/L');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(670, '41', 'Salas de Espectáculos (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(671, '41', 'Fados e Canções (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(672, '41', 'Bandas Musicais (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(673, '41', 'Escolas de Música (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(674, '41', 'FANFARRAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(675, '41', 'MAJORETES (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(676, '41', 'Autores Musicais (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(677, '41', 'Orquestras (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(678, '33', 'Heliogravura');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(679, '33', 'Flexografia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(680, '35', 'Carnes');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(681, '36', 'Sem Reclame de 1986 a 1988');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(682,'36', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(683, '36', 'Hostal-Chupa..');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(684, '12', 'Materiais de Construção(A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(685, '14', 'Bibelots (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(686, '43', 'Bobinagem de Motores A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(687, '38', 'Serrações de Madeiras');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(688, '43', 'Refrigeração A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(689, '43', 'Cabos Eléctricos A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(690, '43', 'Pulverizadores A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(691, '12', 'Pavimentos (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(692, '12', 'Enceradoras (Empresas) (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(693, '15', 'Polyester (fabrico..) (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(694, '12', 'Escavadoras (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(695, '12', 'Gruas (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(696, '29', 'Indefinidos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(697, '43', 'Protecção Industrial A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(698, '21', 'Higiene e Segurança (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(699, '28', 'Ambiente (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(700, '28', 'Reciclagem (A/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(701, '43', 'Condomínios A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(702, '5A', 'Temas da Pasta 5 (I/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(703, '9B', 'Temas da Pasta 9 (D/G)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(704, '11A', 'Adegas (Café S.. / Ce)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(705, '11A', 'Bares (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(706,'11A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(707, '11A', 'Cafés (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(708, '11A', 'Cervejarias (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(709, '11A', 'Churrasqueiras (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(710, '11A', 'Confeitarias (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(711, '11A', 'Doces Regionais (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(712, '11A', 'Hotéis (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(713, '11A', 'Marisqueiras (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(714, '11A', 'Padarias (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(715, '11A', 'Pastelarias (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(716, '11A', 'Pensões (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(717, '11A', 'Restaurantes (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(718, '11A', 'Snack-Bares (Café S../Ce..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(719, '12A', 'Acessórios para a Indústria (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(720, '12A', 'Aprestos (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(721,'12A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(722, '12A', 'Britas (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(723, '12A', 'Cabos Industriais (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(724, '12A', 'Cabos Marítimos (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(725, '12A', 'Cerâmicas (Ver Quais) (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(726, '12A', 'Compactadores (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(727, '12A', 'Construções (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(728, '12A', 'Cooperativas de Habitação (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(729, '12A', 'Enceradoras (Empresas)(F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(730, '12A', 'Escavadoras (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(731, '12A', 'Gruas (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(732, '12A', 'Impermeabilizações (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(733, '12A', 'Instalações Sanitárias (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(734, '12A', 'Marmoristas (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(735, '12A', 'Materiais de Construção (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(736, '12A', 'Pavimentos (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(737, '12A', 'Pedreiras (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(738, '12A', 'Pichelarias (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(739, '12A', 'Propriedades (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(740, '12A', 'Resinas (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(741, '12A', 'Revestimentos (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(742, '12A', 'Sanitárias (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(743, '40', 'REVISTAS  (2)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(744, '43A', ' Temas da Pasta 43 F/O');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(745, '15A', ' Temas da Pasta 15 (C/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(746, '25A', 'TEMAS DA PASTA 25 (C/C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(747, '32', 'Militares (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(748, '19 A', ' TEMAS DA PASTA 19 (E/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(749, '22A', 'TEMAS DA PASTA 22 (C/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(750, '26A', 'BEBIDAS (E/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(751, '19A', 'Temas da Pasta 19 (Co/F)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(752, '3', 'FOGÕES (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(753, '37', 'Cortantes (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(754, '37', 'Escadas (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(755, '37', 'Andaimes (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(756, '37', 'Cromagem (A/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(757, '43', 'Agulhas A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(758, '12', 'ASSISTÊNCIA INDUSTRIAL (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(759, '12', 'MONTAGENS INDUSTRIAIS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(760, '23', 'ARTIGOS DESPORTIVOS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(761, '1A', 'TEMAS DA PASTA 1 (E/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(762, '1', 'PRODUTOS DIETÉTICOS (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(763, '3', 'Utilidades Domésticas (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(764, '3', 'Fábricas de Fogo de Artifício (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(765, '9', 'Peritagens (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(766, '42', 'PERITAGENS (G/R)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(767, '12', 'TORNEIRAS (A/Car)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(768, '43', 'Combustíveis A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(769, '22', 'QUINQUILHARIAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(770, '22', 'VENDEDORES (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(771, '22', 'TÉCNICOS DE VENDAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(772, '22', 'COMISSIONISTAS (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(773, '23', 'ARTIGOS REGIONAIS');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(774, '25-1', 'FEIRAS/EXPOSIÇÕES (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(775, '14', 'MOLDURAS (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(776, '25-1', 'ESTAMPAS (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(777, '33', 'MÁQUINAS DE VENDA DE BILHETES');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(778, '33', 'SUCATAS DE FERRO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(779, '33', 'EXPLORAÇÃO FLORESTAL');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(780, '15', 'POLIESTER');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(781, '38', 'ARTIGOS DE VERGA');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(782, '3A', 'TEMAS DA PASTA 3 (I/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(783, '41', 'Ludotecas (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(784, '21', 'Adornos Pessoais (A/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(785, '13', 'QUALIDADE A/E');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(786, '7A', 'Temas da Pasta 7 (D/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(787,'7A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(788, '8A', 'TEMAS DA PASTA 8 (F/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(789, '44', 'COOPERATIVAS DE CONSUMO');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(790, '3', 'Gases Industriais (A/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(791, '3', 'Arliquido');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(792, '44', 'Funcionários de Alfândega');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(793, '13', 'Consultadoria A/Ediç');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(794, '21A', ' Temas da Pasta 21 (E/F)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(795, '43A', 'Temas da Pasta 43 (K/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(796,'43A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(797, '20', 'Excursões (A/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(798, '14A', 'Temas Pasta 14 (M/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(799, '17A', 'Temas da Pasta 17 (D/Farmácia Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(800, '22B', 'Temas da Pasta 22 (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(801,'22B', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(802, '25B', 'Temas da Pasta 25 (D/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(803, '45', 'Carnaval');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(804, '41A', 'Temas da Pasta 41 (F/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(805, '46', 'Instituições de Crédito');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(806,'46', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(807, '6A', 'Temas da Pasta 6 (J/R)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(808, '25-1', 'Cristais (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(809, '16A', 'Espanha (C/Colc..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(810, '16B', 'Espanha (Colec../Cz..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(811, '9C', 'Temas da Pasta 9 (H/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(812, '10A', 'Sem Reclame de 1984/85 a 1985/1986');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(813, '11C', 'Temas da Pasta 11 (L/Q)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(814, '12B', 'Temas da Pasta 12 (H/Q)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(815, '15B', 'Temas da Pasta 15 (F/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(816, '5B', 'Temas da Pasta 5 (O/S)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(817, '13A', ' Temas da Pasta 13 (Editel/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(818, '43B', 'Temas da Pasta 43 P/Z');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(819, '6', 'Kidstores (A/I)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(820, '15', 'Comunicação A/B');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(821, '25C', 'Temas da Pasta 25 (J/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(822, '47', 'Alemanha (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(823, '47', 'Alemanha (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(824,'47', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(825, '47', 'Alemanha (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(826, '47', 'África do Sul');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(827, '52', 'Angola');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(828, '16E', 'Espanha (N/Rep)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(829, '16R', 'Espanha (Regiões)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(830, '11D', 'Temas da Pasta 11 (R/Rh)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(831, '20A', 'Temas da Pasta 2o (P/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(832, '29A', 'Temas da Pasta 29 (H/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(833, '19B', 'Temas da Pasta 19 (G/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(834, '49', 'Benfica (Todos os Desportos)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(835, '32A', 'Temas da Pasta 32 (F/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(836, '37A', 'Temas da Pasta 37 (K/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(837, '16C', 'Espanha (D/F)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(838, '50US', 'Ex União Soviética');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(839, '50', 'Rússia (A/L)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(840, '50US', 'União Soviética');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(841,'50US', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(842, '17B', 'Temas da Pasta 17 (G/M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(843, '16D', 'Espanha (I/Marir..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(844, '52A', 'Áustria');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(845, '52A', 'Bélgica');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(846,'52A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(847, '52A', 'Bélgica');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(848, '52', 'Argentina');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(849,'52', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(850, '52A', 'ººCabo Verde');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(851, '52A-1', 'Chile');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(852, '52A-1', 'China');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(853,'52A-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(854, '52A-1', 'Chipre');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(855, '52A', 'Bulgária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(856, '52', 'Arábia Saudita');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(857, '52A-1', 'Colômbia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(858, '52A-1', 'Cuba');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(859, '52A-1', 'Egipto');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(860, '52A-1', 'Eslováquia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(861, '52A-1', 'Estados Unidos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(862, '52B', 'Estónia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(863, '52B', 'Finlândia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(864,'52B', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(865, '48A', 'Holanda');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(866, '48A', 'Israel');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(867,'48A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(868, '48AA', 'Japão');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(869, '48AA', 'Kuait');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(870,'48AA', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(871, '48A', 'Hungria');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(872, '48AA', 'Letónia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(873, '48AA', 'Lituânia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(874, '48A-1', 'México');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(875, '48A-1', 'Polónia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(876,'48A-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(877, '48B-1', 'República Dominicana');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(878, '48B', 'República Checa');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(879, '48AA', 'Luxemburgo');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(880, '48B-1', 'Roménia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(881,'48B-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(882, '48B-1', 'Suíça');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(883, '48B-1', 'Tailândia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(884, '48B-1', 'Tunísia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(885, '48B-1', 'Ucránia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(886, '1B', 'Temas da Pasta 1 (M/P)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(887, '5C', 'Temas da Pasta 5 (T/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(888, '28A', 'Temas da Pasta 28 (N/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(889, '25D', 'Temas da Pasta 25 (M/S)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(890, '51', 'Brasileiros');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(891, '32', 'Casamentos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(892, '48', 'França');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(893, '48A-1', 'Perú');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(894, '48B-1', 'Suécia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(895, '52A', 'Austrália');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(896, '52A', 'Cabo Verde');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(897, '52A-1', 'Croácia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(898, '52A-1', 'Eslovénia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(899, '48A', 'Grécia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(900, '48A', 'Inglaterra');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(901, '48AB', 'Itália');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(902, '48AA', 'Kwait');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(903, '48A-1', 'Moçambique');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(904, '48B-1', 'Sérvia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(905, '48B-1', 'Ucrânia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(906, '50A', 'Rússia (Colecções) - A/I');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(907, '48A-1', 'Macau');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(908, '48A', 'Hong Kong');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(909, '36A', 'Sem Reclame desde 1988/89');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(910, '48A-1', 'Porto Rico');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(911, '48B-1', 'República Democrática Alemã');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(912, '16F', 'Espanha (Req/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(913, '16G', 'Espanha sem reclame até 1994');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(914, '16H', 'Espanha sem reclame de 2001 a 2007');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(915, '48A-1', 'Moldávia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(916, '48B-1', 'Turquia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(917, '52', 'Andorra');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(918, '47A', 'Alemanha (E/J)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(919, '26G', 'Galeria Filatélica e Numismática do Porto');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(920, '48A-1', 'Quirguistão');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(921, '48A', 'India');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(922, '48B-1', 'República da Crimeia - (Ucrânia)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(923, '8B', 'Temas pasta 8 (N/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(924, '13B', 'Temas da Pasta 13 (O/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(925, '25E', 'Temas da Pasta 25 (T/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(926, '12C', 'Temas da Pasta 12 (R/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(927, '22C', 'Temas da pasta 22 - (M)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(928, '22D', 'Temas da Pasta 22 (N/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(929, '17C', 'Temas da Pasta 17 (N/O)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(930, '11E', 'Temas pasta 11 - (Ri/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(931, '52', 'Argélia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(932, '48A-1', 'Nova Zelândia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(933, '52A', 'Bielo-Rússia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(934, '47', 'Países desconhecidos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(935, '47B', 'Alemanha (S/U)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(936, '9D', 'Temas da Pasta 9 (H/R)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(937, '9E', 'Temas da Pasta 9 (S/S)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(938, '15', 'Papel Higiénico (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(939, '52A-1', 'Costa Rica');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(940, '6A', 'Temas Pasta 6 (S/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(941,'6A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(942, '9F', 'Temas Pasta 9 (T/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(943, '16-1', 'Espanha (Bar Antu../Bz)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(944, '16D-1', 'Espanha - (Marisa/Mz)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(945, '16I', 'Espanha sem reclame desde 2008');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(946, '31', 'Fórmula 1');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(947, '50A-1', 'Rússia (Colecções) - J/Z');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(948, '53', 'Açores');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(949, '53', 'Madeira');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(950,'53', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(951, '52A', 'Madeira');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(952, '52A', 'Bósnia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(953, '52A', 'Canadá');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(954, '52A-1', 'Croácia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(955, '48-1', 'França - Calendários Grandes');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(956, '50-1', 'Rússia (M/P)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(957, '3B', 'Temas da Pasta 3 (O/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(958, '9', 'Sinais de Trânsito (A/Auto L..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(959, '47A-1', 'Alemanha (K/N)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(960, '52', 'Arménia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(961, '48A-1', 'Nepal');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(962, '48A', 'Gâmbia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(963, '48A-1', 'Maldivas');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(964, '54', 'Calendários de Secretária - Várias pastas');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(965, '48A', 'Indonésia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(966, '8', 'Programas de Rádio (A/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(967, '52A', 'Bolívia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(968, '16G-1', 'Espanha sem reclame de 1995 a 2000');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(969, '3', 'Importações não definidas');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(970, '25', 'Coleccionismo.. (Alberto)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(971, '54G', 'Calendários de Secretária - 2');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(972, '54A', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(973, '54B', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(974, '54C', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(975, '54D', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(976, '54E', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(977, '54F', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(978, '54H', 'Calendários de Secretária');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(979, '17A-1', 'Temas da Pasta 17 (Farme ...Restantes Efes..)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(980, '50SR', 'Rússia - Sem Reclame');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(981, '25P', 'SADM/APBP.. Pintores com a Boca..');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(982, '52A-1', 'Emiratos Árabes Unidos');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(983, '48A-1', 'Mongólia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(984, '4A', 'Venezuela (A/S)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(985, '4A', 'Venezuela - Calendários grandes');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(986,'4A', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(987, '16C-1', 'Espanha (G/H)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(988, '48A-1', 'Mónaco');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(989, '48B-1', 'Trinidad e Tobago');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(990, '39A', 'Temas da Pasta 39 (M/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(991, '47-1', 'Alemanha (C/D)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(992, '48A', 'Irlanda');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(993, '48A-1', 'Malásia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(994, '48A-1', 'Maldivas');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(995, '48B-1', 'República da Crimeia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(996, '50', 'Rússia');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(997,'50', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(998, '48B-1', 'Uzbequistão');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(999, '4', 'Venezuela');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1000,'4', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1001, '21B', 'Temas da Pasta 21 (G/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1002, '48B-1', 'Vietname');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1003, '48B-1', 'República da Maurícia (Ilhas Maurícias)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1004, '17-1', 'Temas da Pasta 17 (B/C)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1005, '17D', 'Temas da Pasta 17 (P/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1006, '12-1', 'Temas da Pasta 12 (Cas/E)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1007, '7-1', 'Temas da Pasta 7 ©');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1008,'7-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1009, '2A', 'Temasa da pasta 2 (K/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1010, '47A-2', 'Alemanha (O/R)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1011, '47B-1', 'Alemanha (V/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1012, '6B', 'Temas da Pasta 6 (S/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1013, '15C', 'Temas da Pasta 15 (M/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1014, '25G', 'Galeria Filatélica e Numismática do Porto');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1015, '11-1', 'Temas da Pasta 11 - Café H/Café R');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1016, '48A-1', 'Montenegro');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1017, '7', 'Festas Religiosas (A/B)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1018, '1C', 'Temas da Pasta 1 (Q/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1019, '33', 'Informática');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1020, '33', 'Computadores');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1021, '50-2', 'Rússia - (Q/Z)');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1022, '40-1', 'Terras de Ovar');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1023,'40-1', 'Não especificado');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1024, '52B', 'Europa');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1025, '16R', 'Astúrias');
+INSERT INTO G_CALLEN.ARCHIVE(Archive_ID, Code, Theme_Descr)
+VALUES(1026,'16R', 'Não especificado');

@@ -39,10 +39,9 @@
                 <!-- <xctk:ColorPicker Width="100" Height="Auto"  Canvas.Left="183" Canvas.Top="300"/> -->
 
                 <Label Content="DB Connect" Canvas.Left="167" Canvas.Top="225" Style="{DynamicResource formLabel}" Width="84" />
-                <TextBox Name="db_string" IsEnabled="False" Width="351" Canvas.Left="256" Canvas.Top="226" Height="26" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="db_string" IsEnabled="True" Width="351" Canvas.Left="256" Canvas.Top="226" Height="26" Style="{StaticResource descTextBox}"/>
 
-
-                <Button x:Name="btn_save_changes" Content="Save Changes" Click="btn_save_changes" Canvas.Left="362" Canvas.Top="387" Height="26"/>
+                <Button x:Name="btn_save_changes" Content="Save Changes" Click="btn_save_changes_Click" Canvas.Left="362" Canvas.Top="387" Height="26"/>
 
             </Canvas>
         </Viewbox>

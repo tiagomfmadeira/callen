@@ -90,8 +90,6 @@ namespace Callen
 
             lbl_menu1.Visibility = Visibility.Visible;
             lbl_menu2.Visibility = Visibility.Visible;
-            lbl_menu3.Visibility = Visibility.Visible;
-            lbl_menu4.Visibility = Visibility.Visible;
             lbl_menu5.Visibility = Visibility.Visible;
             lbl_menu6.Visibility = Visibility.Visible;
             lbl_menu7.Visibility = Visibility.Visible;
@@ -104,8 +102,6 @@ namespace Callen
 
             lbl_menu1.Visibility = Visibility.Hidden;
             lbl_menu2.Visibility = Visibility.Hidden;
-            lbl_menu3.Visibility = Visibility.Hidden;
-            lbl_menu4.Visibility = Visibility.Hidden;
             lbl_menu5.Visibility = Visibility.Hidden;
             lbl_menu6.Visibility = Visibility.Hidden;
             lbl_menu7.Visibility = Visibility.Hidden;
@@ -170,12 +166,6 @@ namespace Callen
                 case 2:
                     btn_colec.IsChecked = true;
                     break;
-                case 3:
-                    btn_entity.IsChecked = true;
-                    break;
-                case 4:
-                    btn_gift.IsChecked = true;
-                    break;
             }
         }
 
@@ -183,8 +173,6 @@ namespace Callen
         {
             btn_callen.IsChecked = false;
             btn_colec.IsChecked = false;
-            btn_entity.IsChecked = false;
-            btn_gift.IsChecked = false;
         }
     }
 }

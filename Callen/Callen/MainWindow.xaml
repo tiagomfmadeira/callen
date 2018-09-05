@@ -112,22 +112,6 @@
                             <Label Content="Coleção" Style="{DynamicResource menuFont}" x:Name="lbl_menu2"/>
                         </DockPanel>
                     </ToggleButton>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left" x:Name="btn_entity" Click="btn_entity_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/entityGray.png" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <Label Style="{DynamicResource menuFont}" FontSize="15" x:Name="lbl_menu3">
-                                <TextBlock LineStackingStrategy="BlockLineHeight" LineHeight="14">
-                                     Fornecedores <LineBreak/> Patrocinadores
-                                </TextBlock>
-                            </Label>
-                        </DockPanel>
-                    </ToggleButton>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left" x:Name="btn_gift" Click="btn_gift_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/giftGray.png" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <Label Content="Ofertas" Style="{DynamicResource menuFont}" x:Name="lbl_menu4"/>
-                        </DockPanel>
-                    </ToggleButton>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" VerticalAlignment="Bottom">

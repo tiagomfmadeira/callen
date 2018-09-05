@@ -29,7 +29,7 @@ namespace Callen.Windows
         bool edited;
         Instance inst;
 
-        public winDesc(Instance it)  // sets the text Boxes with information from an given Item 
+        public winDesc(Instance it)  // sets the text Boxes with information from an given Item
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
