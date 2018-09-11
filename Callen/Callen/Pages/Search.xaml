@@ -97,7 +97,7 @@
             </Grid>
         </Border>
 
-        <ToggleButton Name="btn_pro_mode" Click="btn_pro_mode_Click" Width="20" Margin="410,0,0,0">
+        <ToggleButton Visibility="Hidden" Name="btn_pro_mode" Click="btn_pro_mode_Click" Width="20" Margin="410,0,0,0">
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template">
@@ -120,7 +120,7 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <ToggleButton Name="btn_pic_mode" Click="btn_pic_mode_Click" Width="20" Margin="460,0,0,0">
+        <ToggleButton Visibility="Hidden" Name="btn_pic_mode" Click="btn_pic_mode_Click" Width="20" Margin="460,0,0,0">
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template">

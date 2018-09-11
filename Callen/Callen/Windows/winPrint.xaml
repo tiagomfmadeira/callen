@@ -36,7 +36,7 @@
                     <FlowDocumentReader>
                         <FlowDocument x:Name="flowDocument">
                             <BlockUIContainer>
-                                <ItemsControl x:Name="itemContorlItem" VerticalAlignment="Top">
+                                <ItemsControl x:Name="itemContorlItem" VerticalAlignment="Top" Height="4cm" Width="10cm">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Columns="2"/>
