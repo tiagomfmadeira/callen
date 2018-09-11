@@ -440,10 +440,8 @@
 
         <!-- Add Button -->
         <Style x:Key="addButton" TargetType="Button">
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Margin" Value="10,10,10,0"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">

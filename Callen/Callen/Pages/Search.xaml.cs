@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Callen.Windows;
+
 using System.Data;
 using System.Data.SqlClient;
 
@@ -154,10 +156,17 @@ namespace Callen.Pages
             }
         }
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void formPage(object sender, RoutedEventArgs e) // Opens the form to add a new item 
         {
-            Regex regex = new Regex("[^(0-9)0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            winAddItem popForm = new winAddItem();
+            popForm.Owner = win;
+            win.Opacity = 0.5;
+            popForm.ShowDialog();
+
+            //if (popForm.getInserted()) // A item was inserted (refreshes datagrid) TODO
+
+            win.Opacity = 1;
         }
     }
 }

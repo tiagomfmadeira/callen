@@ -10,8 +10,7 @@
         Title="Collection Manager"
         WindowStyle="None"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        Height="600" Width="800"
+        Height="600" Width="800" WindowState="Maximized"
         Background="{x:Null}"  Icon="Icons/Callen.png"
         >
     <Grid Background="{DynamicResource mainColor}">

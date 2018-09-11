@@ -139,20 +139,6 @@ namespace Callen.Pages
             }
         }
 
-        private void formPage(object sender, RoutedEventArgs e) // Opens the form to add a new item 
-        {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winAddItem popForm = new winAddItem();
-            popForm.Owner = win;
-            win.Opacity = 0.5;
-            popForm.ShowDialog();
-
-            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
-                FillDataGrid();
-
-            win.Opacity = 1;
-        }
-
         private void check_fav(object sender, RoutedEventArgs e)
         {
             String id = (grdColec.SelectedItem as DataRowView)["ID"].ToString();

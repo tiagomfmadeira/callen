@@ -7,57 +7,49 @@
              mc:Ignorable="d" 
              d:DesignHeight="575" d:DesignWidth="800">
     <Grid Style="{StaticResource gridStyle}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
-        
-            <Border BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
-                <DataGrid Name="grdColec" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" AutoGenerateColumns="False">
-                    <DataGrid.ItemContainerStyle>
-                        <Style TargetType="DataGridRow">
-                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
-                        </Style>
-                    </DataGrid.ItemContainerStyle>
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding Path=favourite}" IsReadOnly="False" Header="Fav" CellStyle="{DynamicResource DGCell}">
-                            <DataGridCheckBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type CheckBox}">
-                                    <EventSetter Event="CheckBox.Click" Handler="check_fav"/>
-                                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type CheckBox}">
-                                                <Border Background="Transparent" >
-                                                    <Image Name="img" Source="../Icons/Fat/favorite.png" RenderOptions.BitmapScalingMode="HighQuality" Width="17"/>
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter TargetName="img" Property="Source" Value="../Icons/Fat/favoriteChecked.png"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </DataGridCheckBoxColumn.ElementStyle>
-                        </DataGridCheckBoxColumn>
 
-                        <DataGridTextColumn Binding="{Binding Path=ID}" IsReadOnly="True" Header="ID" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.7*"/>
-                        <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome" Width="3*"/>
-                        <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano" Width="0.5*"/>
-                        <DataGridTextColumn Binding="{Binding Path=other}" IsReadOnly="True" Header="Other" Width="0.7*"/>
-                        <DataGridTextColumn Binding="{Binding Path=collec}" IsReadOnly="True" Header="Coleção" Width="1.5*"/>
-                        <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.6*"/>
-                        <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="2*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Border>
+        <Border BorderBrush="{DynamicResource darkestHighLight}" Style="{StaticResource simpleBorder}">
+            <DataGrid Name="grdColec" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" AutoGenerateColumns="False">
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding Path=favourite}" IsReadOnly="False" Header="Fav" CellStyle="{DynamicResource DGCell}">
+                        <DataGridCheckBoxColumn.ElementStyle>
+                            <Style TargetType="{x:Type CheckBox}">
+                                <EventSetter Event="CheckBox.Click" Handler="check_fav"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                                            <Border Background="Transparent" >
+                                                <Image Name="img" Source="../Icons/Fat/favorite.png" RenderOptions.BitmapScalingMode="HighQuality" Width="17"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="img" Property="Source" Value="../Icons/Fat/favoriteChecked.png"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridCheckBoxColumn.ElementStyle>
+                    </DataGridCheckBoxColumn>
 
-            <Button Click="formPage" Grid.Row="1" Style="{StaticResource addButton}"/>
-        </Grid>
+                    <DataGridTextColumn Binding="{Binding Path=ID}" IsReadOnly="True" Header="ID" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.7*"/>
+                    <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome" Width="3*"/>
+                    <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano" Width="0.5*"/>
+                    <DataGridTextColumn Binding="{Binding Path=other}" IsReadOnly="True" Header="Matriz" Width="0.7*"/>
+                    <DataGridTextColumn Binding="{Binding Path=collec}" IsReadOnly="True" Header="Coleção" Width="1.5*"/>
+                    <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.6*"/>
+                    <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

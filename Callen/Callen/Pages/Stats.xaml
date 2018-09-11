@@ -20,13 +20,13 @@
 
         <Grid Margin="10" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".6*"/>
                 <RowDefinition Height="9*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".45*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Modificados Recentemente" Style="{DynamicResource statsText}" FontSize="18"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Name="LastMod" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" 
+                <DataGrid Name="LastMod" CanUserSortColumns="False"  Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" 
                           AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
                     <DataGrid.ItemContainerStyle>
                         <Style TargetType="DataGridRow">
@@ -43,13 +43,13 @@
 
         <Grid Margin="10" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".6*"/>
                 <RowDefinition Height="9*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".45*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Inseridos recentemente" Style="{DynamicResource statsText}"  FontSize="18"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
-                <DataGrid Name="LastInst" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                <DataGrid Name="LastInst" CanUserSortColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
                           AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
                     <DataGrid.ItemContainerStyle>
                         <Style TargetType="DataGridRow">
@@ -66,9 +66,9 @@
 
         <Grid Margin="10" Grid.Column="3">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".6*"/>
                 <RowDefinition Height="9*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height=".45*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Visualizados recentemente" Style="{DynamicResource statsText}"  FontSize="18"/>
             <Border Grid.Row="1" Style="{StaticResource simpleBorder}">

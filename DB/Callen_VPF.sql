@@ -75,7 +75,7 @@ DROP PROCEDURE G_CALLEN.GET_INST_INFO;
 GO
 CREATE PROCEDURE G_CALLEN.GET_INST_INFO @InstID INT
 AS
-	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Archive AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
+	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Code AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
 	FROM (SELECT *
 		  FROM G_CALLEN.INST
 	      WHERE Inst_Number = @InstID) AS INS
@@ -110,7 +110,7 @@ GO
 -- Used to search the table in pro mode (datagrid mode)
 DROP PROCEDURE G_CALLEN.SEARCH_ITEMS_PRO;
 GO
-CREATE PROCEDURE G_CALLEN.SEARCH_ITEMS_PRO @InstID AS INT, @Item_Name AS nvarchar(255), @Item_Year AS VARCHAR(20), @Item_Other AS VARCHAR(255), @Collec AS nvarchar(50) 
+CREATE PROCEDURE G_CALLEN.SEARCH_ITEMS_PRO @InstID AS INT, @Item_Name AS nvarchar(255), @Item_Year AS VARCHAR(20), @Item_Other AS VARCHAR(255), @Collec AS nvarchar(50), 
 												@Item_Desc AS nvarchar(255), @Item_Folder AS VARCHAR(50), @Item_Theme AS VARCHAR(50), @Item_Note AS nvarchar(255)
 														
 AS
@@ -139,7 +139,7 @@ GO
 -- Used to search the table in pic mode
 DROP PROCEDURE G_CALLEN.SEARCH_ITEMS_PIC;
 GO
-CREATE PROCEDURE G_CALLEN.SEARCH_ITEMS_PIC @InstID AS INT, @Item_Name AS nvarchar(255), @Item_Year AS VARCHAR(20), @Item_Other AS VARCHAR(255), @Collec AS nvarchar(50) 
+CREATE PROCEDURE G_CALLEN.SEARCH_ITEMS_PIC @InstID AS INT, @Item_Name AS nvarchar(255), @Item_Year AS VARCHAR(20), @Item_Other AS VARCHAR(255), @Collec AS nvarchar(50),
 												@Item_Desc AS nvarchar(255), @Item_Folder AS VARCHAR(50), @Item_Theme AS VARCHAR(50), @Item_Note AS nvarchar(255)
 AS
 	SELECT Inst_Number,Item_Name,Inst_PicPath
@@ -161,7 +161,6 @@ AS
 							  AND (ISNULL (@Collec, '') = '' OR Collec  LIKE '%'+@Collec+'%')
 							  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS I
 				  ON I.Item_ID = INS.Item_ID
-	ORDER BY ID DESC
 GO
 
 -- Returns folder info (used to fill combo box)
@@ -277,9 +276,6 @@ AS
 			VALUES(@Name,@Desc,@Year,@Other,@Collec);
 
 		SELECT @ITEM_ID = id FROM @out;
-
-		IF(@Series > 0)
-			INSERT INTO G_CALLEN.SERIESITEMS(Series,Item,NumberInSeries) VALUES (@Series,@ITEM_ID,@SeriesNum);
 
 		INSERT INTO G_CALLEN.INST(Item_ID,Archive,Inst_PicPath,Note,Date_Insert,Favorite,State)
 			VALUES(@ITEM_ID,@Folder,@Img_Path,@Note,GETDATE(),0,0);

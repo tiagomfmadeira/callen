@@ -169,7 +169,7 @@ namespace Callen.Windows
                 List<Folders> ft = new List<Folders>();
                 foreach (DataRow row in dt.Rows)
                 {
-                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
                 }
 
                 combo_theme.ItemsSource = ft;
@@ -321,7 +321,7 @@ namespace Callen.Windows
 
                 while (rdr.Read())
                 {
-                    if (img.Source != null) // Theres an img
+                    if (img.Source != null) // Theres an image
                     {
                         var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
                         System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + rdr["Inst_Number"].ToString() + ".jpeg");
@@ -336,7 +336,15 @@ namespace Callen.Windows
                  MessageBox.Show(ee.ToString());
              }
             inserted = true;
-            this.Close();
+
+            winNotification noti = new winNotification("New Item", name_box.Text.ToString() , "foi inserido com sucesso");
+            noti.Show();
+
+            btn_insert.IsEnabled = false;
+
+            TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
+                btn_insert.IsEnabled = true;
+            }), TimeSpan.FromMilliseconds(1500));
         }
 
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
@@ -345,6 +353,7 @@ namespace Callen.Windows
             {
                 combo_theme.IsEnabled = true;
                 btn_add_theme.IsEnabled = true;
+                btn_add_theme.Visibility = System.Windows.Visibility.Visible;
 
                 fillThemeCombo();
             }
@@ -352,6 +361,7 @@ namespace Callen.Windows
             {
                 combo_theme.IsEnabled = false;
                 btn_add_theme.IsEnabled = false;
+                btn_add_theme.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -373,6 +383,7 @@ namespace Callen.Windows
                 desc_box.IsEnabled = false;
                 other_box.IsEnabled = false;
                 year_box.IsEnabled = false;
+                collec_box.IsEnabled = false;
             }
             else
             {
@@ -382,6 +393,7 @@ namespace Callen.Windows
                 desc_box.IsEnabled = true;
                 other_box.IsEnabled = true;
                 year_box.IsEnabled = true;
+                collec_box.IsEnabled = true;
             }
         }
 
@@ -405,12 +417,6 @@ namespace Callen.Windows
 
             this.Opacity = 1; // turn opacity back to 1
             fillThemeCombo();
-        }
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

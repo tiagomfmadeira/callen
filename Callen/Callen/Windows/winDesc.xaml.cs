@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using Callen.Windows.Other;
+using Callen.Windows.Forms;
 
 using System.Data;
 using System.Data.SqlClient;
@@ -138,6 +139,7 @@ namespace Callen.Windows
 
                     item_note.IsEnabled = false;
                     combo_folder.Visibility = Visibility.Hidden;
+                    btn_add_folder.Visibility = Visibility.Hidden;
                     combo_theme.Visibility = Visibility.Hidden;
                     item_theme.Text = inst.getTheme();
                 }), TimeSpan.FromMilliseconds(500));
@@ -173,6 +175,7 @@ namespace Callen.Windows
 
                     item_note.IsEnabled = true;
                     combo_folder.Visibility = Visibility.Visible;
+                    btn_add_folder.Visibility = Visibility.Visible;
                     combo_theme.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = true;
@@ -308,7 +311,7 @@ namespace Callen.Windows
                     List<Folders> ft = new List<Folders>();
                     foreach (DataRow row in dt.Rows)
                     {
-                        ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Arquive_ID"].ToString() });
+                        ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
                     }
 
                     combo_theme.ItemsSource = ft;
@@ -359,12 +362,10 @@ namespace Callen.Windows
             edited = true;
 
             btn_save.IsEnabled = false;
-            btn_save.Visibility = System.Windows.Visibility.Hidden;
 
             TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
                 btn_save.IsEnabled = true;
-                btn_save.Visibility = System.Windows.Visibility.Visible;
-            }), TimeSpan.FromMilliseconds(2250));
+            }), TimeSpan.FromMilliseconds(1500));
         }
 
         public bool wasEdited()
@@ -373,6 +374,22 @@ namespace Callen.Windows
         }
 
         private void combo_theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btn_add_folder_Click(object sender, RoutedEventArgs e)
+        {
+            winAddFolder popAddFol = new winAddFolder();
+            popAddFol.Owner = this;
+            this.Opacity = 0.85;
+            popAddFol.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+            fillFolderCombo();
+        }
+
+        private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
 
         }
