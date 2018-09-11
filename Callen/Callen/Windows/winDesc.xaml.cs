@@ -134,12 +134,12 @@ namespace Callen.Windows
                     Canvas.SetLeft(btn_print, 568);
 
                     btn_save.IsEnabled = false;
+                    btn_save.Visibility = System.Windows.Visibility.Hidden;
 
                     item_note.IsEnabled = false;
                     combo_folder.Visibility = Visibility.Hidden;
                     combo_theme.Visibility = Visibility.Hidden;
                     item_theme.Text = inst.getTheme();
-
                 }), TimeSpan.FromMilliseconds(500));
             }
             else
@@ -176,6 +176,7 @@ namespace Callen.Windows
                     combo_theme.Visibility = Visibility.Visible;
 
                     btn_save.IsEnabled = true;
+                    btn_save.Visibility = System.Windows.Visibility.Visible;
                 }), TimeSpan.FromMilliseconds(500));
             }
         }
@@ -358,9 +359,11 @@ namespace Callen.Windows
             edited = true;
 
             btn_save.IsEnabled = false;
+            btn_save.Visibility = System.Windows.Visibility.Hidden;
 
             TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
                 btn_save.IsEnabled = true;
+                btn_save.Visibility = System.Windows.Visibility.Visible;
             }), TimeSpan.FromMilliseconds(2250));
         }
 

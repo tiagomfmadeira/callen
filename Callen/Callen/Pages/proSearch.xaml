@@ -49,8 +49,8 @@
                         <DataGridTextColumn Binding="{Binding Path=name}" IsReadOnly="True" Header="Nome" Width="3*"/>
                         <DataGridTextColumn Binding="{Binding Path=year}" IsReadOnly="True" Header="Ano" Width="0.5*"/>
                         <DataGridTextColumn Binding="{Binding Path=other}" IsReadOnly="True" Header="Other" Width="0.7*"/>
-                        <DataGridTextColumn Binding="{Binding Path=collec}" IsReadOnly="True" Header="Coleção" Width="2*"/>
-                        <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.8*"/>
+                        <DataGridTextColumn Binding="{Binding Path=collec}" IsReadOnly="True" Header="Coleção" Width="1.5*"/>
+                        <DataGridTextColumn Binding="{Binding Path=folder}" IsReadOnly="True" Header="Pasta" ElementStyle="{DynamicResource DGElemntCenter}" Width="0.6*"/>
                         <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="Tema" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=descr}" IsReadOnly="True" Header="Descrição" Width="2*"/>
                     </DataGrid.Columns>
