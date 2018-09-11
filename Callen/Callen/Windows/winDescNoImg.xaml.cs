@@ -27,6 +27,7 @@ namespace Callen.Windows
     public partial class winDescNoImg : Window
     {
         bool edited;
+        bool deleted;
         Instance inst;
 
         public winDescNoImg(Instance it)  // sets the text Boxes with information from an given Item 
@@ -43,6 +44,7 @@ namespace Callen.Windows
             }
 
             edited = false;
+            deleted = false;
 
             inst = it;
 
@@ -87,6 +89,17 @@ namespace Callen.Windows
             da_print_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_print_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
+            DoubleAnimation da_delete_dis = new DoubleAnimation();
+            da_delete_dis.From = 1;
+            da_delete_dis.To = 0;
+            da_delete_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+
+            DoubleAnimation da_delete_app = new DoubleAnimation();
+            da_delete_app.From = 0;
+            da_delete_app.To = 1;
+            da_delete_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            da_delete_app.BeginTime = TimeSpan.FromMilliseconds(500);
+
             if (item_note.IsEnabled)
             {
                 var storyboard = new Storyboard();
@@ -102,19 +115,28 @@ namespace Callen.Windows
                 Storyboard.SetTarget(da_print_app, btn_print);
                 Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
 
+                Storyboard.SetTarget(da_delete_dis, btn_delete);
+                Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
+
+                Storyboard.SetTarget(da_delete_app, btn_delete);
+                Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
+
                 Storyboard.SetTarget(da_save_dis, btn_save);
                 Storyboard.SetTargetProperty(da_save_dis, new PropertyPath(Button.OpacityProperty));
 
                 storyboard.Children.Add(da_print_dis);
                 storyboard.Children.Add(da_print_app);
+                storyboard.Children.Add(da_delete_dis);
+                storyboard.Children.Add(da_delete_app);
                 storyboard.Children.Add(da_save_dis);
 
                 storyboard.Begin();
 
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 430);
-                    Canvas.SetLeft(btn_print, 568);
+                    Canvas.SetLeft(grd_pop_print, 405);
+                    Canvas.SetLeft(btn_print, 543);
+                    Canvas.SetLeft(btn_delete, 568);
 
                     btn_save.IsEnabled = false;
                     btn_save.Visibility = System.Windows.Visibility.Hidden;
@@ -143,18 +165,27 @@ namespace Callen.Windows
                 Storyboard.SetTarget(da_print_app, btn_print);
                 Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
 
+                Storyboard.SetTarget(da_delete_dis, btn_delete);
+                Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
+
+                Storyboard.SetTarget(da_delete_app, btn_delete);
+                Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
+
                 Storyboard.SetTarget(da_save_app, btn_save);
                 Storyboard.SetTargetProperty(da_save_app, new PropertyPath(Button.OpacityProperty));
 
                 storyboard.Children.Add(da_print_dis);
                 storyboard.Children.Add(da_print_app);
+                storyboard.Children.Add(da_delete_dis);
+                storyboard.Children.Add(da_delete_app);
                 storyboard.Children.Add(da_save_app);
 
                 storyboard.Begin();
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 405);
-                    Canvas.SetLeft(btn_print, 543);
+                    Canvas.SetLeft(grd_pop_print, 380);
+                    Canvas.SetLeft(btn_print, 518);
+                    Canvas.SetLeft(btn_delete, 543);
 
                     item_note.IsEnabled = true;
                     combo_folder.Visibility = Visibility.Visible;
@@ -357,6 +388,11 @@ namespace Callen.Windows
             return edited;
         }
 
+        public bool wasDeleted()
+        {
+            return deleted;
+        }
+
         private void combo_theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -375,7 +411,18 @@ namespace Callen.Windows
         
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
+            winDelete popDelete = new winDelete(inst.getInstID(), inst.getName());
+            popDelete.Owner = this;
+            this.Opacity = 0.85;
+            popDelete.ShowDialog();
 
+            this.Opacity = 1; // turn opacity back to 1
+
+            if (popDelete.wasDeleted())
+            {
+                deleted = true;
+                this.Close();
+            }
         }
     }
 }

@@ -202,6 +202,13 @@ namespace Callen.Pages
                 if (popDesc.wasEdited())
                     fillLastMod();
 
+                if (popDesc.wasDeleted())
+                {
+                    fillLastInst();
+                    fillLastMod();
+                    fillLastView();
+                }
+
                 win.Opacity = 1;
             }
             else
@@ -213,6 +220,13 @@ namespace Callen.Pages
 
                 if (popDesc.wasEdited())
                     fillLastMod();
+
+                if (popDesc.wasDeleted())
+                {
+                    fillLastInst();
+                    fillLastMod();
+                    fillLastView();
+                }
 
                 win.Opacity = 1;
             }

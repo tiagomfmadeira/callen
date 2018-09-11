@@ -260,6 +260,15 @@ AS
 	SELECT @updated;
 GO
 
+-- Changes instance state to 1
+DROP PROCEDURE G_CALLEN.REMOVE_INST;
+go
+CREATE PROCEDURE G_CALLEN.REMOVE_INST @InstID INT
+AS
+	UPDATE G_CALLEN.INST
+		SET State = 1 WHERE Inst_Number = @InstID;
+GO
+
 -- Adds a new Inst (returns inserted row)
 DROP PROCEDURE G_CALLEN.ADD_INST;
 go

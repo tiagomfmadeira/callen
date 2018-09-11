@@ -153,6 +153,9 @@
     <Compile Include="Providers\NameSuggestionProvider.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="TimedAction.cs" />
+    <Compile Include="Windows\Forms\winDelete.xaml.cs">
+      <DependentUpon>winDelete.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Forms\winAddFolder.xaml.cs">
       <DependentUpon>winAddFolder.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
     <Page Include="Pages\Stats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Forms\winDelete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Forms\winAddFolder.xaml">
       <SubType>Designer</SubType>

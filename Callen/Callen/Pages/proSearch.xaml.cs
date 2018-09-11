@@ -126,6 +126,11 @@ namespace Callen.Pages
                 win.Opacity = 0.5;
                 popDesc.ShowDialog();
 
+                if (popDesc.wasDeleted())
+                {
+                    grdColec.Items.Remove(it);
+                }
+
                 win.Opacity = 1;
             }
             else
@@ -134,6 +139,11 @@ namespace Callen.Pages
                 popDesc.Owner = win;
                 win.Opacity = 0.5;
                 popDesc.ShowDialog();
+
+                if (popDesc.wasDeleted())
+                {
+                    FillDataGrid();
+                }
 
                 win.Opacity = 1;
             }

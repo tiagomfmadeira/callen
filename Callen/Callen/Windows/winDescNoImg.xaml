@@ -22,7 +22,7 @@
                     </Popup>
                 </Grid>
 
-                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="430" Canvas.Top="66">
+                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="405" Canvas.Top="66">
                     <Popup Placement="Center" Name="pop_print" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="115" Height="35" CornerRadius="7,7,0,7">
                             <TextBlock Margin="5,0,0,0" Text="Adiciona à lista de etiquetas a imprimir" Width="110" Height="38" TextWrapping="WrapWithOverflow" />
@@ -72,7 +72,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25"  Panel.ZIndex="1" Visibility="Hidden" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
+                <Button Width="25" Height="25" Panel.ZIndex="1" Visibility="Hidden" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False"  Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -122,8 +122,8 @@
                     </Image>
                 </Button>
 
-                <TextBox Name="item_name" IsEnabled="False" Width="460" Canvas.Left="173" Canvas.Top="158" Height="42" FontWeight="Bold" FontSize="13.5" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
-                <TextBox Name="item_year" IsEnabled="False" Width="100" Canvas.Left="354" Canvas.Top="200" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_name" IsEnabled="False" Width="460" Canvas.Left="173" Canvas.Top="161" Height="39" FontWeight="Bold" FontSize="13.5" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
+                <TextBox Name="item_year" IsEnabled="False" Width="120" Canvas.Left="343" Canvas.Top="200" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
 
                 <Label Content="Coleção" Canvas.Left="173" Canvas.Top="231" Style="{DynamicResource formLabel}" Width="55" />
                 <TextBox Name="item_collec" IsEnabled="False" Width="169" Canvas.Left="229" Canvas.Top="231" Height="26" Style="{StaticResource descTextBox}"/>

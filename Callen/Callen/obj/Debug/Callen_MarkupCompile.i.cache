@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\App.xaml
-1452701986
+15-911475763
 
-301520648723
+31795416891
 29-1538657858
-MainWindow.xaml;Pages\picSearch.xaml;Pages\proSearch.xaml;Pages\Search.xaml;Pages\Stats.xaml;Windows\Forms\winAddFolder.xaml;Windows\winDescNoImg.xaml;Windows\winNotification.xaml;Windows\Other\winZoomImage.xaml;Windows\winAddItem.xaml;Windows\winDesc.xaml;Windows\winHelp.xaml;Windows\winPrint.xaml;Windows\winSettings.xaml;
+MainWindow.xaml;Pages\picSearch.xaml;Pages\proSearch.xaml;Pages\Search.xaml;Pages\Stats.xaml;Windows\Forms\winDelete.xaml;Windows\Forms\winAddFolder.xaml;Windows\winDescNoImg.xaml;Windows\winNotification.xaml;Windows\Other\winZoomImage.xaml;Windows\winAddItem.xaml;Windows\winDesc.xaml;Windows\winHelp.xaml;Windows\winPrint.xaml;Windows\winSettings.xaml;
 
-False
+True
 

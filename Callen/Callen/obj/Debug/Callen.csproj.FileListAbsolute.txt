@@ -354,3 +354,5 @@ C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.applicati
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.csproj.CopyComplete
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.exe
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.pdb
+C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winDelete.g.cs
+C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winDelete.baml
