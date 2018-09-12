@@ -82,11 +82,11 @@ namespace Callen
     {
         private String theme, folder, inst_num, image_path, note;
 
-        public Instance(String name, String ID, String Desc, String year, String Theme, String folder,
+        public Instance(String name, String ID, String Inst_num, String Desc, String year, String Theme, String folder,
                             String other, String img, String note, String collec)
-                                    : base (name, "0", Desc, year, other, collec)
+                                    : base (name, ID, Desc, year, other, collec)
         {
-            this.inst_num = ID;
+            this.inst_num = Inst_num;
             this.theme = Theme;
             this.folder = folder;
             this.image_path = img;

@@ -142,7 +142,7 @@ namespace Callen.Pages
 
                 while (rdr.Read())
                 {
-                    Instance it = new Instance(rdr["name"].ToString(), rdr["ID"].ToString(), rdr["descr"].ToString(), rdr["year"].ToString(),
+                    Instance it = new Instance(rdr["name"].ToString(), rdr["item_id"].ToString(), id, rdr["descr"].ToString(), rdr["year"].ToString(),
                     rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(), 
                     rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["collec"].ToString());
 

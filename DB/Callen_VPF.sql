@@ -75,7 +75,7 @@ DROP PROCEDURE G_CALLEN.GET_INST_INFO;
 GO
 CREATE PROCEDURE G_CALLEN.GET_INST_INFO @InstID INT
 AS
-	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Code AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
+	SELECT Favorite, I.Item_ID AS item_id, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Code AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
 	FROM (SELECT *
 		  FROM G_CALLEN.INST
 	      WHERE Inst_Number = @InstID) AS INS
@@ -223,6 +223,71 @@ AS
 		  LEFT OUTER JOIN (SELECT Item_Name, Item_ID 
 						   FROM G_CALLEN.ITEM ) AS I
 		  ON I.Item_ID = IT.Item_ID;
+GO
+
+-- Updates item only information (returns 1 some info was updated) 
+DROP PROCEDURE G_CALLEN.UPDATE_ITEM_INFO;
+go
+CREATE PROCEDURE G_CALLEN.UPDATE_ITEM_INFO @ItemID INT, @ItemName nvarchar(255), @ItemDescr nvarchar(255), @ItemYear VARCHAR(20),
+												@ItemOther nvarchar(255), @ItemCollec nvarchar(50), @InstID INT
+AS
+	DECLARE @oldName nvarchar(255);
+	DECLARE @oldDescr nvarchar(255);
+	DECLARE @oldYear VARCHAR(20);
+	DECLARE @oldOther nvarchar(255);
+    DECLARE @oldCollec nvarchar(50);
+
+	DECLARE @updated BIT;
+
+	SET @updated = 0;
+
+	SELECT @oldName = Item_Name, @oldYear = Item_Year, @oldDescr = Item_Descr, @oldOther = Other,
+				@oldCollec = Collec  FROM G_CALLEN.ITEM WHERE Item_ID = @ItemID;
+
+	IF @oldName != @ItemName
+	BEGIN
+		UPDATE G_CALLEN.ITEM
+			SET Item_Name = @ItemName WHERE Item_ID = @ItemID;
+
+		SET @updated = 1;
+	END
+
+	IF @oldDescr != @ItemDescr
+	BEGIN
+		UPDATE G_CALLEN.ITEM
+			SET Item_Descr = @ItemDescr WHERE Item_ID = @ItemID;
+
+		SET @updated = 1;
+	END
+
+	IF @oldYear != @ItemYear
+	BEGIN
+		UPDATE G_CALLEN.ITEM
+			SET Item_Year = @ItemYear WHERE Item_ID = @ItemID;
+
+		SET @updated = 1;
+	END
+
+	IF @oldOther != @ItemOther
+	BEGIN
+		UPDATE G_CALLEN.ITEM
+			SET Other = @ItemOther WHERE Item_ID = @ItemID;
+
+		SET @updated = 1;
+	END
+
+	IF @oldCollec != @ItemCollec
+	BEGIN
+		UPDATE G_CALLEN.ITEM
+			SET Collec = @ItemCollec WHERE Item_ID = @ItemID;
+
+		SET @updated = 1;
+	END
+
+	IF(@updated = 1)
+		UPDATE G_CALLEN.INST SET Date_Mod = GETDATE() WHERE Inst_Number = @InstID; -- "Trigger"
+
+	SELECT @updated;
 GO
 
 -- Updates instance only information (returns 1 some info was updated) DONE?

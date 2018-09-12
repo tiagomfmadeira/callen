@@ -100,6 +100,7 @@ namespace Callen.Windows
             da_delete_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_delete_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
+            // Exit edit mode (Hidde stuff)
             if (item_note.IsEnabled)
             {
                 var storyboard = new Storyboard();
@@ -138,18 +139,26 @@ namespace Callen.Windows
                     Canvas.SetLeft(btn_print, 543);
                     Canvas.SetLeft(btn_delete, 568);
 
+                    // Button
                     btn_save.IsEnabled = false;
                     btn_save.Visibility = System.Windows.Visibility.Hidden;
 
-                    item_note.IsEnabled = false;
+                    // Boxes
+                    item_name.IsEnabled = false;
+                    item_year.IsEnabled = false;
+                    item_collec.IsEnabled = false;
+                    item_other.IsEnabled = false;
+                    item_desc.IsEnabled = false;
+
                     combo_folder.Visibility = Visibility.Hidden;
                     btn_add_folder.Visibility = Visibility.Hidden;
                     combo_theme.Visibility = Visibility.Hidden;
-                    item_theme.Text = inst.getTheme();
+                    item_note.IsEnabled = false;
+                    item_theme.Text = inst.getTheme(); //Update theme text box
 
                 }), TimeSpan.FromMilliseconds(500));
             }
-            else
+            else // Enter edit mode
             {
                 var storyboard = new Storyboard();
 
@@ -187,19 +196,84 @@ namespace Callen.Windows
                     Canvas.SetLeft(btn_print, 518);
                     Canvas.SetLeft(btn_delete, 543);
 
-                    item_note.IsEnabled = true;
+                    //Buttons
+                    btn_save.IsEnabled = true;
+                    btn_save.Visibility = System.Windows.Visibility.Visible;
+
+                    // Boxes
+                    item_name.IsEnabled = true;
+                    item_year.IsEnabled = true;
+                    item_collec.IsEnabled = true;
+                    item_other.IsEnabled = true;
+                    item_desc.IsEnabled = true;
+
                     combo_folder.Visibility = Visibility.Visible;
                     btn_add_folder.Visibility = Visibility.Visible;
                     combo_theme.Visibility = Visibility.Visible;
-
-                    btn_save.IsEnabled = true;
-                    btn_save.Visibility = System.Windows.Visibility.Visible;
+                    item_note.IsEnabled = true;
                 }), TimeSpan.FromMilliseconds(500));
             }
         }
 
         private void updateInfo() // Needs to check if some value is changed before performing the procedure
         {
+            bool updated = false;
+            #region UPDATE ITEM
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_CALLEN.UPDATE_ITEM_INFO @ItemID, @ItemName, @ItemDescr, @ItemYear, @ItemOther, @ItemCollec, @InstID";
+
+                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
+
+                SqlParameter paramID = new SqlParameter();
+                paramID.ParameterName = "@ItemID";
+                paramID.Value = inst.getID();
+                cmd.Parameters.Add(paramID);
+
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@ItemName";
+                paramName.Value = item_name.Text;
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramDescr = new SqlParameter();
+                paramDescr.ParameterName = "@ItemDescr";
+                paramDescr.Value = item_desc.Text;
+                cmd.Parameters.Add(paramDescr);
+
+                SqlParameter paramYear = new SqlParameter();
+                paramYear.ParameterName = "@ItemYear";
+                paramYear.Value = item_year.Text;
+                cmd.Parameters.Add(paramYear);
+
+                SqlParameter paramOther = new SqlParameter();
+                paramOther.ParameterName = "@ItemOther";
+                paramOther.Value = item_other.Text;
+                cmd.Parameters.Add(paramOther);
+
+                SqlParameter paramCollec = new SqlParameter();
+                paramCollec.ParameterName = "@ItemCollec";
+                paramCollec.Value = item_collec.Text;
+                cmd.Parameters.Add(paramCollec);
+
+                SqlParameter paramInst = new SqlParameter();
+                paramInst.ParameterName = "@InstID";
+                paramInst.Value = inst.getInstID();
+                cmd.Parameters.Add(paramInst);
+
+                updated = (bool)cmd.ExecuteScalar();
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+            #endregion
+
+            #region UPDATE INSTANCE
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
@@ -224,12 +298,12 @@ namespace Callen.Windows
                 paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
                 cmd.Parameters.Add(paramFolder);
 
-                bool updated = (bool)cmd.ExecuteScalar();
+                bool tmpUpdated = (bool)cmd.ExecuteScalar();
 
-                if (updated)
+                if (tmpUpdated)
                 {
-                    winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
-                    noti.Show();
+                    updated = true;
+
                     //update folder, theme text boxes
                     item_folder.Text = combo_folder.Text;
                     item_theme.Text = combo_theme.Text;
@@ -240,6 +314,13 @@ namespace Callen.Windows
             catch (Exception ee)
             {
                 MessageBox.Show(ee.ToString());
+            }
+            #endregion
+
+            if (updated)
+            {
+                winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
+                noti.Show();
             }
         }
 
