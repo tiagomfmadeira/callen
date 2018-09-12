@@ -135,7 +135,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBConnect.cs" />
-    <Compile Include="Entities.cs" />
     <Compile Include="Folders.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Pages\picSearch.xaml.cs">
@@ -159,7 +158,6 @@
     <Compile Include="Windows\Forms\winAddFolder.xaml.cs">
       <DependentUpon>winAddFolder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\windAddItemViewModel.cs" />
     <Compile Include="Windows\winDescNoImg.xaml.cs">
       <DependentUpon>winDescNoImg.xaml</DependentUpon>
     </Compile>
@@ -169,7 +167,7 @@
     <Compile Include="Windows\Other\winZoomImage.xaml.cs">
       <DependentUpon>winZoomImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\winAddItem.xaml.cs">
+    <Compile Include="Windows\Forms\winAddItem.xaml.cs">
       <DependentUpon>winAddItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\winDesc.xaml.cs">
@@ -232,7 +230,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\winAddItem.xaml">
+    <Page Include="Windows\Forms\winAddItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

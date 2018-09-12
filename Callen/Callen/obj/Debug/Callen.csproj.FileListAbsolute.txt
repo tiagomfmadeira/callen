@@ -322,7 +322,6 @@ C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\wi
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winDescNoImg.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winNotification.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Other\winZoomImage.g.cs
-C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winAddItem.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winDesc.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winHelp.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winPrint.g.cs
@@ -340,7 +339,6 @@ C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Pages\Stats.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winAddFolder.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winDescNoImg.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Other\winZoomImage.baml
-C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winAddItem.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winDesc.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winHelp.baml
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\winPrint.baml
@@ -356,3 +354,5 @@ C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.exe
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.pdb
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winDelete.g.cs
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winDelete.baml
+C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winAddItem.g.cs
+C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Windows\Forms\winAddItem.baml

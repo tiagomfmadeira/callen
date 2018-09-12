@@ -14,16 +14,12 @@ using System.Windows.Shapes;
 
 using System.Diagnostics;
 
-using System.Text.RegularExpressions;
-
 using System.Data;
 using System.Data.SqlClient;
 
 using Microsoft.Win32;
 
-using Callen.Windows.Forms;
-
-namespace Callen.Windows
+namespace Callen.Windows.Forms
 {
     /// <summary>
     /// Interaction logic for winAddItem.xaml

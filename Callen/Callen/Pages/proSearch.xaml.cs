@@ -25,6 +25,8 @@ namespace Callen.Pages
     /// </summary>
     public partial class proSearch : UserControl
     {
+        DataTable items;
+
         public proSearch()
         {
             InitializeComponent();
@@ -36,7 +38,8 @@ namespace Callen.Pages
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEnter);
-            grdColec.ItemsSource = dt.DefaultView;
+            items = dt;
+            grdColec.ItemsSource = items.DefaultView;
         }
 
         private void HandleEnter(object sender, KeyEventArgs e)
@@ -60,10 +63,10 @@ namespace Callen.Pages
                 cmd.CommandText = Get_Data;
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Items");
-                sda.Fill(dt);
+                items = new DataTable("Items");
+                sda.Fill(items);
 
-                grdColec.ItemsSource = dt.DefaultView;
+                grdColec.ItemsSource = items.DefaultView;
 
                 thisConnection.Close();
             }
@@ -128,7 +131,15 @@ namespace Callen.Pages
 
                 if (popDesc.wasDeleted())
                 {
-                    grdColec.Items.Remove(it);
+                    for (int i = items.Rows.Count - 1; i >= 0; i--)
+                    {
+                        DataRow dr = items.Rows[i];
+
+                        if (dr["ID"].ToString() == it.getInstID())
+                        {
+                            dr.Delete();
+                        }
+                    }
                 }
 
                 win.Opacity = 1;
@@ -142,7 +153,15 @@ namespace Callen.Pages
 
                 if (popDesc.wasDeleted())
                 {
-                    FillDataGrid();
+                    for (int i = items.Rows.Count - 1; i >= 0; i--)
+                    {
+                        DataRow dr = items.Rows[i];
+
+                        if (dr["ID"].ToString() == it.getInstID())
+                        {
+                            dr.Delete();
+                        }
+                    }
                 }
 
                 win.Opacity = 1;
