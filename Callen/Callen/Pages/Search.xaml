@@ -67,7 +67,10 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource brushWatermarkBackground}" BorderBrush="{StaticResource brushWatermarkBorder}" Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}" Style="{StaticResource advanceSearchBorder}">
+        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Border_PreviewKeyDown"
+                Background="{StaticResource brushWatermarkBackground}" BorderBrush="{StaticResource brushWatermarkBorder}" 
+                Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"
+                Style="{StaticResource advanceSearchBorder}">
             <Grid Style="{StaticResource advanceSearchForm}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

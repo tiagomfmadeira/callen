@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Printing;
+using System.Windows.Xps;
+using System.Windows.Documents.Serialization;
 
 namespace Callen.Windows
 {
@@ -35,13 +37,13 @@ namespace Callen.Windows
 
             Random r = new Random();
             InitializeComponent();
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 5; i++)
             {
-                itemContorlItem.Items.Add(new { ID = "Nº "+i.ToString(), Collec="Uma coleção muito bonita", Name = "A realy long fucking name to test this out but it can get much bigger if I want it to qowihr qowhr oqwht uihqeo tiqhk eyqoiyqwio eyjqwio ejyioqw eyjiqwohy oiqwhey oihqwe yoinqw eoy qwoeunyweoqhy qowenyo qwjenyoqwen yojnqw eoyn qweyn qwojeyn oqwjey noqwjey noç", Matrix = "B-25", Year = "1999" });
+                tagItems.Items.Add(new { ID = "Nº "+i.ToString(), Collec="Uma coleção muito bonita", Name = "A realy long fucking name to test this out but it can get much bigger if I want it to qowihr qowhr oqwht uihqeo tiqhk eyqoiyqwio eyjqwio ejyioqw eyjiqwohy oiqwhey oihqwe yoinqw eoy qwoeunyweoqhy qowenyo qwjenyoqwen yojnqw eoyn qweyn qwojeyn oqwjey noqwjey noç", Matrix = "B-25", Year = "1999" });
             }
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 5; i++)
             {
-                itemContorlItem.Items.Add(new { ID = "Nº " + i.ToString(), Name = "A realy long", Matrix = "B-25", Year = "1999" });
+                tagItems.Items.Add(new { ID = "Nº " + i.ToString(), Name = "A realy long", Matrix = "B-25", Year = "1999" });
             }
         }
 
@@ -58,14 +60,59 @@ namespace Callen.Windows
 
         public void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            PrintDialog printDialog = new PrintDialog();
+            //PrintDialog printDialog = new PrintDialog();
 
-            if (printDialog.ShowDialog() == true)
+            //if (printDialog.ShowDialog() == true)
+            //{
+            //    flowDocument.ColumnWidth = printDialog.PrintableAreaWidth;
+            //    flowDocument.PagePadding = new Thickness(0);
+
+            //    printDialog.PrintDocument(((IDocumentPaginatorSource)flowDocument).DocumentPaginator, "Flow Document Print Job");
+            //}
+
+            PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
+
+            if (printDlg.ShowDialog() == true)
+
             {
-                flowDocument.ColumnWidth = printDialog.PrintableAreaWidth;
-                flowDocument.PagePadding = new Thickness(0);
 
-                printDialog.PrintDocument(((IDocumentPaginatorSource)flowDocument).DocumentPaginator, "Flow Document Print Job");
+                //get selected printer capabilities
+
+                System.Printing.PrintCapabilities capabilities = printDlg.PrintQueue.GetPrintCapabilities(printDlg.PrintTicket);
+
+
+
+                //get scale of the print wrt to screen of WPF visual
+
+                double scale = Math.Min(capabilities.PageImageableArea.ExtentWidth / this.ActualWidth, capabilities.PageImageableArea.ExtentHeight /
+
+                               this.ActualHeight);
+
+
+
+                //Transform the Visual to scale
+
+                this.LayoutTransform = new ScaleTransform(scale, scale);
+
+
+
+                //get the size of the printer page
+
+                Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
+
+
+
+                //update the layout of the visual to the printer page size.
+
+                this.Measure(sz);
+
+                this.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight), sz));
+
+
+
+                //now print the visual to printer to fit on the one page.
+
+                printDlg.PrintVisual(tagItems as Visual, "First Fit to Page WPF Print");
 
             }
         }

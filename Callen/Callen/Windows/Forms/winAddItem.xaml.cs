@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 
 using System.Diagnostics;
 
+using System.Configuration;
+
 using System.Data;
 using System.Data.SqlClient;
 
@@ -27,7 +29,6 @@ namespace Callen.Windows.Forms
     public partial class winAddItem : Window
     {
         private bool inserted; // tell if a item was inserted
-        private bool oldItem;
 
         public winAddItem()
         {
@@ -42,11 +43,9 @@ namespace Callen.Windows.Forms
                 closeBorder.Height = parent.Height;
             }
 
-            fillItemCombo();
             fillFolderCombo();
 
             inserted = false;
-            oldItem = false;
         }
 
         public bool getInserted()
@@ -70,42 +69,7 @@ namespace Callen.Windows.Forms
             this.Close();
         }
 
-        private void fillItemCombo()
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.ITEMS_BOX";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Items");
-                sda.Fill(dt);
-
-                List<Item> items = new List<Item>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    items.Add(new Item(row["Item_Name"].ToString(),row["Item_ID"].ToString(),row["Item_Descr"].ToString(),row["Item_Year"].ToString(),
-                                                row["Other"].ToString(),row["Collec"].ToString()));
-                }
-
-                combo_item.ItemsSource = items;
-                combo_item.DisplayMemberPath = "Name";
-                combo_item.SelectedValuePath = "ID";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
-        }
-
+        
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
             try
@@ -153,10 +117,10 @@ namespace Callen.Windows.Forms
                 SqlCommand cmd = thisConnection.CreateCommand();
                 cmd.CommandText = Get_Data;
 
-                SqlParameter paramItem = new SqlParameter();
-                paramItem.ParameterName = "@Code";
-                paramItem.Value = combo_folder.SelectedValue.ToString();
-                cmd.Parameters.Add(paramItem);
+                SqlParameter paramFolder = new SqlParameter();
+                paramFolder.ParameterName = "@Code";
+                paramFolder.Value = combo_folder.SelectedValue.ToString();
+                cmd.Parameters.Add(paramFolder);
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable("Folder");
@@ -232,6 +196,8 @@ namespace Callen.Windows.Forms
 
         private void btn_insert_Click(object sender, RoutedEventArgs e) // inserts information in data base 
         {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             if (string.IsNullOrEmpty(name_box.Text.ToString())
                         || string.IsNullOrEmpty(desc_box.Text.ToString()) || string.IsNullOrEmpty(year_box.Text.ToString())
                             || (combo_folder.SelectedItem == null))
@@ -247,47 +213,34 @@ namespace Callen.Windows.Forms
 
                 string Get_Data = "";
 
-                if (oldItem)
-                    Get_Data = "EXEC G_CALLEN.ADD_INST_WITH_ITEM @ItemID, @Folder, @Note, @Img_Path";
-                else
-                    Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Desc, @Year, @Collec, @Folder, @Other, @Note, @Img_Path";
+                Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Desc, @Year, @Collec, @Folder, @Other, @Note, @Img_Path";
 
                 SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
 
-                if (oldItem)
-                {
-                    SqlParameter paramItem = new SqlParameter();
-                    paramItem.ParameterName = "@ItemID";
-                    paramItem.Value = combo_item.SelectedValue.ToString();
-                    cmd.Parameters.Add(paramItem);
-                }
-                else
-                { 
-                    SqlParameter paramName = new SqlParameter();
-                    paramName.ParameterName = "@Name";
-                    paramName.Value = name_box.Text.ToString();
-                    cmd.Parameters.Add(paramName);
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Name";
+                paramName.Value = name_box.Text.ToString();
+                cmd.Parameters.Add(paramName);
 
-                    SqlParameter paramDesc = new SqlParameter();
-                    paramDesc.ParameterName = "@Desc";
-                    paramDesc.Value = desc_box.Text.ToString();
-                    cmd.Parameters.Add(paramDesc);
+                SqlParameter paramDesc = new SqlParameter();
+                paramDesc.ParameterName = "@Desc";
+                paramDesc.Value = desc_box.Text.ToString();
+                cmd.Parameters.Add(paramDesc);
 
-                    SqlParameter paramYear = new SqlParameter();
-                    paramYear.ParameterName = "@Year";
-                    paramYear.Value = year_box.Text.ToString();
-                    cmd.Parameters.Add(paramYear);
+                SqlParameter paramYear = new SqlParameter();
+                paramYear.ParameterName = "@Year";
+                paramYear.Value = year_box.Text.ToString();
+                cmd.Parameters.Add(paramYear);
 
-                    SqlParameter paramOther = new SqlParameter();
-                    paramOther.ParameterName = "@Other";
-                    paramOther.Value = other_box.Text.ToString();
-                    cmd.Parameters.Add(paramOther);
+                SqlParameter paramOther = new SqlParameter();
+                paramOther.ParameterName = "@Other";
+                paramOther.Value = other_box.Text.ToString();
+                cmd.Parameters.Add(paramOther);
 
-                    SqlParameter paramCollec = new SqlParameter();
-                    paramCollec.ParameterName = "@Collec";
-                    paramCollec.Value = collec_box.Text.ToString();
-                    cmd.Parameters.Add(paramCollec);
-                }
+                SqlParameter paramCollec = new SqlParameter();
+                paramCollec.ParameterName = "@Collec";
+                paramCollec.Value = collec_box.Text.ToString();
+                cmd.Parameters.Add(paramCollec);
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Folder";
@@ -304,7 +257,7 @@ namespace Callen.Windows.Forms
                 paramImg.ParameterName = "@Img_Path";
                 if (img.Source != null) // Theres an img
                 {
-                    var img_path = "C:\\Callen_Pics\\Instance_"; // gets filled in database trigger
+                    var img_path = @config.AppSettings.Settings["image_path"].Value + "\\Instance_"; // gets filled in database trigger
                     paramImg.Value = img_path;
                 }
                 else
@@ -320,7 +273,7 @@ namespace Callen.Windows.Forms
                     if (img.Source != null) // Theres an image
                     {
                         var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
-                        System.IO.File.Copy(filename, "C:\\Callen_Pics\\Instance_" + rdr["Inst_Number"].ToString() + ".jpeg");
+                        System.IO.File.Copy(filename, @config.AppSettings.Settings["image_path"].Value + "\\Instance_" + rdr["Inst_Number"].ToString() + ".jpeg");
                     }
                     break;
                 }
@@ -358,38 +311,6 @@ namespace Callen.Windows.Forms
                 combo_theme.IsEnabled = false;
                 btn_add_theme.IsEnabled = false;
                 btn_add_theme.Visibility = System.Windows.Visibility.Hidden;
-            }
-        }
-
-        private void combo_item_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
-        {
-            if (combo_item.SelectedItem != null)
-            {
-                oldItem = true;
-
-                Item it = (Item) combo_item.SelectedItem;
-
-                name_box.Text = it.getName();
-                desc_box.Text = it.getDesc();
-                other_box.Text = it.getOther();
-                year_box.Text = it.getYear();
-                collec_box.Text = it.getCollec();
-
-                name_box.IsEnabled = false;
-                desc_box.IsEnabled = false;
-                other_box.IsEnabled = false;
-                year_box.IsEnabled = false;
-                collec_box.IsEnabled = false;
-            }
-            else
-            {
-                oldItem = false;
-
-                name_box.IsEnabled = true;
-                desc_box.IsEnabled = true;
-                other_box.IsEnabled = true;
-                year_box.IsEnabled = true;
-                collec_box.IsEnabled = true;
             }
         }
 

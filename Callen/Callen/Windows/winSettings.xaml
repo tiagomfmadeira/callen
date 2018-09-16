@@ -36,13 +36,31 @@
                 <Label Content="Color Scheme" Canvas.Left="167" Canvas.Top="195" Style="{DynamicResource formLabel}" Width="84" />
                 <Button Name="btn_change_color" Content="Dark Mode" Click="btn_change_color_Click" Canvas.Left="256" Canvas.Top="195" Height="26"/>
 
-                <!-- <xctk:ColorPicker Width="100" Height="Auto"  Canvas.Left="183" Canvas.Top="300"/> -->
-
                 <Label Content="DB Connect" Canvas.Left="167" Canvas.Top="225" Style="{DynamicResource formLabel}" Width="84" />
                 <TextBox Name="db_string" IsEnabled="True" Width="351" Canvas.Left="256" Canvas.Top="226" Height="26" Style="{StaticResource descTextBox}"/>
 
-                <Button x:Name="btn_save_changes" Content="Save Changes" Click="btn_save_changes_Click" Canvas.Left="362" Canvas.Top="387" Height="26"/>
+                <Label Content="Images Folder" Canvas.Left="167" Canvas.Top="255" Style="{DynamicResource formLabel}" Width="84" />
+                <TextBox x:Name="img_folder" IsEnabled="False" Width="321" Canvas.Left="256" Canvas.Top="256" Height="26" HorizontalAlignment="Left" Style="{StaticResource descTextBox}"/>
+                <Button Width="25" Height="25" x:Name="btn_img_folder" Click="btn_img_folder_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="582" Canvas.Top="257">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/menu/collectionGray.png"/>
+                                <Setter Property="Width" Value="15"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Source" Value="../Icons/Fat/menu/collectionWhite.png"/>
+                                        <Setter Property="Width" Value="17.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
 
+
+                <Button x:Name="btn_save_changes" Content="Save Changes" Click="btn_save_changes_Click" Canvas.Left="362" Canvas.Top="387" Height="26"/>
             </Canvas>
         </Viewbox>
     </Grid>

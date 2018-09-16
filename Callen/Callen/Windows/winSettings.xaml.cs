@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Configuration;
+using Ookii.Dialogs.Wpf;
 
 namespace Callen.Windows
 {
@@ -41,6 +42,7 @@ namespace Callen.Windows
 
             config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             db_string.Text = config.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString;
+            img_folder.Text = config.AppSettings.Settings["image_path"].Value;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -76,15 +78,25 @@ namespace Callen.Windows
 
         private void btn_save_changes_Click(object sender, RoutedEventArgs e) // Save changes
         {
-            // Save changes in the connection string
+            // Write the changes to the connection string and image path to there settings
             config.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString = db_string.Text;
+            config.AppSettings.Settings["image_path"].Value = img_folder.Text;
 
+            // Save and refresh settings
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("ConnectionStrings");
+            ConfigurationManager.RefreshSection("AppSettings");
 
             // Saved Notification popup
             winNotification noti = new winNotification("Settings Saved", "As modificações nas definições foram salvas com sucesso" , "");
             noti.Show();
+        }
+
+        private void btn_img_folder_Click(object sender, RoutedEventArgs e)
+        {
+            VistaFolderBrowserDialog diag = new VistaFolderBrowserDialog();
+            diag.ShowDialog();
+            img_folder.Text = diag.SelectedPath;
         }
     }
 }

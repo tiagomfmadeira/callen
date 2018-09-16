@@ -73,10 +73,11 @@ namespace Callen.Pages
 
         private void btn_adv_search_Click(object sender, RoutedEventArgs e)
         {
-            // if all textbox are empty, don't search
+            // if all textbox are empty, just fill the data grid again (This way it uses the procedure used to fill the data grid with everything instead of the searcg one)
             if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
-                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) && String.IsNullOrEmpty(other_box.Text))
-                return;
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) 
+                 && String.IsNullOrEmpty(other_box.Text) && String.IsNullOrEmpty(collec_box.Text))
+                Switcher.Switch(this.Search_mode, new proSearch());
             try
             {
                 SqlConnection thisConnection = DBConnect.getConnection();
@@ -165,9 +166,23 @@ namespace Callen.Pages
             win.Opacity = 0.5;
             popForm.ShowDialog();
 
-            //if (popForm.getInserted()) // A item was inserted (refreshes datagrid) TODO
+            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
+                btn_adv_search.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
             win.Opacity = 1;
+        }
+
+        private void Border_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)// If Enter key is pressed when in the search menu
+            {   // search
+                btn_adv_search.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+                if (advanceSearch.IsChecked == true) // Close search menu
+                    advanceSearch.IsChecked = false;
+                else
+                    advanceSearch.IsChecked = true;
+            }
         }
     }
 }

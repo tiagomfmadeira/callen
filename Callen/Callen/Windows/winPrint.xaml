@@ -31,46 +31,60 @@
                     </Image>
                 </Button>
 
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Canvas.Left="102" Canvas.Top="108" Height="365" Width="616" Background="White">
-                    <FlowDocumentReader>
-                        <FlowDocument x:Name="flowDocument">
-                            <BlockUIContainer>
-                                <ItemsControl x:Name="itemContorlItem" VerticalAlignment="Top" Height="4cm" Width="10cm">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <UniformGrid Columns="2"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border BorderBrush="Black" BorderThickness="1.5">
-                                                <Grid Height="85">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition/>
-                                                        <RowDefinition  Height="3*"/>
-                                                        <RowDefinition/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding ID}" HorizontalAlignment="Left" Padding="2,1,0,0"/>
-                                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Collec}" HorizontalAlignment="Right" Padding="0,1,5,0"/>
-                                                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Left" Padding="5,0,5,1"/>
-                                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Matrix}" HorizontalAlignment="Left" Padding="2,0,0,0"/>
-                                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Year}" HorizontalAlignment="Right" Padding="0,0,5,0"/>
-                                                </Grid>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </BlockUIContainer>
-                        </FlowDocument>
-                    </FlowDocumentReader>
+                <ScrollViewer Name="tagScroll" VerticalScrollBarVisibility="Auto" Canvas.Left="102" Canvas.Top="108" Height="365" Width="616" Background="White">
+                    <ItemsControl x:Name="tagItems">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Black" BorderThickness="1" Height="1.65cm">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height=".5*"/>
+                                            <RowDefinition/>
+                                            <RowDefinition Height=".5*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding ID}" HorizontalAlignment="Left" Padding="2,0,0,0" FontSize="10"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Collec}" HorizontalAlignment="Right" Padding="0,0,5,0" FontSize="10"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Left" Padding="5,0,5,0" FontSize="11"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Matrix}" HorizontalAlignment="Left" Padding="2,0,0,0" FontSize="10"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Year}" HorizontalAlignment="Right" Padding="0,0,5,0" FontSize="10"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
 
-                <Button Content="Criar Pdf" Click="btn_print_Click" Canvas.Left="357" Canvas.Top="486" Height="36" Width="106" FontSize="18"/>
+                <!--
+                <Border BorderBrush="Black" BorderThickness="1" Background="White" Height="1.65cm" Width="10.5cm">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".5*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height=".5*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="N 1" HorizontalAlignment="Left" Padding="2,0,0,0" FontSize="10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Uma coleção muito bonita" HorizontalAlignment="Right" Padding="0,0,5,0" FontSize="10"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="A realy long fucking name to test this out but it can get much bigger if I want it to qowihr qowhr oqwht uihqeo tiqhk eyqoiyqwio eyjqwio ejyioqw eyjiqwohy oiqwhey oihqwe yoinqw eoy qwoeunyweoqhy qowenyo qwjenyoqwen yojnqw eoyn qweyn qwojeyn oqwjey noqwjey noç" TextWrapping="Wrap" HorizontalAlignment="Left" Padding="5,0,5,0" FontSize="11"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="B-25" HorizontalAlignment="Left" Padding="2,0,0,0" FontSize="10"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="1999" HorizontalAlignment="Right" Padding="0,0,5,0" FontSize="10"/>
+                    </Grid>
+                </Border>
+                -->
+
+                <Button Content="Imprimir" Click="btn_print_Click" Canvas.Left="357" Canvas.Top="486" Height="36" Width="106" FontSize="18"/>
             </Canvas>
         </Viewbox>
     </Grid>
