@@ -94,7 +94,7 @@ DROP PROCEDURE G_CALLEN.ITEMS_INFO;
 GO
 CREATE PROCEDURE G_CALLEN.ITEMS_INFO
 AS
-	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Archive AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
+	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Code AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
 	FROM (SELECT *
 		  FROM G_CALLEN.INST
 	      WHERE State = '0') AS INS
@@ -114,26 +114,26 @@ CREATE PROCEDURE G_CALLEN.SEARCH_ITEMS_PRO @InstID AS INT, @Item_Name AS nvarcha
 												@Item_Desc AS nvarchar(255), @Item_Folder AS VARCHAR(50), @Item_Theme AS VARCHAR(50), @Item_Note AS nvarchar(255)
 														
 AS
-	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Archive AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
+	SELECT Favorite, Inst_Number AS ID, Item_Name AS name, Item_Year AS year, Other AS other, Collec AS collec, Item_Descr AS descr, Code AS folder, Theme_Descr as theme, Note AS note, Inst_PicPath AS img_path
 	FROM (SELECT *
 		  FROM G_CALLEN.INST
 	      WHERE State = '0'
 		  AND (ISNULL (@InstID, '') = '' OR Inst_Number = @InstID)
 		  AND (ISNULL (@Item_Note, '') = '' OR note LIKE '%'+@Item_Note+'%')) AS INS
-		      LEFT JOIN(SELECT * 
+		     INNER JOIN(SELECT * 
 					    FROM G_CALLEN.ARCHIVE
 						WHERE (ISNULL (@Item_Folder, '') = '' OR Code = @Item_Folder)
-						  AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr  = @Item_Theme)) AS A
+						  AND (ISNULL (@Item_Theme, '') = '' OR Theme_Descr LIKE '%'+@Item_Theme+'%')) AS A
 		      ON Archive = A.Archive_ID 
-			      LEFT JOIN(SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Other, Collec
+			     INNER JOIN(SELECT Item_ID, Item_Name, Item_Descr, Item_Year, Other, Collec
 				            FROM G_CALLEN.ITEM
 							WHERE (ISNULL (@Item_Name, '') = '' OR Item_Name LIKE  '%'+@Item_Name+'%')
 							  AND (ISNULL (@Item_Other, '') = '' OR Other  LIKE '%'+@Item_Other+'%')
 							  AND (ISNULL (@Item_Desc, '') = '' OR Item_Descr  LIKE '%'+@Item_Desc+'%')
 							  AND (ISNULL (@Collec, '') = '' OR Collec  LIKE '%'+@Collec+'%')
-							  AND (ISNULL (@Item_Year, '') = '' OR Item_Year = @Item_Year)) AS I
-				  ON I.Item_ID = INS.Item_ID
-	ORDER BY ID DESC
+							  AND (ISNULL (@Item_Year, '') = '' OR Item_Year LIKE '%'+@Item_Year+'%')) AS I
+				  ON INS.Item_ID = I.Item_ID
+	ORDER BY Inst_Number DESC
 GO
 
 -- Used to search the table in pic mode

@@ -85,12 +85,10 @@ namespace Callen.Pages
 
                 string Get_Data = "";
                 if (btn_pic_mode.IsChecked == false) { 
-                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PRO @InstID, @Item_Name, @Item_Desc, @Item_Year, "
-                                + "@Item_Note, @Item_Theme, @Item_Folder, @Collec, @Other;";
+                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PRO @InstID, @Item_Name, @Item_Year, @Other, @Collec, @Item_Desc, @Item_Folder, @Item_Theme, @Item_Note;";
                 }
                 else {
-                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PIC @InstID, @Item_Name, @Item_Desc, @Item_Year, "
-                                                                + "@Item_Note, @Item_Theme, @Item_Folder, @Collec, @Other;";
+                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PIC @InstID, @Item_Name, @Item_Desc, @Item_Year, @Item_Note, @Item_Theme, @Item_Folder, @Collec;";
                 }
 
                 SqlCommand cmd = thisConnection.CreateCommand();
