@@ -27,13 +27,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1262E476754FF44ABF952CE9A2DECF6B"
+        "OwnerKey" = "8:_A870A85723BC473BA618D604EAF4CB8E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_15555B927FBA749357B1CA365344EBF2"
         "OwnerKey" = "8:_A870A85723BC473BA618D604EAF4CB8E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_21E2930A7A094630902F09AB78BFDE19"
+        "MsmKey" = "8:_26259E4143AC47C88CD0D8AA15DF3576"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -130,13 +136,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7D02F664E4799C72BF4B9AA640133618"
+        "OwnerKey" = "8:_A870A85723BC473BA618D604EAF4CB8E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A870A85723BC473BA618D604EAF4CB8E"
+        "OwnerKey" = "8:_1262E476754FF44ABF952CE9A2DECF6B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -193,6 +199,12 @@
         "OwnerKey" = "8:_0B9A640B1B37D5FD11BA00C64C1D3B5F"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7D02F664E4799C72BF4B9AA640133618"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -211,6 +223,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -227,6 +247,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -287,6 +315,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1262E476754FF44ABF952CE9A2DECF6B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1262E476754FF44ABF952CE9A2DECF6B"
+                    {
+                    "Name" = "8:Ookii.Dialogs.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Ookii.Dialogs.Wpf.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A366D2CF312F4C16BCFE87694D70384F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_15555B927FBA749357B1CA365344EBF2"
             {
             "AssemblyRegister" = "3:1"
@@ -318,9 +377,9 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_21E2930A7A094630902F09AB78BFDE19"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_26259E4143AC47C88CD0D8AA15DF3576"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\Callen.ico"
+            "SourcePath" = "8:..\\..\\..\\..\\Callen.ico"
             "TargetName" = "8:Callen.ico"
             "Tag" = "8:"
             "Folder" = "8:_A366D2CF312F4C16BCFE87694D70384F"
@@ -660,7 +719,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_21E2930A7A094630902F09AB78BFDE19"
+        "ARPPRODUCTICON" = "8:_26259E4143AC47C88CD0D8AA15DF3576"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"

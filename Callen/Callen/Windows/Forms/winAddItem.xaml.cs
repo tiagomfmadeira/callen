@@ -29,6 +29,7 @@ namespace Callen.Windows.Forms
     public partial class winAddItem : Window
     {
         private bool inserted; // tell if a item was inserted
+        private bool duplicated;
 
         public winAddItem()
         {
@@ -46,6 +47,28 @@ namespace Callen.Windows.Forms
             fillFolderCombo();
 
             inserted = false;
+            duplicated = false;
+        }
+
+        public winAddItem(Instance it)
+        {
+            InitializeComponent();
+            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+
+            Window parent = Application.Current.MainWindow;
+            if (parent.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Maximized; // Maximize window and close border
+                closeBorder.Width = parent.Width;
+                closeBorder.Height = parent.Height;
+            }
+
+            fillFolderCombo();
+
+            fillWindow(it);
+
+            inserted = false;
+            duplicated = true;
         }
 
         public bool getInserted()
@@ -145,6 +168,55 @@ namespace Callen.Windows.Forms
             }
         }
 
+        private void fillThemeCombo(Instance it)
+        {
+            try
+            {
+                SqlConnection thisConnection = DBConnect.getConnection();
+                thisConnection.Open();
+
+                string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
+
+                SqlCommand cmd = thisConnection.CreateCommand();
+                cmd.CommandText = Get_Data;
+
+                SqlParameter paramItem = new SqlParameter();
+                paramItem.ParameterName = "@Code";
+                paramItem.Value = combo_folder.SelectedValue.ToString();
+                cmd.Parameters.Add(paramItem);
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("Folder");
+                sda.Fill(dt);
+
+                List<Folders> ft = new List<Folders>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
+                }
+
+                combo_theme.ItemsSource = ft;
+                combo_theme.DisplayMemberPath = "theme";
+                combo_theme.SelectedValuePath = "id";
+
+                foreach (Folders folder in combo_theme.Items)
+                {
+                    if (folder.theme == it.getTheme())
+                    {
+                        combo_theme.SelectedItem = folder;
+                        break;
+                    }
+                }
+
+                thisConnection.Close();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+
+            }
+        }
+
         public void btn_upload_Click(object sender, RoutedEventArgs e) // Uploads a image from the users system and sets image to respective border  
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -158,30 +230,7 @@ namespace Callen.Windows.Forms
                 {
                     ImageSource src = new BitmapImage(new Uri(op.FileName));
 
-                    if (src.Width < 127)
-                    {
-                        if (src.Height < 90)
-                        {
-                            img_border.Height = src.Height;
-                            img_border.Width = src.Width;
-                        }
-                        else
-                        {
-                            img_border.Height = 90;
-                        }
-                    }
-                    else
-                    {
-                        if (src.Height < 90)
-                        {
-                            img_border.Height = src.Height;
-                        }
-                        else
-                        {
-                            img_border.Width = 127;
-                            img_border.Height = 90;
-                        }
-                    }
+                    show_img(src);
 
                     img_border.Visibility = Visibility.Visible;
                     img.Source = src;
@@ -190,6 +239,34 @@ namespace Callen.Windows.Forms
                 {
                     MessageBox.Show("Ficheiro " + op.FileName + " não pode ser aberto");
                     Debug.WriteLine("File Error: " + ee.ToString());
+                }
+            }
+        }
+
+        private void show_img(ImageSource src)
+        {
+            if (src.Width < 127)
+            {
+                if (src.Height < 90)
+                {
+                    img_border.Height = src.Height;
+                    img_border.Width = src.Width;
+                }
+                else
+                {
+                    img_border.Height = 90;
+                }
+            }
+            else
+            {
+                if (src.Height < 90)
+                {
+                    img_border.Height = src.Height;
+                }
+                else
+                {
+                    img_border.Width = 127;
+                    img_border.Height = 90;
                 }
             }
         }
@@ -304,7 +381,10 @@ namespace Callen.Windows.Forms
                 btn_add_theme.IsEnabled = true;
                 btn_add_theme.Visibility = System.Windows.Visibility.Visible;
 
-                fillThemeCombo();
+                if (duplicated == false)
+                {
+                    fillThemeCombo();
+                }
             }
             else
             {
@@ -334,6 +414,38 @@ namespace Callen.Windows.Forms
 
             this.Opacity = 1; // turn opacity back to 1
             fillThemeCombo();
+        }
+
+        private void fillWindow(Instance it)
+        {
+            name_box.Text = it.getName();
+            year_box.Text = it.getYear();
+            collec_box.Text = it.getCollec();
+            other_box.Text = it.getOther();
+            desc_box.Text = it.getDesc();
+            note_box.Text = it.getNote();
+
+            foreach (Folders folder in combo_folder.Items)
+            {
+                if (folder.folder == it.getFolder())
+                {
+                    combo_folder.SelectedItem = folder;
+                    break;
+                }
+            }
+
+            fillThemeCombo(it);
+
+            // Check if there is a image
+            if (it.getImagePath() != "")
+            {
+                ImageSource src = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
+
+                show_img(src);
+
+                img_border.Visibility = Visibility.Visible;
+                img.Source = src;
+            }
         }
     }
 }

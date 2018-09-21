@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Callen.exe" size="219560">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Callen.exe" size="237480">
       <assemblyIdentity name="Callen" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Fti5s3l7BmeUshdQrHB7kdZ8QO7zxVojmlyVAP51SLg=</dsig:DigestValue>
+        <dsig:DigestValue>NlXWSeIbJyb2iKyRGXRZHNTVwH7hoSTm7PYCn3dOGUU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

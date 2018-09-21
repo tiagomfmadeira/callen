@@ -357,3 +357,4 @@ C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.exe
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.pdb
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\bin\Debug\Ookii.Dialogs.Wpf.dll
 C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\bin\Debug\Ookii.Dialogs.Wpf.xml
+C:\Users\Samsung\Downloads\Diogo\callen\Callen\Callen\obj\Debug\Callen.csprojAssemblyReference.cache

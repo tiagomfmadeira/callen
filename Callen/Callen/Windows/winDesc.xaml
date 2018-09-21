@@ -41,15 +41,15 @@
                     </Button>
                 </Border>
 
-                <Grid Width="173" Height="148" Name="grd_pop_gift" Canvas.Left="420" Canvas.Top="74">
-                    <Popup Placement="Center" Name="pop_gift" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
+                <Grid Width="173" Height="148" Name="grd_pop_dup" Canvas.Left="470" Canvas.Top="75">
+                    <Popup Placement="Center" Name="pop_dup" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="85" Height="20" CornerRadius="7,7,0,7">
-                            <TextBlock Margin="5,0,0,0" Text="Oferecer item" Width="80" Height="20" TextWrapping="WrapWithOverflow" />
+                            <TextBlock Margin="5,0,0,0" Text="Duplicar item" Width="80" Height="20" TextWrapping="WrapWithOverflow" />
                         </Border>
                     </Popup>
                 </Grid>
 
-                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="405" Canvas.Top="66">
+                <Grid Width="173" Height="148" Name="grd_pop_print" Canvas.Left="380" Canvas.Top="66">
                     <Popup Placement="Center" Name="pop_print" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="115" Height="35" CornerRadius="7,7,0,7">
                             <TextBlock Margin="5,0,0,0" Text="Adiciona à lista de etiquetas a imprimir" Width="110" Height="38" TextWrapping="WrapWithOverflow" />
@@ -57,7 +57,7 @@
                     </Popup>
                 </Grid>
 
-                <Grid Width="173" Height="148" Name="grd_pop_edit" Canvas.Left="581" Canvas.Top="60">
+                <Grid Width="173" Height="148" Name="grd_pop_edit" Canvas.Left="556" Canvas.Top="60">
                     <Popup Placement="Center" Name="pop_edit" AllowsTransparency="True" Visibility="Visible" PopupAnimation="Scroll">
                         <Border Background="{DynamicResource lightHighLight}" Width="120" Height="45" CornerRadius="7,7,7,0">
                             <TextBlock Width="110" Height="60" FontSize="10" TextWrapping="WrapWithOverflow">
@@ -67,7 +67,7 @@
                     </Popup>
                 </Grid>
 
-                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="543" Canvas.Top="153">
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_print" Click="btn_print_Click" MouseEnter="btn_print_MouseEnter" MouseLeave="btn_print_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="518" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -83,7 +83,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_delete" Click="btn_delete_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_delete" Click="btn_delete_Click" Style="{DynamicResource menuMinButton}" Canvas.Left="543" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -99,7 +99,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Visibility="Hidden" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
+                <Button Width="25" Height="25" Panel.ZIndex="1" x:Name="btn_save" Click="btn_save_Click" IsEnabled="False" Visibility="Hidden" Opacity="0" Style="{DynamicResource menuMinButton}" Canvas.Left="543" Canvas.Top="153">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -115,11 +115,27 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button Width="25" Height="25"  Panel.ZIndex="1" x:Name="btn_edit" Click="btn_edit_Click" MouseEnter="btn_edit_MouseEnter" MouseLeave="btn_edit_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="593" Canvas.Top="153">
+                <Button Width="25" Height="25"  Panel.ZIndex="1" x:Name="btn_edit" Click="btn_edit_Click" MouseEnter="btn_edit_MouseEnter" MouseLeave="btn_edit_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="568" Canvas.Top="153">
                     <Image Margin="0,-1,0,0">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Setter Property="Source" Value="../Icons/Fat/edit.png"/>
+                                <Setter Property="Width" Value="12"/>
+                                <Setter Property="Height" Value="auto"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Width" Value="14"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button Width="25" Height="25"  Panel.ZIndex="1" x:Name="btn_duplicate" Click="btn_duplicate_Click"  MouseEnter="btn_duplicate_MouseEnter" MouseLeave="btn_duplicate_MouseLeave" Style="{DynamicResource menuMinButton}" Canvas.Left="593" Canvas.Top="153">
+                    <Image Margin="0,-1,0,0">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="../Icons/Fat/duplicate.png"/>
                                 <Setter Property="Width" Value="12"/>
                                 <Setter Property="Height" Value="auto"/>
                                 <Style.Triggers>

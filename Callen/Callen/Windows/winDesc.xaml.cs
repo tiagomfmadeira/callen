@@ -153,9 +153,9 @@ namespace Callen.Windows
 
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 405);
-                    Canvas.SetLeft(btn_print, 543);
-                    Canvas.SetLeft(btn_delete, 568);
+                    Canvas.SetLeft(grd_pop_print, 380);
+                    Canvas.SetLeft(btn_print, 518);
+                    Canvas.SetLeft(btn_delete, 543);
 
                     // Button
                     btn_save.IsEnabled = false;
@@ -210,9 +210,9 @@ namespace Callen.Windows
                 storyboard.Begin();
 
                 TimedAction.ExecuteWithDelay(new Action(delegate {
-                    Canvas.SetLeft(grd_pop_print, 380);
-                    Canvas.SetLeft(btn_print, 518);
-                    Canvas.SetLeft(btn_delete, 543);
+                    Canvas.SetLeft(grd_pop_print, 355);
+                    Canvas.SetLeft(btn_print, 493);
+                    Canvas.SetLeft(btn_delete, 518);
 
                     //Buttons
                     btn_save.IsEnabled = true;
@@ -337,9 +337,17 @@ namespace Callen.Windows
 
             if (updated)
             {
+                updateLocalInfo();
                 winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
                 noti.Show();
             }
+        }
+
+        private void updateLocalInfo()
+        {
+            inst = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text, 
+                item_year.Text, combo_theme.Text, combo_folder.Text, item_other.Text, 
+                inst.getImagePath(), item_note.Text, item_collec.Text);
         }
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
@@ -413,7 +421,6 @@ namespace Callen.Windows
 
                     SqlParameter paramItem = new SqlParameter();
                     paramItem.ParameterName = "@Code";
-                    Console.WriteLine(combo_folder.SelectedValue.ToString());
                     paramItem.Value = combo_folder.SelectedValue.ToString();
                     cmd.Parameters.Add(paramItem);
 
@@ -521,6 +528,26 @@ namespace Callen.Windows
                 deleted = true;
                 this.Close();
             }
+        }
+
+        private void btn_duplicate_Click(object sender, RoutedEventArgs e)
+        {
+            winAddItem popDup = new winAddItem(inst);
+            popDup.Owner = this;
+            this.Opacity = 0.85;
+            popDup.ShowDialog();
+
+            this.Opacity = 1; // turn opacity back to 1
+        }
+
+        private void btn_duplicate_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
+        {
+            pop_dup.IsOpen = false;
+        }
+
+        private void btn_duplicate_MouseEnter(object sender, MouseEventArgs e) // Show print popup
+        {
+            pop_dup.IsOpen = true;
         }
     }
 }
