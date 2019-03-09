@@ -1,4 +1,2 @@
 # Calendar Collections
-This is an original project, developed in the scope of Data Bases and Human Computer Interaction courses in the third year of ECT in Aveiro.
-
-In this project, it was developed a WPF application, as well as a SQL Server data base, that helps a user manage a collection on callendar's.
+This project was developed within the scope of Data Bases and Human Computer Interaction subjects, during the third year of ECT at University of Aveiro. It consists of a WPF application, as well as a SQL Server data base, which help a user manage a collection of calendars.
