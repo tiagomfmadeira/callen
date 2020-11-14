@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="Callen.Pages.Stats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Callen.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="575" d:DesignWidth="800">
+    <Grid Style="{StaticResource gridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="0"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="10" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".6*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height=".45*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Modificados Recentemente" Style="{DynamicResource statsText}" FontSize="18"/>
+            <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
+                <DataGrid Name="LastMod" CanUserSortColumns="False"  Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}" 
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+
+        <Grid Margin="10" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".6*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height=".45*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Inseridos recentemente" Style="{DynamicResource statsText}"  FontSize="18"/>
+            <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
+                <DataGrid Name="LastInst" CanUserSortColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+
+        <Grid Margin="10" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".6*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height=".45*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Visualizados recentemente" Style="{DynamicResource statsText}"  FontSize="18"/>
+            <Border Grid.Row="1" Style="{StaticResource simpleBorder}">
+                <DataGrid Name="LastView" CanUserSortColumns="False" Style="{DynamicResource dataGrid}" ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
+                          AutoGenerateColumns="False" PreviewKeyDown="KeyDown_Item" LostFocus="Grid_LostFocus">
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Inst_Number}" IsReadOnly="True" Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding Path=Item_Name}" IsReadOnly="True" Header="Nome" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
