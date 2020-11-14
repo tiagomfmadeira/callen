@@ -14,20 +14,21 @@ using System.Windows.Shapes;
 using System.Printing;
 using System.Windows.Xps;
 using System.Windows.Documents.Serialization;
+using Microsoft.Office.Interop.Excel;
 
 namespace Callen.Windows
 {
     /// <summary>
     /// Interaction logic for winPrint.xaml
     /// </summary>
-    public partial class winPrint : Window
+    public partial class winPrint : System.Windows.Window
     {
         public winPrint()
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
-            Window parent = Application.Current.MainWindow;
+            System.Windows.Window parent = System.Windows.Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Maximized;
@@ -70,51 +71,24 @@ namespace Callen.Windows
             //    printDialog.PrintDocument(((IDocumentPaginatorSource)flowDocument).DocumentPaginator, "Flow Document Print Job");
             //}
 
-            PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
+            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+            app.Visible = true;
+            app.WindowState = XlWindowState.xlMaximized;
 
-            if (printDlg.ShowDialog() == true)
+            Workbook wb = app.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            Worksheet ws = wb.Worksheets[1];
+            DateTime currentDate = DateTime.Now;
 
-            {
+            ws.Range["A1:A7"].Value = "Who is number one? :)";
+            ws.Range["A4"].Value = "vitoshacademy.com";
+            ws.Range["A5"].Value = currentDate;
+            ws.Range["B6"].Value = "Tommorow's date is: =>";
+            ws.Range["C6"].FormulaLocal = "= A5 + 1";
+            ws.Range["A7"].FormulaLocal = "=SUM(D1:D10)";
+            for (int i = 1; i <= 10; i++)
+                ws.Range["D" + i].Value = i * 2;
 
-                //get selected printer capabilities
-
-                System.Printing.PrintCapabilities capabilities = printDlg.PrintQueue.GetPrintCapabilities(printDlg.PrintTicket);
-
-
-
-                //get scale of the print wrt to screen of WPF visual
-
-                double scale = Math.Min(capabilities.PageImageableArea.ExtentWidth / this.ActualWidth, capabilities.PageImageableArea.ExtentHeight /
-
-                               this.ActualHeight);
-
-
-
-                //Transform the Visual to scale
-
-                this.LayoutTransform = new ScaleTransform(scale, scale);
-
-
-
-                //get the size of the printer page
-
-                Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
-
-
-
-                //update the layout of the visual to the printer page size.
-
-                this.Measure(sz);
-
-                this.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight), sz));
-
-
-
-                //now print the visual to printer to fit on the one page.
-
-                printDlg.PrintVisual(tagItems as Visual, "First Fit to Page WPF Print");
-
-            }
+            wb.SaveAs("C:\\Users\\negat\\Desktop\\vitoshacademy.xlsx");
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
