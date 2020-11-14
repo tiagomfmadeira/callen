@@ -73,7 +73,6 @@ namespace Callen.Windows
                 Application.Current.Resources["mainColor"] = new SolidColorBrush(Colors.White);
                 btn_change_color.Content = "Light Mode";
             }
-
         }
 
         private void btn_save_changes_Click(object sender, RoutedEventArgs e) // Save changes
@@ -90,6 +89,9 @@ namespace Callen.Windows
             // Saved Notification popup
             winNotification noti = new winNotification("Settings Saved", "As modificações nas definições foram salvas com sucesso" , "");
             noti.Show();
+
+            // Close the settings window
+            this.Close();
         }
 
         private void btn_img_folder_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,7 @@ namespace Callen
         public static SqlConnection getConnection()
         {
             //Local server
-            return new SqlConnection("Data Source="+ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
 
             //UA server
             //return new SqlConnection("Data Source = tcp: 193.136.175.33\\SQLSERVER2012,8293;Initial Catalog = p1g10; uid = ;password = ");
