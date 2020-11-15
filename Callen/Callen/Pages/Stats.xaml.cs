@@ -111,7 +111,7 @@ namespace Callen.Pages
                 MessageBox.Show(ee.ToString());
             }
         }
-        
+
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e) // Double click to open desc
         {
             DataGridRow r = sender as DataGridRow;
@@ -121,7 +121,7 @@ namespace Callen.Pages
 
         private void KeyDown_Item(object sender, KeyEventArgs e) //Press enter to open desc
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 DataGrid grid = sender as DataGrid;
                 DataRowView row = grid.SelectedItem as DataRowView;
@@ -172,7 +172,7 @@ namespace Callen.Pages
                 {
                     Instance it = new Instance(rdr["name"].ToString(), rdr["item_id"].ToString(), id, rdr["descr"].ToString(), rdr["year"].ToString(),
                     rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(),
-                    rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["collec"].ToString());
+                    rdr["img_path"].ToString(), rdr["note"].ToString(), rdr["collec"].ToString());
 
                     openDesc(it);
                 }
@@ -191,53 +191,37 @@ namespace Callen.Pages
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
+            winDesc popDesc;
+
             // Check if there is a image
             if (it.getImagePath() != "")
             {
-                winDesc popDesc = new winDesc(it);
-                popDesc.Owner = win;
-                win.Opacity = 0.5;
-                popDesc.ShowDialog();
-                
-                if (popDesc.wasEdited())
-                {
-                    fillLastInst();
-                    fillLastMod();
-                    fillLastView();
-                }
-
-                if (popDesc.wasDeleted())
-                {
-                    fillLastInst();
-                    fillLastMod();
-                    fillLastView();
-                }
-
-                win.Opacity = 1;
+                popDesc = new winDesc(it, true);
             }
             else
             {
-                winDescNoImg popDesc = new winDescNoImg(it);
-                popDesc.Owner = win;
-                win.Opacity = 0.5;
-                popDesc.ShowDialog();
-
-                if (popDesc.wasEdited())
-                {
-                    fillLastInst();
-                    fillLastMod();
-                    fillLastView();
-                }
-
-                if (popDesc.wasDeleted())
-                {
-                    fillLastInst();
-                    fillLastMod();
-                    fillLastView();
-                }
-
-                win.Opacity = 1;
+                popDesc = new winDesc(it, false);
             }
+
+            popDesc.Owner = win;
+            win.Opacity = 0.5;
+            popDesc.ShowDialog();
+
+            if (popDesc.wasEdited())
+            {
+                fillLastInst();
+                fillLastMod();
+                fillLastView();
+            }
+
+            if (popDesc.wasDeleted())
+            {
+                fillLastInst();
+                fillLastMod();
+                fillLastView();
+            }
+
+            win.Opacity = 1;
         }
     }
 }

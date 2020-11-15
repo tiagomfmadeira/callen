@@ -29,9 +29,10 @@ namespace Callen.Windows
     {
         bool edited;
         bool deleted;
+        bool previewImage;
         Instance inst;
 
-        public winDesc(Instance it)  // sets the text Boxes with information from an given Item
+        public winDesc(Instance it, bool preview)  // sets the text Boxes with information from an given Item
         {
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
@@ -46,6 +47,7 @@ namespace Callen.Windows
 
             edited = false;
             deleted = false;
+            previewImage = preview;
 
             inst = it;
 
@@ -60,15 +62,19 @@ namespace Callen.Windows
             item_other.Text = it.getOther();
             item_collec.Text = it.getCollec();
 
-            try
+            if (previewImage)
             {
-                img.Source = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
-            }
-            catch
-            {
-                MessageBox.Show("File not found : " + it.getImagePath());
-            }
+                img_border.Visibility = Visibility.Visible;
 
+                try
+                {
+                    img.Source = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
+                }
+                catch
+                {
+                    MessageBox.Show("File not found : " + it.getImagePath());
+                }
+            }
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)

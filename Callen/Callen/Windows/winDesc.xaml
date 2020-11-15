@@ -14,7 +14,7 @@
             <Canvas Height="600" Width="800"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,-10,0">
                 <Border Height="309" Width="480" Canvas.Left="164" Canvas.Top="153" Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3"/>
 
-                <Border CornerRadius="3,3,3,3" Background="{DynamicResource lightestHighLight}" Name="img_border"  Height="90" Width="127" Visibility="Visible" Canvas.Left="101" Canvas.Top="108" Style="{StaticResource simpleBorder}">
+                <Border CornerRadius="3,3,3,3" Background="{DynamicResource lightestHighLight}" Name="img_border"  Height="90" Width="127" Visibility="Hidden" Canvas.Left="65" Canvas.Top="88" Style="{StaticResource simpleBorder}">
                     <Button Name="btn_img" Click="btn_img_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Height="90" Width="127" BorderBrush="{x:Null}">
                         <Image Name="img" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <Button.Style>
@@ -165,8 +165,8 @@
                     </Image>
                 </Button>
 
-                <TextBox Name="item_name" IsEnabled="False" Width="391" Canvas.Left="242" Canvas.Top="156" Height="40" FontWeight="Bold" FontSize="13.5" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
-                
+                <TextBox Name="item_name" IsEnabled="False" Width="460" Canvas.Left="173" Canvas.Top="156" Height="40" FontWeight="Bold" FontSize="13.5" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource descTextBox}"/>
+
                 <TextBox Name="item_year" IsEnabled="False" Width="120" Canvas.Left="344" Canvas.Top="196" Height="26" FontWeight="Bold" FontSize="13.8" Style="{StaticResource descTextBox}"/>
 
                 <Label Content="Coleção" Canvas.Left="173" Canvas.Top="231" Style="{DynamicResource formLabel}" Width="55" />

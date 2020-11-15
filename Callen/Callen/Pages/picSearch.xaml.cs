@@ -161,7 +161,7 @@ namespace Callen.Pages
         private void openDesc(Instance it) // Opens the description of the item given
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDesc popDesc = new winDesc(it);
+            winDesc popDesc = new winDesc(it, true);
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();

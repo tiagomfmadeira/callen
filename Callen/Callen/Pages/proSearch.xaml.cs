@@ -76,7 +76,7 @@ namespace Callen.Pages
             }
         }
 
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)  
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             getInstInfo((grdColec.SelectedItem as DataRowView)["ID"].ToString());
         }
@@ -121,51 +121,36 @@ namespace Callen.Pages
         {
             MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
+            winDesc popDesc;
+
             // Check if there is a image
             if (it.getImagePath() != "")
             {
-                winDesc popDesc = new winDesc(it);
-                popDesc.Owner = win;
-                win.Opacity = 0.5;
-                popDesc.ShowDialog();
-
-                if (popDesc.wasDeleted())
-                {
-                    for (int i = items.Rows.Count - 1; i >= 0; i--)
-                    {
-                        DataRow dr = items.Rows[i];
-
-                        if (dr["ID"].ToString() == it.getInstID())
-                        {
-                            dr.Delete();
-                        }
-                    }
-                }
-
-                win.Opacity = 1;
+                popDesc = new winDesc(it, true);
             }
             else
             {
-                winDescNoImg popDesc = new winDescNoImg(it);
-                popDesc.Owner = win;
-                win.Opacity = 0.5;
-                popDesc.ShowDialog();
+                popDesc = new winDesc(it, false);
+            }
 
-                if (popDesc.wasDeleted())
+            popDesc.Owner = win;
+            win.Opacity = 0.5;
+            popDesc.ShowDialog();
+
+            if (popDesc.wasDeleted())
+            {
+                for (int i = items.Rows.Count - 1; i >= 0; i--)
                 {
-                    for (int i = items.Rows.Count - 1; i >= 0; i--)
-                    {
-                        DataRow dr = items.Rows[i];
+                    DataRow dr = items.Rows[i];
 
-                        if (dr["ID"].ToString() == it.getInstID())
-                        {
-                            dr.Delete();
-                        }
+                    if (dr["ID"].ToString() == it.getInstID())
+                    {
+                        dr.Delete();
                     }
                 }
-
-                win.Opacity = 1;
             }
+
+            win.Opacity = 1;
         }
 
         private void check_fav(object sender, RoutedEventArgs e)

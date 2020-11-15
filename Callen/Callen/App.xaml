@@ -29,6 +29,8 @@
         
         <!--#endregion-->
 
+        <!--#region DataGrid-->
+
         <Style x:Key="dataGrid" TargetType="DataGrid">
             <Setter Property="Background" Value="{DynamicResource mainColor}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource highLight}"/>
@@ -90,6 +92,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!--#endregion-->
 
         <!-- Entity page toggle button-->
         <Style x:Key="entityToggle" TargetType="ToggleButton">
