@@ -462,6 +462,26 @@
             </Setter>
         </Style>
 
+        <!-- Add To Print List Button -->
+        <Style x:Key="addToPrintListButton" TargetType="Button">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image Source="Icons/Fat/add_print.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!--#endregion-->
         
         <!--#region Description-->

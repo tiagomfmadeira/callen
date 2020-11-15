@@ -6,6 +6,8 @@ using System.Windows.Input;
 using Callen.Windows;
 
 using System.Data;
+using System;
+using System.Collections.Generic;
 
 namespace Callen.Pages
 {
@@ -39,6 +41,33 @@ namespace Callen.Pages
 
                 if (instance != null)
                     openDesc(instance);
+            }
+            else if ( e.Key == Key.P)
+            {
+                if (grdColec.SelectedItems.Count == 0)
+                {
+                    winNotification noti = new winNotification("Print List", "0 items adicionados", "Nenhum item está selecionado");
+                    noti.Show();
+                }
+                else
+                {
+                    Instance instance;
+                    int addedInstCount = 0;
+
+                    foreach (DataRowView item in grdColec.SelectedItems)
+                    {
+                        instance = DBConnect.getInstanceInfo(item["ID"].ToString());
+
+                        if (!(App.Current.Properties["PrintList"] as List<Instance>).Contains(instance))
+                        {
+                            (App.Current.Properties["PrintList"] as List<Instance>).Add(instance);
+                            addedInstCount++;
+                        }
+                    }
+
+                    winNotification noti = new winNotification("Print List", addedInstCount + " novos items", "foram adicionados com sucesso à lista de impressão");
+                    noti.Show();
+                }
             }
 
             e.Handled = true;

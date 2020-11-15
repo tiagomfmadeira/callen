@@ -261,7 +261,7 @@ namespace Callen.Windows
             if (!(App.Current.Properties["PrintList"] as List<Instance>).Contains(this.inst))
             {
                 (App.Current.Properties["PrintList"] as List<Instance>).Add(this.inst);
-                winNotification noti = new winNotification("Print List", this.inst.inst_num + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
+                winNotification noti = new winNotification("Print List", this.inst.inst_num + " - " + this.inst.name, "foi adicionado com sucesso à lista para imprimir");
                 noti.Show();
             }
         }
