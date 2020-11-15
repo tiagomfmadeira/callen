@@ -18,7 +18,7 @@ namespace Callen.Windows.Forms
     public partial class winAddItem : Window
     {
         // TODO check what this variables do
-        public bool inserted { get; } // tell if a item was inserted
+        public bool inserted { get; set; } // tell if a item was inserted
         private bool duplicated;
 
         public winAddItem()
@@ -57,8 +57,8 @@ namespace Callen.Windows.Forms
 
             fillWindow(it);
 
-            inserted = false;
-            duplicated = true;
+            this.inserted = false;
+            this.duplicated = true;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -179,7 +179,7 @@ namespace Callen.Windows.Forms
 
             DBConnect.addInstance(inst, img.Source, @config.AppSettings.Settings["image_path"].Value);
 
-            inserted = true;
+            this.inserted = true;
 
             winNotification noti = new winNotification("New Item", name_box.Text.ToString() , "foi inserido com sucesso");
             noti.Show();
