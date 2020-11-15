@@ -15,7 +15,6 @@ namespace Callen
         public String other { get; }
         public String collec { get; }
 
-        // TODO needed?
         public Item()
         {
         }
@@ -31,7 +30,6 @@ namespace Callen
             this.collec = "";
         }
 
-        // call the previous constructor? TODO
         public Item(String name, String id, String desc, String year, String other, String collec) : this(name, id, desc, year, other)
         {
             this.collec = collec;
