@@ -258,11 +258,9 @@ namespace Callen.Windows
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            String inst = this.inst.inst_num + " - " + item_name.Text;
-
-            if (!(App.Current.Properties["PrintList"] as List<String>).Contains(inst))
+            if (!(App.Current.Properties["PrintList"] as List<Instance>).Contains(this.inst))
             {
-                (App.Current.Properties["PrintList"] as List<String>).Add(inst);
+                (App.Current.Properties["PrintList"] as List<Instance>).Add(this.inst);
                 winNotification noti = new winNotification("Print List", this.inst.inst_num + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
                 noti.Show();
             }

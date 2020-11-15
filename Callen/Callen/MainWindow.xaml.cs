@@ -29,7 +29,7 @@ namespace Callen
             InitializeComponent();
             MouseEventArgs e = new MouseEventArgs(Mouse.PrimaryDevice, 0);
 
-            App.Current.Properties["PrintList"] = new List<String>();
+            App.Current.Properties["PrintList"] = new List<Instance>();
 
             menu_bar_MouseLeave(new object(), e); // Menu starts closed
 

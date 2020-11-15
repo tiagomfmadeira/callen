@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Printing;
-using System.Windows.Xps;
-using System.Windows.Documents.Serialization;
 using Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
 
 namespace Callen.Windows
 {
@@ -26,6 +14,7 @@ namespace Callen.Windows
         public winPrint()
         {
             InitializeComponent();
+
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
             System.Windows.Window parent = System.Windows.Application.Current.MainWindow;
@@ -36,15 +25,11 @@ namespace Callen.Windows
                 closeBorder.Height = parent.Height;
             }
 
-            Random r = new Random();
-            InitializeComponent();
-            for (int i = 0; i < 5; i++)
+            List<Instance> instances_to_print = (App.Current.Properties["PrintList"] as List<Instance>);
+
+            for (int i = 0; i < instances_to_print.Count; i++)
             {
-                tagItems.Items.Add(new { ID = "Nº "+i.ToString(), Collec="Uma coleção muito bonita", Name = "A realy long fucking name to test this out but it can get much bigger if I want it to qowihr qowhr oqwht uihqeo tiqhk eyqoiyqwio eyjqwio ejyioqw eyjiqwohy oiqwhey oihqwe yoinqw eoy qwoeunyweoqhy qowenyo qwjenyoqwen yojnqw eoyn qweyn qwojeyn oqwjey noqwjey noç", Matrix = "B-25", Year = "1999" });
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                tagItems.Items.Add(new { ID = "Nº " + i.ToString(), Name = "A realy long", Matrix = "B-25", Year = "1999" });
+                tagItems.Items.Add(new { ID = instances_to_print[i].inst_num, Matrix = instances_to_print[i].other, Collec = instances_to_print[i].collec, Year = instances_to_print[i].year, Name = instances_to_print[i].name });
             }
         }
 
@@ -61,34 +46,39 @@ namespace Callen.Windows
 
         public void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            //PrintDialog printDialog = new PrintDialog();
-
-            //if (printDialog.ShowDialog() == true)
-            //{
-            //    flowDocument.ColumnWidth = printDialog.PrintableAreaWidth;
-            //    flowDocument.PagePadding = new Thickness(0);
-
-            //    printDialog.PrintDocument(((IDocumentPaginatorSource)flowDocument).DocumentPaginator, "Flow Document Print Job");
-            //}
 
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
             app.Visible = true;
             app.WindowState = XlWindowState.xlMaximized;
 
-            Workbook wb = app.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            Workbook wb = app.Workbooks.Open("C:\\Users\\NegativeSpade\\Desktop\\tag_printing_template.xlsx");
             Worksheet ws = wb.Worksheets[1];
+
             DateTime currentDate = DateTime.Now;
 
-            ws.Range["A1:A7"].Value = "Who is number one? :)";
-            ws.Range["A4"].Value = "vitoshacademy.com";
-            ws.Range["A5"].Value = currentDate;
-            ws.Range["B6"].Value = "Tommorow's date is: =>";
-            ws.Range["C6"].FormulaLocal = "= A5 + 1";
-            ws.Range["A7"].FormulaLocal = "=SUM(D1:D10)";
-            for (int i = 1; i <= 10; i++)
-                ws.Range["D" + i].Value = i * 2;
+            List<Instance> instances_to_print = (App.Current.Properties["PrintList"] as List<Instance>);
 
-            wb.SaveAs("C:\\Users\\negat\\Desktop\\vitoshacademy.xlsx");
+            for (int i = 0; i < instances_to_print.Count; i = i + 2)
+            {
+                ws.Range["A" + (i + 1)].Value = "Nº" + instances_to_print[i].inst_num;
+                ws.Range["B" + (i + 1)].Value = instances_to_print[i].other;
+                ws.Range["C" + (i + 1)].Value = instances_to_print[i].collec;
+                ws.Range["D" + (i + 1)].Value = instances_to_print[i].year;
+                ws.Range["A" + (i + 2)].Value = instances_to_print[i].name;
+
+                if (i + 1 < instances_to_print.Count)
+                {
+                    ws.Range["E" + (i + 1)].Value = "Nº" + instances_to_print[i + 1].inst_num;
+                    ws.Range["F" + (i + 1)].Value = instances_to_print[i + 1].other;
+                    ws.Range["G" + (i + 1)].Value = instances_to_print[i + 1].collec;
+                    ws.Range["H" + (i + 1)].Value = instances_to_print[i + 1].year;
+                    ws.Range["E" + (i + 2)].Value = instances_to_print[i + 1].name;
+                }
+            }
+
+            ws.Copy(Type.Missing, wb.Worksheets[1]);
+
+            wb.SaveAs("C:\\Users\\NegativeSpade\\Desktop\\Etiquetas_para_imprimir_"+ DateTime.Now.ToString("yyyy-M-dd_HH-mm-ss") + ".xlsx");
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
