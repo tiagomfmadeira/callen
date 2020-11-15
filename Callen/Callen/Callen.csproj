@@ -181,9 +181,6 @@
     <Compile Include="Pages\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Stats.xaml.cs">
-      <DependentUpon>Stats.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Providers\NameSuggestionProvider.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="TimedAction.cs" />
@@ -235,10 +232,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Search.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Stats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

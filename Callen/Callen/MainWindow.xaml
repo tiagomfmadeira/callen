@@ -99,12 +99,6 @@
                     <DockPanel >
                         <Label Margin="35,0,0,0" Content="Callen" Foreground="{DynamicResource lightHighLight}"/>
                     </DockPanel>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left" x:Name="btn_callen" Click="btn_callen_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/homeGray.png" Width="30" Name="image" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <Label Content="Home" Style="{DynamicResource menuFont}" x:Name="lbl_menu1"/>
-                        </DockPanel>
-                    </ToggleButton>
                     <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left" x:Name="btn_colec" Click="btn_colec_Click">
                         <DockPanel Width="145" Margin="5,0,0,0">
                             <Image Source="Icons/Fat/menu/collectionGray.png" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>

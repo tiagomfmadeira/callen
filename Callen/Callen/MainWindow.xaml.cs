@@ -35,7 +35,7 @@ namespace Callen
 
             // Starts in Home Page
             checkedMenu(1); 
-            Switcher.Switch(this.Content_plane, new Stats());
+            Switcher.Switch(this.Content_plane, new proSearch());
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e) 
@@ -88,7 +88,6 @@ namespace Callen
             GridLength grd = new GridLength(103, GridUnitType.Pixel);
             grid_menu_col.Width = grd;
 
-            lbl_menu1.Visibility = Visibility.Visible;
             lbl_menu2.Visibility = Visibility.Visible;
             lbl_menu5.Visibility = Visibility.Visible;
             lbl_menu6.Visibility = Visibility.Visible;
@@ -100,17 +99,10 @@ namespace Callen
             GridLength grd = new GridLength(0, GridUnitType.Pixel);
             grid_menu_col.Width = grd;
 
-            lbl_menu1.Visibility = Visibility.Hidden;
             lbl_menu2.Visibility = Visibility.Hidden;
             lbl_menu5.Visibility = Visibility.Hidden;
             lbl_menu6.Visibility = Visibility.Hidden;
             lbl_menu7.Visibility = Visibility.Hidden;
-        }
-
-        public void btn_callen_Click(object sender, RoutedEventArgs e) // Switch to Home Page 
-        {
-            checkedMenu(1);
-            Switcher.Switch(this.Content_plane, new Stats());
         }
 
         public void btn_colec_Click(object sender, RoutedEventArgs e) // Switch to Collection Page 
@@ -161,9 +153,6 @@ namespace Callen
             switch (menuNum)
             {
                 case 1:
-                    btn_callen.IsChecked = true;
-                    break;
-                case 2:
                     btn_colec.IsChecked = true;
                     break;
             }
@@ -171,7 +160,6 @@ namespace Callen
 
         void uncheckAll() // Removes Hightlight from buttons in menu 
         {
-            btn_callen.IsChecked = false;
             btn_colec.IsChecked = false;
         }
     }
