@@ -20,11 +20,11 @@ namespace Callen
         {
         }
 
-        public Item(String name, String ID, String Desc, String year, String other)
+        public Item(String name, String id, String desc, String year, String other)
         {
-            this.id = ID;
+            this.id = id;
             this.name = name;
-            this.desc = Desc;
+            this.desc = desc;
             this.year = year;
             this.other = other;
 
@@ -32,7 +32,7 @@ namespace Callen
         }
 
         // call the previous constructor? TODO
-        public Item(String name, String ID, String Desc, String year, String other, String collec) : this(name, ID, Desc, year, other)
+        public Item(String name, String id, String desc, String year, String other, String collec) : this(name, id, desc, year, other)
         {
             this.collec = collec;
         }
@@ -46,14 +46,14 @@ namespace Callen
         public String image_path { get; }
         public String note { get; }
 
-        public Instance(String name, String ID, String Inst_num, String Desc, String year, String Theme, String folder,
-                            String other, String img, String note, String collec)
-                                    : base(name, ID, Desc, year, other, collec)
+        public Instance(String name, String id, String inst_num, String desc, String year, String theme, String folder,
+                            String other, String img_path, String note, String collec)
+                                    : base(name, id, desc, year, other, collec)
         {
-            this.inst_num = Inst_num;
-            this.theme = Theme;
+            this.inst_num = inst_num;
+            this.theme = theme;
             this.folder = folder;
-            this.image_path = img;
+            this.image_path = img_path;
             this.note = note;
         }
     }
