@@ -93,6 +93,16 @@ namespace Callen.Windows
             this.Close();
         }
 
+        public bool wasEdited()
+        {
+            return edited;
+        }
+
+        public bool wasDeleted()
+        {
+            return deleted;
+        }
+
         private void btn_img_Click(object sender, RoutedEventArgs e)
         {
             winZoomImage popZoomImg = new winZoomImage(img.Source);
@@ -124,42 +134,56 @@ namespace Callen.Windows
             da_delete_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_delete_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
+            var storyboard = new Storyboard();
+
+            Storyboard.SetTarget(da_print_dis, btn_print);
+            Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
+
+            Storyboard.SetTarget(da_print_app, btn_print);
+            Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
+
+            Storyboard.SetTarget(da_delete_dis, btn_delete);
+            Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
+
+            Storyboard.SetTarget(da_delete_app, btn_delete);
+            Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
+
+            storyboard.Children.Add(da_print_dis);
+            storyboard.Children.Add(da_print_app);
+            storyboard.Children.Add(da_delete_dis);
+            storyboard.Children.Add(da_delete_app);
+
+            DoubleAnimation da_save = new DoubleAnimation();
+
             // Exit edit mode (Hidde stuff)
             if (item_note.IsEnabled)
             {
-                var storyboard = new Storyboard();
+                da_save.From = 1;
+                da_save.To = 0;
+                da_save.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            }
+            else
+            {
+                da_save.From = 0;
+                da_save.To = 1;
+                da_save.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+                da_save.BeginTime = TimeSpan.FromMilliseconds(500);
+            }
 
-                DoubleAnimation da_save_dis = new DoubleAnimation();
-                da_save_dis.From = 1;
-                da_save_dis.To = 0;
-                da_save_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            Storyboard.SetTarget(da_save, btn_save);
+            Storyboard.SetTargetProperty(da_save, new PropertyPath(Button.OpacityProperty));
 
-                Storyboard.SetTarget(da_print_dis, btn_print);
-                Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
+            storyboard.Children.Add(da_save);
 
-                Storyboard.SetTarget(da_print_app, btn_print);
-                Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
+            storyboard.Begin();
 
-                Storyboard.SetTarget(da_delete_dis, btn_delete);
-                Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_delete_app, btn_delete);
-                Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_save_dis, btn_save);
-                Storyboard.SetTargetProperty(da_save_dis, new PropertyPath(Button.OpacityProperty));
-
-                storyboard.Children.Add(da_print_dis);
-                storyboard.Children.Add(da_print_app);
-                storyboard.Children.Add(da_delete_dis);
-                storyboard.Children.Add(da_delete_app);
-                storyboard.Children.Add(da_save_dis);
-
-                storyboard.Begin();
-
-
-                TimedAction.ExecuteWithDelay(new Action(delegate {
+            if (item_note.IsEnabled)
+            {
+                TimedAction.ExecuteWithDelay(new Action(delegate
+                {
                     Canvas.SetLeft(grd_pop_print, 380);
+                    Canvas.SetLeft(grd_pop_delete, 420);
+
                     Canvas.SetLeft(btn_print, 518);
                     Canvas.SetLeft(btn_delete, 543);
 
@@ -182,41 +206,12 @@ namespace Callen.Windows
 
                 }), TimeSpan.FromMilliseconds(500));
             }
-            else // Enter edit mode
+            else
             {
-                var storyboard = new Storyboard();
-
-                DoubleAnimation da_save_app = new DoubleAnimation();
-                da_save_app.From = 0;
-                da_save_app.To = 1;
-                da_save_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
-                da_save_app.BeginTime = TimeSpan.FromMilliseconds(500);
-
-                Storyboard.SetTarget(da_print_dis, btn_print);
-                Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_print_app, btn_print);
-                Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_delete_dis, btn_delete);
-                Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_delete_app, btn_delete);
-                Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
-
-                Storyboard.SetTarget(da_save_app, btn_save);
-                Storyboard.SetTargetProperty(da_save_app, new PropertyPath(Button.OpacityProperty));
-
-                storyboard.Children.Add(da_print_dis);
-                storyboard.Children.Add(da_print_app);
-                storyboard.Children.Add(da_delete_dis);
-                storyboard.Children.Add(da_delete_app);
-                storyboard.Children.Add(da_save_app);
-
-                storyboard.Begin();
-
-                TimedAction.ExecuteWithDelay(new Action(delegate {
+                TimedAction.ExecuteWithDelay(new Action(delegate
+                {
                     Canvas.SetLeft(grd_pop_print, 355);
+                    Canvas.SetLeft(grd_pop_delete, 395);
                     Canvas.SetLeft(btn_print, 493);
                     Canvas.SetLeft(btn_delete, 518);
 
@@ -351,8 +346,8 @@ namespace Callen.Windows
 
         private void updateLocalInfo()
         {
-            inst = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text, 
-                item_year.Text, combo_theme.Text, combo_folder.Text, item_other.Text, 
+            inst = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text,
+                item_year.Text, combo_theme.Text, combo_folder.Text, item_other.Text,
                 inst.getImagePath(), item_note.Text, item_collec.Text);
         }
 
@@ -462,25 +457,7 @@ namespace Callen.Windows
                 }
         }
 
-        private void btn_print_MouseEnter(object sender, MouseEventArgs e) // Show print popup
-        {
-            pop_print.IsOpen = true;
-        }
 
-        private void btn_print_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
-        {
-            pop_print.IsOpen = false;
-        }
-
-        private void btn_edit_MouseEnter(object sender, MouseEventArgs e) // Show print popup
-        {
-            pop_edit.IsOpen = true;
-        }
-
-        private void btn_edit_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
-        {
-            pop_edit.IsOpen = false;
-        }
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
@@ -489,25 +466,12 @@ namespace Callen.Windows
 
             btn_save.IsEnabled = false;
 
-            TimedAction.ExecuteWithDelay(new Action(delegate { // prevent spamming of save
+            TimedAction.ExecuteWithDelay(new Action(delegate
+            { // prevent spamming of save
                 btn_save.IsEnabled = true;
             }), TimeSpan.FromMilliseconds(1500));
         }
 
-        public bool wasEdited()
-        {
-            return edited;
-        }
-
-        public bool wasDeleted()
-        {
-            return deleted;
-        }
-
-        private void combo_theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
@@ -546,6 +510,26 @@ namespace Callen.Windows
             this.Opacity = 1; // turn opacity back to 1
         }
 
+        private void btn_print_MouseEnter(object sender, MouseEventArgs e) // Show print popup
+        {
+            pop_print.IsOpen = true;
+        }
+
+        private void btn_print_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
+        {
+            pop_print.IsOpen = false;
+        }
+
+        private void btn_edit_MouseEnter(object sender, MouseEventArgs e) // Show print popup
+        {
+            pop_edit.IsOpen = true;
+        }
+
+        private void btn_edit_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
+        {
+            pop_edit.IsOpen = false;
+        }
+
         private void btn_duplicate_MouseLeave(object sender, MouseEventArgs e) // Hide print popup
         {
             pop_dup.IsOpen = false;
@@ -555,6 +539,25 @@ namespace Callen.Windows
         {
             pop_dup.IsOpen = true;
         }
+
+        private void btn_delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            pop_delete.IsOpen = true;
+        }
+
+        private void btn_delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            pop_delete.IsOpen = false;
+        }
+
+        private void btn_save_MouseEnter(object sender, MouseEventArgs e)
+        {
+            pop_save.IsOpen = true;
+        }
+
+        private void btn_save_MouseLeave(object sender, MouseEventArgs e)
+        {
+            pop_save.IsOpen = false;
+        }
     }
 }
- 
