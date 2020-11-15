@@ -223,32 +223,6 @@ namespace Callen
 
         #endregion
 
-        public static void toggleFavourite(String id)
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.TOGGLE_FAVOURITE @ItemID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@ItemID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-        }
-
         // TODO change return value?
         public static DataTable searchInstances(Instance inst, bool pic_search)
         {

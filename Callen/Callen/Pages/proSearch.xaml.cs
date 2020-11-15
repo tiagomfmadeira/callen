@@ -44,7 +44,7 @@ namespace Callen.Pages
             e.Handled = true;
         }
 
-        private void FillDataGrid() // Used to Fill the Data Grid with items information (Favourite, Name, Descr, Year, Theme, Folder, Other) 
+        private void FillDataGrid() // Used to Fill the Data Grid with items information (Name, Descr, Year, Theme, Folder, Other) 
         {
             DataView itemsView = DBConnect.getItemsInfo();
 
@@ -94,11 +94,6 @@ namespace Callen.Pages
             }
 
             win.Opacity = 1;
-        }
-
-        private void check_fav(object sender, RoutedEventArgs e)
-        {
-            DBConnect.toggleFavourite((grdColec.SelectedItem as DataRowView)["ID"].ToString());
         }
     }
 }
