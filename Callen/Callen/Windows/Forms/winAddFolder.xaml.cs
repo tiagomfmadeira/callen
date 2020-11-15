@@ -1,9 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-
-
-using System.Data.SqlClient;
 
 namespace Callen.Windows.Forms
 {

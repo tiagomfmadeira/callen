@@ -7,7 +7,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
 using System.Configuration;
-using System.Data.SqlClient;
 
 using Microsoft.Win32;
 
