@@ -18,7 +18,7 @@ namespace Callen.Windows.Forms
     public partial class winAddItem : Window
     {
         // TODO check what this variables do
-        private bool inserted; // tell if a item was inserted
+        public bool inserted { get; } // tell if a item was inserted
         private bool duplicated;
 
         public winAddItem()
@@ -59,11 +59,6 @@ namespace Callen.Windows.Forms
 
             inserted = false;
             duplicated = true;
-        }
-
-        public bool getInserted()
-        {
-            return inserted;
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)

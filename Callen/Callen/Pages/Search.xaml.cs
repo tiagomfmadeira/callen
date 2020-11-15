@@ -87,7 +87,7 @@ namespace Callen.Pages
             win.Opacity = 0.5;
             popForm.ShowDialog();
 
-            if (popForm.getInserted()) // A item was inserted (refreshes datagrid)
+            if (popForm.inserted) // A item was inserted (refreshes datagrid)
                 btn_adv_search.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
             win.Opacity = 1;
