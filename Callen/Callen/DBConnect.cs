@@ -22,6 +22,7 @@ namespace Callen
 
         #region GETTERS
 
+        // TODO Check where this is used
         public static List<Item> getItemsBox()
         {
             try
@@ -269,47 +270,47 @@ namespace Callen
 
                 SqlParameter paramID = new SqlParameter();
                 paramID.ParameterName = "@InstID";
-                paramID.Value = inst.getID();
+                paramID.Value = inst.id;
                 cmd.Parameters.Add(paramID);
 
                 SqlParameter paramName = new SqlParameter();
                 paramName.ParameterName = "@Item_Name";
-                paramName.Value = inst.getName();
+                paramName.Value = inst.name;
                 cmd.Parameters.Add(paramName);
 
                 SqlParameter paramDesc = new SqlParameter();
                 paramDesc.ParameterName = "@Item_Desc";
-                paramDesc.Value = inst.getDesc();
+                paramDesc.Value = inst.desc;
                 cmd.Parameters.Add(paramDesc);
 
                 SqlParameter paramYear = new SqlParameter();
                 paramYear.ParameterName = "@Item_Year";
-                paramYear.Value = inst.getYear();
+                paramYear.Value = inst.year;
                 cmd.Parameters.Add(paramYear);
 
                 SqlParameter paramNote = new SqlParameter();
                 paramNote.ParameterName = "@Item_Note";
-                paramNote.Value = inst.getNote();
+                paramNote.Value = inst.note;
                 cmd.Parameters.Add(paramNote);
 
                 SqlParameter paramTheme = new SqlParameter();
                 paramTheme.ParameterName = "@Item_Theme";
-                paramTheme.Value = inst.getNote();
+                paramTheme.Value = inst.theme;
                 cmd.Parameters.Add(paramTheme);
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Item_Folder";
-                paramFolder.Value = inst.getFolder();
+                paramFolder.Value = inst.folder;
                 cmd.Parameters.Add(paramFolder);
 
                 SqlParameter paramCollec = new SqlParameter();
                 paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = inst.getCollec();
+                paramCollec.Value = inst.collec;
                 cmd.Parameters.Add(paramCollec);
 
                 SqlParameter paramOther = new SqlParameter();
                 paramOther.ParameterName = "@Other";
-                paramOther.Value = inst.getOther();
+                paramOther.Value = inst.other;
                 cmd.Parameters.Add(paramOther);
 
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -373,37 +374,37 @@ namespace Callen
 
                 SqlParameter paramName = new SqlParameter();
                 paramName.ParameterName = "@Name";
-                paramName.Value = inst.getName();
+                paramName.Value = inst.name;
                 cmd.Parameters.Add(paramName);
 
                 SqlParameter paramDesc = new SqlParameter();
                 paramDesc.ParameterName = "@Desc";
-                paramDesc.Value = inst.getDesc();
+                paramDesc.Value = inst.desc;
                 cmd.Parameters.Add(paramDesc);
 
                 SqlParameter paramYear = new SqlParameter();
                 paramYear.ParameterName = "@Year";
-                paramYear.Value = inst.getYear();
+                paramYear.Value = inst.year;
                 cmd.Parameters.Add(paramYear);
 
                 SqlParameter paramOther = new SqlParameter();
                 paramOther.ParameterName = "@Other";
-                paramOther.Value = inst.getOther();
+                paramOther.Value = inst.other;
                 cmd.Parameters.Add(paramOther);
 
                 SqlParameter paramCollec = new SqlParameter();
                 paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = inst.getCollec();
+                paramCollec.Value = inst.collec;
                 cmd.Parameters.Add(paramCollec);
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@Folder";
-                paramFolder.Value = inst.getFolder();
+                paramFolder.Value = inst.folder;
                 cmd.Parameters.Add(paramFolder);
 
                 SqlParameter paramNote = new SqlParameter();
                 paramNote.ParameterName = "@Note";
-                paramNote.Value = inst.getNote();
+                paramNote.Value = inst.note;
                 cmd.Parameters.Add(paramNote);
 
                 // Image Path
@@ -483,37 +484,37 @@ namespace Callen
 
                 SqlParameter paramID = new SqlParameter();
                 paramID.ParameterName = "@ItemID";
-                paramID.Value = updated_instance.getID();
+                paramID.Value = updated_instance.id;
                 cmd.Parameters.Add(paramID);
 
                 SqlParameter paramName = new SqlParameter();
                 paramName.ParameterName = "@ItemName";
-                paramName.Value = updated_instance.getName();
+                paramName.Value = updated_instance.name;
                 cmd.Parameters.Add(paramName);
 
                 SqlParameter paramDescr = new SqlParameter();
                 paramDescr.ParameterName = "@ItemDescr";
-                paramDescr.Value = updated_instance.getDesc();
+                paramDescr.Value = updated_instance.desc;
                 cmd.Parameters.Add(paramDescr);
 
                 SqlParameter paramYear = new SqlParameter();
                 paramYear.ParameterName = "@ItemYear";
-                paramYear.Value = updated_instance.getYear();
+                paramYear.Value = updated_instance.year;
                 cmd.Parameters.Add(paramYear);
 
                 SqlParameter paramOther = new SqlParameter();
                 paramOther.ParameterName = "@ItemOther";
-                paramOther.Value = updated_instance.getOther();
+                paramOther.Value = updated_instance.other;
                 cmd.Parameters.Add(paramOther);
 
                 SqlParameter paramCollec = new SqlParameter();
                 paramCollec.ParameterName = "@ItemCollec";
-                paramCollec.Value = updated_instance.getCollec();
+                paramCollec.Value = updated_instance.collec;
                 cmd.Parameters.Add(paramCollec);
 
                 SqlParameter paramInst = new SqlParameter();
                 paramInst.ParameterName = "@InstID";
-                paramInst.Value = updated_instance.getInstID();
+                paramInst.Value = updated_instance.inst_num;
                 cmd.Parameters.Add(paramInst);
 
                 updated = (bool)cmd.ExecuteScalar();
@@ -543,17 +544,17 @@ namespace Callen
 
                 SqlParameter paramInst = new SqlParameter();
                 paramInst.ParameterName = "@InstID";
-                paramInst.Value = updated_instance.getInstID();
+                paramInst.Value = updated_instance.inst_num;
                 cmd.Parameters.Add(paramInst);
 
                 SqlParameter paramNote = new SqlParameter();
                 paramNote.ParameterName = "@InstNote";
-                paramNote.Value = updated_instance.getNote();
+                paramNote.Value = updated_instance.note;
                 cmd.Parameters.Add(paramNote);
 
                 SqlParameter paramFolder = new SqlParameter();
                 paramFolder.ParameterName = "@InstFolder";
-                paramFolder.Value = updated_instance.getFolder();
+                paramFolder.Value = updated_instance.folder;
                 cmd.Parameters.Add(paramFolder);
 
                 updated = (bool)cmd.ExecuteScalar();

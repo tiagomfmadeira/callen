@@ -67,7 +67,7 @@ namespace Callen.Pages
             winDesc popDesc;
 
             // Check if there is a image
-            if (it.getImagePath() != "")
+            if (it.image_path != "")
             {
                 popDesc = new winDesc(it, true);
             }
@@ -86,7 +86,7 @@ namespace Callen.Pages
                 {
                     DataRow dr = items.Rows[i];
 
-                    if (dr["ID"].ToString() == it.getInstID())
+                    if (dr["ID"].ToString() == it.inst_num)
                     {
                         dr.Delete();
                     }

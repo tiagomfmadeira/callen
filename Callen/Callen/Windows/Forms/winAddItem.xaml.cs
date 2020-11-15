@@ -106,7 +106,7 @@ namespace Callen.Windows.Forms
 
             foreach (Folders folder in combo_theme.Items)
             {
-                if (folder.theme == it.getTheme())
+                if (folder.theme == it.theme)
                 {
                     combo_theme.SelectedItem = folder;
                     break;
@@ -241,16 +241,16 @@ namespace Callen.Windows.Forms
 
         private void fillWindow(Instance it)
         {
-            name_box.Text = it.getName();
-            year_box.Text = it.getYear();
-            collec_box.Text = it.getCollec();
-            other_box.Text = it.getOther();
-            desc_box.Text = it.getDesc();
-            note_box.Text = it.getNote();
+            name_box.Text = it.name;
+            year_box.Text = it.year;
+            collec_box.Text = it.collec;
+            other_box.Text = it.other;
+            desc_box.Text = it.desc;
+            note_box.Text = it.note;
 
             foreach (Folders folder in combo_folder.Items)
             {
-                if (folder.folder == it.getFolder())
+                if (folder.folder == it.folder)
                 {
                     combo_folder.SelectedItem = folder;
                     break;
@@ -260,9 +260,9 @@ namespace Callen.Windows.Forms
             fillThemeCombo(it);
 
             // Check if there is a image
-            if (it.getImagePath() != "")
+            if (it.image_path != "")
             {
-                ImageSource src = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
+                ImageSource src = new BitmapImage(new Uri(it.image_path + ".jpeg", UriKind.RelativeOrAbsolute));
 
                 show_img(src);
 

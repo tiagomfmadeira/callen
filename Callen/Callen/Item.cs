@@ -5,22 +5,23 @@ namespace Callen
 {
     public class Item  // Used to define an Item in a Collection 
     {
-        public String Name { set; get; }
-        public String ID { set; get; }
+        public String Name { get; set; }
+        public String ID { get; set; }
 
-        // TODO get/set
-        private String name, id, desc, year, other, collec;
+        public String name { get; }
+        public String id { get; }
+        public String desc { get; }
+        public String year { get; }
+        public String other { get; }
+        public String collec { get; }
 
         // TODO needed?
         public Item()
         {
         }
 
-        public Item(String name, String ID, String Desc, String year,  String other)
+        public Item(String name, String ID, String Desc, String year, String other)
         {
-            this.Name = name;
-            this.ID = ID;
-
             this.id = ID;
             this.name = name;
             this.desc = Desc;
@@ -31,88 +32,29 @@ namespace Callen
         }
 
         // call the previous constructor? TODO
-        public Item(String name, String ID, String Desc, String year, String other, String collec)
+        public Item(String name, String ID, String Desc, String year, String other, String collec) : this(name, ID, Desc, year, other)
         {
-            this.Name = name;
-            this.ID = ID;
-
-            this.id = ID;
-            this.name = name;
-            this.desc = Desc;
-            this.year = year;
-            this.other = other;
             this.collec = collec;
-        }
-
-        public String getName()
-        {
-            return name;
-        }
-
-        public String getID()
-        {
-            return id;
-        }
-
-        public String getDesc()
-        {
-            return desc;
-        }
-
-        public String getYear()
-        {
-            return year;
-        }
-
-        public String getOther()
-        {
-            return other;
-        }
-
-        public String getCollec()
-        {
-            return collec;
         }
     }
 
     public class Instance : Item
     {
-        private String theme, folder, inst_num, image_path, note;
+        public String theme { get; }
+        public String folder { get; }
+        public String inst_num { get; }
+        public String image_path { get; }
+        public String note { get; }
 
         public Instance(String name, String ID, String Inst_num, String Desc, String year, String Theme, String folder,
                             String other, String img, String note, String collec)
-                                    : base (name, ID, Desc, year, other, collec)
+                                    : base(name, ID, Desc, year, other, collec)
         {
             this.inst_num = Inst_num;
             this.theme = Theme;
             this.folder = folder;
             this.image_path = img;
             this.note = note;
-        }
-
-        public String getTheme()
-        {
-            return theme;
-        }
-
-        public String getFolder()
-        {
-            return folder;
-        }
-
-        public String getImagePath()
-        {
-            return image_path;
-        }
-
-        public String getNote()
-        {
-            return note;
-        }
-
-        public String getInstID()
-        {
-            return inst_num;
         }
     }
 

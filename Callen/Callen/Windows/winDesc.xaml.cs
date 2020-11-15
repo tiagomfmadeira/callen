@@ -43,14 +43,14 @@ namespace Callen.Windows
 
             fillFolderCombo();
 
-            item_name.Text = it.getName();
-            item_year.Text = it.getYear();
-            item_folder.Text = it.getFolder();
-            item_theme.Text = it.getTheme();
-            item_desc.Text = it.getDesc();
-            item_note.Text = it.getNote();
-            item_other.Text = it.getOther();
-            item_collec.Text = it.getCollec();
+            item_name.Text = it.name;
+            item_year.Text = it.year;
+            item_folder.Text = it.folder;
+            item_theme.Text = it.theme;
+            item_desc.Text = it.desc;
+            item_note.Text = it.note;
+            item_other.Text = it.other;
+            item_collec.Text = it.collec;
 
             if (previewImage)
             {
@@ -58,11 +58,11 @@ namespace Callen.Windows
 
                 try
                 {
-                    img.Source = new BitmapImage(new Uri(it.getImagePath() + ".jpeg", UriKind.RelativeOrAbsolute));
+                    img.Source = new BitmapImage(new Uri(it.image_path + ".jpeg", UriKind.RelativeOrAbsolute));
                 }
                 catch
                 {
-                    MessageBox.Show("File not found : " + it.getImagePath());
+                    MessageBox.Show("File not found : " + it.image_path);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace Callen.Windows
                     btn_add_folder.Visibility = Visibility.Hidden;
                     combo_theme.Visibility = Visibility.Hidden;
                     item_note.IsEnabled = false;
-                    item_theme.Text = inst.getTheme(); //Update theme text box
+                    item_theme.Text = inst.theme; //Update theme text box
 
                 }), TimeSpan.FromMilliseconds(500));
             }
@@ -227,7 +227,7 @@ namespace Callen.Windows
         private void updateInfo() // Needs to check if some value is changed before performing the procedure
         {
             bool updated = false;
-            Instance updated_instance = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text, item_year.Text, "", (combo_theme.SelectedItem as Folders).id.ToString(), item_other.Text, "", item_note.Text, item_collec.Text);
+            Instance updated_instance = new Instance(item_name.Text, inst.id, inst.inst_num, item_desc.Text, item_year.Text, "", (combo_theme.SelectedItem as Folders).id.ToString(), item_other.Text, "", item_note.Text, item_collec.Text);
 
             updated = DBConnect.updateItemInfo(updated_instance);
 
@@ -244,26 +244,26 @@ namespace Callen.Windows
             if (updated)
             {
                 updateLocalInfo();
-                winNotification noti = new winNotification("Update Item", inst.getInstID() + " - " + item_name.Text, "foi modificado com sucesso");
+                winNotification noti = new winNotification("Update Item", inst.inst_num + " - " + item_name.Text, "foi modificado com sucesso");
                 noti.Show();
             }
         }
 
         private void updateLocalInfo()
         {
-            inst = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text,
+            inst = new Instance(item_name.Text, inst.id, inst.inst_num, item_desc.Text,
                 item_year.Text, combo_theme.Text, combo_folder.Text, item_other.Text,
-                inst.getImagePath(), item_note.Text, item_collec.Text);
+                inst.image_path, item_note.Text, item_collec.Text);
         }
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            String inst = this.inst.getInstID() + " - " + item_name.Text;
+            String inst = this.inst.inst_num + " - " + item_name.Text;
 
             if (!(App.Current.Properties["PrintList"] as List<String>).Contains(inst))
             {
                 (App.Current.Properties["PrintList"] as List<String>).Add(inst);
-                winNotification noti = new winNotification("Print List", this.inst.getInstID() + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
+                winNotification noti = new winNotification("Print List", this.inst.inst_num + " - " + item_name.Text, "foi adicionado com sucesso à lista para imprimir");
                 noti.Show();
             }
         }
@@ -279,7 +279,7 @@ namespace Callen.Windows
 
             foreach (Folders folder in combo_folder.Items)
             {
-                if (folder.folder == inst.getFolder())
+                if (folder.folder == inst.folder)
                 {
                     combo_folder.SelectedItem = folder;
                     break;
@@ -299,7 +299,7 @@ namespace Callen.Windows
 
                 foreach (Folders folder in combo_theme.Items)
                 {
-                    if (folder.theme == inst.getTheme())
+                    if (folder.theme == inst.theme)
                     {
                         combo_theme.SelectedItem = folder;
                         break;
@@ -335,7 +335,7 @@ namespace Callen.Windows
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            winDelete popDelete = new winDelete(inst.getInstID(), inst.getName());
+            winDelete popDelete = new winDelete(inst.inst_num, inst.name);
             popDelete.Owner = this;
             this.Opacity = 0.85;
             popDelete.ShowDialog();
