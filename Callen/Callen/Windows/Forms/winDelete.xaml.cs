@@ -21,7 +21,9 @@ namespace Callen.Windows.Forms
     /// </summary>
     public partial class winDelete : Window
     {
+        // TODO check if this bool makes sense
         bool deleted;
+
         String instance_id, instance_name;
 
         public winDelete(String inst_id, String inst_name)
@@ -60,28 +62,8 @@ namespace Callen.Windows.Forms
 
         private void btn_yes_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.REMOVE_INST @InstID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = instance_id;
-                cmd.Parameters.Add(paramInst);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
+            DBConnect.removeInstance(instance_id);
+           
             deleted = true;
 
             winNotification noti = new winNotification("Item Deleted", instance_id + " - " + instance_name , "foi eliminado com sucesso");

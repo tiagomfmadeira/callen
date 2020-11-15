@@ -237,104 +237,19 @@ namespace Callen.Windows
         private void updateInfo() // Needs to check if some value is changed before performing the procedure
         {
             bool updated = false;
-            #region UPDATE ITEM
-            try
+            Instance updated_instance = new Instance(item_name.Text, inst.getID(), inst.getInstID(), item_desc.Text, item_year.Text, "", (combo_theme.SelectedItem as Folders).id.ToString(), item_other.Text, "", item_note.Text, item_collec.Text);
+
+            updated = DBConnect.updateItemInfo(updated_instance);
+
+            // TODO merge this two functions together
+            if (DBConnect.updateInstanceInfo(updated_instance))
             {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
+                updated = true;
 
-                string Get_Data = "EXEC G_CALLEN.UPDATE_ITEM_INFO @ItemID, @ItemName, @ItemDescr, @ItemYear, @ItemOther, @ItemCollec, @InstID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter paramID = new SqlParameter();
-                paramID.ParameterName = "@ItemID";
-                paramID.Value = inst.getID();
-                cmd.Parameters.Add(paramID);
-
-                SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@ItemName";
-                paramName.Value = item_name.Text;
-                cmd.Parameters.Add(paramName);
-
-                SqlParameter paramDescr = new SqlParameter();
-                paramDescr.ParameterName = "@ItemDescr";
-                paramDescr.Value = item_desc.Text;
-                cmd.Parameters.Add(paramDescr);
-
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@ItemYear";
-                paramYear.Value = item_year.Text;
-                cmd.Parameters.Add(paramYear);
-
-                SqlParameter paramOther = new SqlParameter();
-                paramOther.ParameterName = "@ItemOther";
-                paramOther.Value = item_other.Text;
-                cmd.Parameters.Add(paramOther);
-
-                SqlParameter paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@ItemCollec";
-                paramCollec.Value = item_collec.Text;
-                cmd.Parameters.Add(paramCollec);
-
-                SqlParameter paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = inst.getInstID();
-                cmd.Parameters.Add(paramInst);
-
-                updated = (bool)cmd.ExecuteScalar();
-
-                thisConnection.Close();
+                //update folder, theme text boxes
+                item_folder.Text = combo_folder.Text;
+                item_theme.Text = combo_theme.Text;
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-            #endregion
-
-            #region UPDATE INSTANCE
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.UPDATE_INST_INFO @InstID, @InstNote, @InstFolder";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = inst.getInstID();
-                cmd.Parameters.Add(paramInst);
-
-                SqlParameter paramNote = new SqlParameter();
-                paramNote.ParameterName = "@InstNote";
-                paramNote.Value = item_note.Text;
-                cmd.Parameters.Add(paramNote);
-
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@InstFolder";
-                paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
-                cmd.Parameters.Add(paramFolder);
-
-                bool tmpUpdated = (bool)cmd.ExecuteScalar();
-
-                if (tmpUpdated)
-                {
-                    updated = true;
-
-                    //update folder, theme text boxes
-                    item_folder.Text = combo_folder.Text;
-                    item_theme.Text = combo_theme.Text;
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-            #endregion
 
             if (updated)
             {
@@ -363,101 +278,45 @@ namespace Callen.Windows
             }
         }
 
+        // TODO REPEATED?
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
-            try
+            List<Folders> folders = DBConnect.getFolders();
+
+            combo_folder.ItemsSource = folders;
+            combo_folder.DisplayMemberPath = "folder";
+            combo_folder.SelectedValuePath = "folder";
+
+            foreach (Folders folder in combo_folder.Items)
             {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FOLDERS_NAMES";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                List<Folders> ft = new List<Folders>();
-                foreach (DataRow row in dt.Rows)
+                if (folder.folder == inst.getFolder())
                 {
-                    ft.Add(new Folders { folder = row["Code"].ToString() });
+                    combo_folder.SelectedItem = folder;
+                    break;
                 }
-
-                combo_folder.ItemsSource = ft;
-                combo_folder.DisplayMemberPath = "folder";
-                combo_folder.SelectedValuePath = "folder";
-
-                foreach (Folders folder in combo_folder.Items)
-                {
-                    if (folder.folder == inst.getFolder())
-                    {
-                        combo_folder.SelectedItem = folder;
-                        break;
-                    }
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
             }
         }
 
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
             if (combo_folder.SelectedItem != null)
-                try
+            {
+                List<Folders> folders_themes = DBConnect.getFoldersThemes(combo_folder.SelectedValue.ToString());
+
+                combo_theme.ItemsSource = folders_themes;
+                combo_theme.DisplayMemberPath = "theme";
+                combo_theme.SelectedValuePath = "id";
+
+                foreach (Folders folder in combo_theme.Items)
                 {
-                    SqlConnection thisConnection = DBConnect.getConnection();
-                    thisConnection.Open();
-
-                    string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
-
-                    SqlCommand cmd = thisConnection.CreateCommand();
-                    cmd.CommandText = Get_Data;
-
-                    SqlParameter paramItem = new SqlParameter();
-                    paramItem.ParameterName = "@Code";
-                    paramItem.Value = combo_folder.SelectedValue.ToString();
-                    cmd.Parameters.Add(paramItem);
-
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable("Folder");
-                    sda.Fill(dt);
-
-                    List<Folders> ft = new List<Folders>();
-                    foreach (DataRow row in dt.Rows)
+                    if (folder.theme == inst.getTheme())
                     {
-                        ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
+                        combo_theme.SelectedItem = folder;
+                        break;
                     }
-
-                    combo_theme.ItemsSource = ft;
-                    combo_theme.DisplayMemberPath = "theme";
-                    combo_theme.SelectedValuePath = "id";
-
-                    foreach (Folders folder in combo_theme.Items)
-                    {
-                        if (folder.theme == inst.getTheme())
-                        {
-                            combo_theme.SelectedItem = folder;
-                            break;
-                        }
-                    }
-
-                    thisConnection.Close();
                 }
-                catch (Exception ee)
-                {
-                    MessageBox.Show(ee.ToString());
-
-                }
+            }
         }
-
-
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {

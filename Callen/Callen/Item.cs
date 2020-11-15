@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Data;
 using System.Data.SqlClient;
@@ -14,8 +12,10 @@ namespace Callen
         public String Name { set; get; }
         public String ID { set; get; }
 
+        // TODO get/set
         private String name, id, desc, year, other, collec;
 
+        // TODO needed?
         public Item()
         {
         }
@@ -34,6 +34,7 @@ namespace Callen
             this.collec = "";
         }
 
+        // call the previous constructor? TODO
         public Item(String name, String ID, String Desc, String year, String other, String collec)
         {
             this.Name = name;
@@ -123,38 +124,7 @@ namespace Callen
     {
         public static IList<Item> CreateNamesList()
         {
-            List<Item> names = new List<Item>();
-
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.ITEMS_BOX";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Items");
-                sda.Fill(dt);
-
-                List<Item> items = new List<Item>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    items.Add(new Item() { Name = row["Item_Name"].ToString(), ID = row["Item_ID"].ToString() });
-                }
-
-                thisConnection.Close();
-
-                return items.ToList();
-            }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.ToString());
-            }
-
-            return new List<Item>().ToList();
+            return DBConnect.getItemsBox();
         }
     }
 }

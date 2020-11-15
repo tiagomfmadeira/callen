@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 using Callen.Windows;
 using Callen.Windows.Forms;
 
@@ -57,26 +49,7 @@ namespace Callen.Pages
 
         private void getItems()
         {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.ITEMS_PIC_MODE";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                dt = new DataTable("PicItems");
-                sda.Fill(dt);
-                
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
+            DBConnect.getPicItems(dt);
         }
 
         private void fillList(int page)
@@ -119,43 +92,10 @@ namespace Callen.Pages
         
         private void btn_open_desc(object sender, RoutedEventArgs e) // Opens description window 
         {
-            getInstInfo((sender as Button).CommandParameter.ToString());
-        }
+            Instance instance = DBConnect.getInstanceInfo((sender as Button).CommandParameter.ToString());
 
-        private void getInstInfo(String id) // Gets Selected item info 
-        {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.GET_INST_INFO @InstID";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter param = new SqlParameter();
-
-                param.ParameterName = "@InstID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    Instance it = new Instance(rdr["name"].ToString(), rdr["item_id"].ToString(), id, rdr["descr"].ToString(), rdr["year"].ToString(),
-                    rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(), 
-                    rdr["img_path"].ToString(),rdr["note"].ToString(), rdr["collec"].ToString());
-
-                    openDesc(it);
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
+            if (instance != null)
+                openDesc(instance);
         }
 
         private void openDesc(Instance it) // Opens the description of the item given

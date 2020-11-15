@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 using System.Diagnostics;
-
 using System.Configuration;
-
-using System.Data;
 using System.Data.SqlClient;
 
 using Microsoft.Win32;
@@ -28,6 +18,7 @@ namespace Callen.Windows.Forms
     /// </summary>
     public partial class winAddItem : Window
     {
+        // TODO check what this variables do
         private bool inserted; // tell if a item was inserted
         private bool duplicated;
 
@@ -92,128 +83,35 @@ namespace Callen.Windows.Forms
             this.Close();
         }
 
-        
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
+            List<Folders> folders = DBConnect.getFolders();
 
-                string Get_Data = "EXEC G_CALLEN.FOLDERS_NAMES";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                List<Folders> ft = new List<Folders>();
-                foreach(DataRow row in dt.Rows)
-                {
-                    ft.Add(new Folders { folder = row["Code"].ToString()});
-                }
-
-                combo_folder.ItemsSource = ft;
-                combo_folder.DisplayMemberPath = "folder";
-                combo_folder.SelectedValuePath = "folder";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-                
-            }
+            combo_folder.ItemsSource = folders;
+            combo_folder.DisplayMemberPath = "folder";
+            combo_folder.SelectedValuePath = "folder";
         }
 
         private void fillThemeCombo()
         {
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
+            List<Folders> foldersThemes = DBConnect.getFoldersThemes(combo_folder.SelectedValue.ToString());
 
-                string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Code";
-                paramFolder.Value = combo_folder.SelectedValue.ToString();
-                cmd.Parameters.Add(paramFolder);
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                List<Folders> ft = new List<Folders>();
-                foreach (DataRow row in dt.Rows)
-                {
-                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
-                }
-
-                combo_theme.ItemsSource = ft;
-                combo_theme.DisplayMemberPath = "theme";
-                combo_theme.SelectedValuePath = "id";
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
-            }
+            combo_theme.ItemsSource = foldersThemes;
+            combo_theme.DisplayMemberPath = "theme";
+            combo_theme.SelectedValuePath = "id";
         }
 
         private void fillThemeCombo(Instance it)
         {
-            try
+            fillThemeCombo();
+
+            foreach (Folders folder in combo_theme.Items)
             {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlParameter paramItem = new SqlParameter();
-                paramItem.ParameterName = "@Code";
-                paramItem.Value = combo_folder.SelectedValue.ToString();
-                cmd.Parameters.Add(paramItem);
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                List<Folders> ft = new List<Folders>();
-                foreach (DataRow row in dt.Rows)
+                if (folder.theme == it.getTheme())
                 {
-                    ft.Add(new Folders { theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString() });
+                    combo_theme.SelectedItem = folder;
+                    break;
                 }
-
-                combo_theme.ItemsSource = ft;
-                combo_theme.DisplayMemberPath = "theme";
-                combo_theme.SelectedValuePath = "id";
-
-                foreach (Folders folder in combo_theme.Items)
-                {
-                    if (folder.theme == it.getTheme())
-                    {
-                        combo_theme.SelectedItem = folder;
-                        break;
-                    }
-                }
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-
             }
         }
 
@@ -283,84 +181,10 @@ namespace Callen.Windows.Forms
                 return;
             }
 
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
+            Instance inst = new Instance(name_box.Text, "", "", desc_box.Text, year_box.Text, "", (combo_theme.SelectedItem as Folders).id.ToString(), other_box.Text, "", note_box.Text, collec_box.Text);
 
-                string Get_Data = "";
+            DBConnect.addInstance(inst, img.Source, @config.AppSettings.Settings["image_path"].Value);
 
-                Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Desc, @Year, @Collec, @Folder, @Other, @Note, @Img_Path";
-
-                SqlCommand cmd = new SqlCommand(Get_Data, thisConnection);
-
-                SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@Name";
-                paramName.Value = name_box.Text.ToString();
-                cmd.Parameters.Add(paramName);
-
-                SqlParameter paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Desc";
-                paramDesc.Value = desc_box.Text.ToString();
-                cmd.Parameters.Add(paramDesc);
-
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Year";
-                paramYear.Value = year_box.Text.ToString();
-                cmd.Parameters.Add(paramYear);
-
-                SqlParameter paramOther = new SqlParameter();
-                paramOther.ParameterName = "@Other";
-                paramOther.Value = other_box.Text.ToString();
-                cmd.Parameters.Add(paramOther);
-
-                SqlParameter paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = collec_box.Text.ToString();
-                cmd.Parameters.Add(paramCollec);
-
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Folder";
-                paramFolder.Value = (combo_theme.SelectedItem as Folders).id.ToString();
-                cmd.Parameters.Add(paramFolder);
-
-                SqlParameter paramNote = new SqlParameter();
-                paramNote.ParameterName = "@Note";
-                paramNote.Value = note_box.Text.ToString();
-                cmd.Parameters.Add(paramNote);
-
-                // Image Path
-                SqlParameter paramImg = new SqlParameter();
-                paramImg.ParameterName = "@Img_Path";
-                if (img.Source != null) // Theres an img
-                {
-                    var img_path = @config.AppSettings.Settings["image_path"].Value + "\\Instance_"; // gets filled in database trigger
-                    paramImg.Value = img_path;
-                }
-                else
-                {
-                    paramImg.Value = "";
-                }
-                cmd.Parameters.Add(paramImg);
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    if (img.Source != null) // Theres an image
-                    {
-                        var filename = img.Source.ToString().Substring(img.Source.ToString().LastIndexOf("///") + 3);
-                        System.IO.File.Copy(filename, @config.AppSettings.Settings["image_path"].Value + "\\Instance_" + rdr["Inst_Number"].ToString() + ".jpeg");
-                    }
-                    break;
-                }
-
-                thisConnection.Close();
-             }
-             catch (Exception ee)
-             {
-                 MessageBox.Show(ee.ToString());
-             }
             inserted = true;
 
             winNotification noti = new winNotification("New Item", name_box.Text.ToString() , "foi inserido com sucesso");

@@ -67,35 +67,9 @@ namespace Callen.Windows.Forms
                 MessageBox.Show("Necessita de ambos os atributos");
                 return;
             }
+
+            DBConnect.createFolder(folder_box.Text.ToString(), theme_box.Text.ToString());
      
-            try
-            {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "EXEC G_CALLEN.CREATE_FOLDER @Code, @Theme";
-
-                SqlCommand cmd = new SqlCommand(Get_Data,thisConnection);
-
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@Code";
-                param.Value = folder_box.Text.ToString();
-                cmd.Parameters.Add(param);
-
-                SqlParameter param2 = new SqlParameter();
-                param2.ParameterName = "@Theme";
-                param2.Value = theme_box.Text.ToString();
-                cmd.Parameters.Add(param2);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
             this.Close();
         }
     }

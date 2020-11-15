@@ -75,84 +75,20 @@ namespace Callen.Pages
         {
             // if all textbox are empty, just fill the data grid again (This way it uses the procedure used to fill the data grid with everything instead of the searcg one)
             if (String.IsNullOrEmpty(id_box.Text) && String.IsNullOrEmpty(name_box.Text) && String.IsNullOrEmpty(desc_box.Text) && String.IsNullOrEmpty(year_box.Text)
-                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text) 
+                 && String.IsNullOrEmpty(note_box.Text) && String.IsNullOrEmpty(theme_box.Text) && String.IsNullOrEmpty(folder_box.Text)
                  && String.IsNullOrEmpty(other_box.Text) && String.IsNullOrEmpty(collec_box.Text))
                 Switcher.Switch(this.Search_mode, new proSearch());
-            try
+
+            Instance inst = new Instance(name_box.Text, id_box.Text, "", desc_box.Text, year_box.Text, theme_box.Text, folder_box.Text, other_box.Text, "", note_box.Text, collec_box.Text);
+
+            DataTable dt = DBConnect.searchInstances(inst, btn_pic_mode.IsChecked == true);
+
+            if (dt != null)
             {
-                SqlConnection thisConnection = DBConnect.getConnection();
-                thisConnection.Open();
-
-                string Get_Data = "";
-                if (btn_pic_mode.IsChecked == false) { 
-                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PRO @InstID, @Item_Name, @Item_Year, @Other, @Collec, @Item_Desc, @Item_Folder, @Item_Theme, @Item_Note;";
-                }
-                else {
-                    Get_Data = "EXEC G_CALLEN.SEARCH_ITEMS_PIC @InstID, @Item_Name, @Item_Desc, @Item_Year, @Item_Note, @Item_Theme, @Item_Folder, @Collec;";
-                }
-
-                SqlCommand cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                SqlParameter paramID = new SqlParameter();
-                paramID.ParameterName = "@InstID";
-                paramID.Value = id_box.Text;
-                cmd.Parameters.Add(paramID);
-
-                SqlParameter paramName = new SqlParameter();
-                paramName.ParameterName = "@Item_Name";
-                paramName.Value = name_box.Text;
-                cmd.Parameters.Add(paramName);
-
-                SqlParameter paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Item_Desc";
-                paramDesc.Value = desc_box.Text;
-                cmd.Parameters.Add(paramDesc);
-
-                SqlParameter paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Item_Year";
-                paramYear.Value = year_box.Text;
-                cmd.Parameters.Add(paramYear);
-
-                SqlParameter paramNote = new SqlParameter();
-                paramNote.ParameterName = "@Item_Note";
-                paramNote.Value = note_box.Text;
-                cmd.Parameters.Add(paramNote);
-
-                SqlParameter paramTheme = new SqlParameter();
-                paramTheme.ParameterName = "@Item_Theme";
-                paramTheme.Value = theme_box.Text;
-                cmd.Parameters.Add(paramTheme);
-
-                SqlParameter paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Item_Folder";
-                paramFolder.Value = folder_box.Text;
-                cmd.Parameters.Add(paramFolder);
-
-                SqlParameter paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = collec_box.Text;
-                cmd.Parameters.Add(paramCollec);
-
-                SqlParameter paramOther = new SqlParameter();
-                paramOther.ParameterName = "@Other";
-                paramOther.Value = other_box.Text;
-                cmd.Parameters.Add(paramOther);
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("INST");
-                sda.Fill(dt);
-
                 if (btn_pic_mode.IsChecked == false)
                     Switcher.Switch(this.Search_mode, new proSearch(dt));
                 else
                     Switcher.Switch(this.Search_mode, new picSearch(dt));
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
             }
         }
 
