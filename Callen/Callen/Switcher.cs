@@ -5,7 +5,7 @@ namespace Callen
     public static class Switcher
     {
         public static MainWindow pageSwitcher;
-        
+
         public static void Switch(Grid grd, UserControl newPage) // Switches grid with UserControl
         {
             if (grd.Children.Count > 0)
@@ -18,6 +18,5 @@ namespace Callen
                 grd.Children.Add(newPage);
             }
         }
-
     }
 }

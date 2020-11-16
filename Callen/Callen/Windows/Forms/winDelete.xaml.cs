@@ -1,28 +1,28 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Callen.Windows.Forms
 {
     /// <summary>
-    /// Interaction logic for winDelete.xaml
+    ///     Interaction logic for winDelete.xaml
     /// </summary>
     public partial class winDelete : Window
     {
         // TODO check if this bool makes sense
-        bool deleted;
+        private bool deleted;
 
-        String instance_id, instance_name;
+        private readonly string instance_id;
+        private readonly string instance_name;
 
-        public winDelete(String inst_id, String inst_name)
+        public winDelete(string inst_id, string inst_name)
         {
             InitializeComponent();
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            PreviewKeyDown += HandleEsc;
 
-            Window parent = Application.Current.MainWindow;
+            var parent = Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
-                this.WindowState = WindowState.Maximized;
+                WindowState = WindowState.Maximized;
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
@@ -35,29 +35,30 @@ namespace Callen.Windows.Forms
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void btn_yes_Click(object sender, RoutedEventArgs e)
         {
             DBConnect.removeInstance(instance_id);
-           
+
             deleted = true;
 
-            winNotification noti = new winNotification("Item Deleted", instance_id + " - " + instance_name , "foi eliminado com sucesso");
+            var noti = new winNotification("Item Deleted", instance_id + " - " + instance_name,
+                "foi eliminado com sucesso");
             noti.Show();
 
-            this.Close();
+            Close();
         }
 
         public bool wasDeleted()
@@ -67,7 +68,7 @@ namespace Callen.Windows.Forms
 
         private void btn_no_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

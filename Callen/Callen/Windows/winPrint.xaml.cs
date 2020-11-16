@@ -1,51 +1,58 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Office.Interop.Excel;
-using System.Collections.Generic;
-using System.IO;
+using Application = Microsoft.Office.Interop.Excel.Application;
+using Window = System.Windows.Window;
 
 namespace Callen.Windows
 {
     /// <summary>
-    /// Interaction logic for winPrint.xaml
+    ///     Interaction logic for winPrint.xaml
     /// </summary>
-    public partial class winPrint : System.Windows.Window
+    public partial class winPrint : Window
     {
         public winPrint()
         {
             InitializeComponent();
 
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            PreviewKeyDown += HandleEsc;
 
-            System.Windows.Window parent = System.Windows.Application.Current.MainWindow;
+            var parent = System.Windows.Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
-                this.WindowState = WindowState.Maximized;
+                WindowState = WindowState.Maximized;
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
 
-            List<Instance> instances_to_print = (App.Current.Properties["PrintList"] as List<Instance>);
+            var instances_to_print = System.Windows.Application.Current.Properties["PrintList"] as List<Instance>;
 
-            for (int i = 0; i < instances_to_print.Count; i++)
-            {
-                tagItems.Items.Add(new { ID = instances_to_print[i].inst_num, Matrix = instances_to_print[i].other, Collec = instances_to_print[i].collec, Year = instances_to_print[i].year, Name = instances_to_print[i].name });
-            }
+            for (var i = 0; i < instances_to_print.Count; i++)
+                tagItems.Items.Add(new
+                {
+                    ID = instances_to_print[i].inst_num, Matrix = instances_to_print[i].other,
+                    Collec = instances_to_print[i].collec, Year = instances_to_print[i].year,
+                    Name = instances_to_print[i].name
+                });
         }
 
-        public void DisposeExcelInstance(Microsoft.Office.Interop.Excel.Application app, Workbook workBook, Worksheet workSheet)
+        public void DisposeExcelInstance(Application app, Workbook workBook, Worksheet workSheet)
         {
             app.DisplayAlerts = false;
-            workBook.Close(null, null, null);
+            workBook.Close();
             app.Workbooks.Close();
             app.Quit();
             if (workSheet != null)
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workSheet);
+                Marshal.ReleaseComObject(workSheet);
             if (workBook != null)
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workBook);
+                Marshal.ReleaseComObject(workBook);
             if (app != null)
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                Marshal.ReleaseComObject(app);
             workSheet = null;
             workBook = null;
             app = null;
@@ -55,52 +62,45 @@ namespace Callen.Windows
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         public void btn_print_Click(object sender, RoutedEventArgs e)
         {
-
-            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+            var app = new Application();
             //app.WindowState = XlWindowState.xlMaximized;
 
-            string template_tmp_path = Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
+            var template_tmp_path = Path.GetTempPath() + Guid.NewGuid() + ".xlsx";
             File.WriteAllBytes(template_tmp_path, Properties.Resources.tag_printing_template);
 
-            Workbook wb = app.Workbooks.Open(template_tmp_path);
+            var wb = app.Workbooks.Open(template_tmp_path);
             Worksheet ws = wb.Worksheets[1];
 
-            DateTime currentDate = DateTime.Now;
+            var currentDate = DateTime.Now;
 
-            List<Instance> instances_to_print = (App.Current.Properties["PrintList"] as List<Instance>);
+            var instances_to_print = System.Windows.Application.Current.Properties["PrintList"] as List<Instance>;
 
-            int nr_of_ws = instances_to_print.Count / 36;
-            if(instances_to_print.Count % 36 > 0)
-            {
-                nr_of_ws++;
-            }
+            var nr_of_ws = instances_to_print.Count / 36;
+            if (instances_to_print.Count % 36 > 0) nr_of_ws++;
 
-            for (int i = 1; i < nr_of_ws; i++)
+            for (var i = 1; i < nr_of_ws; i++)
             {
                 ws.Copy(Type.Missing, wb.Worksheets[wb.Sheets.Count]);
                 wb.Sheets[wb.Sheets.Count].Name = "Folha" + i;
             }
 
-            int k = 0;
-            for (int j = 1; j <= nr_of_ws; j++)
+            var k = 0;
+            for (var j = 1; j <= nr_of_ws; j++)
             {
                 ws = wb.Worksheets[j];
-                for (int i = 0; i < 36; i = i + 2)
+                for (var i = 0; i < 36; i = i + 2)
                 {
-                    if (k >= instances_to_print.Count)
-                    {
-                        break;
-                    }
+                    if (k >= instances_to_print.Count) break;
 
                     ws.Range["A" + (i + 1)].Value = "Nº" + instances_to_print[k].inst_num;
                     ws.Range["B" + (i + 1)].Value = instances_to_print[k].other;
@@ -109,10 +109,7 @@ namespace Callen.Windows
                     ws.Range["A" + (i + 2)].Value = instances_to_print[k].name;
                     k++;
 
-                    if (k >= instances_to_print.Count)
-                    {
-                        break;
-                    }
+                    if (k >= instances_to_print.Count) break;
 
                     ws.Range["E" + (i + 1)].Value = "Nº" + instances_to_print[k].inst_num;
                     ws.Range["F" + (i + 1)].Value = instances_to_print[k].other;
@@ -135,9 +132,8 @@ namespace Callen.Windows
             // KILL EVERYTHING
             DisposeExcelInstance(app, wb, ws);
 
-            bool tryAgain = true;
+            var tryAgain = true;
             while (tryAgain)
-            {
                 try
                 {
                     File.Delete(template_tmp_path);
@@ -145,14 +141,14 @@ namespace Callen.Windows
                 }
                 catch (Exception ex)
                 {
-                    System.Threading.Thread.Sleep(1000);
+                    Console.WriteLine(ex.Message);
+                    Thread.Sleep(1000);
                 }
-            }
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

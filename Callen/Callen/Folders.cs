@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Callen
+﻿namespace Callen
 {
     public class Folders //Used to define a folder (Code, Theme) 
     {
-        public String id { get; set; }
-        public String folder { get; set; }
-        public String theme { get; set; }
+        public string id { get; set; }
+        public string folder { get; set; }
+        public string theme { get; set; }
     }
 }

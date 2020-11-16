@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Callen.Windows;
 using Callen.Windows.Forms;
-
-using System.Data;
 
 namespace Callen.Pages
 {
     /// <summary>
-    /// Interaction logic for picSearchU.xaml
+    ///     Interaction logic for picSearchU.xaml
     /// </summary>
     public partial class picSearch : UserControl
     {
-        private DataTable dt;
-        private List<PicItem> items;
-
-        private int current_page;
+        private readonly int current_page;
+        private readonly DataTable dt;
+        private readonly List<PicItem> items;
         private double pageCnt;
 
         public picSearch()
@@ -53,16 +50,19 @@ namespace Callen.Pages
 
         private void fillList(int page)
         {
-            pageCnt = Math.Ceiling((double)dt.Rows.Count / 16);
+            pageCnt = Math.Ceiling((double) dt.Rows.Count / 16);
 
             pageCount.Text = current_page + "/" + pageCnt;
 
             items.Clear();
 
-            for (int i = 0; i < 16 && i < dt.Rows.Count; i++)
-                items.Add(new PicItem() { ID = dt.Rows[i]["Inst_Number"].ToString(),
-                                            Name = dt.Rows[i]["Item_Name"].ToString(),
-                                                ImgPath = dt.Rows[i]["Inst_PicPath"].ToString()+".jpeg"});
+            for (var i = 0; i < 16 && i < dt.Rows.Count; i++)
+                items.Add(new PicItem
+                {
+                    ID = dt.Rows[i]["Inst_Number"].ToString(),
+                    Name = dt.Rows[i]["Item_Name"].ToString(),
+                    ImgPath = dt.Rows[i]["Inst_PicPath"] + ".jpeg"
+                });
 
 
             PicGrid.ItemsSource = items;
@@ -70,28 +70,26 @@ namespace Callen.Pages
 
         private void btn_next_page(object sender, RoutedEventArgs e) // TODO goes to the next page 
         {
-
         }
 
         private void btn_prev_page(object sender, RoutedEventArgs e) // TODO goes to the prev page 
         {
-
         }
 
         private void formPage(object sender, RoutedEventArgs e) // Opens form window 
         {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winAddItem popForm = new winAddItem();
+            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            var popForm = new winAddItem();
             popForm.Owner = win;
             win.Opacity = 0.5;
             popForm.ShowDialog();
 
             win.Opacity = 1;
         }
-        
+
         private void btn_open_desc(object sender, RoutedEventArgs e) // Opens description window 
         {
-            Instance instance = DBConnect.getInstanceInfo((sender as Button).CommandParameter.ToString());
+            var instance = DBConnect.getInstanceInfo((sender as Button).CommandParameter.ToString());
 
             if (instance != null)
                 openDesc(instance);
@@ -99,8 +97,8 @@ namespace Callen.Pages
 
         private void openDesc(Instance it) // Opens the description of the item given
         {
-            MainWindow win = (MainWindow)Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            winDesc popDesc = new winDesc(it, true);
+            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            var popDesc = new winDesc(it, true);
             popDesc.Owner = win;
             win.Opacity = 0.5;
             popDesc.ShowDialog();
@@ -110,9 +108,9 @@ namespace Callen.Pages
 
         private class PicItem
         {
-            public String ID { set; get; }
-            public String Name { set; get; }
-            public String ImgPath { set; get; }
+            public string ID { set; get; }
+            public string Name { set; get; }
+            public string ImgPath { set; get; }
         }
     }
 }

@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Callen
 {
-    public class Item  // Used to define an Item in a Collection 
+    public class Item // Used to define an Item in a Collection 
     {
-        public String Name { get; set; }
-        public String ID { get; set; }
-
-        public String name { get; }
-        public String id { get; }
-        public String desc { get; }
-        public String year { get; }
-        public String other { get; }
-        public String collec { get; }
-
         public Item()
         {
         }
 
-        public Item(String name, String id, String desc, String year, String other)
+        public Item(string name, string id, string desc, string year, string other)
         {
             this.id = id;
             this.name = name;
@@ -27,33 +16,44 @@ namespace Callen
             this.year = year;
             this.other = other;
 
-            this.collec = "";
+            collec = "";
         }
 
-        public Item(String name, String id, String desc, String year, String other, String collec) : this(name, id, desc, year, other)
+        public Item(string name, string id, string desc, string year, string other, string collec) : this(name, id,
+            desc, year, other)
         {
             this.collec = collec;
         }
+
+        public string Name { get; set; }
+        public string ID { get; set; }
+
+        public string name { get; }
+        public string id { get; }
+        public string desc { get; }
+        public string year { get; }
+        public string other { get; }
+        public string collec { get; }
     }
 
     public class Instance : Item
     {
-        public String theme { get; }
-        public String folder { get; }
-        public String inst_num { get; }
-        public String image_path { get; }
-        public String note { get; }
-
-        public Instance(String name, String id, String inst_num, String desc, String year, String theme, String folder,
-                            String other, String img_path, String note, String collec)
-                                    : base(name, id, desc, year, other, collec)
+        public Instance(string name, string id, string inst_num, string desc, string year, string theme, string folder,
+            string other, string img_path, string note, string collec)
+            : base(name, id, desc, year, other, collec)
         {
             this.inst_num = inst_num;
             this.theme = theme;
             this.folder = folder;
-            this.image_path = img_path;
+            image_path = img_path;
             this.note = note;
         }
+
+        public string theme { get; }
+        public string folder { get; }
+        public string inst_num { get; }
+        public string image_path { get; }
+        public string note { get; }
     }
 
     public class ItemsName

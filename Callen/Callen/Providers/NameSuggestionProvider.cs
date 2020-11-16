@@ -2,13 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
 using WpfControls;
 
 namespace Callen.Providers
 {
     public class NameSuggestionProvider : ISuggestionProvider
     {
+        public NameSuggestionProvider()
+        {
+            var names = ItemsName.CreateNamesList();
+            ListOfNames = names;
+        }
+
         public IEnumerable<Item> ListOfNames { get; set; }
 
         public IEnumerable GetSuggestions(string filter)
@@ -18,12 +23,6 @@ namespace Callen.Providers
                 ListOfNames
                     .Where(nome => nome.Name.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase))
                     .ToList();
-        }
-
-        public NameSuggestionProvider()
-        {
-            var names = ItemsName.CreateNamesList();
-            ListOfNames = names;
         }
     }
 }

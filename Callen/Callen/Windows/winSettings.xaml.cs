@@ -1,29 +1,28 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Configuration;
-
 using Ookii.Dialogs.Wpf;
 
 namespace Callen.Windows
 {
     /// <summary>
-    /// Interaction logic for winSettings.xaml
+    ///     Interaction logic for winSettings.xaml
     /// </summary>
     public partial class winSettings : Window
     {
         //Create the object
-        Configuration config;
+        private readonly Configuration config;
 
         public winSettings()
         {
             InitializeComponent();
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            PreviewKeyDown += HandleEsc;
 
-            Window parent = Application.Current.MainWindow;
+            var parent = Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
-                this.WindowState = WindowState.Maximized;
+                WindowState = WindowState.Maximized;
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
@@ -39,24 +38,24 @@ namespace Callen.Windows
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void btn_change_color_Click(object sender, RoutedEventArgs e) // Changes the color Scheme 
         {
             if (btn_change_color.Content.ToString() == "Light Mode") // Set to Dark Mode
             {
-                Application.Current.Resources["mainColor"] = new SolidColorBrush(Color.FromRgb(0x36,0x39,0x3E));
+                Application.Current.Resources["mainColor"] = new SolidColorBrush(Color.FromRgb(0x36, 0x39, 0x3E));
                 btn_change_color.Content = "Dark Mode";
             }
             else // Set Light Mode
@@ -78,16 +77,17 @@ namespace Callen.Windows
             ConfigurationManager.RefreshSection("AppSettings");
 
             // Saved Notification popup
-            winNotification noti = new winNotification("Settings Saved", "As modificações nas definições foram salvas com sucesso" , "");
+            var noti = new winNotification("Settings Saved", "As modificações nas definições foram salvas com sucesso",
+                "");
             noti.Show();
 
             // Close the settings window
-            this.Close();
+            Close();
         }
 
         private void btn_img_folder_Click(object sender, RoutedEventArgs e)
         {
-            VistaFolderBrowserDialog diag = new VistaFolderBrowserDialog();
+            var diag = new VistaFolderBrowserDialog();
             diag.ShowDialog();
             img_folder.Text = diag.SelectedPath;
         }

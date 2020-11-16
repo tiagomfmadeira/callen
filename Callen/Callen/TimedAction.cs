@@ -7,17 +7,17 @@ namespace Callen
     {
         public static void ExecuteWithDelay(Action action, TimeSpan delay)
         {
-            DispatcherTimer timer = new DispatcherTimer();
+            var timer = new DispatcherTimer();
             timer.Interval = delay;
             timer.Tag = action;
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += timer_Tick;
             timer.Start();
         }
 
-        static void timer_Tick(object sender, EventArgs e)
+        private static void timer_Tick(object sender, EventArgs e)
         {
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            Action action = (Action)timer.Tag;
+            var timer = (DispatcherTimer) sender;
+            var action = (Action) timer.Tag;
 
             action.Invoke();
             timer.Stop();

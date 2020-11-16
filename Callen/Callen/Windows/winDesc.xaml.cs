@@ -3,34 +3,32 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-
-using Callen.Windows.Other;
-using Callen.Windows.Forms;
-
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using Callen.Windows.Forms;
+using Callen.Windows.Other;
 
 namespace Callen.Windows
 {
     /// <summary>
-    /// Interaction logic for winDesc.xaml
+    ///     Interaction logic for winDesc.xaml
     /// </summary>
     public partial class winDesc : Window
     {
-        bool edited;
-        bool deleted;
-        bool previewImage;
-        Instance inst;
+        private bool deleted;
+        private bool edited;
+        private Instance inst;
+        private readonly bool previewImage;
 
-        public winDesc(Instance it, bool preview)  // sets the text Boxes with information from an given Item
+        public winDesc(Instance it, bool preview) // sets the text Boxes with information from an given Item
         {
             InitializeComponent();
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            PreviewKeyDown += HandleEsc;
 
-            Window parent = Application.Current.MainWindow;
+            var parent = Application.Current.MainWindow;
             if (parent.WindowState == WindowState.Maximized)
             {
-                this.WindowState = WindowState.Maximized;
+                WindowState = WindowState.Maximized;
                 closeBorder.Width = parent.Width;
                 closeBorder.Height = parent.Height;
             }
@@ -70,17 +68,17 @@ namespace Callen.Windows
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                Close();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         public bool wasEdited()
@@ -95,30 +93,30 @@ namespace Callen.Windows
 
         private void btn_img_Click(object sender, RoutedEventArgs e)
         {
-            winZoomImage popZoomImg = new winZoomImage(img.Source);
+            var popZoomImg = new winZoomImage(img.Source);
             popZoomImg.Owner = this;
             popZoomImg.ShowDialog();
         }
 
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation da_print_dis = new DoubleAnimation();
+            var da_print_dis = new DoubleAnimation();
             da_print_dis.From = 1;
             da_print_dis.To = 0;
             da_print_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
-            DoubleAnimation da_print_app = new DoubleAnimation();
+            var da_print_app = new DoubleAnimation();
             da_print_app.From = 0;
             da_print_app.To = 1;
             da_print_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             da_print_app.BeginTime = TimeSpan.FromMilliseconds(500);
 
-            DoubleAnimation da_delete_dis = new DoubleAnimation();
+            var da_delete_dis = new DoubleAnimation();
             da_delete_dis.From = 1;
             da_delete_dis.To = 0;
             da_delete_dis.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
-            DoubleAnimation da_delete_app = new DoubleAnimation();
+            var da_delete_app = new DoubleAnimation();
             da_delete_app.From = 0;
             da_delete_app.To = 1;
             da_delete_app.Duration = new Duration(TimeSpan.FromMilliseconds(500));
@@ -127,23 +125,23 @@ namespace Callen.Windows
             var storyboard = new Storyboard();
 
             Storyboard.SetTarget(da_print_dis, btn_print);
-            Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(da_print_dis, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(da_print_app, btn_print);
-            Storyboard.SetTargetProperty(da_print_app, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(da_print_app, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(da_delete_dis, btn_delete);
-            Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(da_delete_dis, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(da_delete_app, btn_delete);
-            Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(da_delete_app, new PropertyPath(OpacityProperty));
 
             storyboard.Children.Add(da_print_dis);
             storyboard.Children.Add(da_print_app);
             storyboard.Children.Add(da_delete_dis);
             storyboard.Children.Add(da_delete_app);
 
-            DoubleAnimation da_save = new DoubleAnimation();
+            var da_save = new DoubleAnimation();
 
             // Exit edit mode (Hidde stuff)
             if (item_note.IsEnabled)
@@ -161,15 +159,14 @@ namespace Callen.Windows
             }
 
             Storyboard.SetTarget(da_save, btn_save);
-            Storyboard.SetTargetProperty(da_save, new PropertyPath(Button.OpacityProperty));
+            Storyboard.SetTargetProperty(da_save, new PropertyPath(OpacityProperty));
 
             storyboard.Children.Add(da_save);
 
             storyboard.Begin();
 
             if (item_note.IsEnabled)
-            {
-                TimedAction.ExecuteWithDelay(new Action(delegate
+                TimedAction.ExecuteWithDelay(delegate
                 {
                     Canvas.SetLeft(grd_pop_print, 380);
                     Canvas.SetLeft(grd_pop_delete, 420);
@@ -179,7 +176,7 @@ namespace Callen.Windows
 
                     // Button
                     btn_save.IsEnabled = false;
-                    btn_save.Visibility = System.Windows.Visibility.Hidden;
+                    btn_save.Visibility = Visibility.Hidden;
 
                     // Boxes
                     item_name.IsEnabled = false;
@@ -193,12 +190,9 @@ namespace Callen.Windows
                     combo_theme.Visibility = Visibility.Hidden;
                     item_note.IsEnabled = false;
                     item_theme.Text = inst.theme; //Update theme text box
-
-                }), TimeSpan.FromMilliseconds(500));
-            }
+                }, TimeSpan.FromMilliseconds(500));
             else
-            {
-                TimedAction.ExecuteWithDelay(new Action(delegate
+                TimedAction.ExecuteWithDelay(delegate
                 {
                     Canvas.SetLeft(grd_pop_print, 355);
                     Canvas.SetLeft(grd_pop_delete, 395);
@@ -207,7 +201,7 @@ namespace Callen.Windows
 
                     //Buttons
                     btn_save.IsEnabled = true;
-                    btn_save.Visibility = System.Windows.Visibility.Visible;
+                    btn_save.Visibility = Visibility.Visible;
 
                     // Boxes
                     item_name.IsEnabled = true;
@@ -220,14 +214,14 @@ namespace Callen.Windows
                     btn_add_folder.Visibility = Visibility.Visible;
                     combo_theme.Visibility = Visibility.Visible;
                     item_note.IsEnabled = true;
-                }), TimeSpan.FromMilliseconds(500));
-            }
+                }, TimeSpan.FromMilliseconds(500));
         }
 
         private void updateInfo() // Needs to check if some value is changed before performing the procedure
         {
-            bool updated = false;
-            Instance updated_instance = new Instance(item_name.Text, inst.id, inst.inst_num, item_desc.Text, item_year.Text, "", (combo_theme.SelectedItem as Folders).id.ToString(), item_other.Text, "", item_note.Text, item_collec.Text);
+            var updated = false;
+            var updated_instance = new Instance(item_name.Text, inst.id, inst.inst_num, item_desc.Text, item_year.Text,
+                "", (combo_theme.SelectedItem as Folders).id, item_other.Text, "", item_note.Text, item_collec.Text);
 
             updated = DBConnect.updateItemInfo(updated_instance);
 
@@ -244,7 +238,8 @@ namespace Callen.Windows
             if (updated)
             {
                 updateLocalInfo();
-                winNotification noti = new winNotification("Update Item", inst.inst_num + " - " + item_name.Text, "foi modificado com sucesso");
+                var noti = new winNotification("Update Item", inst.inst_num + " - " + item_name.Text,
+                    "foi modificado com sucesso");
                 noti.Show();
             }
         }
@@ -258,10 +253,11 @@ namespace Callen.Windows
 
         private void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            if (!(App.Current.Properties["PrintList"] as List<Instance>).Contains(this.inst))
+            if (!(Application.Current.Properties["PrintList"] as List<Instance>).Contains(inst))
             {
-                (App.Current.Properties["PrintList"] as List<Instance>).Add(this.inst);
-                winNotification noti = new winNotification("Print List", this.inst.inst_num + " - " + this.inst.name, "foi adicionado com sucesso à lista para imprimir");
+                (Application.Current.Properties["PrintList"] as List<Instance>).Add(inst);
+                var noti = new winNotification("Print List", inst.inst_num + " - " + inst.name,
+                    "foi adicionado com sucesso à lista para imprimir");
                 noti.Show();
             }
         }
@@ -269,40 +265,38 @@ namespace Callen.Windows
         // TODO REPEATED?
         public void fillFolderCombo() // gets info about the folder and sets the respective combo box 
         {
-            List<Folders> folders = DBConnect.getFolders();
+            var folders = DBConnect.getFolders();
 
             combo_folder.ItemsSource = folders;
             combo_folder.DisplayMemberPath = "folder";
             combo_folder.SelectedValuePath = "folder";
 
             foreach (Folders folder in combo_folder.Items)
-            {
                 if (folder.folder == inst.folder)
                 {
                     combo_folder.SelectedItem = folder;
                     break;
                 }
-            }
         }
 
-        private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e) // changes theme text box when folder is selected  
+        private void
+            combo_folder_SelectionChanged(object sender,
+                SelectionChangedEventArgs e) // changes theme text box when folder is selected  
         {
             if (combo_folder.SelectedItem != null)
             {
-                List<Folders> folders_themes = DBConnect.getFoldersThemes(combo_folder.SelectedValue.ToString());
+                var folders_themes = DBConnect.getFoldersThemes(combo_folder.SelectedValue.ToString());
 
                 combo_theme.ItemsSource = folders_themes;
                 combo_theme.DisplayMemberPath = "theme";
                 combo_theme.SelectedValuePath = "id";
 
                 foreach (Folders folder in combo_theme.Items)
-                {
                     if (folder.theme == inst.theme)
                     {
                         combo_theme.SelectedItem = folder;
                         break;
                     }
-                }
             }
         }
 
@@ -313,48 +307,49 @@ namespace Callen.Windows
 
             btn_save.IsEnabled = false;
 
-            TimedAction.ExecuteWithDelay(new Action(delegate
-            { // prevent spamming of save
+            TimedAction.ExecuteWithDelay(delegate
+            {
+                // prevent spamming of save
                 btn_save.IsEnabled = true;
-            }), TimeSpan.FromMilliseconds(1500));
+            }, TimeSpan.FromMilliseconds(1500));
         }
 
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
-            winAddFolder popAddFol = new winAddFolder();
+            var popAddFol = new winAddFolder();
             popAddFol.Owner = this;
-            this.Opacity = 0.85;
+            Opacity = 0.85;
             popAddFol.ShowDialog();
 
-            this.Opacity = 1; // turn opacity back to 1
+            Opacity = 1; // turn opacity back to 1
             fillFolderCombo();
         }
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            winDelete popDelete = new winDelete(inst.inst_num, inst.name);
+            var popDelete = new winDelete(inst.inst_num, inst.name);
             popDelete.Owner = this;
-            this.Opacity = 0.85;
+            Opacity = 0.85;
             popDelete.ShowDialog();
 
-            this.Opacity = 1; // turn opacity back to 1
+            Opacity = 1; // turn opacity back to 1
 
             if (popDelete.wasDeleted())
             {
                 deleted = true;
-                this.Close();
+                Close();
             }
         }
 
         private void btn_duplicate_Click(object sender, RoutedEventArgs e)
         {
-            winAddItem popDup = new winAddItem(inst);
+            var popDup = new winAddItem(inst);
             popDup.Owner = this;
-            this.Opacity = 0.85;
+            Opacity = 0.85;
             popDup.ShowDialog();
 
-            this.Opacity = 1; // turn opacity back to 1
+            Opacity = 1; // turn opacity back to 1
         }
 
         private void btn_print_MouseEnter(object sender, MouseEventArgs e) // Show print popup

@@ -1,24 +1,26 @@
 ﻿<UserControl x:Class="Callen.Pages.Search"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Callen.Pages"
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="575" d:DesignWidth="800">
     <Grid Style="{StaticResource gridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition/>
+            <RowDefinition Height="20" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Button Click="formPage" Style="{StaticResource addButton}" Margin="410,0,0,0"/>
+        <Button Click="formPage" Style="{StaticResource addButton}" Margin="410,0,0,0" />
 
-        <Grid Width="380" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}" >
-            <TextBlock  Width="380" Margin="5,2" Text="Procura" Foreground="{StaticResource brushWatermarkForeground}"
+        <Grid Width="380" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+              Background="{StaticResource brushWatermarkBackground}" Style="{StaticResource EntryFieldStyle}">
+            <TextBlock Width="380" Margin="5,2" Text="Procura" Foreground="{StaticResource brushWatermarkForeground}"
                        Visibility="{Binding ElementName=searchEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox IsEnabled="False"  Width="380" Name="searchEntry" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" />
-            <ToggleButton Width="380" Name="advanceSearch" Click="advanceSearch_Click" Style="{DynamicResource dropDownButton}"/>
+            <TextBox IsEnabled="False" Width="380" Name="searchEntry" Background="Transparent"
+                     BorderBrush="{StaticResource brushWatermarkBorder}" />
+            <ToggleButton Width="380" Name="advanceSearch" Click="advanceSearch_Click"
+                          Style="{DynamicResource dropDownButton}" />
         </Grid>
 
         <ToggleButton Visibility="Hidden" Name="btn_pro_mode" Click="btn_pro_mode_Click" Width="20" Margin="410,0,0,0">
@@ -27,14 +29,17 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                <Image Name="btn_pic_mode_img" Source="../Icons/Fat/listGray.png" Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <Image Name="btn_pic_mode_img" Source="../Icons/Fat/listGray.png" Width="17"
+                                       Height="17" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter TargetName="btn_pic_mode_img" Property="Source" Value="../Icons/Fat/listLightRed.png"/>
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter TargetName="btn_pic_mode_img" Property="Source"
+                                                Value="../Icons/Fat/listLightRed.png" />
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter TargetName="btn_pic_mode_img" Property="Source" Value="../Icons/Fat/listRed.png"/>
+                                        <Setter TargetName="btn_pic_mode_img" Property="Source"
+                                                Value="../Icons/Fat/listRed.png" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -50,14 +55,17 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                <Image Name="btn_pic_mode_img" Source="../Icons/Fat/gridGray.png" Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <Image Name="btn_pic_mode_img" Source="../Icons/Fat/gridGray.png" Width="17"
+                                       Height="17" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter TargetName="btn_pic_mode_img" Property="Source" Value="../Icons/Fat/gridLightRed.png"/>
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter TargetName="btn_pic_mode_img" Property="Source"
+                                                Value="../Icons/Fat/gridLightRed.png" />
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter TargetName="btn_pic_mode_img" Property="Source" Value="../Icons/Fat/gridRed.png"/>
+                                        <Setter TargetName="btn_pic_mode_img" Property="Source"
+                                                Value="../Icons/Fat/gridRed.png" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -67,74 +75,84 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Border_PreviewKeyDown"
-                Background="{StaticResource brushWatermarkBackground}" BorderBrush="{StaticResource brushWatermarkBorder}" 
+        <Border Grid.RowSpan="2" Width="380" HorizontalAlignment="Center" VerticalAlignment="Top"
+                PreviewKeyDown="Border_PreviewKeyDown"
+                Background="{StaticResource brushWatermarkBackground}"
+                BorderBrush="{StaticResource brushWatermarkBorder}"
                 Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"
                 Style="{StaticResource advanceSearchBorder}">
             <Grid Style="{StaticResource advanceSearchForm}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <!-- Não me lembrei que existiam StackPanels... -->
-                <TextBlock Text="Nome" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="name_box" Grid.Row="1" Grid.ColumnSpan="5" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Text="Nome" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="name_box" Grid.Row="1" Grid.ColumnSpan="5" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Column="5" Text="ID"  Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="id_box" Grid.Row="1" Grid.Column="5" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Column="5" Text="ID" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="id_box" Grid.Row="1" Grid.Column="5" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="2" Text="Coleção" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="collec_box" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="2" Text="Coleção" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="collec_box" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="3" Text="Pasta" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="folder_box" Grid.Row="3" Grid.Column="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="Pasta" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="folder_box" Grid.Row="3" Grid.Column="3" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="4" Text="Ano" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="year_box"  Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"  Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="2" Grid.Column="4" Text="Ano" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="year_box" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"
+                         Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="4"  Text="Matriz" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="other_box" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="4" Text="Matriz" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="other_box" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="4" Grid.Column="3" Text="Tema" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="theme_box" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="4" Grid.Column="3" Text="Tema" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="theme_box" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3"
+                         Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="6" Text="Descrição" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="desc_box" TextWrapping="Wrap" Grid.Row="7" Grid.RowSpan="3" Grid.ColumnSpan="3" MinHeight="50" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="6" Text="Descrição" Grid.ColumnSpan="2" Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="desc_box" TextWrapping="Wrap" Grid.Row="7" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                         MinHeight="50" Style="{StaticResource advanceSearchInput}" />
 
-                <TextBlock Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Text="Nota" Style="{StaticResource advanceSearchFont}"/>
-                <TextBox Name="note_box" TextWrapping="Wrap" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" MinHeight="50" Style="{StaticResource advanceSearchInput}"/>
+                <TextBlock Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Text="Nota"
+                           Style="{StaticResource advanceSearchFont}" />
+                <TextBox Name="note_box" TextWrapping="Wrap" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3"
+                         Grid.ColumnSpan="3" MinHeight="50" Style="{StaticResource advanceSearchInput}" />
 
-                <Button Name="btn_adv_search" Click="btn_adv_search_Click" Margin="0,10,0,0" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="10" Grid.RowSpan="2" Width="70" Height="30">
+                <Button Name="btn_adv_search" Click="btn_adv_search_Click" Margin="0,10,0,0" Grid.Column="4"
+                        Grid.ColumnSpan="2" Grid.Row="10" Grid.RowSpan="2" Width="70" Height="30">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
                                         <Border Background="Transparent">
-                                            <Image Width="60" Height="20" Name="img" Source="../Icons/Fat/search.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill"/>
+                                            <Image Width="60" Height="20" Name="img" Source="../Icons/Fat/search.png"
+                                                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill" />
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="img" Property="Source" Value="../Icons/Fat/searchRed.png"/>
-                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Setter TargetName="img" Property="Source"
+                                                        Value="../Icons/Fat/searchRed.png" />
+                                                <Setter Property="Cursor" Value="Hand" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
