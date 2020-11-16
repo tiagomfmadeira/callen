@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Office.Interop.Excel;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Callen.Windows
 {
@@ -33,6 +34,24 @@ namespace Callen.Windows
             }
         }
 
+        public void DisposeExcelInstance(Microsoft.Office.Interop.Excel.Application app, Workbook workBook, Worksheet workSheet)
+        {
+            app.DisplayAlerts = false;
+            workBook.Close(null, null, null);
+            app.Workbooks.Close();
+            app.Quit();
+            if (workSheet != null)
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(workSheet);
+            if (workBook != null)
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(workBook);
+            if (app != null)
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+            workSheet = null;
+            workBook = null;
+            app = null;
+            GC.Collect(); // force final cleanup!
+        }
+
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -48,10 +67,12 @@ namespace Callen.Windows
         {
 
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
-            app.Visible = true;
-            app.WindowState = XlWindowState.xlMaximized;
+            //app.WindowState = XlWindowState.xlMaximized;
 
-            Workbook wb = app.Workbooks.Open("C:\\Users\\NegativeSpade\\Desktop\\tag_printing_template.xlsx");
+            string template_tmp_path = Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
+            File.WriteAllBytes(template_tmp_path, Properties.Resources.tag_printing_template);
+
+            Workbook wb = app.Workbooks.Open(template_tmp_path);
             Worksheet ws = wb.Worksheets[1];
 
             DateTime currentDate = DateTime.Now;
@@ -101,7 +122,32 @@ namespace Callen.Windows
                     k++;
                 }
             }
-            wb.SaveAs("C:\\Users\\NegativeSpade\\Desktop\\Etiquetas_para_imprimir_"+ DateTime.Now.ToString("yyyy-M-dd_HH-mm-ss") + ".xlsx");
+            //wb.SaveAs("C:\\Users\\NegativeSpade\\Desktop\\Etiquetas_para_imprimir_"+ DateTime.Now.ToString("yyyy-M-dd_HH-mm-ss") + ".xlsx");
+
+            //app.Visible = true;
+            //ws.PrintPreview();
+            //app.Visible = false;
+
+            wb.PrintOut(
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+            // KILL EVERYTHING
+            DisposeExcelInstance(app, wb, ws);
+
+            bool tryAgain = true;
+            while (tryAgain)
+            {
+                try
+                {
+                    File.Delete(template_tmp_path);
+                    tryAgain = false;
+                }
+                catch (Exception ex)
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
