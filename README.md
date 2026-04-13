@@ -19,11 +19,6 @@ A WPF desktop application for organizing and managing a personal collection, wit
 - `dist` - generated artifacts
 - `.github/workflows` - CI/release automation
 
-## Releases
-
-Releases are built and published by GitHub Actions.
-Download the portable artifact from the GitHub Releases page (`callen.zip`).
-
 ## Local data scripts
 
 Create empty DB:
