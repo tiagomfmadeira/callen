@@ -5,7 +5,7 @@
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6)
 
 <p align="center">
-  <img src="src/Callen/Icons/logo.svg" alt="Callen" width="120"><br>
+  <img src="src/Callen/Icons/logo.svg" alt="Callen" width="150"><br>
   <b><span style="font-size: 20px;">Callen</span></b>
 </p>
 
