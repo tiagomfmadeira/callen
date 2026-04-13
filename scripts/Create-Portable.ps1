@@ -1,7 +1,7 @@
 param(
-    [string]$SourceDir = "Callen/Callen/bin/Release",
-    [string]$OutputDir = "dist/CallenPortable",
-    [string]$DatabaseFile = "Data/Callen.db"
+    [string]$SourceDir = "src/Callen/bin/Release",
+    [string]$OutputDir = "dist/callen",
+    [string]$DatabaseFile = "data/Callen.db"
 )
 
 Set-StrictMode -Version Latest
@@ -36,8 +36,8 @@ Get-ChildItem -Path $outputPath -File -Recurse |
     } |
     Remove-Item -Force
 
-$dataDir = Join-Path $outputPath "Data"
-$imagesDir = Join-Path $outputPath "Images"
+$dataDir = Join-Path $outputPath "data"
+$imagesDir = Join-Path $outputPath "images"
 New-Item -ItemType Directory -Path $dataDir -Force | Out-Null
 New-Item -ItemType Directory -Path $imagesDir -Force | Out-Null
 
@@ -57,20 +57,20 @@ if (Test-Path $configPath) {
     if ($null -eq $dbSetting) {
         $dbSetting = $config.CreateElement("add")
         $dbSetting.SetAttribute("key", "database_path")
-        $dbSetting.SetAttribute("value", ".\Data\Callen.db")
+        $dbSetting.SetAttribute("value", ".\data\Callen.db")
         $config.configuration.appSettings.AppendChild($dbSetting) | Out-Null
     } else {
-        $dbSetting.value = ".\Data\Callen.db"
+        $dbSetting.value = ".\data\Callen.db"
     }
 
     $imageSetting = $config.configuration.appSettings.add | Where-Object { $_.key -eq "image_path" }
     if ($null -eq $imageSetting) {
         $imageSetting = $config.CreateElement("add")
         $imageSetting.SetAttribute("key", "image_path")
-        $imageSetting.SetAttribute("value", ".\Images")
+        $imageSetting.SetAttribute("value", ".\images")
         $config.configuration.appSettings.AppendChild($imageSetting) | Out-Null
     } else {
-        $imageSetting.value = ".\Images"
+        $imageSetting.value = ".\images"
     }
 
     $config.Save($configPath)

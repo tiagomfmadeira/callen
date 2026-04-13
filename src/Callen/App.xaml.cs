@@ -9,8 +9,8 @@ namespace Callen
     {
         private const string DatabaseName = "Callen.db";
         private static string AppBasePath => AppDomain.CurrentDomain.BaseDirectory;
-        private static string PortableDatabasePath => Path.Combine(AppBasePath, "Data", DatabaseName);
-        private static string PortableImagePath => Path.Combine(AppBasePath, "Images");
+        private static string PortableDatabasePath => Path.Combine(AppBasePath, "data", DatabaseName);
+        private static string PortableImagePath => Path.Combine(AppBasePath, "images");
 
         public static string DatabasePath
         {

@@ -33,7 +33,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         default=str(Path(__file__).with_name("Callen.db")),
-        help="Output .db file path (default: Data/Callen.db)",
+        help="Output .db file path (default: data/Callen.db)",
     )
     args = parser.parse_args()
 

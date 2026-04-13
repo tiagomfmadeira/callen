@@ -20,10 +20,10 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Restore packages
-        run: nuget restore Callen/Callen.sln -PackagesDirectory Callen/packages -NonInteractive
+        run: nuget restore Callen.sln -PackagesDirectory src/packages -NonInteractive
 
       - name: Build Release
-        run: msbuild Callen/Callen.sln /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild Callen.sln /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Create portable folder
         shell: pwsh
@@ -31,9 +31,9 @@ jobs:
 
       - name: Zip portable folder
         shell: pwsh
-        run: Compress-Archive -Path dist/CallenPortable/* -DestinationPath dist/CallenPortable.zip -Force
+        run: Compress-Archive -Path dist/callen/* -DestinationPath dist/callen.zip -Force
 
       - name: Publish GitHub release asset
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/CallenPortable.zip
+          files: dist/callen.zip
