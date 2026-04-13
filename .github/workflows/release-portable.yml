@@ -1,0 +1,39 @@
+name: Release Portable
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore packages
+        run: nuget restore Callen/Callen.sln
+
+      - name: Build Release
+        run: msbuild Callen/Callen.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Create portable folder
+        shell: pwsh
+        run: ./scripts/Create-Portable.ps1
+
+      - name: Zip portable folder
+        shell: pwsh
+        run: Compress-Archive -Path dist/CallenPortable/* -DestinationPath dist/CallenPortable.zip -Force
+
+      - name: Publish GitHub release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/CallenPortable.zip

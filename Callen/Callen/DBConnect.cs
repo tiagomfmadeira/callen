@@ -1,544 +1,320 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using SQLite;
 
 namespace Callen
 {
-    public class DBConnect // Used to create a connection with the data base
+    public class DBConnect
     {
-        public static SqlConnection getConnection()
+        private const string CalendarSelectWithArchive = @"
+            SELECT
+                Calendar.id,
+                Calendar.name,
+                Calendar.description,
+                Calendar.year,
+                Calendar.collection,
+                Calendar.matrix,
+                Calendar.pic_path,
+                Calendar.archive_id,
+                Archive.code AS code,
+                Archive.theme AS theme
+            FROM Calendar
+            LEFT JOIN Archive ON Calendar.archive_id = Archive.id
+            WHERE 1 = 1";
+
+        public static DataTable SearchCalendar(Calendar calendar)
         {
-            //Local server
-            return new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
+            var query = BuildCalendarSearchQuery(calendar, null, null, out var parameters);
 
-            //UA server
-            //return new SqlConnection("Data Source = tcp: 193.136.175.33\\SQLSERVER2012,8293;Initial Catalog = p1g10; uid = ;password = ");
-        }
-
-        // TODO change return value?
-        public static DataTable searchInstances(Instance inst, bool pic_search)
-        {
-            DataTable dt = null;
-
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "";
-                if (pic_search == false)
-                    Get_Data =
-                        "EXEC G_CALLEN.SEARCH_ITEMS_PRO @InstID, @Item_Name, @Item_Year, @Other, @Collec, @Item_Desc, @Item_Folder, @Item_Theme, @Item_Note;";
-                else
-                    Get_Data =
-                        "EXEC G_CALLEN.SEARCH_ITEMS_PIC @InstID, @Item_Name, @Item_Desc, @Item_Year, @Item_Note, @Item_Theme, @Item_Folder, @Collec;";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var paramID = new SqlParameter();
-                paramID.ParameterName = "@InstID";
-                paramID.Value = inst.id;
-                cmd.Parameters.Add(paramID);
-
-                var paramName = new SqlParameter();
-                paramName.ParameterName = "@Item_Name";
-                paramName.Value = inst.name;
-                cmd.Parameters.Add(paramName);
-
-                var paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Item_Desc";
-                paramDesc.Value = inst.desc;
-                cmd.Parameters.Add(paramDesc);
-
-                var paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Item_Year";
-                paramYear.Value = inst.year;
-                cmd.Parameters.Add(paramYear);
-
-                var paramNote = new SqlParameter();
-                paramNote.ParameterName = "@Item_Note";
-                paramNote.Value = inst.note;
-                cmd.Parameters.Add(paramNote);
-
-                var paramTheme = new SqlParameter();
-                paramTheme.ParameterName = "@Item_Theme";
-                paramTheme.Value = inst.theme;
-                cmd.Parameters.Add(paramTheme);
-
-                var paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Item_Folder";
-                paramFolder.Value = inst.folder;
-                cmd.Parameters.Add(paramFolder);
-
-                var paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = inst.collec;
-                cmd.Parameters.Add(paramCollec);
-
-                var paramOther = new SqlParameter();
-                paramOther.ParameterName = "@Other";
-                paramOther.Value = inst.other;
-                cmd.Parameters.Add(paramOther);
-
-                var sda = new SqlDataAdapter(cmd);
-                dt = new DataTable("INST");
-                sda.Fill(dt);
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return dt;
-        }
-
-        public static void createFolder(string folder_name, string theme_value)
-        {
-            try
-            {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.CREATE_FOLDER @Code, @Theme";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var param = new SqlParameter();
-                param.ParameterName = "@Code";
-                param.Value = folder_name;
-                cmd.Parameters.Add(param);
-
-                var param2 = new SqlParameter();
-                param2.ParameterName = "@Theme";
-                param2.Value = theme_value;
-                cmd.Parameters.Add(param2);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
+                var result = conn.Query<Calendar>(query, parameters.ToArray());
+                return result.ToDataTable();
             }
         }
 
-        public static void addInstance(Instance inst, ImageSource image, string image_base_path)
+        public static DataTable SearchCalendarPaged(Calendar calendar, int limit, int offset)
+        {
+            if (limit <= 0)
+                limit = 1;
+            if (offset < 0)
+                offset = 0;
+
+            var query = BuildCalendarSearchQuery(calendar, limit, offset, out var parameters);
+
+            using (var conn = new SQLiteConnection(App.databasePath))
+            {
+                var result = conn.Query<Calendar>(query, parameters.ToArray());
+                return result.ToDataTable();
+            }
+        }
+
+        public static void RemoveCalendar(int calendarId)
+        {
+            using (var conn = new SQLiteConnection(App.databasePath))
+            {
+                conn.Execute("DELETE FROM Calendar WHERE id = ?", calendarId);
+            }
+        }
+
+        public static void AddCalendar(Calendar calendar, ImageSource image, string imageBasePath)
+        {
+            using (var conn = new SQLiteConnection(App.databasePath))
+            {
+                conn.Execute(
+                    "INSERT INTO Calendar (name, description, year, matrix, collection, pic_path, archive_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    calendar.name,
+                    calendar.description,
+                    calendar.year,
+                    calendar.matrix,
+                    calendar.collection,
+                    calendar.pic_path ?? string.Empty,
+                    calendar.archive_id);
+
+                var calendarId = conn.ExecuteScalar<int>("SELECT last_insert_rowid()");
+                calendar.id = calendarId;
+
+                if (image == null || string.IsNullOrWhiteSpace(imageBasePath))
+                    return;
+
+                var bitmap = image as BitmapImage;
+                var sourcePath = bitmap != null && bitmap.UriSource != null
+                    ? bitmap.UriSource.LocalPath
+                    : null;
+
+                if (string.IsNullOrWhiteSpace(sourcePath) || !File.Exists(sourcePath))
+                    return;
+
+                Directory.CreateDirectory(imageBasePath);
+
+                var picPathWithoutExtension = Path.Combine(imageBasePath, "Calendar_" + calendarId);
+                var targetPath = picPathWithoutExtension + ".jpeg";
+
+                File.Copy(sourcePath, targetPath, true);
+                conn.Execute("UPDATE Calendar SET pic_path = ? WHERE id = ?", picPathWithoutExtension, calendarId);
+                calendar.pic_path = picPathWithoutExtension;
+            }
+        }
+
+        public static void CreateFolder(string folderName, string theme)
         {
             try
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "";
-
-                Get_Data = "EXEC G_CALLEN.ADD_INST @Name, @Desc, @Year, @Collec, @Folder, @Other, @Note, @Img_Path";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var paramName = new SqlParameter();
-                paramName.ParameterName = "@Name";
-                paramName.Value = inst.name;
-                cmd.Parameters.Add(paramName);
-
-                var paramDesc = new SqlParameter();
-                paramDesc.ParameterName = "@Desc";
-                paramDesc.Value = inst.desc;
-                cmd.Parameters.Add(paramDesc);
-
-                var paramYear = new SqlParameter();
-                paramYear.ParameterName = "@Year";
-                paramYear.Value = inst.year;
-                cmd.Parameters.Add(paramYear);
-
-                var paramOther = new SqlParameter();
-                paramOther.ParameterName = "@Other";
-                paramOther.Value = inst.other;
-                cmd.Parameters.Add(paramOther);
-
-                var paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@Collec";
-                paramCollec.Value = inst.collec;
-                cmd.Parameters.Add(paramCollec);
-
-                var paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Folder";
-                paramFolder.Value = inst.folder;
-                cmd.Parameters.Add(paramFolder);
-
-                var paramNote = new SqlParameter();
-                paramNote.ParameterName = "@Note";
-                paramNote.Value = inst.note;
-                cmd.Parameters.Add(paramNote);
-
-                // Image Path
-                var paramImg = new SqlParameter();
-                paramImg.ParameterName = "@Img_Path";
-                if (image != null) // Theres an img
+                using (var conn = new SQLiteConnection(App.databasePath))
                 {
-                    var img_path = image_base_path + "\\Instance_"; // gets filled in database trigger
-                    paramImg.Value = img_path;
+                    conn.Execute("INSERT INTO Archive (code, theme) VALUES (?, ?)", folderName, theme);
                 }
-                else
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error creating folder: " + ex.Message);
+            }
+        }
+
+        public static bool DeleteArchiveEntry(int archiveId)
+        {
+            using (var conn = new SQLiteConnection(App.databasePath))
+            {
+                if (GetArchiveUsageCount(archiveId) > 0)
+                    return false;
+
+                conn.Execute("DELETE FROM Archive WHERE id = ?", archiveId);
+                return true;
+            }
+        }
+
+        public static List<Archive> GetArchiveEntriesByCode(string code)
+        {
+            using (var conn = new SQLiteConnection(App.databasePath))
+            {
+                return conn.Query<Archive>(
+                    @"SELECT
+                          Archive.id,
+                          Archive.code,
+                          Archive.theme,
+                          COUNT(Calendar.id) AS usage_count
+                      FROM Archive
+                      LEFT JOIN Calendar ON Calendar.archive_id = Archive.id
+                      WHERE Archive.code = ?
+                      GROUP BY Archive.id, Archive.code, Archive.theme
+                      ORDER BY Archive.theme",
+                    code);
+            }
+        }
+
+        public static bool UpdateCalendarInfo(Calendar calendar)
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(App.databasePath))
                 {
-                    paramImg.Value = "";
+                    conn.Execute(
+                        "UPDATE Calendar SET name = ?, description = ?, year = ?, matrix = ?, collection = ?, pic_path = ?, archive_id = ? WHERE id = ?",
+                        calendar.name,
+                        calendar.description,
+                        calendar.year,
+                        calendar.matrix,
+                        calendar.collection,
+                        calendar.pic_path,
+                        calendar.archive_id,
+                        calendar.id);
+
+                    return true;
                 }
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
-                cmd.Parameters.Add(paramImg);
-
-                var rdr = cmd.ExecuteReader();
-
-                // TODO remove this from here?
-                while (rdr.Read())
+        public static DataTable GetPicItems()
+        {
+            try
+            {
+                using (var conn = new SQLiteConnection(App.databasePath))
                 {
-                    if (image != null) // Theres an image
-                    {
-                        var filename = image.ToString().Substring(image.ToString().LastIndexOf("///") + 3);
-                        File.Copy(filename, image_base_path + "\\Instance_" + rdr["Inst_Number"] + ".jpeg");
-                    }
-
-                    break;
+                    var picItems = conn.Query<PicItem>("SELECT * FROM PicItems");
+                    return picItems.ToDataTable();
                 }
-
-                thisConnection.Close();
             }
-            catch (Exception ee)
+            catch (Exception ex)
             {
-                MessageBox.Show(ee.ToString());
+                MessageBox.Show("Error in GetPicItems: " + ex.Message);
+                return new DataTable("PicItems");
             }
         }
 
-        public static void removeInstance(string instance_id)
+        public static Archive GetArchiveById(int archiveId)
         {
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.REMOVE_INST @InstID";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = instance_id;
-                cmd.Parameters.Add(paramInst);
-
-                cmd.ExecuteNonQuery();
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
+                return conn.Find<Archive>(archiveId);
             }
         }
 
-        // TODO Join this function with the next
-        public static bool updateItemInfo(Instance updated_instance)
+        public static int GetArchiveUsageCount(int archiveId)
         {
-            var updated = false;
-
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data =
-                    "EXEC G_CALLEN.UPDATE_ITEM_INFO @ItemID, @ItemName, @ItemDescr, @ItemYear, @ItemOther, @ItemCollec, @InstID";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var paramID = new SqlParameter();
-                paramID.ParameterName = "@ItemID";
-                paramID.Value = updated_instance.id;
-                cmd.Parameters.Add(paramID);
-
-                var paramName = new SqlParameter();
-                paramName.ParameterName = "@ItemName";
-                paramName.Value = updated_instance.name;
-                cmd.Parameters.Add(paramName);
-
-                var paramDescr = new SqlParameter();
-                paramDescr.ParameterName = "@ItemDescr";
-                paramDescr.Value = updated_instance.desc;
-                cmd.Parameters.Add(paramDescr);
-
-                var paramYear = new SqlParameter();
-                paramYear.ParameterName = "@ItemYear";
-                paramYear.Value = updated_instance.year;
-                cmd.Parameters.Add(paramYear);
-
-                var paramOther = new SqlParameter();
-                paramOther.ParameterName = "@ItemOther";
-                paramOther.Value = updated_instance.other;
-                cmd.Parameters.Add(paramOther);
-
-                var paramCollec = new SqlParameter();
-                paramCollec.ParameterName = "@ItemCollec";
-                paramCollec.Value = updated_instance.collec;
-                cmd.Parameters.Add(paramCollec);
-
-                var paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = updated_instance.inst_num;
-                cmd.Parameters.Add(paramInst);
-
-                updated = (bool) cmd.ExecuteScalar();
-
-                thisConnection.Close();
+                return conn.ExecuteScalar<int>("SELECT COUNT(*) FROM Calendar WHERE archive_id = ?", archiveId);
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return updated;
         }
 
-        public static bool updateInstanceInfo(Instance updated_instance)
+        public static Calendar GetCalendarInfo(string id)
         {
-            var updated = false;
+            int calendarId;
+            if (!int.TryParse(id, out calendarId))
+                throw new ArgumentException("Invalid calendar id: " + id);
 
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.UPDATE_INST_INFO @InstID, @InstNote, @InstFolder";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var paramInst = new SqlParameter();
-                paramInst.ParameterName = "@InstID";
-                paramInst.Value = updated_instance.inst_num;
-                cmd.Parameters.Add(paramInst);
-
-                var paramNote = new SqlParameter();
-                paramNote.ParameterName = "@InstNote";
-                paramNote.Value = updated_instance.note;
-                cmd.Parameters.Add(paramNote);
-
-                var paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@InstFolder";
-                paramFolder.Value = updated_instance.folder;
-                cmd.Parameters.Add(paramFolder);
-
-                updated = (bool) cmd.ExecuteScalar();
-
-                thisConnection.Close();
+                var calendars = conn.Query<Calendar>(CalendarSelectWithArchive + " AND Calendar.id = ?", calendarId);
+                return calendars.Count > 0 ? calendars[0] : null;
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return updated;
         }
 
-        #region GETTERS
-
-        // TODO Check where this is used
-        public static List<Item> getItemsBox()
+        public static DataView GetItemsInfo()
         {
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.ITEMS_BOX";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var sda = new SqlDataAdapter(cmd);
-                var dt = new DataTable("Items");
-                sda.Fill(dt);
-
-                var items = new List<Item>();
-                foreach (DataRow row in dt.Rows)
-                    items.Add(new Item {Name = row["Item_Name"].ToString(), ID = row["Item_ID"].ToString()});
-
-                thisConnection.Close();
-
-                return items.ToList();
+                var calendars = conn.Query<Calendar>(CalendarSelectWithArchive);
+                return calendars.ToDataTable().DefaultView;
             }
-            catch (Exception ee)
-            {
-                Console.WriteLine(ee.ToString());
-            }
-
-            return new List<Item>().ToList();
         }
 
-        // Return info instead of filling the table? TODO
-        public static void getPicItems(DataTable dt)
+        public static List<Archive> GetFolders()
         {
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.ITEMS_PIC_MODE";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var sda = new SqlDataAdapter(cmd);
-                dt = new DataTable("PicItems");
-                sda.Fill(dt);
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
+                return conn.Query<Archive>("SELECT code, MIN(theme) AS theme FROM Archive GROUP BY code");
             }
         }
 
-        public static Instance getInstanceInfo(string id)
+        public static List<Archive> GetFoldersThemes(string code)
         {
-            Instance instance = null;
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.GET_INST_INFO @InstID";
-
-                var cmd = new SqlCommand(Get_Data, thisConnection);
-
-                var param = new SqlParameter();
-
-                param.ParameterName = "@InstID";
-                param.Value = id;
-                cmd.Parameters.Add(param);
-
-                var rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                    instance = new Instance(rdr["name"].ToString(), rdr["item_id"].ToString(), id,
-                        rdr["descr"].ToString(), rdr["year"].ToString(),
-                        rdr["theme"].ToString(), rdr["folder"].ToString(), rdr["other"].ToString(),
-                        rdr["img_path"].ToString(), rdr["note"].ToString(), rdr["collec"].ToString());
-
-                thisConnection.Close();
+                return conn.Query<Archive>("SELECT * FROM Archive WHERE code = ?", code);
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return instance;
         }
 
-        // TODO change return value?
-        public static DataView getItemsInfo()
+        public static void RenameArchiveTheme(int archiveId, string theme)
         {
-            DataView itemsView = null;
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.ITEMS_INFO";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var sda = new SqlDataAdapter(cmd);
-                var items = new DataTable("Items");
-                sda.Fill(items);
-
-                itemsView = items.DefaultView;
-
-                thisConnection.Close();
+                conn.Execute("UPDATE Archive SET theme = ? WHERE id = ?", theme, archiveId);
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return itemsView;
         }
 
-        public static List<Folders> getFolders()
+        public static void RenameFolder(string currentCode, string newCode)
         {
-            var folders = new List<Folders>();
-
-            try
+            using (var conn = new SQLiteConnection(App.databasePath))
             {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.FOLDERS_NAMES";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var sda = new SqlDataAdapter(cmd);
-                var dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                foreach (DataRow row in dt.Rows) folders.Add(new Folders {folder = row["Code"].ToString()});
-
-                thisConnection.Close();
+                conn.Execute("UPDATE Archive SET code = ? WHERE code = ?", newCode, currentCode);
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return folders;
         }
 
-        // TODO code?
-        public static List<Folders> getFoldersThemes(string code)
+        private static void AddLikeCondition(
+            ICollection<string> conditions,
+            ICollection<object> parameters,
+            string columnName,
+            string value)
         {
-            var folders_themes = new List<Folders>();
+            if (string.IsNullOrWhiteSpace(value))
+                return;
 
-            try
-            {
-                var thisConnection = getConnection();
-                thisConnection.Open();
-
-                var Get_Data = "EXEC G_CALLEN.FOLDERS_THEMES @Code";
-
-                var cmd = thisConnection.CreateCommand();
-                cmd.CommandText = Get_Data;
-
-                var paramFolder = new SqlParameter();
-                paramFolder.ParameterName = "@Code";
-                paramFolder.Value = code;
-                cmd.Parameters.Add(paramFolder);
-
-                var sda = new SqlDataAdapter(cmd);
-                var dt = new DataTable("Folder");
-                sda.Fill(dt);
-
-                foreach (DataRow row in dt.Rows)
-                    folders_themes.Add(new Folders
-                        {theme = row["Theme_Descr"].ToString(), id = row["Archive_ID"].ToString()});
-
-                thisConnection.Close();
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.ToString());
-            }
-
-            return folders_themes;
+            conditions.Add(columnName + " LIKE ?");
+            parameters.Add("%" + value + "%");
         }
 
-        #endregion
+        private static string BuildCalendarSearchQuery(
+            Calendar calendar,
+            int? limit,
+            int? offset,
+            out List<object> parameters)
+        {
+            var query = CalendarSelectWithArchive;
+            var conditions = new List<string>();
+            parameters = new List<object>();
+
+            if (calendar.id > 0)
+            {
+                conditions.Add("Calendar.id = ?");
+                parameters.Add(calendar.id);
+            }
+
+            AddLikeCondition(conditions, parameters, "Calendar.name", calendar.name);
+            AddLikeCondition(conditions, parameters, "Calendar.description", calendar.description);
+            AddLikeCondition(conditions, parameters, "Calendar.year", calendar.year);
+            AddLikeCondition(conditions, parameters, "Calendar.collection", calendar.collection);
+            AddLikeCondition(conditions, parameters, "Calendar.matrix", calendar.matrix);
+            AddLikeCondition(conditions, parameters, "Archive.code", calendar.code);
+            AddLikeCondition(conditions, parameters, "Archive.theme", calendar.theme);
+
+            if (conditions.Count > 0)
+                query += " AND " + string.Join(" AND ", conditions);
+
+            query += " ORDER BY Calendar.id DESC";
+
+            if (limit != null)
+            {
+                query += " LIMIT ?";
+                parameters.Add(limit.Value);
+
+                if (offset != null)
+                {
+                    query += " OFFSET ?";
+                    parameters.Add(offset.Value);
+                }
+            }
+
+            return query;
+        }
     }
 }

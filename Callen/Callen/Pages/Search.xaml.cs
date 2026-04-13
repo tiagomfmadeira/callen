@@ -1,112 +1,234 @@
-﻿using System.Linq;
+using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using Callen.Windows.Forms;
+using System.Windows.Media;
 
 namespace Callen.Pages
 {
-    /// <summary>
-    ///     Interaction logic for Search.xaml
-    /// </summary>
+    public class SearchFilters
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Year { get; set; }
+        public string Collection { get; set; }
+        public string Folder { get; set; }
+        public string Theme { get; set; }
+        public string Other { get; set; }
+    }
+
     public partial class Search : UserControl
     {
+        private const int SearchPageSize = 250;
+
+        private readonly SearchFilters currentFilters = new SearchFilters();
+        private ListSearch listSearchPage;
+        private int searchRequestVersion;
+        private int loadedOffset;
+        private bool hasMoreRows;
+        private bool isLoadingMore;
+
         public Search()
         {
             InitializeComponent();
-            btn_pro_mode.IsChecked = true;
-            Switcher.Switch(Search_mode, new proSearch());
+            EnsureListSearchPage();
+            _ = RunSearchAsync();
         }
 
-        private void btn_pic_mode_Click(object sender, RoutedEventArgs e)
+        private async void btn_adv_search_Click(object sender, RoutedEventArgs e)
         {
-            if (btn_pic_mode.IsChecked == true)
-            {
-                Switcher.Switch(Search_mode, new picSearch());
-                btn_pro_mode.IsChecked = false;
-                return;
-            }
-
-            btn_pic_mode.IsChecked = true;
+            CaptureCurrentFilters();
+            await RunSearchAsync();
+            advanceSearch.IsChecked = false;
         }
 
-        private void btn_pro_mode_Click(object sender, RoutedEventArgs e)
+        private async void btn_adv_clear_Click(object sender, RoutedEventArgs e)
         {
-            if (btn_pro_mode.IsChecked == true)
-            {
-                Switcher.Switch(Search_mode, new proSearch());
-                btn_pic_mode.IsChecked = false;
-                return;
-            }
+            name_box.Text = string.Empty;
+            id_box.Text = string.Empty;
+            collec_box.Text = string.Empty;
+            folder_box.Text = string.Empty;
+            year_box.Text = string.Empty;
+            other_box.Text = string.Empty;
+            theme_box.Text = string.Empty;
+            desc_box.Text = string.Empty;
 
-            btn_pro_mode.IsChecked = true;
+            CaptureCurrentFilters();
+            await RunSearchAsync();
         }
 
-        private void advanceSearch_Click(object sender, RoutedEventArgs e) // rotates arrow in search bar when clicked 
+        public async void ReloadData()
         {
-            /*if(advanceSearch.IsChecked == true)
-            {
-                RotateTransform rotateTransform = new RotateTransform(90,advanceSearch.Height/2,advanceSearch.Width/2);
-                advanceSearch.RenderTransform = rotateTransform;
-            }
-            else
-            {
-                RotateTransform rotateTransform = new RotateTransform(0, advanceSearch.Height/2, advanceSearch.Width/2);
-                advanceSearch.RenderTransform = rotateTransform;
-            }*/
-        }
-
-        private void btn_adv_search_Click(object sender, RoutedEventArgs e)
-        {
-            // if all textbox are empty, just fill the data grid again (This way it uses the procedure used to fill the data grid with everything instead of the searcg one)
-            if (string.IsNullOrEmpty(id_box.Text) && string.IsNullOrEmpty(name_box.Text) &&
-                string.IsNullOrEmpty(desc_box.Text) && string.IsNullOrEmpty(year_box.Text)
-                && string.IsNullOrEmpty(note_box.Text) && string.IsNullOrEmpty(theme_box.Text) &&
-                string.IsNullOrEmpty(folder_box.Text)
-                && string.IsNullOrEmpty(other_box.Text) && string.IsNullOrEmpty(collec_box.Text))
-                Switcher.Switch(Search_mode, new proSearch());
-
-            var inst = new Instance(name_box.Text, id_box.Text, "", desc_box.Text, year_box.Text, theme_box.Text,
-                folder_box.Text, other_box.Text, "", note_box.Text, collec_box.Text);
-
-            var dt = DBConnect.searchInstances(inst, btn_pic_mode.IsChecked == true);
-
-            if (dt != null)
-            {
-                if (btn_pic_mode.IsChecked == false)
-                    Switcher.Switch(Search_mode, new proSearch(dt));
-                else
-                    Switcher.Switch(Search_mode, new picSearch(dt));
-            }
-        }
-
-        private void formPage(object sender, RoutedEventArgs e) // Opens the form to add a new item 
-        {
-            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var popForm = new winAddItem();
-            popForm.Owner = win;
-            win.Opacity = 0.5;
-            popForm.ShowDialog();
-
-            if (popForm.inserted) // A item was inserted (refreshes datagrid)
-                btn_adv_search.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-
-            win.Opacity = 1;
+            CaptureCurrentFilters();
+            await RunSearchAsync();
         }
 
         private void Border_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) // If Enter key is pressed when in the search menu
-            {
-                // search
-                btn_adv_search.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            if (e.Key != Key.Enter)
+                return;
 
-                if (advanceSearch.IsChecked == true) // Close search menu
-                    advanceSearch.IsChecked = false;
-                else
-                    advanceSearch.IsChecked = true;
+            btn_adv_search.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        }
+
+        private void RootSearch_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (advanceSearch.IsChecked != true)
+                return;
+
+            var source = e.OriginalSource as DependencyObject;
+            if (source == null)
+                return;
+
+            if (IsDescendantOf(source, advanceSearch) || IsDescendantOf(source, advanceSearchPanel))
+                return;
+
+            advanceSearch.IsChecked = false;
+        }
+
+        private static bool IsDescendantOf(DependencyObject source, DependencyObject ancestor)
+        {
+            var current = source;
+            while (current != null)
+            {
+                if (current == ancestor)
+                    return true;
+
+                if (current is Visual || current is System.Windows.Media.Media3D.Visual3D)
+                {
+                    current = VisualTreeHelper.GetParent(current);
+                    continue;
+                }
+
+                if (current is FrameworkContentElement contentElement)
+                {
+                    current = contentElement.Parent;
+                    continue;
+                }
+
+                break;
             }
+
+            return false;
+        }
+
+        private Calendar BuildSearchCalendar()
+        {
+            return new Calendar
+            {
+                id = currentFilters.Id,
+                name = currentFilters.Name,
+                description = currentFilters.Description,
+                year = currentFilters.Year,
+                matrix = currentFilters.Other,
+                collection = currentFilters.Collection,
+                pic_path = string.Empty,
+                code = currentFilters.Folder,
+                theme = currentFilters.Theme
+            };
+        }
+
+        private void CaptureCurrentFilters()
+        {
+            int id;
+
+            currentFilters.Id = int.TryParse(id_box.Text, out id) ? id : 0;
+            currentFilters.Name = name_box.Text;
+            currentFilters.Description = desc_box.Text;
+            currentFilters.Year = year_box.Text;
+            currentFilters.Collection = collec_box.Text;
+            currentFilters.Folder = folder_box.Text;
+            currentFilters.Theme = theme_box.Text;
+            currentFilters.Other = other_box.Text;
+        }
+
+        private async Task RunSearchAsync()
+        {
+            var requestVersion = ++searchRequestVersion;
+            SetSearchBusy(true);
+            isLoadingMore = true;
+            loadedOffset = 0;
+            hasMoreRows = false;
+
+            try
+            {
+                var filter = BuildSearchCalendar();
+                var data = await Task.Run(() => DBConnect.SearchCalendarPaged(filter, SearchPageSize, 0));
+
+                if (requestVersion != searchRequestVersion || data == null)
+                    return;
+
+                EnsureListSearchPage();
+                listSearchPage.ApplyData(data);
+                loadedOffset = data.Rows.Count;
+                hasMoreRows = data.Rows.Count == SearchPageSize;
+            }
+            finally
+            {
+                isLoadingMore = false;
+                if (requestVersion == searchRequestVersion)
+                    SetSearchBusy(false);
+            }
+        }
+
+        private void EnsureListSearchPage()
+        {
+            if (listSearchPage != null)
+                return;
+
+            listSearchPage = new ListSearch(new DataTable());
+            listSearchPage.LoadMoreRequested += ListSearchPage_LoadMoreRequested;
+            Switcher.Switch(Search_mode, listSearchPage);
+        }
+
+        private async void ListSearchPage_LoadMoreRequested(object sender, EventArgs e)
+        {
+            if (isLoadingMore || !hasMoreRows)
+            {
+                if (listSearchPage != null)
+                    listSearchPage.CompleteLoadMoreRequest();
+                return;
+            }
+
+            isLoadingMore = true;
+            var requestVersion = searchRequestVersion;
+
+            try
+            {
+                var filter = BuildSearchCalendar();
+                var nextPage = await Task.Run(() => DBConnect.SearchCalendarPaged(filter, SearchPageSize, loadedOffset));
+
+                if (requestVersion != searchRequestVersion || nextPage == null || nextPage.Rows.Count == 0)
+                {
+                    hasMoreRows = false;
+                    if (listSearchPage != null)
+                        listSearchPage.CompleteLoadMoreRequest();
+                    return;
+                }
+
+                loadedOffset += nextPage.Rows.Count;
+                hasMoreRows = nextPage.Rows.Count == SearchPageSize;
+
+                listSearchPage.AppendData(nextPage);
+            }
+            finally
+            {
+                isLoadingMore = false;
+                if (listSearchPage != null)
+                    listSearchPage.CompleteLoadMoreRequest();
+            }
+        }
+
+        private void SetSearchBusy(bool isBusy)
+        {
+            btn_adv_search.IsEnabled = !isBusy;
+            btn_adv_clear.IsEnabled = !isBusy;
+            Cursor = isBusy ? Cursors.Wait : null;
         }
     }
 }
+

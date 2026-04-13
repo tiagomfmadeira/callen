@@ -1,29 +1,42 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using Callen.Pages;
 using Callen.Windows;
+using Callen.Windows.Forms;
 
 namespace Callen
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private const int CollectionMenuIndex = 1;
+        private const double ExpandedMenuWidth = 100;
+
+        private bool maximized;
+        private bool pendingDragFromMaximized;
+        private Point dragStartPoint;
+        private double storedHeight;
+        private double storedLeft;
+        private double storedTop;
+        private double storedWidth;
+
         public MainWindow()
         {
             InitializeComponent();
-            var e = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            PrintListStore.GetOrCreate();
+            SetMenuState(false);
 
-            Application.Current.Properties["PrintList"] = new List<Instance>();
+            // Starts in Search
+            checkedMenu(CollectionMenuIndex);
+            Switcher.Switch(Content_plane, new Search());
 
-            menu_bar_MouseLeave(new object(), e); // Menu starts closed
-
-            // Starts in Home Page
-            checkedMenu(1);
-            Switcher.Switch(Content_plane, new proSearch());
+            StoreCurrentWindowBounds();
+            maximized = true;
+            ApplyWindowBounds(
+                SystemParameters.WorkArea.Left,
+                SystemParameters.WorkArea.Top,
+                SystemParameters.WorkArea.Height,
+                SystemParameters.WorkArea.Width);
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
@@ -38,99 +51,115 @@ namespace Callen
 
         public void btn_expand_Click(object sender, RoutedEventArgs e)
         {
-            if (WindowState == WindowState.Normal)
-                WindowState = WindowState.Maximized;
-            else
-                WindowState = WindowState.Normal;
-        }
-
-        private void
-            ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e) // Double click top bar to expand
-        {
-            if (WindowState == WindowState.Normal)
-                WindowState = WindowState.Maximized;
-            else
-                WindowState = WindowState.Normal;
-        }
-
-        private void menu_min_bar_MouseDown(object sender, MouseButtonEventArgs e) // Drag window 
-        {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (maximized)
             {
-                if (WindowState == WindowState.Maximized) // If window is fullscreen when draged - set screen to normal 
-                    WindowState = WindowState.Normal;
-
-                DragMove();
+                ApplyWindowBounds(storedLeft, storedTop, storedHeight, storedWidth);
+                maximized = false;
+            }
+            else
+            {
+                StoreCurrentWindowBounds();
+                ApplyWindowBounds(
+                    SystemParameters.WorkArea.Left,
+                    SystemParameters.WorkArea.Top,
+                    SystemParameters.WorkArea.Height,
+                    SystemParameters.WorkArea.Width);
+                maximized = true;
             }
         }
 
-        private void menu_bar_MouseEnter(object sender, MouseEventArgs e) // Expands Menu when entered 
+        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var grd = new GridLength(103, GridUnitType.Pixel);
-            grid_menu_col.Width = grd;
-
-            lbl_menu2.Visibility = Visibility.Visible;
-            lbl_menu5.Visibility = Visibility.Visible;
-            lbl_menu6.Visibility = Visibility.Visible;
-            lbl_menu7.Visibility = Visibility.Visible;
+            btn_expand_Click(sender, e);
         }
 
-        private void menu_bar_MouseLeave(object sender, MouseEventArgs e) // Minimizes menu when left 
+        private void menu_min_bar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var grd = new GridLength(0, GridUnitType.Pixel);
-            grid_menu_col.Width = grd;
+            if (Mouse.LeftButton != MouseButtonState.Pressed || e.ChangedButton != MouseButton.Left)
+                return;
 
-            lbl_menu2.Visibility = Visibility.Hidden;
-            lbl_menu5.Visibility = Visibility.Hidden;
-            lbl_menu6.Visibility = Visibility.Hidden;
-            lbl_menu7.Visibility = Visibility.Hidden;
+            dragStartPoint = e.GetPosition(this);
+            pendingDragFromMaximized = maximized;
+
+            if (!maximized)
+                DragMove();
         }
 
-        public void btn_colec_Click(object sender, RoutedEventArgs e) // Switch to Collection Page 
+        private void menu_min_bar_MouseMove(object sender, MouseEventArgs e)
         {
-            checkedMenu(2);
+            if (!pendingDragFromMaximized || Mouse.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            var current = e.GetPosition(this);
+            if (Math.Abs(current.X - dragStartPoint.X) < 4 && Math.Abs(current.Y - dragStartPoint.Y) < 4)
+                return;
+
+            var screen = PointToScreen(current);
+            var widthRatio = ActualWidth <= 0 ? 0.5 : current.X / ActualWidth;
+
+            ApplyWindowBounds(
+                screen.X - (storedWidth * widthRatio),
+                SystemParameters.WorkArea.Top,
+                storedHeight,
+                storedWidth);
+
+            maximized = false;
+            pendingDragFromMaximized = false;
+            DragMove();
+        }
+
+        private void menu_min_bar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pendingDragFromMaximized = false;
+        }
+
+        private void menu_bar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            SetMenuState(true);
+        }
+
+        private void menu_bar_MouseLeave(object sender, MouseEventArgs e)
+        {
+            SetMenuState(false);
+        }
+
+        public void btn_colec_Click(object sender, RoutedEventArgs e)
+        {
+            checkedMenu(CollectionMenuIndex);
             Switcher.Switch(Content_plane, new Search());
         }
 
-        public void btn_print_Click(object sender, RoutedEventArgs e) // Opens Print List window 
+        public void btn_print_Click(object sender, RoutedEventArgs e)
         {
             btn_print.IsChecked = false;
-            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var popPrint = new winPrint();
-            popPrint.Owner = win;
-            win.Opacity = 0.5;
-            popPrint.ShowDialog();
-
-            Opacity = 1;
+            DialogHelper.ShowOwnedDialog(new PrintWindow(), DialogHelper.GetActiveMainWindow());
         }
 
-        public void btn_help_Click(object sender, RoutedEventArgs e) // Opens Help window
+        public void btn_add_item_Click(object sender, RoutedEventArgs e)
         {
-            btn_help.IsChecked = false;
-            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var popHelp = new winHelp();
-            popHelp.Owner = win;
-            win.Opacity = 0.5;
-            popHelp.ShowDialog();
+            var addItemWindow = new AddItemWindow();
+            DialogHelper.ShowOwnedDialog(addItemWindow, DialogHelper.GetActiveMainWindow());
 
-            Opacity = 1;
+            if (!addItemWindow.inserted)
+                return;
+
+            if (Content_plane.Children.Count == 0)
+                return;
+
+            var searchPage = Content_plane.Children[0] as Search;
+            if (searchPage != null)
+                searchPage.ReloadData();
         }
 
-        public void btn_settings_Click(object sender, RoutedEventArgs e) // Opens Settings window 
+        public void btn_settings_Click(object sender, RoutedEventArgs e)
         {
             btn_settings.IsChecked = false;
-            var win = (MainWindow) Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-            var popSettings = new winSettings();
-            popSettings.Owner = win;
-            win.Opacity = 0.5;
-            popSettings.ShowDialog();
-
-            Opacity = 1;
+            DialogHelper.ShowOwnedDialog(new SettingsWindow(), DialogHelper.GetActiveMainWindow());
         }
 
-        private void checkedMenu(int menuNum) // HighLights the click button in menu (only) 
+        private void checkedMenu(int menuNum)
         {
-            uncheckAll(); // remove highlight from all the buttons in menu
+            btn_colec.IsChecked = false;
             switch (menuNum)
             {
                 case 1:
@@ -139,9 +168,37 @@ namespace Callen
             }
         }
 
-        private void uncheckAll() // Removes Hightlight from buttons in menu 
+        private void ApplyWindowBounds(double left, double top, double height, double width)
         {
-            btn_colec.IsChecked = false;
+            Left = left;
+            Top = top;
+            Height = height;
+            Width = width;
+        }
+
+        private void StoreCurrentWindowBounds()
+        {
+            storedLeft = Left;
+            storedTop = Top;
+            storedHeight = Height;
+            storedWidth = Width;
+        }
+
+        private void SetMenuState(bool expanded)
+        {
+            grid_menu_col.Width = expanded
+                ? new GridLength(ExpandedMenuWidth)
+                : new GridLength(0, GridUnitType.Pixel);
+
+            var visibility = expanded ? Visibility.Visible : Visibility.Hidden;
+
+            lbl_menu2.Visibility = visibility;
+            lbl_menu_add.Visibility = visibility;
+            lbl_menu5.Visibility = visibility;
+            lbl_menu7.Visibility = visibility;
         }
     }
 }
+
+
+

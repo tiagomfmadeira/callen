@@ -1,0 +1,258 @@
+<Window x:Class="Callen.Windows.Forms.ManageArchiveWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Callen"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ManageArchiveWindow"
+        Height="600"
+        Width="800"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="{x:Null}"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="archiveActionButtonBase" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style x:Key="archiveIconButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource archiveActionButtonBase}">
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="4">
+                            <ui:TintedIcon x:Name="img"
+                                           MaskSource="{TemplateBinding Tag}"
+                                           Width="{StaticResource dialogIconSize}"
+                                           Height="{StaticResource dialogIconSize}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Tint="#FF2E3136" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="img" Property="Opacity" Value="0.28" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="archiveCloseButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource menuMinButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="4">
+                            <ui:TintedIcon x:Name="img"
+                                           MaskSource="{StaticResource Icon.CloseWindow}"
+                                           Tint="#FF2E3136"
+                                           Width="{StaticResource dialogCloseIconSize}"
+                                           Height="{StaticResource dialogCloseIconSize}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="archiveUsageLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource formLabel}">
+            <Setter Property="Background" Value="{DynamicResource lightHighLight}" />
+            <Setter Property="Foreground" Value="{DynamicResource darkestHighLight}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource highLight}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="8,0,8,0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Border Name="closeBorder"
+                Background="Black"
+                Opacity="0.1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                MouseLeftButtonDown="Border_MouseLeftButtonDown" />
+
+        <Viewbox Stretch="Uniform">
+            <Grid Width="800" Height="600">
+                <Canvas Width="385"
+                        Height="302"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Border Width="385"
+                            Height="302"
+                            Canvas.Left="0"
+                            Canvas.Top="0"
+                            Background="{DynamicResource lightestHighLight}"
+                            CornerRadius="3,3,3,3" />
+
+                    <Grid Width="385"
+                          Height="32"
+                          Canvas.Left="0"
+                          Canvas.Top="0">
+                        <Label Content="Gerir Pastas / Temas"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Style="{DynamicResource menuFont}"
+                               FontSize="13.5"
+                               Foreground="{DynamicResource highLight}" />
+                    </Grid>
+
+                    <Label Content="Pasta"
+                           Canvas.Left="20"
+                           Canvas.Top="42"
+                           Style="{DynamicResource formLabel}" />
+                    <ComboBox Name="combo_folder"
+                              Width="253"
+                              Height="26"
+                              Canvas.Left="102"
+                              Canvas.Top="42"
+                              SelectionChanged="combo_folder_SelectionChanged" />
+
+                    <Button Name="btn_add_folder"
+                            Click="btn_add_folder_Click"
+                            Tag="{StaticResource Icon.Plus}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="356"
+                            Canvas.Top="42"
+                            Style="{StaticResource archiveIconButtonStyle}" />
+
+                    <ListBox Name="list_themes"
+                             Width="335"
+                             Height="117"
+                             Canvas.Left="20"
+                             Canvas.Top="73"
+                             SelectionChanged="list_themes_SelectionChanged"
+                             DisplayMemberPath="theme" />
+
+                    <Label Name="lbl_usage"
+                           Content="Selecione um tema"
+                           Canvas.Left="20"
+                           Canvas.Top="195"
+                           Width="335"
+                           Height="26"
+                           Style="{StaticResource archiveUsageLabelStyle}" />
+
+                    <Label Content="Modificar pasta"
+                           Canvas.Left="20"
+                           Canvas.Top="226"
+                           Width="130"
+                           Style="{DynamicResource formLabel}" />
+                    <TextBox Name="folder_name_box"
+                             Width="200"
+                             Height="25"
+                             Canvas.Left="155"
+                             Canvas.Top="227"
+                             Style="{DynamicResource formTextBox}" />
+
+                    <Button Name="btn_rename_folder"
+                            Click="btn_rename_folder_Click"
+                            Tag="{StaticResource Icon.Check}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="356"
+                            Canvas.Top="226"
+                            Style="{StaticResource archiveIconButtonStyle}" />
+
+                    <Label Content="Modificar tema"
+                           Canvas.Left="20"
+                           Canvas.Top="257"
+                           Width="130"
+                           Style="{DynamicResource formLabel}" />
+                    <TextBox Name="theme_name_box"
+                             Width="200"
+                             Height="25"
+                             Canvas.Left="155"
+                             Canvas.Top="257"
+                             Style="{DynamicResource formTextBox}" />
+
+                    <Button Name="btn_rename_theme"
+                            Click="btn_rename_theme_Click"
+                            Tag="{StaticResource Icon.Check}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="356"
+                            Canvas.Top="256"
+                            Style="{StaticResource archiveIconButtonStyle}" />
+
+                    <Button Name="btn_add_theme"
+                            Click="btn_add_theme_Click"
+                            Tag="{StaticResource Icon.Plus}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="356"
+                            Canvas.Top="164"
+                            Style="{StaticResource archiveIconButtonStyle}" />
+
+                    <Button Name="btn_delete_theme"
+                            Click="btn_delete_theme_Click"
+                            Tag="{StaticResource Icon.Delete}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="356"
+                            Canvas.Top="195"
+                            Style="{StaticResource archiveIconButtonStyle}" />
+
+                    <Button Width="25"
+                            Height="25"
+                            x:Name="btn_close"
+                            Click="btn_close_Click"
+                            Style="{StaticResource archiveCloseButtonStyle}"
+                            Canvas.Left="360"
+                            Canvas.Top="0" />
+                </Canvas>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</Window>
+
+
+
+
+
+
+

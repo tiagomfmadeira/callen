@@ -1,17 +1,74 @@
-﻿<Window x:Class="Callen.MainWindow"
+<Window x:Class="Callen.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Callen"
+        xmlns:pages="clr-namespace:Callen.Pages"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Collection Manager"
         WindowStyle="None"
-        ResizeMode="NoResize"
-        Height="600" Width="800" WindowState="Maximized"
-        Background="{x:Null}" Icon="Icons/Callen.png">
+        ResizeMode="CanResize"
+        Height="600" Width="800" WindowState="Normal"
+        Background="{x:Null}" Icon="{StaticResource Icon.Logo}">
+    <Window.Resources>
+        <Style x:Key="sidebarMenuButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource menuButton}">
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <Style x:Key="sidebarActionButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="{DynamicResource foreground}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                                BorderThickness="0,0,0,0"
+                                BorderBrush="{x:Null}"
+                                Background="{x:Null}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="sidebarMenuContentStyle" TargetType="DockPanel">
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="LastChildFill" Value="True" />
+        </Style>
+
+        <Style x:Key="sidebarMenuLabelStyle" TargetType="Label" BasedOn="{StaticResource menuFont}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style x:Key="topBarActionButtonStyle" TargetType="Button" BasedOn="{StaticResource windowActionButton}" />
+
+        <Style x:Key="topBarTintIconStyle" TargetType="{x:Type ui:TintedIcon}">
+            <Setter Property="Width" Value="23" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Tint" Value="#FFFFFFFF" />
+        </Style>
+    </Window.Resources>
+
     <Grid Background="{DynamicResource mainColor}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
+            <RowDefinition Height="36" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,70 +79,60 @@
 
         <!-- Menu Min Bar -->
         <ContentControl Grid.Column="2" MouseDoubleClick="ContentControl_MouseDoubleClick">
-            <DockPanel Background="{DynamicResource mainColor}" x:Name="menu_min_bar"
-                       MouseDown="menu_min_bar_MouseDown">
+            <Grid Background="{DynamicResource mainColor}"
+                  x:Name="menu_min_bar"
+                  MouseDown="menu_min_bar_MouseDown"
+                  MouseMove="menu_min_bar_MouseMove"
+                  MouseLeftButtonUp="menu_min_bar_MouseLeftButtonUp">
+                <Grid HorizontalAlignment="Right"
+                      VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="36" />
+                        <ColumnDefinition Width="36" />
+                        <ColumnDefinition Width="36" />
+                    </Grid.ColumnDefinitions>
 
-                <DockPanel HorizontalAlignment="Right">
-                    <Button Width="25" Height="Auto" x:Name="btn_mini" Click="btn_mini_Click"
-                            Style="{DynamicResource menuMinButton}">
-                        <Image RenderOptions.BitmapScalingMode="HighQuality">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Source" Value="Icons/Fat/menu/minimizeGray.png" />
-                                    <Setter Property="Width" Value="15" />
-                                    <Setter Property="Height" Value="auto" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Source" Value="Icons/Fat/menu/minimizeWhite.png" />
-                                            <Setter Property="Width" Value="17.5" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
+                    <Button Grid.Column="0"
+                            Width="36"
+                            Height="36"
+                            x:Name="btn_mini"
+                            Click="btn_mini_Click"
+                            Style="{StaticResource topBarActionButtonStyle}">
+                        <ui:TintedIcon MaskSource="{StaticResource Icon.Minimize}"
+                                       Style="{StaticResource topBarTintIconStyle}"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
-                    <Button Width="25" x:Name="btn_expand" Click="btn_expand_Click"
-                            Style="{DynamicResource menuMinButton}">
-                        <Image RenderOptions.BitmapScalingMode="HighQuality">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Source" Value="Icons/Fat/menu/expandGray.png" />
-                                    <Setter Property="Width" Value="15" />
-                                    <Setter Property="Height" Value="auto" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Source" Value="Icons/Fat/menu/expandWhite.png" />
-                                            <Setter Property="Width" Value="17.5" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
+
+                    <Button Grid.Column="1"
+                            Width="36"
+                            Height="36"
+                            x:Name="btn_expand"
+                            Click="btn_expand_Click"
+                            Style="{StaticResource topBarActionButtonStyle}">
+                        <ui:TintedIcon MaskSource="{StaticResource Icon.Expand}"
+                                       Style="{StaticResource topBarTintIconStyle}"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
-                    <Button Width="25" x:Name="btn_close" Click="btn_close_Click"
-                            Style="{DynamicResource menuMinButton}">
-                        <Image RenderOptions.BitmapScalingMode="HighQuality">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Source" Value="Icons/Fat/menu/closeGray.png" />
-                                    <Setter Property="Width" Value="15" />
-                                    <Setter Property="Height" Value="auto" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Source" Value="Icons/Fat/menu/CloseWhite.png" />
-                                            <Setter Property="Width" Value="17.5" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
+
+                    <Button Grid.Column="2"
+                            Width="36"
+                            Height="36"
+                            x:Name="btn_close"
+                            Click="btn_close_Click"
+                            Style="{StaticResource topBarActionButtonStyle}">
+                        <ui:TintedIcon MaskSource="{StaticResource Icon.CloseWindow}"
+                                       Style="{StaticResource topBarTintIconStyle}"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
-                </DockPanel>
-            </DockPanel>
+                </Grid>
+            </Grid>
         </ContentControl>
         <!-- Content Frame -->
         <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            <Grid x:Name="Content_plane" />
+            <Grid x:Name="Content_plane">
+                <pages:Search Visibility="Collapsed"
+                              IsHitTestVisible="False" />
+            </Grid>
         </Border>
 
         <!-- Menu Bar Items -->
@@ -97,42 +144,43 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Left">
-                    <DockPanel>
-                        <Label Margin="35,0,0,0" Content="Callen" Foreground="{DynamicResource lightHighLight}" />
-                    </DockPanel>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left"
-                                  x:Name="btn_colec" Click="btn_colec_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/collectionGray.png" Width="30"
+                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_colec" Click="btn_colec_Click">
+                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
+                            <Image Source="{StaticResource Icon.Collection}" Width="30" Margin="5,0,0,0"
                                    RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Coleção" Style="{DynamicResource menuFont}" x:Name="lbl_menu2" />
+                            <Label Content="Coleção" Style="{StaticResource sidebarMenuLabelStyle}"
+                                   x:Name="lbl_menu2" />
                         </DockPanel>
                     </ToggleButton>
+                    <Button Style="{StaticResource sidebarActionButtonStyle}"
+                            x:Name="btn_add_item"
+                            Click="btn_add_item_Click">
+                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
+                            <Image Source="{StaticResource iconAddVector}"
+                                   Width="26"
+                                   Margin="8,0,0,0"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Label Content="Adicionar"
+                                   Style="{StaticResource sidebarMenuLabelStyle}"
+                                   x:Name="lbl_menu_add" />
+                        </DockPanel>
+                    </Button>
                 </StackPanel>
-
                 <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left"
-                                  x:Name="btn_print" Click="btn_print_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/printGray.png" Width="30"
+                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_print" Click="btn_print_Click">
+                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
+                            <Image Source="{StaticResource Icon.Print}" Width="30" Margin="5,0,0,0"
                                    RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Imprimir" Style="{DynamicResource menuFont}" x:Name="lbl_menu5" />
+                            <Label Content="Imprimir" Style="{StaticResource sidebarMenuLabelStyle}"
+                                   x:Name="lbl_menu5" />
                         </DockPanel>
                     </ToggleButton>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left"
-                                  x:Name="btn_help" Click="btn_help_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/helpGray.png" Width="30"
+                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_settings" Click="btn_settings_Click">
+                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
+                            <Image Source="{StaticResource Icon.Settings}" Width="30" Margin="5,0,0,0"
                                    RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Ajuda" Style="{DynamicResource menuFont}" x:Name="lbl_menu6" />
-                        </DockPanel>
-                    </ToggleButton>
-                    <ToggleButton Height="50" Style="{DynamicResource menuButton}" HorizontalAlignment="Left"
-                                  x:Name="btn_settings" Click="btn_settings_Click">
-                        <DockPanel Width="145" Margin="5,0,0,0">
-                            <Image Source="Icons/Fat/menu/settingsGray.png" Width="30"
-                                   RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Definições" Style="{DynamicResource menuFont}" x:Name="lbl_menu7" />
+                            <Label Content="Definições" Style="{StaticResource sidebarMenuLabelStyle}"
+                                   x:Name="lbl_menu7" />
                         </DockPanel>
                     </ToggleButton>
                 </StackPanel>
@@ -140,3 +188,5 @@
         </Border>
     </Grid>
 </Window>
+
+

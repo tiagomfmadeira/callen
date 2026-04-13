@@ -1,0 +1,4 @@
+Data/*.db
+Data/*.sqlite
+Data/table*.xml
+dist/
