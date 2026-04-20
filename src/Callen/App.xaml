@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             Startup="Application_Startup"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Callen;component/Resources/Strings.pt.xaml" />
                 <ResourceDictionary Source="/Callen;component/Resources/IconResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
@@ -39,7 +41,13 @@
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <sys:Double x:Key="dialogIconSize">18</sys:Double>
-        <sys:Double x:Key="dialogCloseIconSize">18</sys:Double>
+        <sys:Double x:Key="dialogCloseIconSize">16</sys:Double>
+        <Style x:Key="DialogOverlayDimmer" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Opacity" Value="0.22" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
 
         <!--#endregion-->
 
@@ -54,12 +62,26 @@
             <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
 
             <Setter Property="CanUserResizeRows" Value="False" />
+            <Setter Property="CanUserResizeColumns" Value="True" />
             <Setter Property="CanUserAddRows" Value="False" />
             <Setter Property="RowBackground" Value="#FFF4F5F6" />
             <Setter Property="AlternatingRowBackground" Value="{DynamicResource lightestHighLight}" />
             <Setter Property="AlternationCount" Value="2" />
 
             <Setter Property="ColumnHeaderHeight" Value="30" />
+        </Style>
+
+        <Style x:Key="DataGridColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Width" Value="8" />
+            <Setter Property="Cursor" Value="SizeWE" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="{TemplateBinding Background}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="DGElementBase" TargetType="TextBlock">
@@ -91,14 +113,21 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                        <Border Background="{TemplateBinding Background}">
+                        <Border x:Name="HeaderBorder" Background="{TemplateBinding Background}">
                             <Grid>
                                 <ContentPresenter VerticalAlignment="Center"
                                                   HorizontalAlignment="Center"
                                                   Margin="6,0,6,0" />
+                                <Thumb x:Name="PART_LeftHeaderGripper"
+                                       HorizontalAlignment="Left"
+                                       Style="{StaticResource DataGridColumnHeaderGripperStyle}" />
+                                <Thumb x:Name="PART_RightHeaderGripper"
+                                       HorizontalAlignment="Right"
+                                       Style="{StaticResource DataGridColumnHeaderGripperStyle}" />
                                 <StackPanel Orientation="Vertical"
                                             IsHitTestVisible="False"
                                             HorizontalAlignment="Right"
@@ -109,24 +138,29 @@
                                           Height="6"
                                           Fill="{DynamicResource lightestHighLight}"
                                           Data="M 0 6 L 10 6 L 5 0"
-                                          Opacity="0.45" />
+                                          Opacity="0.65" />
                                     <Path x:Name="SortArrowDown"
                                           Width="10"
                                           Height="6"
                                           Margin="0,2,0,0"
                                           Fill="{DynamicResource lightestHighLight}"
                                           Data="M 0 0 L 10 0 L 5 6"
-                                          Opacity="0.45" />
+                                          Opacity="0.65" />
                                 </StackPanel>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource highLight}" />
+                                <Setter TargetName="SortArrowUp" Property="Opacity" Value="0.95" />
+                                <Setter TargetName="SortArrowDown" Property="Opacity" Value="0.95" />
+                            </Trigger>
                             <Trigger Property="SortDirection" Value="Ascending">
                                 <Setter TargetName="SortArrowUp" Property="Opacity" Value="1" />
-                                <Setter TargetName="SortArrowDown" Property="Opacity" Value="0.2" />
+                                <Setter TargetName="SortArrowDown" Property="Opacity" Value="0.4" />
                             </Trigger>
                             <Trigger Property="SortDirection" Value="Descending">
-                                <Setter TargetName="SortArrowUp" Property="Opacity" Value="0.2" />
+                                <Setter TargetName="SortArrowUp" Property="Opacity" Value="0.4" />
                                 <Setter TargetName="SortArrowDown" Property="Opacity" Value="1" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -328,11 +362,7 @@
                 </Grid>
             </Border>
             <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource lightestHighLight}" />
-                </Trigger>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource lightestHighLight}" />
                     <Setter TargetName="Arrow" Property="Data" Value="M 0 4 L 8 4 L 4 0 Z" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
@@ -349,6 +379,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource highLight}" />
             <Setter Property="BorderThickness" Value="0,0,0,1" />
             <Setter Property="Padding" Value="8,2,24,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -369,7 +400,7 @@
                             <ContentPresenter x:Name="ContentSite"
                                               IsHitTestVisible="False"
                                               Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="Stretch"
+                                              HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               Content="{TemplateBinding SelectionBoxItem}"
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -378,7 +409,8 @@
                                      Margin="{TemplateBinding Padding}"
                                      Background="Transparent"
                                      Foreground="{TemplateBinding Foreground}"
-                                     HorizontalContentAlignment="Left"
+                                     HorizontalContentAlignment="Center"
+                                     TextAlignment="Center"
                                      VerticalContentAlignment="Center"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      Visibility="Hidden" />
@@ -434,13 +466,14 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource highLight}" />
             <Setter Property="Padding" Value="4,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border Name="border"
                                 Background="{TemplateBinding Background}"
                                 Padding="{TemplateBinding Padding}">
-                            <ContentPresenter />
+                            <ContentPresenter HorizontalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
@@ -517,6 +550,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ButtonBorder" Property="Background" Value="#33000000" />
+                                <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="ButtonBorder" Property="Background" Value="#59000000" />
@@ -525,6 +559,29 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <sys:Double x:Key="bottomActionRowHeight">26</sys:Double>
+        <sys:Double x:Key="bottomActionButtonWidth">92</sys:Double>
+        <sys:Double x:Key="bottomActionButtonHeight">24</sys:Double>
+        <Thickness x:Key="bottomActionButtonSpacing">0,0,10,0</Thickness>
+
+        <Style x:Key="bottomActionRow" TargetType="{x:Type Panel}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="{StaticResource bottomActionRowHeight}" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style x:Key="bottomActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="{StaticResource bottomActionButtonWidth}" />
+            <Setter Property="Height" Value="{StaticResource bottomActionButtonHeight}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Margin" Value="{StaticResource bottomActionButtonSpacing}" />
+        </Style>
+
+        <Style x:Key="bottomActionButtonLast" TargetType="{x:Type Button}" BasedOn="{StaticResource bottomActionButton}">
+            <Setter Property="Margin" Value="0" />
         </Style>
 
         <Style x:Key="windowActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
@@ -539,6 +596,36 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}" />
                                 <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="imageUploadOverlayButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#33000000" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#59000000" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -720,7 +807,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid>
-                            <Image Source="{StaticResource iconAddVector}" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Image Source="{StaticResource Icon.Plus}" RenderOptions.BitmapScalingMode="HighQuality" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -740,7 +827,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid>
-                            <Image Source="{StaticResource Icon.AddPrint}" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Image Source="{StaticResource Icon.Print}" RenderOptions.BitmapScalingMode="HighQuality" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -799,5 +886,3 @@
         </ResourceDictionary>
     </Application.Resources>
 </Application>
-
-

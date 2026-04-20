@@ -120,7 +120,7 @@ namespace Callen.Pages
         {
             if (grdColec.SelectedItems.Count == 0)
             {
-                new NotificationWindow("Etiquetas para imprimir", "0 items adicionados", "Nenhum item está selecionado").Show();
+                new NotificationWindow(Loc.T("Noti.PrintLabels"), Loc.T("Noti.ZeroAdded"), Loc.T("Noti.NoneSelected")).Show();
                 return;
             }
 
@@ -136,9 +136,9 @@ namespace Callen.Pages
             }
 
             new NotificationWindow(
-                "Etiquetas para imprimir",
-                addedItemCount + " novos items",
-                "Foram adicionados com sucesso à lista de impressão").Show();
+                Loc.T("Noti.PrintLabels"),
+                Loc.F("Noti.NewItemsCount", addedItemCount),
+                Loc.T("Noti.AddedToPrintList")).Show();
         }
 
         private int? GetSelectedId()
@@ -196,8 +196,14 @@ namespace Callen.Pages
                 ReloadData();
                 ScrollToLastRowSafe();
             };
+            descriptionWindow.OnCalendarNavigated += SelectCalendarRowById;
 
             DialogHelper.ShowOwnedDialog(descriptionWindow, DialogHelper.GetActiveMainWindow());
+        }
+
+        private void SelectCalendarRowById(int calendarId)
+        {
+            RestoreSelectionById(calendarId);
         }
 
         private List<int> GetCurrentCalendarIds()

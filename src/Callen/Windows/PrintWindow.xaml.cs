@@ -23,6 +23,7 @@ namespace Callen.Windows
         private readonly WindowOverlaySync overlaySync;
         private int currentPage = 1;
         private int totalPages = 1;
+        private int selectedCalendarId = -1;
 
         public PrintWindow()
         {
@@ -30,13 +31,13 @@ namespace Callen.Windows
             overlaySync = new WindowOverlaySync(this);
 
             PreviewKeyDown += HandleEsc;
-            Loaded += WinPrint_Loaded;
+            SourceInitialized += WinPrint_SourceInitialized;
             Closed += WinPrint_Closed;
 
             RefreshTagItems();
         }
 
-        private void WinPrint_Loaded(object sender, RoutedEventArgs e)
+        private void WinPrint_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
         }
@@ -82,7 +83,7 @@ namespace Callen.Windows
             var instances_to_print = PrintListStore.GetOrCreate();
             if (instances_to_print.Count == 0)
             {
-                new NotificationWindow("Etiquetas para imprimir", "Sem items", "Não existem calendários para imprimir").Show();
+                new NotificationWindow(Loc.T("Noti.PrintLabels"), Loc.T("Noti.NoItems"), Loc.T("Noti.NoCalendarsToPrint")).Show();
                 return;
             }
 
@@ -164,10 +165,46 @@ namespace Callen.Windows
             var printList = PrintListStore.GetOrCreate();
             var removedCount = printList.Count;
             printList.Clear();
+            selectedCalendarId = -1;
 
             RefreshTagItems();
 
-            new NotificationWindow("Etiquetas para imprimir", removedCount + " items removidos", "Foi limpa com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.PrintLabels"), Loc.F("Noti.ClearedCount", removedCount), Loc.T("Noti.ClearedSuccess")).Show();
+        }
+
+        public void btn_remove_selected_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedCalendarId <= 0)
+            {
+                new NotificationWindow(Loc.T("Noti.PrintLabels"), Loc.T("Noti.NoneSelected"), string.Empty).Show();
+                return;
+            }
+
+            var printList = PrintListStore.GetOrCreate();
+            Calendar removedItem = null;
+            foreach (var calendar in printList)
+            {
+                if (calendar != null && calendar.id == selectedCalendarId)
+                {
+                    removedItem = calendar;
+                    break;
+                }
+            }
+
+            var removedCount = printList.RemoveAll(item => item != null && item.id == selectedCalendarId);
+
+            if (removedCount <= 0)
+            {
+                selectedCalendarId = -1;
+                RefreshTagItems();
+                return;
+            }
+
+            selectedCalendarId = -1;
+            RefreshTagItems();
+
+            var removedContext = removedItem == null ? Loc.T("Noti.NoneSelected") : removedItem.id + " - " + removedItem.name;
+            new NotificationWindow(Loc.T("Noti.PrintLabels"), removedContext, Loc.T("Noti.RemovedFromPrint")).Show();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -180,6 +217,9 @@ namespace Callen.Windows
             tagItems.Items.Clear();
 
             var instances_to_print = PrintListStore.GetOrCreate();
+            if (selectedCalendarId > 0 && !instances_to_print.Exists(item => item != null && item.id == selectedCalendarId))
+                selectedCalendarId = -1;
+
             if (instances_to_print.Count == 0)
             {
                 currentPage = 1;
@@ -207,7 +247,8 @@ namespace Callen.Windows
                     Collec = instances_to_print[i].collection,
                     Year = instances_to_print[i].year,
                     Name = instances_to_print[i].name,
-                    BreakSpan = 1
+                    BreakSpan = 1,
+                    IsSelected = instances_to_print[i].id == selectedCalendarId
                 });
             }
 
@@ -220,6 +261,7 @@ namespace Callen.Windows
             pageCount.Text = totalPages <= 0 ? "0/0" : currentPage + "/" + totalPages;
             btn_prev_page.IsEnabled = currentPage > 1;
             btn_next_page.IsEnabled = currentPage < totalPages;
+            btn_remove_selected.IsEnabled = selectedCalendarId > 0;
         }
 
         public void btn_prev_page_Click(object sender, RoutedEventArgs e)
@@ -237,6 +279,17 @@ namespace Callen.Windows
                 return;
 
             currentPage++;
+            RefreshTagItems();
+        }
+
+        public void tag_item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var clickedBorder = sender as System.Windows.Controls.Border;
+            var clickedItem = clickedBorder == null ? null : clickedBorder.DataContext as PrintTagCardItem;
+            if (clickedItem == null)
+                return;
+
+            selectedCalendarId = clickedItem.ID;
             RefreshTagItems();
         }
     }

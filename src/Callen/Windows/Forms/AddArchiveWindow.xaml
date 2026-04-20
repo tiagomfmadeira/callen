@@ -48,22 +48,21 @@
     <Grid>
         <!-- UPDATED: full-window overlay (no fixed size) -->
         <Border Name="closeBorder"
-                Background="Black"
-                Opacity="0.1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
             <Grid Width="800" Height="600">
                 <Canvas Height="150"
-                        Width="220"
+                        Width="212"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center">
 
-                    <Border Height="150" Width="220"
+                    <Border Height="150" Width="212"
                             Canvas.Left="0" Canvas.Top="0"
                             Background="{DynamicResource lightestHighLight}"
+                            BorderBrush="{DynamicResource highLight}"
+                            BorderThickness="1"
                             CornerRadius="3,3,3,3" />
 
                     <Button Width="25" Height="25"
@@ -71,17 +70,17 @@
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource dialogCloseButtonStyle}"
-                            Canvas.Left="195"
-                            Canvas.Top="0" />
+                            Canvas.Left="185"
+                            Canvas.Top="2" />
 
                     <!-- Header title in centered container -->
-                    <Grid Width="220"
+                    <Grid Width="212"
                           Height="30"
                           Canvas.Left="0"
                           Canvas.Top="6"
                           Panel.ZIndex="2">
                         <Label Name="wind_name"
-                               Content="Adicionar Pasta/Tema"
+                               Content="{DynamicResource AddArchive.Title}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                HorizontalContentAlignment="Center"
@@ -91,36 +90,39 @@
                                Foreground="{DynamicResource highLight}" />
                     </Grid>
 
-                    <Label Content="Pasta"
-                           Canvas.Left="12"
+                    <Label Content="{DynamicResource AddArchive.Folder}"
+                           Canvas.Left="10"
                            Canvas.Top="46"
                            Style="{DynamicResource formLabel}"
                            Width="50" />
                     <TextBox Name="folder_box"
-                             Width="140"
-                             Canvas.Left="67"
-                             Canvas.Top="45"
+                             Width="139"
+                             Canvas.Left="63"
+                             Canvas.Top="46"
                              Height="26"
                              Style="{DynamicResource formTextBox}" />
 
-                    <Label Content="Tema"
-                           Canvas.Left="12"
+                    <Label Content="{DynamicResource AddArchive.Theme}"
+                           Canvas.Left="10"
                            Canvas.Top="77"
                            Style="{DynamicResource formLabel}"
                            Width="50" />
                     <TextBox Name="theme_box"
-                             Width="140"
-                             Canvas.Left="67"
-                             Canvas.Top="76"
+                             Width="139"
+                             Canvas.Left="63"
+                             Canvas.Top="77"
                              Height="26"
                              Style="{DynamicResource formTextBox}" />
 
-                    <Button Name="btn_add_folder"
-                            Click="btn_add_folder_Click"
-                            Content="Submeter"
-                            Canvas.Left="79"
-                            Canvas.Top="120"
-                            Width="62" />
+                    <Grid Width="212"
+                          Canvas.Left="0"
+                          Canvas.Top="114"
+                          Style="{StaticResource bottomActionRow}">
+                        <Button Name="btn_add_folder"
+                                Click="btn_add_folder_Click"
+                                Content="{DynamicResource AddArchive.Submit}"
+                                Style="{StaticResource bottomActionButtonLast}" />
+                    </Grid>
                 </Canvas>
             </Grid>
         </Viewbox>

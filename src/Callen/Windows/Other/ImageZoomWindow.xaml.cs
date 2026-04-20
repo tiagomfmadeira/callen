@@ -18,6 +18,7 @@ namespace Callen.Windows.Other
 
             PreviewKeyDown += HandleEsc;
 
+            SourceInitialized += WinZoomImage_SourceInitialized;
             Loaded += WinZoomImage_Loaded;
             Closed += WinZoomImage_Closed;
 
@@ -35,9 +36,13 @@ namespace Callen.Windows.Other
 
         // ---------- Overlay + image sizing (KISS) ----------
 
-        private void WinZoomImage_Loaded(object sender, RoutedEventArgs e)
+        private void WinZoomImage_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
+        }
+
+        private void WinZoomImage_Loaded(object sender, RoutedEventArgs e)
+        {
             if (!overlaySync.IsAttached)
                 ApplyImageSizing(ActualHeight > 0 ? ActualHeight : Height);
 

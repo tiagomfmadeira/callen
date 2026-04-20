@@ -1,70 +1,27 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <BitmapImage x:Key="Icon.Add" UriSource="/Callen;component/Icons/add.png" />
-    <BitmapImage x:Key="Icon.AddPrint" UriSource="/Callen;component/Icons/addPrint.png" />
-    <BitmapImage x:Key="Icon.BinderFile" UriSource="/Callen;component/Icons/binderFileIcon.png" />
-    <BitmapImage x:Key="Icon.Check" UriSource="/Callen;component/Icons/check.png" />
-    <BitmapImage x:Key="Icon.Close" UriSource="/Callen;component/Icons/close.png" />
-    <BitmapImage x:Key="Icon.CloseWindow" UriSource="/Callen;component/Icons/closeWindow.png" />
-    <BitmapImage x:Key="Icon.Collection" UriSource="/Callen;component/Icons/collection.png" />
-    <BitmapImage x:Key="Icon.Delete" UriSource="/Callen;component/Icons/delete.png" />
-    <BitmapImage x:Key="Icon.DropDown" UriSource="/Callen;component/Icons/dropDown.png" />
-    <BitmapImage x:Key="Icon.Duplicate" UriSource="/Callen;component/Icons/duplicate.png" />
-    <BitmapImage x:Key="Icon.Edit" UriSource="/Callen;component/Icons/edit.png" />
-    <BitmapImage x:Key="Icon.Expand" UriSource="/Callen;component/Icons/expand.png" />
-    <BitmapImage x:Key="Icon.Grid" UriSource="/Callen;component/Icons/grid.png" />
-    <BitmapImage x:Key="Icon.Home" UriSource="/Callen;component/Icons/home.png" />
-    <BitmapImage x:Key="Icon.List" UriSource="/Callen;component/Icons/list.png" />
-    <BitmapImage x:Key="Icon.Logo" UriSource="/Callen;component/Icons/logo.png" />
-    <BitmapImage x:Key="Icon.Minimize" UriSource="/Callen;component/Icons/minimize.png" />
-    <BitmapImage x:Key="Icon.NextPage" UriSource="/Callen;component/Icons/nextPage.png" />
-    <BitmapImage x:Key="Icon.NextPageDark" UriSource="/Callen;component/Icons/nextPageDark.png" />
-    <BitmapImage x:Key="Icon.OpenFolder" UriSource="/Callen;component/Icons/openFolder.png" />
-    <BitmapImage x:Key="Icon.Plus" UriSource="/Callen;component/Icons/plus.png" />
-    <BitmapImage x:Key="Icon.PreviousPage" UriSource="/Callen;component/Icons/previousPage.png" />
-    <BitmapImage x:Key="Icon.PreviousPageDark" UriSource="/Callen;component/Icons/previousPageDark.png" />
-    <BitmapImage x:Key="Icon.Print" UriSource="/Callen;component/Icons/print.png" />
-    <BitmapImage x:Key="Icon.Save" UriSource="/Callen;component/Icons/save.png" />
-    <BitmapImage x:Key="Icon.Search" UriSource="/Callen;component/Icons/search.png" />
-    <BitmapImage x:Key="Icon.Settings" UriSource="/Callen;component/Icons/settings.png" />
-    <BitmapImage x:Key="Icon.Sort" UriSource="/Callen;component/Icons/sort.png" />
-    <BitmapImage x:Key="Icon.SortDown" UriSource="/Callen;component/Icons/sortDown.png" />
-    <BitmapImage x:Key="Icon.SortUp" UriSource="/Callen;component/Icons/sortUp.png" />
-    <BitmapImage x:Key="Icon.Upload" UriSource="/Callen;component/Icons/upload.png" />
-
-    <DrawingImage x:Key="iconAddVector">
-        <DrawingImage.Drawing>
-            <DrawingGroup>
-                <GeometryDrawing>
-                    <GeometryDrawing.Pen>
-                        <Pen Brush="#FFC9CBCC"
-                             Thickness="44"
-                             StartLineCap="Round"
-                             EndLineCap="Round"
-                             LineJoin="Round" />
-                    </GeometryDrawing.Pen>
-                    <GeometryDrawing.Geometry>
-                        <RectangleGeometry Rect="22,22,468,468"
-                                           RadiusX="132"
-                                           RadiusY="132" />
-                    </GeometryDrawing.Geometry>
-                </GeometryDrawing>
-                <GeometryDrawing>
-                    <GeometryDrawing.Pen>
-                        <Pen Brush="#FFC9CBCC"
-                             Thickness="44"
-                             StartLineCap="Round"
-                             EndLineCap="Round"
-                             LineJoin="Round" />
-                    </GeometryDrawing.Pen>
-                    <GeometryDrawing.Geometry>
-                        <GeometryGroup>
-                            <LineGeometry StartPoint="108,256" EndPoint="404,256" />
-                            <LineGeometry StartPoint="256,108" EndPoint="256,404" />
-                        </GeometryGroup>
-                    </GeometryDrawing.Geometry>
-                </GeometryDrawing>
-            </DrawingGroup>
-        </DrawingImage.Drawing>
-    </DrawingImage>
+  <BitmapImage x:Key="Icon.Check" UriSource="/Callen;component/Icons/tabler/check.png" />
+  <BitmapImage x:Key="Icon.CloseWindow" UriSource="/Callen;component/Icons/tabler/x.png" />
+  <BitmapImage x:Key="Icon.Collection" UriSource="/Callen;component/Icons/collection.png" />
+  <BitmapImage x:Key="Icon.Delete" UriSource="/Callen;component/Icons/tabler/trash-x.png" />
+  <BitmapImage x:Key="Icon.DropDown" UriSource="/Callen;component/Icons/tabler/chevron-down.png" />
+  <BitmapImage x:Key="Icon.Duplicate" UriSource="/Callen;component/Icons/tabler/copy-plus.png" />
+  <BitmapImage x:Key="Icon.Edit" UriSource="/Callen;component/Icons/tabler/edit.png" />
+  <BitmapImage x:Key="Icon.Expand" UriSource="/Callen;component/Icons/tabler/maximize.png" />
+  <BitmapImage x:Key="Icon.Home" UriSource="/Callen;component/Icons/tabler/home.png" />
+  <BitmapImage x:Key="Icon.Minimize" UriSource="/Callen;component/Icons/tabler/minus.png" />
+  <BitmapImage x:Key="Icon.NextPage" UriSource="/Callen;component/Icons/tabler/chevron-right.png" />
+  <BitmapImage x:Key="Icon.NextPageDark" UriSource="/Callen;component/Icons/tabler/chevron-right.png" />
+  <BitmapImage x:Key="Icon.OpenFolder" UriSource="/Callen;component/Icons/tabler/folder.png" />
+  <BitmapImage x:Key="Icon.Plus" UriSource="/Callen;component/Icons/tabler/plus.png" />
+  <BitmapImage x:Key="Icon.PreviousPage" UriSource="/Callen;component/Icons/tabler/chevron-left.png" />
+  <BitmapImage x:Key="Icon.PreviousPageDark" UriSource="/Callen;component/Icons/tabler/chevron-left.png" />
+  <BitmapImage x:Key="Icon.Refresh" UriSource="/Callen;component/Icons/tabler/refresh.png" />
+  <BitmapImage x:Key="Icon.Save" UriSource="/Callen;component/Icons/tabler/device-floppy.png" />
+  <BitmapImage x:Key="Icon.Search" UriSource="/Callen;component/Icons/tabler/search.png" />
+  <BitmapImage x:Key="Icon.Settings" UriSource="/Callen;component/Icons/tabler/settings.png" />
+  <BitmapImage x:Key="Icon.Upload" UriSource="/Callen;component/Icons/tabler/photo-scan.png" />
+  <BitmapImage x:Key="Icon.Print" UriSource="/Callen;component/Icons/tabler/printer.png" />
+  <BitmapImage x:Key="Icon.Archive" UriSource="/Callen;component/Icons/tabler/archive.png" />
+  <BitmapImage x:Key="Icon.Logo" UriSource="/Callen;component/Icons/logo.png" />
 </ResourceDictionary>

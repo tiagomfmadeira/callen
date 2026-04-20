@@ -63,6 +63,48 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="archiveCheckIconButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource archiveActionButtonBase}">
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="4">
+                            <ui:TintedIcon x:Name="img"
+                                           MaskSource="{TemplateBinding Tag}"
+                                           Width="16"
+                                           Height="16"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Tint="#FF2E3136" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="img" Property="Opacity" Value="0.28" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="archiveCloseButtonStyle"
                TargetType="{x:Type Button}"
                BasedOn="{StaticResource menuMinButton}">
@@ -108,30 +150,29 @@
 
     <Grid>
         <Border Name="closeBorder"
-                Background="Black"
-                Opacity="0.1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
             <Grid Width="800" Height="600">
-                <Canvas Width="385"
-                        Height="302"
+                <Canvas Width="373"
+                        Height="292"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                    <Border Width="385"
-                            Height="302"
+                    <Border Width="373"
+                            Height="292"
                             Canvas.Left="0"
                             Canvas.Top="0"
                             Background="{DynamicResource lightestHighLight}"
+                            BorderBrush="{DynamicResource highLight}"
+                            BorderThickness="1"
                             CornerRadius="3,3,3,3" />
 
-                    <Grid Width="385"
+                    <Grid Width="373"
                           Height="32"
                           Canvas.Left="0"
                           Canvas.Top="0">
-                        <Label Content="Gerir Pastas / Temas"
+                        <Label Content="{DynamicResource ManageArchive.Title}"
                                HorizontalContentAlignment="Center"
                                VerticalContentAlignment="Center"
                                HorizontalAlignment="Center"
@@ -141,14 +182,14 @@
                                Foreground="{DynamicResource highLight}" />
                     </Grid>
 
-                    <Label Content="Pasta"
-                           Canvas.Left="20"
+                    <Label Content="{DynamicResource ManageArchive.Folder}"
+                           Canvas.Left="10"
                            Canvas.Top="42"
                            Style="{DynamicResource formLabel}" />
                     <ComboBox Name="combo_folder"
-                              Width="253"
+                              Width="248"
                               Height="26"
-                              Canvas.Left="102"
+                              Canvas.Left="96"
                               Canvas.Top="42"
                               SelectionChanged="combo_folder_SelectionChanged" />
 
@@ -157,36 +198,36 @@
                             Tag="{StaticResource Icon.Plus}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="356"
+                            Canvas.Left="345"
                             Canvas.Top="42"
                             Style="{StaticResource archiveIconButtonStyle}" />
 
                     <ListBox Name="list_themes"
-                             Width="335"
+                             Width="334"
                              Height="117"
-                             Canvas.Left="20"
+                             Canvas.Left="10"
                              Canvas.Top="73"
                              SelectionChanged="list_themes_SelectionChanged"
                              DisplayMemberPath="theme" />
 
                     <Label Name="lbl_usage"
-                           Content="Selecione um tema"
-                           Canvas.Left="20"
+                           Content="{DynamicResource ManageArchive.SelectTheme}"
+                           Canvas.Left="10"
                            Canvas.Top="195"
-                           Width="335"
+                           Width="334"
                            Height="26"
                            Style="{StaticResource archiveUsageLabelStyle}" />
 
-                    <Label Content="Modificar pasta"
-                           Canvas.Left="20"
+                    <Label Content="{DynamicResource ManageArchive.EditFolder}"
+                           Canvas.Left="10"
                            Canvas.Top="226"
                            Width="130"
                            Style="{DynamicResource formLabel}" />
                     <TextBox Name="folder_name_box"
-                             Width="200"
+                             Width="198"
                              Height="25"
-                             Canvas.Left="155"
-                             Canvas.Top="227"
+                             Canvas.Left="146"
+                             Canvas.Top="226"
                              Style="{DynamicResource formTextBox}" />
 
                     <Button Name="btn_rename_folder"
@@ -194,19 +235,19 @@
                             Tag="{StaticResource Icon.Check}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="356"
+                            Canvas.Left="345"
                             Canvas.Top="226"
-                            Style="{StaticResource archiveIconButtonStyle}" />
+                            Style="{StaticResource archiveCheckIconButtonStyle}" />
 
-                    <Label Content="Modificar tema"
-                           Canvas.Left="20"
+                    <Label Content="{DynamicResource ManageArchive.EditTheme}"
+                           Canvas.Left="10"
                            Canvas.Top="257"
                            Width="130"
                            Style="{DynamicResource formLabel}" />
                     <TextBox Name="theme_name_box"
-                             Width="200"
+                             Width="198"
                              Height="25"
-                             Canvas.Left="155"
+                             Canvas.Left="146"
                              Canvas.Top="257"
                              Style="{DynamicResource formTextBox}" />
 
@@ -215,16 +256,16 @@
                             Tag="{StaticResource Icon.Check}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="356"
-                            Canvas.Top="256"
-                            Style="{StaticResource archiveIconButtonStyle}" />
+                            Canvas.Left="345"
+                            Canvas.Top="257"
+                            Style="{StaticResource archiveCheckIconButtonStyle}" />
 
                     <Button Name="btn_add_theme"
                             Click="btn_add_theme_Click"
                             Tag="{StaticResource Icon.Plus}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="356"
+                            Canvas.Left="345"
                             Canvas.Top="164"
                             Style="{StaticResource archiveIconButtonStyle}" />
 
@@ -233,7 +274,7 @@
                             Tag="{StaticResource Icon.Delete}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="356"
+                            Canvas.Left="345"
                             Canvas.Top="195"
                             Style="{StaticResource archiveIconButtonStyle}" />
 
@@ -242,8 +283,8 @@
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource archiveCloseButtonStyle}"
-                            Canvas.Left="360"
-                            Canvas.Top="0" />
+                            Canvas.Left="346"
+                            Canvas.Top="2" />
                 </Canvas>
             </Grid>
         </Viewbox>

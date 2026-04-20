@@ -29,11 +29,30 @@ jobs:
         shell: pwsh
         run: ./scripts/Create-Portable.ps1
 
+      - name: Write app version file
+        shell: pwsh
+        run: |
+          Set-Content -Path "dist/callen/version.txt" -Value "${{ github.ref_name }}" -Encoding UTF8
+
       - name: Zip portable folder
         shell: pwsh
         run: Compress-Archive -Path dist/callen/* -DestinationPath dist/callen.zip -Force
 
+      - name: Build update manifest
+        shell: pwsh
+        run: |
+          $zipPath = "dist/callen.zip"
+          $hash = (Get-FileHash -Algorithm SHA256 $zipPath).Hash.ToLowerInvariant()
+          $manifest = [ordered]@{
+            version = "${{ github.ref_name }}"
+            zip = "callen.zip"
+            sha256 = $hash
+          }
+          $manifest | ConvertTo-Json | Set-Content -Path "dist/callen-update.json" -Encoding UTF8
+
       - name: Publish GitHub release asset
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/callen.zip
+          files: |
+            dist/callen.zip
+            dist/callen-update.json

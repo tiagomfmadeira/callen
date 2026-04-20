@@ -19,7 +19,10 @@
             <Setter Property="Opacity" Value="0" />
             <Setter Property="CornerRadius" Value="7,7,0,7" />
             <Setter Property="Background" Value="{DynamicResource lightHighLight}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource highLight}" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Panel.ZIndex" Value="30" />
+            <Setter Property="Padding" Value="6,2,6,2" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(componentModel:DesignerProperties.IsInDesignMode)}"
                              Value="True">
@@ -182,9 +185,7 @@
     <Grid>
         <!-- Full-window overlay -->
         <Border Name="closeBorder"
-                Background="Black"
-                Opacity="0.1"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
@@ -210,117 +211,121 @@
                         Visibility="Hidden"
                         ClipToBounds="True"
                         Style="{StaticResource simpleBorder}">
-                        <Button Name="btn_img"
-                            Click="btn_img_Click"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Height="120"
-                            Width="150"
-                            BorderBrush="{x:Null}">
-                            <!-- Aspect ratio preserved; fills the box without deformation -->
-                            <Image Name="img"
-                               Stretch="UniformToFill"
-                               RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border Name="border"
-                                                    BorderThickness="0,0,0,0"
-                                                    BorderBrush="{DynamicResource foreground}"
-                                                    Background="{x:Null}">
-                                                    <ContentPresenter HorizontalAlignment="Center"
-                                                                  VerticalAlignment="Center" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Cursor" Value="Hand" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                        <Grid>
+                            <Button Name="btn_img"
+                                Click="btn_img_Click"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="120"
+                                Width="150"
+                                BorderBrush="{x:Null}">
+                                <!-- Aspect ratio preserved; fills the box without deformation -->
+                                <Image Name="img"
+                                   Stretch="UniformToFill"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Name="border"
+                                                        BorderThickness="0,0,0,0"
+                                                        BorderBrush="{DynamicResource foreground}"
+                                                        Background="{x:Null}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
                     </Border>
+                    <Button Width="150" Height="120" Panel.ZIndex="21"
+                        x:Name="btn_upload_image"
+                        Click="btn_upload_image_Click"
+                        Canvas.Left="0" Canvas.Top="0"
+                        Style="{StaticResource imageUploadOverlayButton}"
+                        Visibility="Hidden">
+                        <ui:TintedIcon MaskSource="{StaticResource Icon.Upload}"
+                                       Width="{StaticResource dialogIconSize}"
+                                       Height="{StaticResource dialogIconSize}"
+                                       Tint="#FF2E3136" />
+                    </Button>
                     <!--#endregion-->
 
                     <!--#region Tooltip-->
                     <Border x:Name="pop_save"
                         Style="{StaticResource TooltipBubbleStyle}"
-                        Width="45"
-                        Height="22"
                         Canvas.Left="627"
                         Canvas.Top="121">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="pop_save_translate" Y="6" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="5,0,5,0"
+                        <TextBlock
                                VerticalAlignment="Center"
-                               Text="Gravar"
+                               Text="{DynamicResource Details.TooltipSave}"
                                TextWrapping="WrapWithOverflow" />
                     </Border>
 
                     <Border x:Name="pop_edit"
                         Style="{StaticResource TooltipBubbleStyle}"
-                        Width="41"
-                        Height="22"
                         Canvas.Left="631"
                         Canvas.Top="94">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="pop_edit_translate" Y="6" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="5,0,5,0"
+                        <TextBlock
                                VerticalAlignment="Center"
-                               Text="Editar"
+                               Text="{DynamicResource Details.TooltipEdit}"
                                TextWrapping="WrapWithOverflow" />
                     </Border>
 
                     <Border x:Name="pop_dup"
                         Style="{StaticResource TooltipBubbleStyle}"
-                        Width="55"
-                        Height="22"
                         Canvas.Left="617"
                         Canvas.Top="67">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="pop_dup_translate" Y="6" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="5,0,5,0"
+                        <TextBlock
                                VerticalAlignment="Center"
-                               Text="Duplicar"
+                               Text="{DynamicResource Details.TooltipDuplicate}"
                                TextWrapping="WrapWithOverflow" />
                     </Border>
 
                     <Border x:Name="pop_delete"
                         Style="{StaticResource TooltipBubbleStyle}"
-                        Width="55"
-                        Height="22"
                         Canvas.Left="617"
                         Canvas.Top="40">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="pop_delete_translate" Y="6" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="5,0,5,0"
+                        <TextBlock
                                VerticalAlignment="Center"
-                               Text="Eliminar"
+                               Text="{DynamicResource Details.TooltipDelete}"
                                TextWrapping="WrapWithOverflow" />
                     </Border>
 
                     <Border x:Name="pop_print"
                         Style="{StaticResource TooltipBubbleStyle}"
-                        Width="117"
-                        Height="35"
+                        MaxWidth="150"
                         Canvas.Left="555"
                         Canvas.Top="0">
                         <Border.RenderTransform>
                             <TranslateTransform x:Name="pop_print_translate" Y="6" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="5,0"
+                        <TextBlock
                                VerticalAlignment="Center"
-                               Text="Adicionar à lista de etiquetas a imprimir"
-                               TextWrapping="WrapWithOverflow" Height="35" />
+                               Text="{DynamicResource Details.TooltipPrint}"
+                               TextWrapping="Wrap" />
                     </Border>
                     <!--#endregion-->
 
@@ -350,6 +355,8 @@
                         <Border Height="317"
                             Width="480"
                             Background="{DynamicResource lightestHighLight}"
+                            BorderBrush="{DynamicResource highLight}"
+                            BorderThickness="1"
                             CornerRadius="3,3,3,3" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
@@ -360,7 +367,7 @@
                             MouseLeave="btn_save_MouseLeave"
                             Tag="{StaticResource Icon.Save}"
                             Style="{StaticResource ToolbarActionButton}"
-                            Canvas.Left="330" Canvas.Top="0" />
+                            Canvas.Left="318" Canvas.Top="2" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
                             x:Name="btn_edit"
@@ -369,7 +376,7 @@
                             MouseLeave="btn_edit_MouseLeave"
                             Tag="{StaticResource Icon.Edit}"
                             Style="{StaticResource ToolbarActionButton}"
-                            Canvas.Left="355" Canvas.Top="0" />
+                            Canvas.Left="345" Canvas.Top="2" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
                             x:Name="btn_duplicate"
@@ -378,7 +385,7 @@
                             MouseLeave="btn_duplicate_MouseLeave"
                             Tag="{StaticResource Icon.Duplicate}"
                             Style="{StaticResource ToolbarActionButton}"
-                            Canvas.Left="380" Canvas.Top="0" />
+                            Canvas.Left="372" Canvas.Top="2" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
                             x:Name="btn_delete"
@@ -387,28 +394,28 @@
                             MouseLeave="btn_delete_MouseLeave"
                             Tag="{StaticResource Icon.Delete}"
                             Style="{StaticResource ToolbarActionButton}"
-                            Canvas.Left="405" Canvas.Top="0" />
+                            Canvas.Left="399" Canvas.Top="2" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
                             x:Name="btn_print"
                             Click="btn_print_Click"
                             MouseEnter="btn_print_MouseEnter"
                             MouseLeave="btn_print_MouseLeave"
-                            Tag="{StaticResource Icon.AddPrint}"
+                            Tag="{StaticResource Icon.Print}"
                             Style="{StaticResource ToolbarActionButton}"
-                            Canvas.Left="430" Canvas.Top="0" />
+                            Canvas.Left="426" Canvas.Top="2" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="3"
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource DescCloseButtonStyle}"
-                            Canvas.Left="455" Canvas.Top="0" />
+                            Canvas.Left="453" Canvas.Top="2" />
 
                         <TextBox Name="item_name"
                              IsEnabled="False"
                              Width="464"
                              Canvas.Left="7"
-                             Canvas.Top="30"
+                             Canvas.Top="29"
                              Height="40"
                              FontWeight="Bold"
                              FontSize="13.5"
@@ -426,13 +433,13 @@
                              FontSize="13.8"
                              Style="{StaticResource descTextBox}" />
 
-                        <Label Content="Coleção" Canvas.Left="7" Canvas.Top="111" Style="{StaticResource DescLabel}" />
-                        <TextBox Name="item_collec" IsEnabled="False" Width="152" Canvas.Left="78" Canvas.Top="110" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Collection}" Canvas.Left="7" Canvas.Top="111" Style="{StaticResource DescLabel}" />
+                        <TextBox Name="item_collec" IsEnabled="False" Width="157" Canvas.Left="78" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
 
-                        <Label Content="Matriz" Canvas.Left="7" Canvas.Top="146" Style="{StaticResource DescLabel}" />
-                        <TextBox Name="item_other" IsEnabled="False" Width="151" Canvas.Left="78" Canvas.Top="145" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Matrix}" Canvas.Left="7" Canvas.Top="146" Style="{StaticResource DescLabel}" />
+                        <TextBox Name="item_other" IsEnabled="False" Width="157" Canvas.Left="78" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
 
-                        <Label Content="Descrição" Canvas.Left="7" Canvas.Top="181" Style="{StaticResource DescLabel}" />
+                        <Label Content="{DynamicResource Details.Description}" Canvas.Left="7" Canvas.Top="181" Style="{StaticResource DescLabel}" />
                         <TextBox Name="item_desc"
                              IsEnabled="False"
                              VerticalContentAlignment="Center"
@@ -444,25 +451,25 @@
                              AcceptsReturn="True"
                              Style="{StaticResource descTextBox}" />
 
-                        <Label Content="Pasta" Canvas.Left="248" Canvas.Top="111" Style="{StaticResource DescLabel}"/>
-                        <TextBox Name="item_folder" IsEnabled="False" Width="128" Canvas.Left="319" Canvas.Top="110" Height="26" Style="{StaticResource descTextBox}" />
-
+                        <Label Content="{DynamicResource Details.Folder}" Canvas.Left="241" Canvas.Top="111" Style="{StaticResource DescLabel}"/>
+                        <TextBox Name="item_folder" IsEnabled="False" Width="140" Canvas.Left="312" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
                         <ComboBox Name="combo_folder"
                               Visibility="Hidden"
-                              Width="128"
-                              Canvas.Left="320"
+                              Width="140"
+                              Canvas.Left="312"
                               Canvas.Top="111"
+                              Padding="0,2,22,2"
                               Height="26"
                               SelectionChanged="combo_folder_SelectionChanged" />
 
                         <Button Name="btn_manage_archive"
                             Click="btn_manage_archive_Click"
                             IsEnabled="False"
-                            Tag="{StaticResource Icon.BinderFile}"
+                            Tag="{StaticResource Icon.Archive}"
                             Width="25"
                             Height="25"
-                            Canvas.Top="111"
-                            Canvas.Left="452">
+                            Canvas.Top="112"
+                            Canvas.Left="453">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarActionButton}">
                                     <Setter Property="Template">
@@ -500,14 +507,15 @@
                             </Button.Style>
                         </Button>
 
-                        <Label Content="Tema" Canvas.Left="248" Canvas.Top="146" Style="{StaticResource DescLabel}"/>
-                        <TextBox Name="item_theme" IsEnabled="False" Width="129" Canvas.Left="319" Canvas.Top="145" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Theme}" Canvas.Left="241" Canvas.Top="146" Style="{StaticResource DescLabel}"/>
+                        <TextBox Name="item_theme" IsEnabled="False" Width="160" Canvas.Left="312" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
 
                         <ComboBox Name="combo_theme"
                               Visibility="Hidden"
-                              Width="127"
-                              Canvas.Left="321"
+                              Width="140"
+                              Canvas.Left="312"
                               Canvas.Top="146"
+                              Padding="0,2,22,2"
                               Height="26" />
                     </Canvas>
                     <!--#endregion-->

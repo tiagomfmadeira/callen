@@ -8,6 +8,19 @@
         Title="PrintWindow" Height="600" Width="800" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Window.Resources>
+        <Style x:Key="printBottomActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource bottomActionButton}">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0,0,12,0" />
+        </Style>
+
+        <Style x:Key="printBottomActionButtonLast" TargetType="{x:Type Button}" BasedOn="{StaticResource bottomActionButtonLast}">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
         <Style x:Key="printCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -48,8 +61,8 @@
                                 CornerRadius="4">
                             <ui:TintedIcon x:Name="img"
                                            MaskSource="{StaticResource Icon.PreviousPageDark}"
-                                           Width="{StaticResource dialogIconSize}"
-                                           Height="{StaticResource dialogIconSize}"
+                                           Width="22"
+                                           Height="22"
                                            Tint="#FF2E3136"
                                            RenderOptions.BitmapScalingMode="HighQuality" />
                         </Border>
@@ -81,8 +94,8 @@
                                 CornerRadius="4">
                             <ui:TintedIcon x:Name="img"
                                            MaskSource="{StaticResource Icon.NextPageDark}"
-                                           Width="{StaticResource dialogIconSize}"
-                                           Height="{StaticResource dialogIconSize}"
+                                           Width="22"
+                                           Height="22"
                                            Tint="#FF2E3136"
                                            RenderOptions.BitmapScalingMode="HighQuality" />
                         </Border>
@@ -105,8 +118,8 @@
     </Window.Resources>
 
     <Grid>
-        <Border Name="closeBorder" Background="Black" Opacity="0.16"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <Border Name="closeBorder"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
@@ -115,16 +128,19 @@
                     Margin="0">
 
                 <Border Height="540" Width="730" Canvas.Left="0" Canvas.Top="0"
-                        Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3" />
+                        Background="{DynamicResource lightestHighLight}"
+                        BorderBrush="{DynamicResource highLight}"
+                        BorderThickness="1"
+                        CornerRadius="3,3,3,3" />
 
                 <Button Width="25" Height="25" Panel.ZIndex="3" x:Name="btn_close" Click="btn_close_Click"
-                        Style="{StaticResource printCloseButtonStyle}" Canvas.Left="700" Canvas.Top="8" />
+                        Style="{StaticResource printCloseButtonStyle}" Canvas.Left="703" Canvas.Top="2" />
 
                 <Grid Width="730"
                       Height="30"
                       Canvas.Left="0"
                       Canvas.Top="8">
-                    <Label Content="Etiquetas para imprimir"
+                    <Label Content="{DynamicResource Print.Title}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            HorizontalContentAlignment="Center"
@@ -141,7 +157,7 @@
                               VerticalContentAlignment="Top"
                               Canvas.Left="10"
                               Canvas.Top="46"
-                              Height="422"
+                              Height="404"
                               Width="710"
                               Background="#C9CBCC">
                     <ItemsControl x:Name="tagItems"
@@ -155,9 +171,29 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border BorderBrush="{Binding BorderColor}" BorderThickness="1" Background="{Binding TextBoxBackground}"
+                                <Border
                                         Height="{Binding TextBoxHeight}"
-                                        Margin="{Binding TextBoxMargin}">
+                                        Margin="{Binding TextBoxMargin}"
+                                        Cursor="Hand"
+                                        MouseLeftButtonDown="tag_item_MouseLeftButtonDown">
+                                    <Border.Style>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="Opacity" Value="1" />
+                                            <Setter Property="BorderBrush" Value="{Binding BorderColor}" />
+                                            <Setter Property="BorderThickness" Value="1" />
+                                            <Setter Property="Background" Value="{Binding TextBoxBackground}" />
+                                            <Setter Property="TextElement.Foreground" Value="{DynamicResource darkHighLight}" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#FFC2C7CB" />
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource darkHighLight}" />
+                                                    <Setter Property="TextElement.Foreground" Value="#FFF0F2F3" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
@@ -209,29 +245,29 @@
 
                 <Grid Width="730"
                       Panel.ZIndex="5"
-                      Height="58"
+                      Height="78"
                       Canvas.Left="0"
-                      Canvas.Top="475">
+                      Canvas.Top="457">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="28" />
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="36" />
+                        <RowDefinition Height="42" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0"
-                          Width="170"
+                          Width="220"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
                         <Button x:Name="btn_prev_page"
                                 Click="btn_prev_page_Click"
-                                Width="25"
-                                Height="25"
+                                Width="32"
+                                Height="32"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Style="{StaticResource printPrevPageButtonStyle}" />
 
                         <TextBlock x:Name="pageCount"
-                                   Width="70"
-                                   FontSize="14"
+                                   Width="90"
+                                   FontSize="16"
                                    Foreground="{DynamicResource highLight}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -240,8 +276,8 @@
 
                         <Button x:Name="btn_next_page"
                                 Click="btn_next_page_Click"
-                                Width="25"
-                                Height="25"
+                                Width="32"
+                                Height="32"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Style="{StaticResource printNextPageButtonStyle}" />
@@ -249,20 +285,17 @@
 
                     <StackPanel Grid.Row="1"
                                 Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="0,4,0,0">
-                        <Button Content="Limpar Lista"
+                                Style="{StaticResource bottomActionRow}">
+                        <Button x:Name="btn_remove_selected"
+                                Content="{DynamicResource Print.RemoveSelected}"
+                                Click="btn_remove_selected_Click"
+                                Style="{StaticResource printBottomActionButton}" />
+                        <Button Content="{DynamicResource Print.ClearList}"
                                 Click="btn_clear_list_Click"
-                                Width="72"
-                                Height="20"
-                                FontSize="11"
-                                Margin="0,0,10,0" />
-                        <Button Content="Imprimir"
+                                Style="{StaticResource printBottomActionButton}" />
+                        <Button Content="{DynamicResource Print.Print}"
                                 Click="btn_print_Click"
-                                Width="72"
-                                Height="20"
-                                FontSize="11" />
+                                Style="{StaticResource printBottomActionButtonLast}" />
                     </StackPanel>
                 </Grid>
             </Canvas>

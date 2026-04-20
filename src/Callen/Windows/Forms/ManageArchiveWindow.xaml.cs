@@ -22,6 +22,7 @@ namespace Callen.Windows.Forms
             overlaySync = new WindowOverlaySync(this);
 
             PreviewKeyDown += HandleEsc;
+            SourceInitialized += WinManageArchive_SourceInitialized;
             Loaded += WinManageArchive_Loaded;
             Closed += WinManageArchive_Closed;
         }
@@ -33,9 +34,13 @@ namespace Callen.Windows.Forms
             initialArchiveId = archiveId;
         }
 
-        private void WinManageArchive_Loaded(object sender, RoutedEventArgs e)
+        private void WinManageArchive_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
+        }
+
+        private void WinManageArchive_Loaded(object sender, RoutedEventArgs e)
+        {
             LoadFolders();
         }
 
@@ -76,7 +81,7 @@ namespace Callen.Windows.Forms
             if (selectedArchive == null)
             {
                 SelectedArchiveId = null;
-                lbl_usage.Content = "Selecione um tema";
+                lbl_usage.Content = Loc.T("ManageArchive.SelectTheme");
                 theme_name_box.Text = string.Empty;
                 btn_delete_theme.IsEnabled = false;
                 btn_rename_theme.IsEnabled = false;
@@ -88,8 +93,8 @@ namespace Callen.Windows.Forms
             btn_delete_theme.IsEnabled = selectedArchive.usage_count == 0;
             btn_rename_theme.IsEnabled = true;
             lbl_usage.Content = selectedArchive.usage_count > 0
-                ? "Tema em uso por " + selectedArchive.usage_count + " calendários"
-                : "Tema sem calendários associados";
+                ? Loc.F("ManageArchive.ThemeInUseCount", selectedArchive.usage_count)
+                : Loc.T("ManageArchive.ThemeUnused");
         }
 
         private void btn_rename_folder_Click(object sender, RoutedEventArgs e)
@@ -104,7 +109,7 @@ namespace Callen.Windows.Forms
             DBConnect.RenameFolder(oldFolderCode, newFolderCode);
             LoadFolders(newFolderCode);
 
-            new NotificationWindow("Pasta Modificada", oldFolderCode, "Foi modificada com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.FolderUpdatedTitle"), oldFolderCode, Loc.T("Noti.UpdatedSuccess")).Show();
         }
 
         private void btn_rename_theme_Click(object sender, RoutedEventArgs e)
@@ -119,7 +124,7 @@ namespace Callen.Windows.Forms
             DBConnect.RenameArchiveTheme(selectedArchive.id, newThemeName);
             RefreshThemeList(selectedArchive.id);
 
-            new NotificationWindow("Tema Modificado", oldThemeName, "Foi modificado com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.ThemeUpdatedTitle"), oldThemeName, Loc.T("Noti.UpdatedSuccess")).Show();
         }
 
         private void btn_delete_theme_Click(object sender, RoutedEventArgs e)
@@ -131,10 +136,10 @@ namespace Callen.Windows.Forms
             if (selectedArchive.usage_count > 0)
             {
                 var usageDialog = new ActionDialogWindow(
-                    "Tema em uso",
+                    Loc.T("Dlg.ThemeInUseTitle"),
                     selectedArchive.theme,
-                    "Não é possível eliminar um tema que ainda está associado a calendários.",
-                    "Fechar")
+                    Loc.T("Dlg.ThemeInUseMessage"),
+                    Loc.T("Dlg.Close"))
                 {
                     Owner = this
                 };
@@ -144,11 +149,11 @@ namespace Callen.Windows.Forms
             }
 
             var deleteDialog = new ActionDialogWindow(
-                "Eliminar tema",
+                Loc.T("Dlg.DeleteThemeTitle"),
                 selectedArchive.theme,
-                "Tem a certeza que pretende eliminar este tema?",
-                "Eliminar",
-                "Cancelar")
+                Loc.T("Dlg.DeleteThemeMessage"),
+                Loc.T("Dlg.Delete"),
+                Loc.T("Dlg.Cancel"))
             {
                 Owner = this
             };
@@ -161,10 +166,10 @@ namespace Callen.Windows.Forms
             if (!DBConnect.DeleteArchiveEntry(selectedArchive.id))
             {
                 var errorDialog = new ActionDialogWindow(
-                    "Erro a eliminar tema",
+                    Loc.T("Dlg.DeleteThemeErrorTitle"),
                     selectedArchive.theme,
-                    "Não foi possível eliminar o tema.",
-                    "Fechar")
+                    Loc.T("Dlg.DeleteThemeErrorMessage"),
+                    Loc.T("Dlg.Close"))
                 {
                     Owner = this
                 };
@@ -176,7 +181,7 @@ namespace Callen.Windows.Forms
             var selectedFolder = combo_folder.SelectedItem as Archive;
             LoadFolders(selectedFolder == null ? null : selectedFolder.code);
 
-            new NotificationWindow("Tema Eliminado", selectedArchive.theme, "Foi eliminado com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.ThemeDeletedTitle"), selectedArchive.theme, Loc.T("Noti.DeletedSuccess")).Show();
         }
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
@@ -220,7 +225,7 @@ namespace Callen.Windows.Forms
             if (combo_folder.SelectedItem == null)
             {
                 list_themes.ItemsSource = null;
-                lbl_usage.Content = "Não existem pastas configuradas";
+                lbl_usage.Content = Loc.T("ManageArchive.NoFolders");
                 folder_name_box.Text = string.Empty;
                 theme_name_box.Text = string.Empty;
                 btn_add_theme.IsEnabled = false;
@@ -264,7 +269,7 @@ namespace Callen.Windows.Forms
             }
 
             if (themes.Count == 0)
-                lbl_usage.Content = "Esta pasta deixou de ter temas";
+                lbl_usage.Content = Loc.T("ManageArchive.NoThemesInFolder");
         }
     }
 }

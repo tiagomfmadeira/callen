@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="SettingsWindow"
-        Height="600"
+        Height="520"
         Width="800"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -44,7 +44,7 @@
             </Setter>
         </Style>
 
-        <Style x:Key="settingsFolderPickerButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
+        <Style x:Key="settingsIconButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -52,9 +52,9 @@
                                 Background="Transparent"
                                 BorderBrush="Transparent"
                                 BorderThickness="1"
-                                CornerRadius="4">
+                                CornerRadius="3">
                             <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.OpenFolder}"
+                                           MaskSource="{TemplateBinding Tag}"
                                            Width="{StaticResource dialogIconSize}"
                                            Height="{StaticResource dialogIconSize}"
                                            Tint="#FF2E3136" />
@@ -72,39 +72,40 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
 
     <Grid>
         <Border Name="closeBorder"
-                Background="Black"
-                Opacity="0.16"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
-            <Grid Width="800" Height="600">
+            <Grid Width="800" Height="560">
                 <Canvas Width="479"
-                        Height="169"
+                        Height="202"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
 
-                    <Border Height="169" Width="479" Canvas.Left="0" Canvas.Top="0"
-                            Background="{DynamicResource lightestHighLight}" CornerRadius="3,3,3,3" />
+                    <Border Height="202" Width="479" Canvas.Left="0" Canvas.Top="0"
+                            Background="{DynamicResource lightestHighLight}"
+                            BorderBrush="{DynamicResource highLight}"
+                            BorderThickness="1"
+                            CornerRadius="3,3,3,3" />
 
                     <Button Width="25" Height="25"
                             Panel.ZIndex="3"
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource settingsCloseButtonStyle}"
-                            Canvas.Left="454"
-                            Canvas.Top="0" />
+                            Canvas.Left="452"
+                            Canvas.Top="2" />
 
                     <Grid Width="479"
                           Height="30"
                           Canvas.Left="0"
-                          Canvas.Top="5">
-                        <Label Content="Definições"
+                          Canvas.Top="4">
+                        <Label Content="{DynamicResource Settings.Title}"
                                HorizontalContentAlignment="Center"
                                VerticalContentAlignment="Center"
                                HorizontalAlignment="Center"
@@ -114,57 +115,99 @@
                                Foreground="{DynamicResource highLight}" />
                     </Grid>
 
-                    <Label Content="Base de dados"
-                           Canvas.Left="16"
-                           Canvas.Top="46"
+                    <Label Content="{DynamicResource Settings.Version}"
+                           Canvas.Left="10"
+                           Canvas.Top="36"
+                           Style="{DynamicResource formLabel}"
+                           Width="95" />
+                    <TextBlock x:Name="app_version"
+                             Width="332"
+                             Canvas.Left="108"
+                             Canvas.Top="42"
+                             TextWrapping="Wrap"
+                             Foreground="{DynamicResource highLight}"
+                             Cursor="Hand"
+                             TextDecorations="Underline"
+                             ToolTip="{DynamicResource Settings.ReleaseTooltip}"
+                             MouseLeftButtonUp="app_version_MouseLeftButtonUp" />
+                    <Button x:Name="btn_check_updates"
+                            Click="btn_check_updates_Click"
+                            Width="25"
+                            Height="25"
+                            Tag="{StaticResource Icon.Refresh}"
+                            ToolTip="{DynamicResource Settings.Update}"
+                            Style="{StaticResource settingsIconButtonStyle}"
+                            Canvas.Left="444"
+                            Canvas.Top="40" />
+
+                    <Label x:Name="lbl_language"
+                           Content="{DynamicResource Settings.Language}"
+                           Canvas.Left="10"
+                           Canvas.Top="66"
+                           Style="{DynamicResource formLabel}"
+                           Width="95" />
+                    <ComboBox x:Name="combo_language"
+                              Width="182"
+                              Canvas.Left="108"
+                              Canvas.Top="66"
+                              Height="26"
+                              SelectionChanged="combo_language_SelectionChanged" />
+
+                    <Label x:Name="lbl_database"
+                           Content="{DynamicResource Settings.Database}"
+                           Canvas.Left="10"
+                           Canvas.Top="96"
                            Style="{DynamicResource formLabel}"
                            Width="95" />
                     <TextBox Name="db_string"
-                             Width="325"
-                             Canvas.Left="116"
-                             Canvas.Top="46"
+                             Width="332"
+                             Canvas.Left="108"
+                             Canvas.Top="96"
                              Height="25"
                              HorizontalContentAlignment="Left"
                              TextAlignment="Left"
                              Style="{StaticResource descTextBox}" />
-                    <Button Width="33" Height="25"
+                    <Button Width="25" Height="25"
                             x:Name="btn_db_path"
                             Click="btn_db_path_Click"
-                            Style="{StaticResource settingsFolderPickerButtonStyle}"
-                            Canvas.Left="446"
-                            Canvas.Top="46" />
+                            Tag="{StaticResource Icon.OpenFolder}"
+                            Style="{StaticResource settingsIconButtonStyle}"
+                            Canvas.Left="444"
+                            Canvas.Top="96" />
 
-                    <Label Content="Pasta de fotos"
-                           Canvas.Left="16"
-                           Canvas.Top="79"
+                    <Label x:Name="lbl_images"
+                           Content="{DynamicResource Settings.ImagesFolder}"
+                           Canvas.Left="10"
+                           Canvas.Top="126"
                            Style="{DynamicResource formLabel}"
                            Width="95" />
                     <TextBox x:Name="img_folder"
                              IsReadOnly="True"
-                             Width="325"
-                             Canvas.Left="116"
-                             Canvas.Top="79"
-                             Height="26"
+                             Width="332"
+                             Canvas.Left="108"
+                             Canvas.Top="126"
+                             Height="25"
                              HorizontalAlignment="Left"
                              HorizontalContentAlignment="Left"
                              TextAlignment="Left"
                              Style="{StaticResource descTextBox}" />
-                    <Button Width="33" Height="26"
+                    <Button Width="25" Height="25"
                             x:Name="btn_img_folder"
                             Click="btn_img_folder_Click"
-                            Style="{StaticResource settingsFolderPickerButtonStyle}"
-                            Canvas.Left="446"
-                            Canvas.Top="79" />
+                            Tag="{StaticResource Icon.OpenFolder}"
+                            Style="{StaticResource settingsIconButtonStyle}"
+                            Canvas.Left="444"
+                            Canvas.Top="126" />
 
-                    <Grid Width="479"
-                          Height="30"
+                    <Grid x:Name="save_row"
+                          Width="479"
                           Canvas.Left="0"
-                          Canvas.Top="126">
+                          Canvas.Top="163"
+                          Style="{StaticResource bottomActionRow}">
                         <Button x:Name="btn_save_changes"
-                                Content="Guardar"
+                                Content="{DynamicResource Settings.Save}"
                                 Click="btn_save_changes_Click"
-                                Height="24"
-                                Width="86"
+                                Style="{StaticResource bottomActionButtonLast}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
                     </Grid>

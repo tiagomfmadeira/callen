@@ -80,123 +80,186 @@
     </Window.Resources>
 
     <Grid>
-        <!-- Full-window overlay -->
         <Border Name="closeBorder"
-                Background="Black"
-                Opacity="0.1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
             <Grid Width="800" Height="600">
-                <Canvas Width="500"
-                        Height="300"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
+                <Grid x:Name="sceneRoot"
+                      Width="560"
+                      Height="470"
+                      ClipToBounds="False"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                    <Canvas Width="560"
+                            Height="470"
+                            ClipToBounds="False">
+                        <Border Name="img_border"
+                                Width="150"
+                                Height="120"
+                                Canvas.Left="205"
+                                Canvas.Top="0"
+                                Background="#FFD7D9DB"
+                                BorderBrush="#FF2E3136"
+                                BorderThickness="1"
+                                CornerRadius="3">
+                            <Grid>
+                                <Image Name="img"
+                                       Stretch="UniformToFill"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                                <Button x:Name="btn_upload"
+                                        Click="btn_upload_Click"
+                                        Width="150"
+                                        Height="120"
+                                        Tag="{StaticResource Icon.Upload}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Style="{StaticResource imageUploadOverlayButton}">
+                                    <ui:TintedIcon MaskSource="{StaticResource Icon.Upload}"
+                                                   Width="{StaticResource dialogIconSize}"
+                                                   Height="{StaticResource dialogIconSize}"
+                                                   Tint="#FF2E3136" />
+                                </Button>
+                            </Grid>
+                        </Border>
 
-                <Border Height="300" Width="500"
-                        Canvas.Left="0" Canvas.Top="0"
-                        Background="{DynamicResource lightestHighLight}"
-                        CornerRadius="3,3,3,3" />
+                        <Canvas Width="560"
+                                Height="340"
+                                Canvas.Left="0"
+                                Canvas.Top="125">
+                            <Border Height="340"
+                                    Width="560"
+                                    Background="{DynamicResource lightestHighLight}"
+                                    BorderBrush="{DynamicResource highLight}"
+                                    BorderThickness="1"
+                                    CornerRadius="3,3,3,3" />
 
-                <Button Width="25" Height="25"
-                        Panel.ZIndex="3"
-                        x:Name="btn_close"
-                        Click="btn_close_Click"
-                        Style="{StaticResource dialogCloseButtonStyle}"
-                        Canvas.Left="475"
-                        Canvas.Top="0" />
+                            <Button Width="25"
+                                    Height="25"
+                                    Panel.ZIndex="3"
+                                    x:Name="btn_close"
+                                    Click="btn_close_Click"
+                                    Style="{StaticResource dialogCloseButtonStyle}"
+                                    Canvas.Left="533"
+                                    Canvas.Top="2" />
 
-                <Label Content="Nome" Canvas.Left="9" Canvas.Top="35"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <TextBox Name="name_box" Width="150" Canvas.Left="89" Canvas.Top="34" Height="26"
-                         Style="{DynamicResource formTextBox}" />
+                            <Label Content="{DynamicResource AddItem.Name}"
+                                   Canvas.Left="12"
+                                   Canvas.Top="36"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <TextBox Name="name_box"
+                                     Width="185"
+                                     Canvas.Left="95"
+                                     Canvas.Top="36"
+                                     Height="26"
+                                     Style="{DynamicResource formTextBox}" />
 
-                <Label Content="Ano" Canvas.Left="9" Canvas.Top="71"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <TextBox Name="year_box" Width="150" Canvas.Left="89" Canvas.Top="70" Height="26"
-                         Style="{DynamicResource formTextBox}" />
+                            <Label Content="{DynamicResource AddItem.Folder}"
+                                   Canvas.Left="292"
+                                   Canvas.Top="36"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <ComboBox Name="combo_folder"
+                                      Width="157"
+                                      Canvas.Left="375"
+                                      Canvas.Top="36"
+                                      Height="26"
+                                      SelectionChanged="combo_folder_SelectionChanged" />
 
-                <Label Content="Coleção" Canvas.Left="9" Canvas.Top="107"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <TextBox Name="collec_box" Width="150" Canvas.Left="89" Canvas.Top="106" Height="26"
-                         Style="{DynamicResource formTextBox}" />
+                            <Button Name="btn_manage_archive"
+                                    Click="btn_manage_archive_Click"
+                                    Tag="{StaticResource Icon.Archive}"
+                                    Width="25"
+                                    Height="25"
+                                    Canvas.Top="36"
+                                    Canvas.Left="533"
+                                    Style="{StaticResource dialogIconButtonStyle}" />
 
-                <Label Content="Matriz" Canvas.Left="9" Canvas.Top="143"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <TextBox Name="other_box" Width="150" Canvas.Left="89" Canvas.Top="142" Height="26"
-                         Style="{DynamicResource formTextBox}" />
+                            <Label Content="{DynamicResource AddItem.Year}"
+                                   Canvas.Left="12"
+                                   Canvas.Top="72"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <TextBox Name="year_box"
+                                     Width="185"
+                                     Canvas.Left="95"
+                                     Canvas.Top="72"
+                                     Height="26"
+                                     Style="{DynamicResource formTextBox}" />
 
-                <Label Content="Descrição" Canvas.Left="259" Canvas.Top="107"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <TextBox Name="desc_box" Width="228"
-                         VerticalContentAlignment="Top"
-                         Canvas.Left="259" Canvas.Top="137"
-                         Height="130"
-                         TextWrapping="Wrap"
-                         AcceptsReturn="True"
-                         Style="{DynamicResource formTextBox}" />
+                            <Label Content="{DynamicResource AddItem.Theme}"
+                                   Canvas.Left="292"
+                                   Canvas.Top="72"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <ComboBox Name="combo_theme"
+                                      Width="157"
+                                      Canvas.Left="375"
+                                      Canvas.Top="72"
+                                      Height="26"
+                                      IsEnabled="False" />
 
-                <Label Content="Pasta" Canvas.Left="259" Canvas.Top="35"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26" />
-                <ComboBox Name="combo_folder" Width="130" Canvas.Left="341" Canvas.Top="35" Height="26"
-                          SelectionChanged="combo_folder_SelectionChanged" />
+                            <Label Content="{DynamicResource AddItem.Collection}"
+                                   Canvas.Left="12"
+                                   Canvas.Top="108"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <TextBox Name="collec_box"
+                                     Width="185"
+                                     Canvas.Left="95"
+                                     Canvas.Top="108"
+                                     Height="26"
+                                     Style="{DynamicResource formTextBox}" />
 
-                <Button Name="btn_manage_archive"
-                        Click="btn_manage_archive_Click"
-                        Tag="{StaticResource Icon.BinderFile}"
-                        Width="29"
-                        Height="26"
-                        Canvas.Top="35"
-                        Canvas.Left="471"
-                        Style="{StaticResource dialogIconButtonStyle}" />
+                            <Label Content="{DynamicResource AddItem.Matrix}"
+                                   Canvas.Left="292"
+                                   Canvas.Top="108"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <TextBox Name="other_box"
+                                     Width="173"
+                                     Canvas.Left="375"
+                                     Canvas.Top="108"
+                                     Height="26"
+                                     Style="{DynamicResource formTextBox}" />
 
-                <Label Content="Tema" Canvas.Left="258" Canvas.Top="71"
-                       Style="{DynamicResource formLabel}" />
-                <ComboBox Name="combo_theme" Width="130" Canvas.Left="341" Canvas.Top="71" Height="26"
-                          IsEnabled="False" />
+                            <Label Content="{DynamicResource AddItem.Description}"
+                                   Canvas.Left="12"
+                                   Canvas.Top="144"
+                                   Style="{DynamicResource formLabel}"
+                                   Width="77"
+                                   Height="26" />
+                            <TextBox Name="desc_box"
+                                     Width="536"
+                                     Canvas.Left="12"
+                                     Canvas.Top="174"
+                                     Height="120"
+                                     VerticalContentAlignment="Top"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"
+                                     Style="{DynamicResource formTextBox}" />
 
-                <Label Content="Foto" Canvas.Left="9" Canvas.Top="179"
-                       Style="{DynamicResource formLabel}" Width="77" Height="26"/>
-
-                <Border Name="img_border"
-                        Visibility="Hidden"
-                        Canvas.Left="89"
-                        Canvas.Top="183"
-                        Width="150"
-                        Height="100"
-                        Background="Transparent">
-                    <Image Name="img"
-                           Stretch="Uniform"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           RenderOptions.BitmapScalingMode="HighQuality" />
-                </Border>
-
-                <Button Width="77" Height="15"
-                        x:Name="btn_upload"
-                        Click="btn_upload_Click"
-                        Tag="{StaticResource Icon.Upload}"
-                        Canvas.Left="9"
-                        Canvas.Top="214"
-                        Style="{StaticResource dialogIconButtonStyle}" />
-
-                <Button Name="btn_insert"
-                        Click="btn_insert_Click"
-                        Content="Inserir"
-                        Canvas.Left="437"
-                        Canvas.Top="272"
-                        Width="50" />
-                </Canvas>
+                            <Grid Width="560"
+                                  Canvas.Left="0"
+                                  Canvas.Top="304"
+                                  Style="{StaticResource bottomActionRow}">
+                                <Button Name="btn_insert"
+                                        Click="btn_insert_Click"
+                                        Content="{DynamicResource AddItem.Insert}"
+                                        Style="{StaticResource bottomActionButtonLast}" />
+                            </Grid>
+                        </Canvas>
+                    </Canvas>
+                </Grid>
             </Grid>
         </Viewbox>
     </Grid>
 </Window>
-
-
-
-
-
-
-

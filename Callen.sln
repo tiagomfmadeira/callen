@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Callen", "src\Callen\Callen.csproj", "{40D40EA9-7E43-4F3E-BDFC-6862030334C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Callen.Updater", "src\Callen.Updater\Callen.Updater.csproj", "{9A3DAA08-0C85-4A3D-B6D5-6E7B6D47D83A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,10 @@ Global
 		{40D40EA9-7E43-4F3E-BDFC-6862030334C0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{40D40EA9-7E43-4F3E-BDFC-6862030334C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D40EA9-7E43-4F3E-BDFC-6862030334C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A3DAA08-0C85-4A3D-B6D5-6E7B6D47D83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A3DAA08-0C85-4A3D-B6D5-6E7B6D47D83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A3DAA08-0C85-4A3D-B6D5-6E7B6D47D83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A3DAA08-0C85-4A3D-B6D5-6E7B6D47D83A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

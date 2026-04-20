@@ -13,16 +13,53 @@
         Background="{x:Null}" Icon="{StaticResource Icon.Logo}">
     <Window.Resources>
         <Style x:Key="sidebarMenuButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource menuButton}">
-            <Setter Property="Width" Value="140" />
-            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="55" />
+            <Setter Property="Height" Value="65" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Template">
+                <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border Name="border"
+                                BorderThickness="0,0,0,0"
+                                BorderBrush="{x:Null}"
+                                Background="{x:Null}">
+                            <ui:TintedIcon x:Name="menuIcon"
+                                           MaskSource="{TemplateBinding Tag}"
+                                           Width="31"
+                                           Height="31"
+                                           Tint="#FF787878"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter TargetName="menuIcon" Property="Tint" Value="#FFC9CBCC" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="menuIcon" Property="Tint" Value="#FFC9CBCC" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#121516" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                <Setter TargetName="menuIcon" Property="Tint" Value="#FFC9CBCC" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="menuIcon" Property="Tint" Value="#FFFFFFFF" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="sidebarActionButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="140" />
-            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="55" />
+            <Setter Property="Height" Value="65" />
             <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Foreground" Value="{DynamicResource foreground}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -30,14 +67,23 @@
                                 BorderThickness="0,0,0,0"
                                 BorderBrush="{x:Null}"
                                 Background="{x:Null}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ui:TintedIcon x:Name="actionIcon"
+                                           MaskSource="{TemplateBinding Tag}"
+                                           Width="31"
+                                           Height="31"
+                                           Tint="#FF787878"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}" />
                                 <Setter Property="Cursor" Value="Hand" />
-                                <Setter Property="Foreground" Value="White" />
+                                <Setter TargetName="actionIcon" Property="Tint" Value="#FFC9CBCC" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="actionIcon" Property="Tint" Value="#FFC9CBCC" />
+                            </Trigger>
+                            <Trigger Property="Foreground" Value="White">
+                                <Setter TargetName="actionIcon" Property="Tint" Value="#FFC9CBCC" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -46,7 +92,7 @@
         </Style>
 
         <Style x:Key="sidebarMenuContentStyle" TargetType="DockPanel">
-            <Setter Property="Width" Value="140" />
+            <Setter Property="Width" Value="55" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="LastChildFill" Value="True" />
         </Style>
@@ -60,7 +106,7 @@
         <Style x:Key="topBarActionButtonStyle" TargetType="Button" BasedOn="{StaticResource windowActionButton}" />
 
         <Style x:Key="topBarTintIconStyle" TargetType="{x:Type ui:TintedIcon}">
-            <Setter Property="Width" Value="23" />
+            <Setter Property="Width" Value="20" />
             <Setter Property="Height" Value="Auto" />
             <Setter Property="Tint" Value="#FFFFFFFF" />
         </Style>
@@ -72,7 +118,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="55" />
             <ColumnDefinition Width="0" x:Name="grid_menu_col" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -136,53 +182,34 @@
         </Border>
 
         <!-- Menu Bar Items -->
-        <Border Grid.RowSpan="2" Grid.ColumnSpan="2" Name="menu_border" MouseLeave="menu_bar_MouseLeave"
-                MouseEnter="menu_bar_MouseEnter" Background="{DynamicResource darkestHighLight}">
+        <Border Grid.RowSpan="2" Grid.ColumnSpan="2" Name="menu_border" Background="{DynamicResource darkestHighLight}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Left">
-                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_colec" Click="btn_colec_Click">
-                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
-                            <Image Source="{StaticResource Icon.Collection}" Width="30" Margin="5,0,0,0"
-                                   RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Coleção" Style="{StaticResource sidebarMenuLabelStyle}"
-                                   x:Name="lbl_menu2" />
-                        </DockPanel>
-                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}"
+                                  x:Name="btn_colec"
+                                  Tag="{StaticResource Icon.Collection}"
+                                  Click="btn_colec_Click" />
                     <Button Style="{StaticResource sidebarActionButtonStyle}"
                             x:Name="btn_add_item"
+                            Tag="{StaticResource Icon.Plus}"
                             Click="btn_add_item_Click">
-                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
-                            <Image Source="{StaticResource iconAddVector}"
-                                   Width="26"
-                                   Margin="8,0,0,0"
-                                   RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Adicionar"
-                                   Style="{StaticResource sidebarMenuLabelStyle}"
-                                   x:Name="lbl_menu_add" />
-                        </DockPanel>
                     </Button>
                 </StackPanel>
                 <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_print" Click="btn_print_Click">
-                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
-                            <Image Source="{StaticResource Icon.Print}" Width="30" Margin="5,0,0,0"
-                                   RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Imprimir" Style="{StaticResource sidebarMenuLabelStyle}"
-                                   x:Name="lbl_menu5" />
-                        </DockPanel>
-                    </ToggleButton>
-                    <ToggleButton Style="{StaticResource sidebarMenuButtonStyle}" x:Name="btn_settings" Click="btn_settings_Click">
-                        <DockPanel Style="{StaticResource sidebarMenuContentStyle}">
-                            <Image Source="{StaticResource Icon.Settings}" Width="30" Margin="5,0,0,0"
-                                   RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Label Content="Definições" Style="{StaticResource sidebarMenuLabelStyle}"
-                                   x:Name="lbl_menu7" />
-                        </DockPanel>
-                    </ToggleButton>
+                    <Button Style="{StaticResource sidebarActionButtonStyle}"
+                            x:Name="btn_print"
+                            Tag="{StaticResource Icon.Print}"
+                            Click="btn_print_Click">
+                    </Button>
+                    <Button Style="{StaticResource sidebarActionButtonStyle}"
+                            x:Name="btn_settings"
+                            Tag="{StaticResource Icon.Settings}"
+                            Click="btn_settings_Click">
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>

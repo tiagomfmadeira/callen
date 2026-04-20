@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -47,32 +48,48 @@ namespace Callen
         private void UpdateTintedSource()
         {
             var bitmap = MaskSource as BitmapSource;
-            if (bitmap == null)
+            if (bitmap != null)
             {
-                Source = MaskSource;
+                var frozenMask = bitmap.IsFrozen ? bitmap : bitmap.GetAsFrozen() as BitmapSource;
+                if (frozenMask == null)
+                {
+                    Source = bitmap;
+                    return;
+                }
+
+                var bitmapKey = GetBitmapCacheKey(frozenMask, Tint);
+                if (Cache.TryGetValue(bitmapKey, out var cachedBitmap))
+                {
+                    Source = cachedBitmap;
+                    return;
+                }
+
+                var tintedBitmap = CreateTintedBitmap(frozenMask, Tint);
+                Cache[bitmapKey] = tintedBitmap;
+                Source = tintedBitmap;
                 return;
             }
 
-            var frozenMask = bitmap.IsFrozen ? bitmap : bitmap.GetAsFrozen() as BitmapSource;
-            if (frozenMask == null)
+            var drawingImage = MaskSource as DrawingImage;
+            if (drawingImage != null)
             {
-                Source = bitmap;
+                var drawingKey = GetDrawingCacheKey(drawingImage, Tint);
+                if (Cache.TryGetValue(drawingKey, out var cachedDrawing))
+                {
+                    Source = cachedDrawing;
+                    return;
+                }
+
+                var tintedDrawing = CreateTintedDrawing(drawingImage, Tint);
+                Cache[drawingKey] = tintedDrawing;
+                Source = tintedDrawing;
                 return;
             }
 
-            var key = GetCacheKey(frozenMask, Tint);
-            if (Cache.TryGetValue(key, out var cached))
-            {
-                Source = cached;
-                return;
-            }
-
-            var tinted = CreateTintedBitmap(frozenMask, Tint);
-            Cache[key] = tinted;
-            Source = tinted;
+            Source = MaskSource;
         }
 
-        private static string GetCacheKey(BitmapSource source, Color tint)
+        private static string GetBitmapCacheKey(BitmapSource source, Color tint)
         {
             string sourceKey;
 
@@ -82,6 +99,12 @@ namespace Callen
                 sourceKey = $"{source.PixelWidth}x{source.PixelHeight}:{source.Format}";
 
             return $"{sourceKey}|{tint.A:X2}{tint.R:X2}{tint.G:X2}{tint.B:X2}";
+        }
+
+        private static string GetDrawingCacheKey(DrawingImage source, Color tint)
+        {
+            var drawingId = source.Drawing == null ? 0 : RuntimeHelpers.GetHashCode(source.Drawing);
+            return $"{drawingId}|{tint.A:X2}{tint.R:X2}{tint.G:X2}{tint.B:X2}";
         }
 
         private static ImageSource CreateTintedBitmap(BitmapSource source, Color tint)
@@ -113,6 +136,69 @@ namespace Callen
             writeable.Freeze();
 
             return writeable;
+        }
+
+        private static ImageSource CreateTintedDrawing(DrawingImage source, Color tint)
+        {
+            if (source.Drawing == null)
+                return source;
+
+            var clonedDrawing = source.Drawing.CloneCurrentValue();
+            ApplyTintToDrawing(clonedDrawing, tint);
+            clonedDrawing.Freeze();
+
+            var image = new DrawingImage(clonedDrawing);
+            image.Freeze();
+            return image;
+        }
+
+        private static void ApplyTintToDrawing(Drawing drawing, Color tint)
+        {
+            if (drawing == null)
+                return;
+
+            var group = drawing as DrawingGroup;
+            if (group != null)
+            {
+                foreach (var child in group.Children)
+                    ApplyTintToDrawing(child, tint);
+                return;
+            }
+
+            var geometry = drawing as GeometryDrawing;
+            if (geometry != null)
+            {
+                geometry.Brush = CreateTintedBrush(geometry.Brush, tint);
+                if (geometry.Pen != null)
+                {
+                    var pen = geometry.Pen.CloneCurrentValue();
+                    pen.Brush = CreateTintedBrush(pen.Brush, tint);
+                    pen.Freeze();
+                    geometry.Pen = pen;
+                }
+                return;
+            }
+
+            var glyph = drawing as GlyphRunDrawing;
+            if (glyph != null)
+                glyph.ForegroundBrush = CreateTintedBrush(glyph.ForegroundBrush, tint);
+        }
+
+        private static Brush CreateTintedBrush(Brush sourceBrush, Color tint)
+        {
+            byte sourceAlpha;
+            if (sourceBrush is SolidColorBrush solid)
+                sourceAlpha = solid.Color.A;
+            else
+                sourceAlpha = 255;
+
+            var alpha = (byte)(sourceAlpha * tint.A / 255);
+            var brush = new SolidColorBrush(Color.FromArgb(alpha, tint.R, tint.G, tint.B))
+            {
+                Opacity = sourceBrush?.Opacity ?? 1.0
+            };
+            brush.Freeze();
+            return brush;
         }
     }
 }

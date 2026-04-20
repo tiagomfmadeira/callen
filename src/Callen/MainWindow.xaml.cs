@@ -1,5 +1,7 @@
 using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Input;
 using Callen.Pages;
 using Callen.Windows;
@@ -10,33 +12,24 @@ namespace Callen
     public partial class MainWindow : Window
     {
         private const int CollectionMenuIndex = 1;
-        private const double ExpandedMenuWidth = 100;
+        private static readonly Brush ActiveSidebarActionBrush = Brushes.White;
 
-        private bool maximized;
+        private bool isWorkAreaMaximized;
         private bool pendingDragFromMaximized;
         private Point dragStartPoint;
-        private double storedHeight;
-        private double storedLeft;
-        private double storedTop;
-        private double storedWidth;
+        private Rect restoreBounds;
 
         public MainWindow()
         {
             InitializeComponent();
             PrintListStore.GetOrCreate();
-            SetMenuState(false);
 
             // Starts in Search
             checkedMenu(CollectionMenuIndex);
             Switcher.Switch(Content_plane, new Search());
 
-            StoreCurrentWindowBounds();
-            maximized = true;
-            ApplyWindowBounds(
-                SystemParameters.WorkArea.Left,
-                SystemParameters.WorkArea.Top,
-                SystemParameters.WorkArea.Height,
-                SystemParameters.WorkArea.Width);
+            restoreBounds = new Rect(Left, Top, Width, Height);
+            MaximizeToWorkArea();
         }
 
         public void btn_close_Click(object sender, RoutedEventArgs e)
@@ -51,21 +44,14 @@ namespace Callen
 
         public void btn_expand_Click(object sender, RoutedEventArgs e)
         {
-            if (maximized)
+            if (isWorkAreaMaximized)
             {
-                ApplyWindowBounds(storedLeft, storedTop, storedHeight, storedWidth);
-                maximized = false;
+                RestoreFromWorkArea();
+                return;
             }
-            else
-            {
-                StoreCurrentWindowBounds();
-                ApplyWindowBounds(
-                    SystemParameters.WorkArea.Left,
-                    SystemParameters.WorkArea.Top,
-                    SystemParameters.WorkArea.Height,
-                    SystemParameters.WorkArea.Width);
-                maximized = true;
-            }
+
+            restoreBounds = new Rect(Left, Top, Width, Height);
+            MaximizeToWorkArea();
         }
 
         private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -79,9 +65,9 @@ namespace Callen
                 return;
 
             dragStartPoint = e.GetPosition(this);
-            pendingDragFromMaximized = maximized;
+            pendingDragFromMaximized = isWorkAreaMaximized;
 
-            if (!maximized)
+            if (!pendingDragFromMaximized)
                 DragMove();
         }
 
@@ -95,15 +81,16 @@ namespace Callen
                 return;
 
             var screen = PointToScreen(current);
+            var restoredWidth = restoreBounds.Width > 0 ? restoreBounds.Width : Math.Max(800, Width);
+            var restoredHeight = restoreBounds.Height > 0 ? restoreBounds.Height : Math.Max(600, Height);
             var widthRatio = ActualWidth <= 0 ? 0.5 : current.X / ActualWidth;
 
-            ApplyWindowBounds(
-                screen.X - (storedWidth * widthRatio),
-                SystemParameters.WorkArea.Top,
-                storedHeight,
-                storedWidth);
+            Left = screen.X - (restoredWidth * widthRatio);
+            Top = screen.Y - dragStartPoint.Y;
+            Width = restoredWidth;
+            Height = restoredHeight;
+            isWorkAreaMaximized = false;
 
-            maximized = false;
             pendingDragFromMaximized = false;
             DragMove();
         }
@@ -111,16 +98,6 @@ namespace Callen
         private void menu_min_bar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             pendingDragFromMaximized = false;
-        }
-
-        private void menu_bar_MouseEnter(object sender, MouseEventArgs e)
-        {
-            SetMenuState(true);
-        }
-
-        private void menu_bar_MouseLeave(object sender, MouseEventArgs e)
-        {
-            SetMenuState(false);
         }
 
         public void btn_colec_Click(object sender, RoutedEventArgs e)
@@ -131,14 +108,15 @@ namespace Callen
 
         public void btn_print_Click(object sender, RoutedEventArgs e)
         {
-            btn_print.IsChecked = false;
-            DialogHelper.ShowOwnedDialog(new PrintWindow(), DialogHelper.GetActiveMainWindow());
+            ShowSidebarActionDialog(btn_print, () =>
+                DialogHelper.ShowOwnedDialog(new PrintWindow(), DialogHelper.GetActiveMainWindow()));
         }
 
         public void btn_add_item_Click(object sender, RoutedEventArgs e)
         {
             var addItemWindow = new AddItemWindow();
-            DialogHelper.ShowOwnedDialog(addItemWindow, DialogHelper.GetActiveMainWindow());
+            ShowSidebarActionDialog(btn_add_item, () =>
+                DialogHelper.ShowOwnedDialog(addItemWindow, DialogHelper.GetActiveMainWindow()));
 
             if (!addItemWindow.inserted)
                 return;
@@ -153,8 +131,30 @@ namespace Callen
 
         public void btn_settings_Click(object sender, RoutedEventArgs e)
         {
-            btn_settings.IsChecked = false;
-            DialogHelper.ShowOwnedDialog(new SettingsWindow(), DialogHelper.GetActiveMainWindow());
+            ShowSidebarActionDialog(btn_settings, () =>
+                DialogHelper.ShowOwnedDialog(
+                    new SettingsWindow(() =>
+                    {
+                        if (Content_plane.Children.Count == 0)
+                            return;
+
+                        var searchPage = Content_plane.Children[0] as Search;
+                        searchPage?.ReloadData();
+                    }),
+                    DialogHelper.GetActiveMainWindow()));
+        }
+
+        private static void ShowSidebarActionDialog(Button actionButton, Action openDialog)
+        {
+            actionButton.Foreground = ActiveSidebarActionBrush;
+            try
+            {
+                openDialog();
+            }
+            finally
+            {
+                actionButton.ClearValue(ForegroundProperty);
+            }
         }
 
         private void checkedMenu(int menuNum)
@@ -168,35 +168,29 @@ namespace Callen
             }
         }
 
-        private void ApplyWindowBounds(double left, double top, double height, double width)
+        private void MaximizeToWorkArea()
         {
-            Left = left;
-            Top = top;
-            Height = height;
-            Width = width;
+            var workArea = SystemParameters.WorkArea;
+            Left = workArea.Left;
+            Top = workArea.Top;
+            Width = workArea.Width;
+            Height = workArea.Height;
+            isWorkAreaMaximized = true;
         }
 
-        private void StoreCurrentWindowBounds()
+        private void RestoreFromWorkArea()
         {
-            storedLeft = Left;
-            storedTop = Top;
-            storedHeight = Height;
-            storedWidth = Width;
+            var hasValidRestoreBounds = restoreBounds.Width > 0 && restoreBounds.Height > 0;
+            if (!hasValidRestoreBounds)
+                return;
+
+            Left = restoreBounds.Left;
+            Top = restoreBounds.Top;
+            Width = restoreBounds.Width;
+            Height = restoreBounds.Height;
+            isWorkAreaMaximized = false;
         }
 
-        private void SetMenuState(bool expanded)
-        {
-            grid_menu_col.Width = expanded
-                ? new GridLength(ExpandedMenuWidth)
-                : new GridLength(0, GridUnitType.Pixel);
-
-            var visibility = expanded ? Visibility.Visible : Visibility.Hidden;
-
-            lbl_menu2.Visibility = visibility;
-            lbl_menu_add.Visibility = visibility;
-            lbl_menu5.Visibility = visibility;
-            lbl_menu7.Visibility = visibility;
-        }
     }
 }
 

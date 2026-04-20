@@ -29,6 +29,7 @@ namespace Callen.Windows.Forms
 
             PreviewKeyDown += HandleEsc;
 
+            SourceInitialized += WinAddItem_SourceInitialized;
             Loaded += WinAddItem_Loaded;
             Closed += WinAddItem_Closed;
 
@@ -45,10 +46,13 @@ namespace Callen.Windows.Forms
 
         // ---------- Overlay sizing + initialization ----------
 
-        private void WinAddItem_Loaded(object sender, RoutedEventArgs e)
+        private void WinAddItem_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
+        }
 
+        private void WinAddItem_Loaded(object sender, RoutedEventArgs e)
+        {
             // Existing behavior
             FillFolderCombo();
 
@@ -130,7 +134,7 @@ namespace Callen.Windows.Forms
         {
             var op = new OpenFileDialog
             {
-                Title = "Select a picture",
+                Title = Loc.T("Msg.SelectImageTitle"),
                 Filter =
                     "All supported graphics|*.jpg;*.jpeg;*.png|" +
                     "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
@@ -143,12 +147,11 @@ namespace Callen.Windows.Forms
             {
                 ImageSource src = new BitmapImage(new Uri(op.FileName));
 
-                img_border.Visibility = Visibility.Visible;
                 img.Source = src;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ficheiro " + op.FileName + " não pode ser aberto");
+                MessageBox.Show(Loc.F("Msg.InvalidFile", op.FileName), Loc.T("Msg.GenericTitle"));
                 Debug.WriteLine("File Error: " + ex);
             }
         }
@@ -180,7 +183,7 @@ namespace Callen.Windows.Forms
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show("Erro ao inserir: " + ex.Message);
+                MessageBox.Show(Loc.F("Msg.InsertError", ex.Message), Loc.T("Msg.GenericTitle"));
                 Debug.WriteLine(ex);
                 return;
             }
@@ -188,7 +191,7 @@ namespace Callen.Windows.Forms
             inserted = true;
             AddInsertedItemToPrintList(calendar);
 
-            new NotificationWindow("New Item", name_box.Text, "Foi inserido com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.NewItemTitle"), name_box.Text, Loc.T("Noti.InsertedSuccess")).Show();
 
             OnInserted?.Invoke();
 
@@ -242,7 +245,6 @@ namespace Callen.Windows.Forms
                 {
                     ImageSource src = new BitmapImage(new Uri(calen.pic_path + ".jpeg", UriKind.RelativeOrAbsolute));
 
-                    img_border.Visibility = Visibility.Visible;
                     img.Source = src;
                 }
                 catch (Exception ex)
@@ -276,6 +278,7 @@ namespace Callen.Windows.Forms
         {
             PrintListStore.AddIfMissing(calendar);
         }
+
     }
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using Callen.Windows.Forms;
 using Callen.Windows.Other;
 
@@ -24,6 +26,8 @@ namespace Callen.Windows
         private readonly bool previewImage;
         private readonly List<int> navigationCalendarIds;
         private int navigationIndex;
+        private bool imageDirty;
+        private string pendingImageSourcePath;
 
         // Event to notify when the item is updated
         public event Action<Calendar> OnItemUpdated;
@@ -33,6 +37,9 @@ namespace Callen.Windows
 
         // Event to notify when a new item is inserted (e.g. via duplicate)
         public event Action OnItemInserted;
+
+        // Event to notify when current navigation item changes.
+        public event Action<int> OnCalendarNavigated;
 
         public ItemDetailsWindow(Calendar calen, bool preview)
             : this(calen, preview, null)
@@ -47,6 +54,7 @@ namespace Callen.Windows
             PreviewKeyDown += HandleEsc;
 
             // Make this overlay window match the owner/main window so closeBorder is truly full coverage
+            SourceInitialized += WinDesc_SourceInitialized;
             Loaded += WinDesc_Loaded;
             Closed += WinDesc_Closed;
             Closing += WinDesc_Closing;
@@ -66,9 +74,13 @@ namespace Callen.Windows
 
         // ---------- Overlay sizing (KISS) ----------
 
-        private void WinDesc_Loaded(object sender, RoutedEventArgs e)
+        private void WinDesc_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
+        }
+
+        private void WinDesc_Loaded(object sender, RoutedEventArgs e)
+        {
             PositionCardAdjacents();
             SizeChanged += WinDesc_SizeChanged;
         }
@@ -119,6 +131,15 @@ namespace Callen.Windows
 
         private void btn_img_Click(object sender, RoutedEventArgs e)
         {
+            if (IsEditMode)
+            {
+                btn_upload_image_Click(sender, e);
+                return;
+            }
+
+            if (img.Source == null)
+                return;
+
             var popZoomImg = new ImageZoomWindow(img.Source) { Owner = this };
             popZoomImg.ShowDialog();
         }
@@ -161,24 +182,62 @@ namespace Callen.Windows
 
         private void LoadPreviewImage()
         {
-            if (!previewImage)
-            {
-                img_border.Visibility = Visibility.Hidden;
-                img.Source = null;
-                return;
-            }
+            img.Source = LoadImageIfExists();
 
-            img_border.Visibility = Visibility.Visible;
+            imageDirty = false;
+            pendingImageSourcePath = null;
+            UpdateImagePanelState();
+        }
+
+        private BitmapImage LoadImageIfExists()
+        {
+            var imagePath = ResolveExistingImagePath();
+            if (string.IsNullOrWhiteSpace(imagePath))
+                return null;
 
             try
             {
-                img.Source = new BitmapImage(new Uri(cal.pic_path + ".jpeg", UriKind.RelativeOrAbsolute));
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
             }
             catch
             {
-                img.Source = null;
-                MessageBox.Show("File not found: " + cal.pic_path);
+                return null;
             }
+        }
+
+        private string ResolveExistingImagePath()
+        {
+            if (string.IsNullOrWhiteSpace(cal.pic_path))
+                return null;
+
+            var baseWithoutExtension = cal.pic_path.Trim();
+            var candidates = new[]
+            {
+                baseWithoutExtension + ".jpeg",
+                baseWithoutExtension + ".jpg",
+                baseWithoutExtension + ".png"
+            };
+
+            foreach (var candidate in candidates)
+            {
+                if (File.Exists(candidate))
+                    return Path.GetFullPath(candidate);
+
+                if (Path.IsPathRooted(candidate))
+                    continue;
+
+                var rootedCandidate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, candidate);
+                if (File.Exists(rootedCandidate))
+                    return Path.GetFullPath(rootedCandidate);
+            }
+
+            return null;
         }
 
         private bool ConfirmPendingChanges()
@@ -187,12 +246,12 @@ namespace Callen.Windows
                 return true;
 
             var saveChangesDialog = new ActionDialogWindow(
-                "Alterações por guardar",
+                Loc.T("Dlg.UnsavedChangesTitle"),
                 cal.id + " - " + cal.name,
-                "Pretende guardar as alterações antes de continuar?",
-                "Guardar",
-                "Descartar",
-                "Cancelar")
+                Loc.T("Dlg.UnsavedChangesMessage"),
+                Loc.T("Dlg.Save"),
+                Loc.T("Dlg.Discard"),
+                Loc.T("Dlg.Cancel"))
             {
                 Owner = this
             };
@@ -230,6 +289,8 @@ namespace Callen.Windows
             // Ensure theme combo is loaded for selected folder
             if (combo_folder.SelectedItem != null)
                 FillThemeComboForSelectedFolder(combo_folder.SelectedValue.ToString());
+
+            UpdateImagePanelState();
         }
 
         private void ExitEditMode()
@@ -250,6 +311,7 @@ namespace Callen.Windows
             combo_theme.Visibility = Visibility.Hidden;
 
             LoadCalendarValues();
+            UpdateImagePanelState();
         }
 
         // ---------- Edit toggle ----------
@@ -287,6 +349,7 @@ namespace Callen.Windows
         private bool updateInfo()
         {
             var selectedArchive = combo_theme.SelectedItem as Archive;
+            var resolvedPicturePath = ResolveUpdatedPicturePath();
 
             var updatedCalendar = new Calendar
             {
@@ -296,7 +359,7 @@ namespace Callen.Windows
                 year = item_year.Text,
                 matrix = item_other.Text,
                 collection = item_collec.Text,
-                pic_path = cal.pic_path,
+                pic_path = resolvedPicturePath,
                 archive_id = selectedArchive == null ? 0 : selectedArchive.id,
                 code = selectedArchive == null ? null : selectedArchive.code,
                 theme = selectedArchive == null ? null : selectedArchive.theme
@@ -308,15 +371,15 @@ namespace Callen.Windows
             item_folder.Text = updatedCalendar.code ?? string.Empty;
             item_theme.Text = updatedCalendar.theme ?? string.Empty;
 
-            UpdateLocalInfo();
+            UpdateLocalInfo(resolvedPicturePath);
 
-            new NotificationWindow("Update Item", cal.id + " - " + item_name.Text, "Foi modificado com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.UpdateItemTitle"), cal.id + " - " + item_name.Text, Loc.T("Noti.UpdatedSuccess")).Show();
 
             OnItemUpdated?.Invoke(updatedCalendar);
             return true;
         }
 
-        private void UpdateLocalInfo()
+        private void UpdateLocalInfo(string resolvedPicturePath)
         {
             var selectedArchive = combo_theme.SelectedItem as Archive;
 
@@ -328,11 +391,14 @@ namespace Callen.Windows
                 year = item_year.Text,
                 matrix = item_other.Text,
                 collection = item_collec.Text,
-                pic_path = cal.pic_path,
+                pic_path = resolvedPicturePath,
                 archive_id = selectedArchive == null ? 0 : selectedArchive.id,
                 code = selectedArchive == null ? null : selectedArchive.code,
                 theme = selectedArchive == null ? null : selectedArchive.theme
             };
+
+            imageDirty = false;
+            pendingImageSourcePath = null;
         }
 
         private void UpdateNavigationButtons()
@@ -371,6 +437,7 @@ namespace Callen.Windows
             LoadCalendarValues();
             LoadPreviewImage();
             UpdateNavigationButtons();
+            OnCalendarNavigated?.Invoke(cal.id);
             return true;
         }
 
@@ -380,8 +447,8 @@ namespace Callen.Windows
         {
             if (PrintListStore.AddIfMissing(cal))
             {
-                new NotificationWindow("Etiquetas para imprimir", cal.id + " - " + cal.name,
-                    "Foi adicionado com sucesso à lista para imprimir").Show();
+                new NotificationWindow(Loc.T("Noti.PrintLabels"), cal.id + " - " + cal.name,
+                    Loc.T("Noti.AddedToPrintSuccess")).Show();
             }
         }
 
@@ -494,11 +561,11 @@ namespace Callen.Windows
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
             var deleteDialog = new ActionDialogWindow(
-                "Eliminar item",
+                Loc.T("Dlg.DeleteItemTitle"),
                 cal.id + " - " + cal.name,
-                "Tem a certeza que pretende eliminar este item?",
-                "Eliminar",
-                "Cancelar")
+                Loc.T("Dlg.DeleteItemMessage"),
+                Loc.T("Dlg.Delete"),
+                Loc.T("Dlg.Cancel"))
             {
                 Owner = this
             };
@@ -512,7 +579,7 @@ namespace Callen.Windows
 
             OnItemDeleted?.Invoke(cal.id);
 
-            new NotificationWindow("Item Eliminado", cal.id + " - " + cal.name, "Foi eliminado com sucesso").Show();
+            new NotificationWindow(Loc.T("Noti.ItemDeletedTitle"), cal.id + " - " + cal.name, Loc.T("Noti.DeletedSuccess")).Show();
 
             suppressCloseConfirmation = true;
             Close();
@@ -559,8 +626,10 @@ namespace Callen.Windows
 
             var anchorWidth = ResolveElementWidth(anchor);
             var anchorTopLeft = anchor.TranslatePoint(new Point(0, 0), tooltipParent);
-            var tooltipLeft = anchorTopLeft.X + (anchorWidth / 2.0) - tooltip.Width;
-            var tooltipTop = anchorTopLeft.Y - ResolveElementHeight(tooltip) - 3;
+            tooltip.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            var desiredSize = tooltip.DesiredSize;
+            var tooltipLeft = anchorTopLeft.X + (anchorWidth / 2.0) - desiredSize.Width;
+            var tooltipTop = anchorTopLeft.Y - desiredSize.Height - 4;
 
             Canvas.SetLeft(tooltip, tooltipLeft);
             Canvas.SetTop(tooltip, tooltipTop);
@@ -568,9 +637,8 @@ namespace Callen.Windows
 
         private static void ShowActionTooltip(Border tooltip, TranslateTransform translate, FrameworkElement anchor)
         {
-            PositionTooltip(tooltip, anchor);
-
             tooltip.Visibility = Visibility.Visible;
+            PositionTooltip(tooltip, anchor);
             tooltip.Opacity = 0;
             translate.Y = 6;
 
@@ -604,6 +672,8 @@ namespace Callen.Windows
             var imageHeight = ResolveElementHeight(img_border);
             Canvas.SetLeft(img_border, cardLeft + ((cardWidth - imageWidth) / 2.0));
             Canvas.SetTop(img_border, cardTop - imageHeight - imageToCardGap);
+            Canvas.SetLeft(btn_upload_image, cardLeft + ((cardWidth - ResolveElementWidth(btn_upload_image)) / 2.0));
+            Canvas.SetTop(btn_upload_image, cardTop - imageHeight - imageToCardGap + ((imageHeight - ResolveElementHeight(btn_upload_image)) / 2.0));
 
             var navTop = cardTop + ((cardHeight - ResolveElementHeight(btn_prev_item)) / 2.0);
             Canvas.SetTop(btn_prev_item, navTop);
@@ -628,6 +698,33 @@ namespace Callen.Windows
         private void btn_save_MouseEnter(object sender, MouseEventArgs e) => ShowActionTooltip(pop_save, pop_save_translate, btn_save);
         private void btn_save_MouseLeave(object sender, MouseEventArgs e) => HideActionTooltip(pop_save, pop_save_translate);
 
+        private void btn_upload_image_Click(object sender, RoutedEventArgs e)
+        {
+            var op = new OpenFileDialog
+            {
+                Title = Loc.T("Msg.SelectImageTitle"),
+                Filter =
+                    "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                    "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                    "Portable Network Graphic (*.png)|*.png"
+            };
+
+            if (op.ShowDialog() != true)
+                return;
+
+            try
+            {
+                img.Source = new BitmapImage(new Uri(op.FileName));
+                pendingImageSourcePath = op.FileName;
+                imageDirty = true;
+                UpdateImagePanelState();
+            }
+            catch
+            {
+                MessageBox.Show(Loc.F("Msg.InvalidFile", op.FileName), Loc.T("Msg.GenericTitle"));
+            }
+        }
+
         private void WinDesc_Closing(object sender, CancelEventArgs e)
         {
             if (suppressCloseConfirmation || !HasUnsavedChanges())
@@ -640,6 +737,42 @@ namespace Callen.Windows
 
             suppressCloseConfirmation = true;
             Dispatcher.BeginInvoke(new Action(Close), DispatcherPriority.Background);
+        }
+
+        private void UpdateImagePanelState()
+        {
+            var hasImage = img.Source != null;
+            var shouldShowPanel = IsEditMode || hasImage;
+
+            img_border.Visibility = shouldShowPanel ? Visibility.Visible : Visibility.Hidden;
+            btn_upload_image.Visibility = IsEditMode ? Visibility.Visible : Visibility.Hidden;
+            img.Opacity = IsEditMode && hasImage ? 0.68 : 1.0;
+
+            PositionCardAdjacents();
+        }
+
+        private string ResolveUpdatedPicturePath()
+        {
+            if (!imageDirty || string.IsNullOrWhiteSpace(pendingImageSourcePath))
+                return cal.pic_path;
+
+            try
+            {
+                if (!File.Exists(pendingImageSourcePath))
+                    return cal.pic_path;
+
+                var imagePath = App.ImagePath;
+                Directory.CreateDirectory(imagePath);
+
+                var picPathWithoutExtension = Path.Combine(imagePath, "Calendar_" + cal.id);
+                File.Copy(pendingImageSourcePath, picPathWithoutExtension + ".jpeg", true);
+                return picPathWithoutExtension;
+            }
+            catch
+            {
+                MessageBox.Show(Loc.T("Msg.SaveImageFail"), Loc.T("Msg.GenericTitle"));
+                return cal.pic_path;
+            }
         }
     }
 }

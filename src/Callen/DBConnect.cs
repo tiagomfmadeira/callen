@@ -112,7 +112,7 @@ namespace Callen
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error creating folder: " + ex.Message);
+                MessageBox.Show(Loc.F("Msg.DbCreateFolderError", ex.Message), Loc.T("Msg.GenericTitle"));
             }
         }
 
@@ -185,7 +185,7 @@ namespace Callen
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in GetPicItems: " + ex.Message);
+                MessageBox.Show(Loc.F("Msg.DbGetPicItemsError", ex.Message), Loc.T("Msg.GenericTitle"));
                 return new DataTable("PicItems");
             }
         }

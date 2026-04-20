@@ -6,7 +6,7 @@ namespace Callen
 {
     internal static class DialogHelper
     {
-        private const double DefaultOwnerOpacity = 0.5;
+        private const double DefaultOwnerOpacity = 1.0;
 
         public static MainWindow GetActiveMainWindow()
         {
@@ -27,19 +27,7 @@ namespace Callen
                 throw new ArgumentNullException(nameof(dialog));
 
             dialog.Owner = owner;
-
-            if (owner != null)
-                owner.Opacity = ownerOpacity;
-
-            try
-            {
-                dialog.ShowDialog();
-            }
-            finally
-            {
-                if (owner != null)
-                    owner.Opacity = 1;
-            }
+            dialog.ShowDialog();
         }
     }
 }

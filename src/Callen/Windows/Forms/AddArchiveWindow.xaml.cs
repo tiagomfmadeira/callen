@@ -18,6 +18,7 @@ namespace Callen.Windows.Forms
             overlaySync = new WindowOverlaySync(this);
             PreviewKeyDown += HandleEsc;
 
+            SourceInitialized += WinAddFolder_SourceInitialized;
             Loaded += WinAddFolder_Loaded;
             Closed += WinAddFolder_Closed;
         }
@@ -28,14 +29,17 @@ namespace Callen.Windows.Forms
             fixedFolderCode = code;
         }
 
-        private void WinAddFolder_Loaded(object sender, RoutedEventArgs e)
+        private void WinAddFolder_SourceInitialized(object sender, EventArgs e)
         {
             overlaySync.Attach();
+        }
 
+        private void WinAddFolder_Loaded(object sender, RoutedEventArgs e)
+        {
             // Existing behavior (theme mode)
             if (!string.IsNullOrEmpty(fixedFolderCode))
             {
-                wind_name.Content = "Adicionar Tema";
+                wind_name.Content = Loc.T("AddArchive.TitleTheme");
                 folder_box.Text = fixedFolderCode;
                 folder_box.IsEnabled = false;
             }
@@ -67,7 +71,7 @@ namespace Callen.Windows.Forms
         {
             if (string.IsNullOrWhiteSpace(folder_box.Text) || string.IsNullOrWhiteSpace(theme_box.Text))
             {
-                MessageBox.Show("Necessita de ambos os atributos");
+                MessageBox.Show(Loc.T("Msg.RequireBothAttributes"), Loc.T("Msg.GenericTitle"));
                 return;
             }
 

@@ -15,63 +15,63 @@
     <Grid>
         <!-- Full-window overlay -->
         <Border x:Name="closeBorder"
-                Background="Black"
-                Opacity="0.75"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                Style="{StaticResource DialogOverlayDimmer}"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <!-- Content layer -->
         <Grid>
-            <!-- Close button -->
-            <Button x:Name="btn_close"
-                    Click="btn_close_Click"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Margin="14"
-                    Width="25"
-                    Height="25">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Name="border"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            BorderThickness="1"
-                                            CornerRadius="4">
-                                        <ui:TintedIcon x:Name="img"
-                                                       MaskSource="{StaticResource Icon.CloseWindow}"
-                                                       Tint="#FF2E3136"
-                                                       Width="{StaticResource dialogCloseIconSize}"
-                                                       Height="{StaticResource dialogCloseIconSize}"
-                                                       RenderOptions.BitmapScalingMode="HighQuality" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                            <Setter Property="Cursor" Value="Hand" />
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#59000000" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <!-- Centered image -->
+                <Image x:Name="img"
+                       Stretch="Uniform"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       Visibility="Hidden"
+                       MaxHeight="0"/>
 
-            <!-- Centered image -->
-            <Image x:Name="img"
-                   Stretch="Uniform"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   RenderOptions.BitmapScalingMode="HighQuality"
-                   Visibility="Hidden"
-                   MaxHeight="0"/>
+                <!-- Close button pinned to image corner -->
+                <Button x:Name="btn_close"
+                        Click="btn_close_Click"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="2"
+                        Width="27"
+                        Height="27">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Name="border"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                            <ui:TintedIcon x:Name="img"
+                                                           MaskSource="{StaticResource Icon.CloseWindow}"
+                                                           Tint="#FF2E3136"
+                                                           Width="{StaticResource dialogCloseIconSize}"
+                                                           Height="{StaticResource dialogCloseIconSize}"
+                                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                                <Setter Property="Cursor" Value="Hand" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

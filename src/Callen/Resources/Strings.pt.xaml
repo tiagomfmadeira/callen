@@ -1,0 +1,155 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Collection">Coleção</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Add">Adicionar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Print">Imprimir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Settings">Definições</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Header">Procurar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Name">Nome</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Id">ID</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Collection">Coleção</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Year">Ano</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Matrix">Matriz</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Theme">Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Description">Descrição</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Clear">Limpar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Search">Procurar</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Id">ID</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Name">Nome</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Year">Ano</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Matrix">Matriz</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Collection">Coleção</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Theme">Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Grid.Col.Description">Descrição</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Title">Definições</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Version">Versão</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Language">Idioma</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Update">Atualizar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Install">Instalar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Database">Base de dados</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.ImagesFolder">Pasta de fotos</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.Save">Guardar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Settings.ReleaseTooltip">Abrir página de releases</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Print.Title">Etiquetas para imprimir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Print.RemoveSelected">Remover</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Print.ClearList">Limpar Lista</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Print.Print">Imprimir</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Title">Adicionar Pasta/Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.TitleTheme">Adicionar Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Theme">Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Submit">Submeter</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Title">Gerir Pastas / Temas</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SelectTheme">Selecione um tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditFolder">Modificar pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditTheme">Modificar tema</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Name">Nome</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Year">Ano</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Theme">Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Collection">Coleção</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Matrix">Matriz</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Description">Descrição</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Insert">Inserir</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.Collection">Coleção</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.Matrix">Matriz</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.Description">Descrição</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.Folder">Pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.Theme">Tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.TooltipSave">Gravar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.TooltipEdit">Editar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.TooltipDuplicate">Duplicar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.TooltipDelete">Eliminar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Details.TooltipPrint">Adicionar à lista de etiquetas a imprimir</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Lang.Portuguese">Português</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Lang.English">English</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.InitStorageError">Não foi possível inicializar pastas/base de dados.{0}{0}{1}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.GenericTitle">Callen</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.InvalidFile">Ficheiro {0} não pode ser aberto</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SelectImageTitle">Selecionar imagem</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SettingsSaved">As modificações nas definições foram salvas com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SettingsSavedWarnApply">As definições foram guardadas, mas não foi possível aplicar os novos caminhos.{0}{0}{1}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SelectDatabaseTitle">Selecionar base de dados</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.OpenReleasesError">Não foi possível abrir a página de releases.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SearchingUpdates">A verificar atualizações...</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesGithubFail">Não foi possível verificar atualizações no GitHub.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesInvalidResponse">Resposta inválida do servidor de releases.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.NewVersionAvailable">Nova versão disponível: {0}.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.NewVersionNoAuto">Nova versão disponível: {0}. Auto-update indisponível nesta build.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.NewVersionCurrent">Nova versão disponível: {0} (atual: v{1}).</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.LatestReleaseFound">Última release encontrada: {0}.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.AlreadyLatest">Você já está na versão mais recente (v{0}).</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesCheckFailNow">Não foi possível verificar atualizações neste momento.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.AutoUpdateUnavailable">Auto-update indisponível para esta release.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdaterMissing">O atualizador não foi encontrado nesta build.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateConfirm">A aplicação vai fechar para instalar a atualização {0}.{1}{1}Deseja continuar?</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateTitle">Atualizar Callen</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateDownloading">A transferir pacote de atualização...</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateValidating">A validar integridade do pacote...</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateHashMismatch">O hash SHA256 do pacote não confere.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateInstallFail">Falha ao instalar atualização automática.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.InsertError">Erro ao inserir: {0}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SaveImageFail">Não foi possível guardar a nova imagem.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.RequireBothAttributes">Necessita de ambos os atributos</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbCreateFolderError">Erro ao criar pasta: {0}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbGetPicItemsError">Erro ao obter itens com imagem: {0}</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.PrintLabels">Etiquetas para imprimir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.SettingsSavedTitle">Settings Saved</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NoItems">Sem items</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NoCalendarsToPrint">Não existem calendários para imprimir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedCount">{0} items removidos</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedSuccess">Foi limpa com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedCount">{0} item(ns) removido(s)</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedSuccess">Removido com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedFromPrint">Item removido da lista de impressão</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NewItemTitle">New Item</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.InsertedSuccess">Foi inserido com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.UpdateItemTitle">Update Item</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.UpdatedSuccess">Foi modificado com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.AddedToPrintSuccess">Foi adicionado com sucesso à lista para imprimir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ItemDeletedTitle">Item Eliminado</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.DeletedSuccess">Foi eliminado com sucesso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ZeroAdded">0 items adicionados</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NoneSelected">Nenhum item está selecionado</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NewItemsCount">{0} novos items</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.AddedToPrintList">Foram adicionados com sucesso à lista de impressão</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.FolderUpdatedTitle">Pasta Modificada</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ThemeUpdatedTitle">Tema Modificado</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ThemeDeletedTitle">Tema Eliminado</sys:String>
+
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.UnsavedChangesTitle">Alterações por guardar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.UnsavedChangesMessage">Pretende guardar as alterações antes de continuar?</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.Save">Guardar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.Discard">Descartar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.Cancel">Cancelar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.ThemeInUseTitle">Tema em uso</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.ThemeInUseMessage">Não é possível eliminar um tema que ainda está associado a calendários.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.Close">Fechar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteThemeTitle">Eliminar tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteThemeMessage">Tem a certeza que pretende eliminar este tema?</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.Delete">Eliminar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteItemTitle">Eliminar item</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteItemMessage">Tem a certeza que pretende eliminar este item?</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteThemeErrorTitle">Erro a eliminar tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.DeleteThemeErrorMessage">Não foi possível eliminar o tema.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.LanguagePreviewDiscardTitle">Alterações por guardar</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Dlg.LanguagePreviewDiscardMessage">Pretende guardar o idioma antes de fechar?</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.ThemeInUseCount">Tema em uso por {0} calendários</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.ThemeUnused">Tema sem calendários associados</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.NoFolders">Não existem pastas configuradas</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.NoThemesInFolder">Esta pasta deixou de ter temas</sys:String>
+</ResourceDictionary>

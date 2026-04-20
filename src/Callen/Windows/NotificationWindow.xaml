@@ -2,39 +2,39 @@
     x:Class="Callen.Windows.NotificationWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Notification Popup" Width="500" SizeToContent="Height"
+    Title="Notification Popup" Width="420" SizeToContent="Height"
     WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="Manual"
     Loaded="Window_Loaded">
 
     <Grid RenderTransformOrigin="0,1">
 
         <!-- Notification area -->
-        <Border BorderThickness="1" Background="{DynamicResource lightestHighLight}" BorderBrush="Black"
-                CornerRadius="10">
-            <StackPanel Margin="18">
-                <Grid Width="450"
+        <Border BorderThickness="1" Background="{DynamicResource lightestHighLight}" BorderBrush="{DynamicResource highLight}"
+                CornerRadius="9">
+            <StackPanel Margin="14">
+                <Grid Width="376"
                       HorizontalAlignment="Center">
                     <TextBlock Name="notiTitle"
                                TextWrapping="Wrap"
-                               Margin="0,0,0,6"
+                               Margin="0,0,0,4"
                                FontWeight="ExtraBlack"
-                               FontSize="20"
+                               FontSize="16"
                                TextAlignment="Center">
                         Notification data
                     </TextBlock>
                 </Grid>
                 <TextBlock Name="notiFText"
                            TextWrapping="Wrap"
-                           Margin="0,0,0,4"
+                           Margin="0,0,0,3"
                            FontWeight="SemiBold"
-                           FontSize="18"
+                           FontSize="14"
                            TextAlignment="Center">
                     1234 - Exemple
                 </TextBlock>
                 <TextBlock Name="notiText"
                            TextWrapping="Wrap"
                            Margin="0,0,0,2"
-                           FontSize="18"
+                           FontSize="14"
                            TextAlignment="Center">
                     Something just happened and you are being notified of it.
                 </TextBlock>
