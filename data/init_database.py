@@ -28,22 +28,28 @@ CREATE TABLE IF NOT EXISTS Calendar (
 """
 
 
-def main() -> None:
+def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="Create an empty Callen SQLite database.")
     parser.add_argument(
         "--output",
         default=str(Path(__file__).with_name("Callen.db")),
         help="Output .db file path (default: data/Callen.db)",
     )
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    output_path = Path(args.output).resolve()
+
+def create_database(output_path: Path) -> None:
+    """Create the database and base tables."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
     with sqlite3.connect(str(output_path)) as conn:
         conn.executescript(SCHEMA)
-        conn.commit()
 
+
+def main() -> None:
+    args = parse_args()
+    output_path = Path(args.output).resolve()
+    create_database(output_path)
     print(f"Empty database created: {output_path}")
 
 
