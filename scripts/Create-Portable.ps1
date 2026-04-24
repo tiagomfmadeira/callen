@@ -55,8 +55,6 @@ Get-ChildItem -Path $outputPath -File -Recurse |
         $_.Extension -in @(".pdb", ".xml") -or
         $_.Name -like "*.application" -or
         $_.Name -like "*.vshost.*" -or
-        $_.Name -ieq "SQLitePCLRaw.batteries_green.dll" -or
-        $_.Name -ieq "WpfControls.dll" -or
         $_.Name -ieq "setup.exe" -or
         $_.Name -like "*.manifest"
     } |

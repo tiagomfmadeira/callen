@@ -17,6 +17,7 @@ namespace Callen.Infrastructure.Printing
         private const double DefaultPageWidthCm = 21.0;
         private const double DefaultPageHeightCm = 29.7;
         private const double TopRowFontSize = 10.0;
+        private const double TopRowLineHeight = 12.0;
         private const double NameRowFontSize = 11.0;
         private const double NameLineHeight = 12.0;
         private const int NameMaxLines = 2;
@@ -62,8 +63,8 @@ namespace Callen.Infrastructure.Printing
             var labelWidth = printableWidth / LabelsPerRow;
             var labelHeight = printableHeight / LabelRowsPerPage;
             var count = Math.Min(ItemsPerPage, calendars.Count - startIndex);
-            var pageGrid = CreateGridOverlay(printableWidth, printableHeight, labelWidth, labelHeight);
-            fixedPage.Children.Add(pageGrid);
+            var usedRows = Math.Max(1, (int)Math.Ceiling(count / (double)LabelsPerRow));
+            fixedPage.Children.Add(CreateGridOverlay(printableWidth, labelWidth, labelHeight, usedRows));
 
             for (var slot = 0; slot < count; slot++)
             {
@@ -96,6 +97,7 @@ namespace Callen.Infrastructure.Printing
             };
             content.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             content.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1.0, GridUnitType.Star) });
+            content.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
             for (var i = 0; i < 4; i++)
                 content.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.0, GridUnitType.Star) });
@@ -109,7 +111,7 @@ namespace Callen.Infrastructure.Printing
             {
                 Text = item.name ?? string.Empty,
                 FontSize = NameRowFontSize,
-                VerticalAlignment = VerticalAlignment.Bottom,
+                VerticalAlignment = VerticalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
                 LineStackingStrategy = LineStackingStrategy.BlockLineHeight,
                 LineHeight = NameLineHeight,
@@ -118,7 +120,7 @@ namespace Callen.Infrastructure.Printing
                 TextAlignment = TextAlignment.Left,
                 ClipToBounds = true
             };
-            Grid.SetRow(name, 1);
+            Grid.SetRow(name, 2);
             Grid.SetColumn(name, 0);
             Grid.SetColumnSpan(name, 4);
             content.Children.Add(name);
@@ -140,11 +142,13 @@ namespace Callen.Infrastructure.Printing
             {
                 Text = value ?? string.Empty,
                 FontSize = TopRowFontSize,
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = horizontalAlignment,
                 TextWrapping = TextWrapping.NoWrap,
                 TextTrimming = TextTrimming.CharacterEllipsis,
                 TextAlignment = textAlignment,
+                LineStackingStrategy = LineStackingStrategy.BlockLineHeight,
+                LineHeight = TopRowLineHeight,
                 ClipToBounds = true
             };
             Grid.SetRow(text, 0);
@@ -152,12 +156,13 @@ namespace Callen.Infrastructure.Printing
             parent.Children.Add(text);
         }
 
-        private static FrameworkElement CreateGridOverlay(double width, double height, double labelWidth, double labelHeight)
+        private static FrameworkElement CreateGridOverlay(double width, double labelWidth, double labelHeight, int usedRows)
         {
+            var usedHeight = usedRows * labelHeight;
             var canvas = new Canvas
             {
                 Width = width,
-                Height = height,
+                Height = usedHeight,
                 IsHitTestVisible = false
             };
 
@@ -169,7 +174,7 @@ namespace Callen.Infrastructure.Printing
                     X1 = x,
                     Y1 = 0,
                     X2 = x,
-                    Y2 = height,
+                    Y2 = usedHeight,
                     Stroke = Brushes.Black,
                     StrokeThickness = 1.0,
                     StrokeDashArray = GridLineDash
@@ -177,7 +182,7 @@ namespace Callen.Infrastructure.Printing
                 canvas.Children.Add(verticalLine);
             }
 
-            for (var row = 0; row <= LabelRowsPerPage; row++)
+            for (var row = 0; row <= usedRows; row++)
             {
                 var y = row * labelHeight;
                 var horizontalLine = new System.Windows.Shapes.Line

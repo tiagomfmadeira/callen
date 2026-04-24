@@ -38,7 +38,6 @@ namespace Callen.Windows
         private string latestZipDownloadUrl;
         private string latestZipSha256;
         private string latestTagName;
-        private bool updateReady;
         private bool suppressCloseRevertPrompt;
         private bool isRefreshingLanguageOptions;
 
@@ -67,7 +66,6 @@ namespace Callen.Windows
             img_folder.Text = App.ImagePath;
             app_version.Text = GetCurrentVersionText();
             btn_check_updates.ToolTip = Loc.T("Settings.Update");
-            updateReady = false;
         }
 
         private void WinSettings_SourceInitialized(object sender, EventArgs e)
@@ -201,18 +199,11 @@ namespace Callen.Windows
 
         private async void btn_check_updates_Click(object sender, RoutedEventArgs e)
         {
-            if (updateReady)
-            {
-                await StartAutoUpdateAsync();
-                return;
-            }
-
             btn_check_updates.IsEnabled = false;
             latestReleasePageUrl = null;
             latestZipDownloadUrl = null;
             latestZipSha256 = null;
             latestTagName = null;
-            updateReady = false;
             btn_check_updates.ToolTip = Loc.T("Settings.Update");
 
             try
@@ -280,33 +271,31 @@ namespace Callen.Windows
                 {
                     if (string.IsNullOrWhiteSpace(latestZipDownloadUrl))
                     {
-                        ShowUpdatePrompt(Loc.F("Msg.NewVersionAvailable", release.TagName));
+                        await ShowUpdateDialogAsync(Loc.F("Msg.NewVersionAvailable", release.TagName), false);
                         return;
                     }
 
                     if (string.IsNullOrWhiteSpace(latestZipSha256))
                     {
-                        ShowUpdatePrompt(Loc.F("Msg.NewVersionNoAuto", release.TagName));
+                        await ShowUpdateDialogAsync(Loc.F("Msg.NewVersionNoAuto", release.TagName), false);
                         return;
                     }
 
-                    ShowUpdatePrompt(Loc.F("Msg.NewVersionCurrent", release.TagName, currentVersion));
-                    updateReady = true;
-                    btn_check_updates.ToolTip = Loc.T("Settings.Install");
+                    await ShowUpdateDialogAsync(Loc.F("Msg.NewVersionCurrent", release.TagName, currentVersion), true);
                     return;
                 }
 
                 if (latestVersion == null)
                 {
-                    ShowUpdatePrompt(Loc.F("Msg.LatestReleaseFound", release.TagName ?? "(sem tag)"));
+                    await ShowUpdateDialogAsync(Loc.F("Msg.LatestReleaseFound", release.TagName ?? "(sem tag)"), false);
                     return;
                 }
 
-                ShowUpdatePrompt(Loc.F("Msg.AlreadyLatest", currentVersion));
+                await ShowUpdateDialogAsync(Loc.F("Msg.AlreadyLatest", currentVersion), false);
             }
             catch (Exception)
             {
-                ShowUpdatePrompt(Loc.T("Msg.UpdatesCheckFailNow"));
+                await ShowUpdateDialogAsync(Loc.T("Msg.UpdatesCheckFailNow"), false);
             }
             finally
             {
@@ -314,7 +303,7 @@ namespace Callen.Windows
             }
         }
 
-        private async Task StartAutoUpdateAsync()
+        private async Task StartAutoUpdateAsync(bool requireConfirmation = true)
         {
             if (string.IsNullOrWhiteSpace(latestZipDownloadUrl) || string.IsNullOrWhiteSpace(latestZipSha256))
             {
@@ -328,18 +317,20 @@ namespace Callen.Windows
             {
                 ShowUpdatePrompt(Loc.T("Msg.UpdaterMissing"));
                 btn_check_updates.ToolTip = Loc.T("Settings.Update");
-                updateReady = false;
                 return;
             }
 
-            var answer = MessageBox.Show(
-                Loc.F("Msg.UpdateConfirm", latestTagName, Environment.NewLine),
-                Loc.T("Msg.UpdateTitle"),
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            if (requireConfirmation)
+            {
+                var answer = MessageBox.Show(
+                    Loc.F("Msg.UpdateConfirm", latestTagName, Environment.NewLine),
+                    Loc.T("Msg.UpdateTitle"),
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
-            if (answer != MessageBoxResult.Yes)
-                return;
+                if (answer != MessageBoxResult.Yes)
+                    return;
+            }
 
             btn_check_updates.IsEnabled = false;
 
@@ -373,9 +364,31 @@ namespace Callen.Windows
                 TryDeleteFile(tempZipPath);
                 ShowUpdatePrompt(Loc.T("Msg.UpdateInstallFail"));
                 btn_check_updates.ToolTip = Loc.T("Settings.Update");
-                updateReady = false;
                 btn_check_updates.IsEnabled = true;
             }
+        }
+
+        private async Task ShowUpdateDialogAsync(string message, bool allowInstall)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            var primaryText = allowInstall ? Loc.T("Settings.Install") : Loc.T("Dlg.Close");
+            var secondaryText = allowInstall ? Loc.T("Dlg.Close") : null;
+            var updateDialog = new ActionDialogWindow(
+                Loc.T("Msg.UpdateTitle"),
+                string.Empty,
+                message,
+                primaryText,
+                secondaryText)
+            {
+                Owner = this
+            };
+
+            DialogHelper.ShowOwnedDialog(updateDialog, this, 0.85);
+
+            if (allowInstall && updateDialog.SelectedAction == DialogAction.Primary)
+                await StartAutoUpdateAsync(false);
         }
 
         private void ShowUpdatePrompt(string message)
@@ -412,10 +425,7 @@ namespace Callen.Windows
         private void RefreshLanguageOptionDisplay(string selectedLanguageCode = null)
         {
             InitializeLanguageOptions(selectedLanguageCode);
-            if (updateReady)
-                btn_check_updates.ToolTip = Loc.T("Settings.Install");
-            else
-                btn_check_updates.ToolTip = Loc.T("Settings.Update");
+            btn_check_updates.ToolTip = Loc.T("Settings.Update");
         }
 
         private void WinSettings_Closing(object sender, System.ComponentModel.CancelEventArgs e)

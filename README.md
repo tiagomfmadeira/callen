@@ -1,7 +1,7 @@
 [![Version](https://img.shields.io/github/v/release/tiagomfmadeira/callen?display_name=tag)](https://github.com/tiagomfmadeira/callen/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/tiagomfmadeira/callen/release-portable.yml?label=ci)](https://github.com/tiagomfmadeira/callen/actions/workflows/release-portable.yml)
 ![C%23](https://img.shields.io/badge/language-C%23-239120)
-![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.6-512BD4)
+![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-512BD4)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6)
 
 <p align="center">
@@ -9,7 +9,7 @@
   <b><span style="font-size: 20px;">Callen</span></b>
 </p>
 
-A WPF desktop application for organizing and managing a personal collection, with local database support and automated packaging.
+A WPF desktop application for organizing and managing a personal collection, with local database support, native Windows printing, and automated portable packaging.
 
 ## Structure
 

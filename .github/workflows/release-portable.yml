@@ -20,7 +20,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Restore packages
-        run: nuget restore Callen.sln -PackagesDirectory src/packages -NonInteractive
+        run: nuget restore Callen.sln -PackagesDirectory packages -NonInteractive
 
       - name: Build Release
         run: msbuild Callen.sln /p:Configuration=Release /p:Platform="Any CPU"
