@@ -1,13 +1,9 @@
 using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.Office.Interop.Excel;
-using Application = Microsoft.Office.Interop.Excel.Application;
+using Callen.Infrastructure.Printing;
 using Window = System.Windows.Window;
 
 namespace Callen.Windows
@@ -17,7 +13,7 @@ namespace Callen.Windows
     /// </summary>
     public partial class PrintWindow : Window
     {
-        private const int ItemsPerPage = 36;
+        private const int ItemsPerPage = LabelPrintDocumentBuilder.ItemsPerPage;
         private static readonly double TagCardHeight = (double)new LengthConverter().ConvertFrom("2cm");
         private static readonly Thickness TagCardMargin = new Thickness(0.5, 0, 0.5, 1);
         private readonly WindowOverlaySync overlaySync;
@@ -48,25 +44,6 @@ namespace Callen.Windows
             overlaySync.Detach();
         }
 
-
-        public void DisposeExcelInstance(Application app, Workbook workBook, Worksheet workSheet)
-        {
-            app.DisplayAlerts = false;
-            workBook.Close();
-            app.Workbooks.Close();
-            app.Quit();
-            if (workSheet != null)
-                Marshal.ReleaseComObject(workSheet);
-            if (workBook != null)
-                Marshal.ReleaseComObject(workBook);
-            if (app != null)
-                Marshal.ReleaseComObject(app);
-            workSheet = null;
-            workBook = null;
-            app = null;
-            GC.Collect(); // force final cleanup!
-        }
-
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -87,77 +64,15 @@ namespace Callen.Windows
                 return;
             }
 
-            var app = new Application();
-            //app.WindowState = XlWindowState.xlMaximized;
+            var printDialog = new PrintDialog();
+            var printConfirmed = printDialog.ShowDialog();
+            if (printConfirmed != true)
+                return;
 
-            var template_tmp_path = Path.GetTempPath() + Guid.NewGuid() + ".xlsx";
-            File.WriteAllBytes(template_tmp_path, Properties.Resources.tag_printing_template);
-
-            var wb = app.Workbooks.Open(template_tmp_path);
-            Worksheet ws = wb.Worksheets[1];
-
-            var nr_of_ws = instances_to_print.Count / ItemsPerPage;
-            if (instances_to_print.Count % ItemsPerPage > 0) nr_of_ws++;
-
-            for (var i = 1; i < nr_of_ws; i++)
-            {
-                ws.Copy(Type.Missing, wb.Worksheets[wb.Sheets.Count]);
-                wb.Sheets[wb.Sheets.Count].Name = "Folha" + i;
-            }
-
-            var k = 0;
-            for (var j = 1; j <= nr_of_ws; j++)
-            {
-                ws = wb.Worksheets[j];
-
-                for (var i = 0; i < ItemsPerPage; i = i + 2)
-                {
-                    if (k >= instances_to_print.Count) break;
-
-                    ws.Range["A" + (i + 1), "D" + (i + 2)].BorderAround2(XlLineStyle.xlDash);
-
-                    ws.Range["A" + (i + 1)].Value = "Nº" + instances_to_print[k].id;
-                    ws.Range["B" + (i + 1)].Value = instances_to_print[k].matrix;
-                    ws.Range["C" + (i + 1)].Value = instances_to_print[k].collection;
-                    ws.Range["D" + (i + 1)].Value = instances_to_print[k].year;
-                    ws.Range["A" + (i + 2)].Value = instances_to_print[k].name;
-                    k++;
-
-                    if (k >= instances_to_print.Count) break;
-
-                    ws.Range["E" + (i + 1), "H" + (i + 2)].BorderAround2(XlLineStyle.xlDash);
-
-                    ws.Range["E" + (i + 1)].Value = "Nº" + instances_to_print[k].id;
-                    ws.Range["F" + (i + 1)].Value = instances_to_print[k].matrix;
-                    ws.Range["G" + (i + 1)].Value = instances_to_print[k].collection;
-                    ws.Range["H" + (i + 1)].Value = instances_to_print[k].year;
-                    ws.Range["E" + (i + 2)].Value = instances_to_print[k].name;
-                    k++;
-                }
-            }
-            //app.Visible = true;
-            //ws.PrintPreview();
-            //app.Visible = false;
-
-            wb.PrintOut(
-                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-                Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-            // KILL EVERYTHING
-            DisposeExcelInstance(app, wb, ws);
-
-            var tryAgain = true;
-            while (tryAgain)
-                try
-                {
-                    File.Delete(template_tmp_path);
-                    tryAgain = false;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Thread.Sleep(1000);
-                }
+            var pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+            var documentBuilder = new LabelPrintDocumentBuilder();
+            var document = documentBuilder.Build(instances_to_print, pageSize);
+            printDialog.PrintDocument(document.DocumentPaginator, Loc.T("Print.Title"));
         }
 
         public void btn_clear_list_Click(object sender, RoutedEventArgs e)

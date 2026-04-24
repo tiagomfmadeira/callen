@@ -59,15 +59,5 @@ namespace Callen.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] tag_printing_template {
-            get {
-                object obj = ResourceManager.GetObject("tag_printing_template", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
