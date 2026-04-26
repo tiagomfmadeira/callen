@@ -73,6 +73,7 @@ namespace Callen.Pages
                 return;
 
             btn_adv_search.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            e.Handled = true;
         }
 
         private void RootSearch_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -182,7 +183,13 @@ namespace Callen.Pages
 
             listSearchPage = new ListSearch(new DataTable());
             listSearchPage.LoadMoreRequested += ListSearchPage_LoadMoreRequested;
+            listSearchPage.ArchiveStructureChangedRequested += ListSearchPage_ArchiveStructureChangedRequested;
             Switcher.Switch(Search_mode, listSearchPage);
+        }
+
+        private void ListSearchPage_ArchiveStructureChangedRequested(object sender, EventArgs e)
+        {
+            ReloadData();
         }
 
         private async void ListSearchPage_LoadMoreRequested(object sender, EventArgs e)

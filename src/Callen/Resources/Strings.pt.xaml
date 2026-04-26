@@ -1,9 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Collection">Coleção</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Add">Adicionar</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Print">Imprimir</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Settings">Definições</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Header">Procurar</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Name">Nome</sys:String>
@@ -46,12 +42,35 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Folder">Pasta</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Theme">Tema</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Submit">Submeter</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.MissingFieldsTitle">Faltam campos obrigatórios</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.MissingFieldsMessage">Preencha todos os campos obrigatórios antes de continuar.</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Title">Gerir Pastas / Temas</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Folder">Pasta</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SelectTheme">Selecione um tema</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditFolder">Modificar pasta</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditTheme">Modificar tema</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTitle">Dividir pasta</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSourceFolder">Pasta origem</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetOneCode">Pasta A</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitPoint">Nova divisão</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetTwoCode">Pasta B</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirm">Dividir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirmTitle">Confirmar divisão</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirmMessage">Criar pasta '{0}' ({1}) e pasta '{2}' ({3}), duplicar temas, mover calendários por intervalo do nome e remover a pasta original.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryTitle">Divisão concluída</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryContext">Criadas: {0} / {1}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryCounts">Calendários movidos: {0} (A: {1}, B: {2})</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryUnmatched">{0} calendário(s) não encaixaram em nenhum intervalo e foram movidos para '{1}'.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryExamples">Exemplos: {0}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitErrorTitle">Erro ao dividir</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitMissingFields">Todos os campos da divisão são obrigatórios.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitCodesMustDiffer">Os códigos das pastas de destino devem ser diferentes.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetCodeCannotMatchSource">Os códigos de destino não podem ser iguais ao da pasta de origem.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitCodeExists">A pasta '{0}' já existe.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeRequired">O intervalo é obrigatório.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeInvalid">O intervalo deve estar no formato A/Z (prefixos permitidos).</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeOrderInvalid">O início do intervalo deve vir antes do fim.</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Name">Nome</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Year">Ano</sys:String>
@@ -84,7 +103,6 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SettingsSavedWarnApply">As definições foram guardadas, mas não foi possível aplicar os novos caminhos.{0}{0}{1}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SelectDatabaseTitle">Selecionar base de dados</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.OpenReleasesError">Não foi possível abrir a página de releases.</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SearchingUpdates">A verificar atualizações...</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesGithubFail">Não foi possível verificar atualizações no GitHub.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesInvalidResponse">Resposta inválida do servidor de releases.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.NewVersionAvailable">Nova versão disponível: {0}.</sys:String>
@@ -97,13 +115,10 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdaterMissing">O atualizador não foi encontrado nesta build.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateConfirm">A aplicação vai fechar para instalar a atualização {0}.{1}{1}Deseja continuar?</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateTitle">Atualizar Callen</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateDownloading">A transferir pacote de atualização...</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateValidating">A validar integridade do pacote...</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateHashMismatch">O hash SHA256 do pacote não confere.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateInstallFail">Falha ao instalar atualização automática.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.InsertError">Erro ao inserir: {0}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SaveImageFail">Não foi possível guardar a nova imagem.</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.RequireBothAttributes">Necessita de ambos os atributos</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbCreateFolderError">Erro ao criar pasta: {0}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbGetPicItemsError">Erro ao obter itens com imagem: {0}</sys:String>
 
@@ -113,8 +128,6 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NoCalendarsToPrint">Não existem calendários para imprimir</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedCount">{0} items removidos</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedSuccess">Foi limpa com sucesso</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedCount">{0} item(ns) removido(s)</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedSuccess">Removido com sucesso</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedFromPrint">Item removido da lista de impressão</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NewItemTitle">New Item</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.InsertedSuccess">Foi inserido com sucesso</sys:String>

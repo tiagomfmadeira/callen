@@ -8,7 +8,8 @@
              d:DesignHeight="575"
              d:DesignWidth="800">
     <UserControl.Resources>
-        <Thickness x:Key="AdvancedFieldMargin">0,0,10,6</Thickness>
+        <Thickness x:Key="SearchLabelMargin">3</Thickness>
+        <Thickness x:Key="SearchFieldMargin">3</Thickness>
 
         <Style x:Key="SearchHeaderToggleStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -44,7 +45,7 @@
 
         <Style x:Key="SearchInputTextBoxStyle"
                TargetType="{x:Type TextBox}">
-            <Setter Property="Margin" Value="0,0,10,8" />
+            <Setter Property="Margin" Value="{StaticResource SearchFieldMargin}" />
             <Setter Property="Background" Value="#FFF4F5F6" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -55,7 +56,7 @@
             <Setter Property="FontSize" Value="13.5" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Height" Value="28" />
-            <Setter Property="Padding" Value="6,1,6,1" />
+            <Setter Property="Padding" Value="2,1,2,1" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
@@ -92,7 +93,7 @@
                TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource advanceSearchFont}">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="Margin" Value="0,0,0,2" />
+            <Setter Property="Margin" Value="{StaticResource SearchLabelMargin}" />
         </Style>
 
         <Style x:Key="SearchBottomActionButton"
@@ -116,7 +117,13 @@
                TargetType="{x:Type Panel}"
                BasedOn="{StaticResource bottomActionRow}">
             <Setter Property="Height" Value="32" />
-            <Setter Property="Margin" Value="0,6,10,6" />
+            <Setter Property="Margin" Value="{StaticResource layoutSpacing3}" />
+        </Style>
+
+        <Style x:Key="SearchAdvanceFormStyle"
+               TargetType="{x:Type Grid}"
+               BasedOn="{StaticResource advanceSearchForm}">
+            <Setter Property="Margin" Value="{StaticResource layoutSpacing3}" />
         </Style>
 
         <Style x:Key="SearchHeaderChevronStyle" TargetType="{x:Type Path}">
@@ -203,7 +210,7 @@
                 BorderBrush="{DynamicResource highLight}"
                 Visibility="{Binding ElementName=advanceSearch, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}"
                 Style="{StaticResource advanceSearchBorder}">
-            <Grid Style="{StaticResource advanceSearchForm}" TextElement.FontSize="12">
+            <Grid Style="{StaticResource SearchAdvanceFormStyle}" TextElement.FontSize="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -227,33 +234,33 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{DynamicResource Search.Name}" Style="{StaticResource SearchLabelTextStyle}" />
                 <TextBlock Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Text="{DynamicResource Search.Id}" Style="{StaticResource SearchLabelTextStyle}" />
 
-                <TextBox Name="name_box" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
-                <TextBox Name="id_box" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="name_box" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="id_box" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource SearchInputTextBoxStyle}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{DynamicResource Search.Collection}" Style="{StaticResource SearchLabelTextStyle}" />
                 <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{DynamicResource Search.Folder}" Style="{StaticResource SearchLabelTextStyle}" />
                 <TextBlock Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Text="{DynamicResource Search.Year}" Style="{StaticResource SearchLabelTextStyle}" />
 
-                <TextBox Name="collec_box" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
-                <TextBox Name="folder_box" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
-                <TextBox Name="year_box" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="collec_box" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="folder_box" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="year_box" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource SearchInputTextBoxStyle}" />
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="{DynamicResource Search.Matrix}" Style="{StaticResource SearchLabelTextStyle}" />
                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3" Text="{DynamicResource Search.Theme}" Style="{StaticResource SearchLabelTextStyle}" />
 
-                <TextBox Name="other_box" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
-                <TextBox Name="theme_box" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="{StaticResource AdvancedFieldMargin}" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="other_box" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource SearchInputTextBoxStyle}" />
+                <TextBox Name="theme_box" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource SearchInputTextBoxStyle}" />
 
                 <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="{DynamicResource Search.Description}" Style="{StaticResource SearchLabelTextStyle}" />
                 <TextBox Name="desc_box"
                          Grid.Row="7"
                          Grid.Column="0"
                          Grid.ColumnSpan="6"
-                         Margin="0,0,10,4"
+                         Margin="{StaticResource SearchFieldMargin}"
                          Height="92"
                          MinHeight="92"
                          TextWrapping="Wrap"
-                         AcceptsReturn="True"
+                         AcceptsReturn="False"
                          Style="{StaticResource SearchInputTextBoxStyle}"
                          VerticalContentAlignment="Top" />
 

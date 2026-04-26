@@ -103,6 +103,7 @@
     <Compile Include="Classes\Calendar.cs" />
     <Compile Include="DBConnect.cs" />
     <Compile Include="Infrastructure\Data\DataTableExtensions.cs" />
+    <Compile Include="Infrastructure\Data\FolderRangeHelper.cs" />
     <Compile Include="Infrastructure\Localization\Loc.cs" />
     <Compile Include="Infrastructure\Printing\LabelPrintDocumentBuilder.cs" />
     <Compile Include="Pages\ListSearch.xaml.cs">
@@ -119,6 +120,9 @@
     </Compile>
     <Compile Include="Windows\Forms\ManageArchiveWindow.xaml.cs">
       <DependentUpon>ManageArchiveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\SplitArchiveWindow.xaml.cs">
+      <DependentUpon>SplitArchiveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ActionDialogWindow.xaml.cs">
       <DependentUpon>ActionDialogWindow.xaml</DependentUpon>
@@ -179,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Forms\ManageArchiveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Forms\SplitArchiveWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,26 +251,27 @@
   <ItemGroup>
     <Resource Include="Icons\collection.png" />
     <Resource Include="Icons\logo.png" />
-    <Resource Include="Icons\tabler\archive.png" />
-    <Resource Include="Icons\tabler\check.png" />
-    <Resource Include="Icons\tabler\chevron-down.png" />
-    <Resource Include="Icons\tabler\chevron-left.png" />
-    <Resource Include="Icons\tabler\chevron-right.png" />
-    <Resource Include="Icons\tabler\copy-plus.png" />
-    <Resource Include="Icons\tabler\device-floppy.png" />
-    <Resource Include="Icons\tabler\edit.png" />
-    <Resource Include="Icons\tabler\folder.png" />
-    <Resource Include="Icons\tabler\home.png" />
-    <Resource Include="Icons\tabler\search.png" />
-    <Resource Include="Icons\tabler\maximize.png" />
-    <Resource Include="Icons\tabler\minus.png" />
-    <Resource Include="Icons\tabler\photo-scan.png" />
-    <Resource Include="Icons\tabler\plus.png" />
-    <Resource Include="Icons\tabler\printer.png" />
-    <Resource Include="Icons\tabler\refresh.png" />
-    <Resource Include="Icons\tabler\settings.png" />
-    <Resource Include="Icons\tabler\trash-x.png" />
-    <Resource Include="Icons\tabler\x.png" />
+    <Resource Include="Icons\archive.png" />
+    <Resource Include="Icons\arrow-fork.png" />
+    <Resource Include="Icons\check.png" />
+    <Resource Include="Icons\chevron-down.png" />
+    <Resource Include="Icons\chevron-left.png" />
+    <Resource Include="Icons\chevron-right.png" />
+    <Resource Include="Icons\copy-plus.png" />
+    <Resource Include="Icons\device-floppy.png" />
+    <Resource Include="Icons\edit.png" />
+    <Resource Include="Icons\folder.png" />
+    <Resource Include="Icons\home.png" />
+    <Resource Include="Icons\search.png" />
+    <Resource Include="Icons\maximize.png" />
+    <Resource Include="Icons\minus.png" />
+    <Resource Include="Icons\photo-scan.png" />
+    <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\printer.png" />
+    <Resource Include="Icons\refresh.png" />
+    <Resource Include="Icons\settings.png" />
+    <Resource Include="Icons\trash-x.png" />
+    <Resource Include="Icons\x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != '' and Exists('$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets')" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace Callen.Windows.Forms
         private readonly int? initialArchiveId;
         public string SelectedFolderCode { get; private set; }
         public int? SelectedArchiveId { get; private set; }
+        public bool HasArchiveStructureChanges { get; private set; }
 
         public ManageArchiveWindow()
         {
@@ -71,6 +73,7 @@ namespace Callen.Windows.Forms
         private void combo_folder_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btn_add_theme.IsEnabled = combo_folder.SelectedItem != null;
+            btn_split_folder.IsEnabled = combo_folder.SelectedItem != null;
             SelectedFolderCode = (combo_folder.SelectedItem as Archive)?.code;
             RefreshThemeList(initialArchiveId);
         }
@@ -108,6 +111,7 @@ namespace Callen.Windows.Forms
 
             DBConnect.RenameFolder(oldFolderCode, newFolderCode);
             LoadFolders(newFolderCode);
+            HasArchiveStructureChanges = true;
 
             new NotificationWindow(Loc.T("Noti.FolderUpdatedTitle"), oldFolderCode, Loc.T("Noti.UpdatedSuccess")).Show();
         }
@@ -123,6 +127,7 @@ namespace Callen.Windows.Forms
 
             DBConnect.RenameArchiveTheme(selectedArchive.id, newThemeName);
             RefreshThemeList(selectedArchive.id);
+            HasArchiveStructureChanges = true;
 
             new NotificationWindow(Loc.T("Noti.ThemeUpdatedTitle"), oldThemeName, Loc.T("Noti.UpdatedSuccess")).Show();
         }
@@ -139,12 +144,9 @@ namespace Callen.Windows.Forms
                     Loc.T("Dlg.ThemeInUseTitle"),
                     selectedArchive.theme,
                     Loc.T("Dlg.ThemeInUseMessage"),
-                    Loc.T("Dlg.Close"))
-                {
-                    Owner = this
-                };
+                    Loc.T("Dlg.Close"));
 
-                DialogHelper.ShowOwnedDialog(usageDialog, this, 0.85);
+                DialogHelper.ShowOwnedDialog(usageDialog, this);
                 return;
             }
 
@@ -153,12 +155,9 @@ namespace Callen.Windows.Forms
                 selectedArchive.theme,
                 Loc.T("Dlg.DeleteThemeMessage"),
                 Loc.T("Dlg.Delete"),
-                Loc.T("Dlg.Cancel"))
-            {
-                Owner = this
-            };
+                Loc.T("Dlg.Cancel"));
 
-            DialogHelper.ShowOwnedDialog(deleteDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(deleteDialog, this);
 
             if (deleteDialog.SelectedAction != DialogAction.Primary)
                 return;
@@ -169,27 +168,26 @@ namespace Callen.Windows.Forms
                     Loc.T("Dlg.DeleteThemeErrorTitle"),
                     selectedArchive.theme,
                     Loc.T("Dlg.DeleteThemeErrorMessage"),
-                    Loc.T("Dlg.Close"))
-                {
-                    Owner = this
-                };
+                    Loc.T("Dlg.Close"));
 
-                DialogHelper.ShowOwnedDialog(errorDialog, this, 0.85);
+                DialogHelper.ShowOwnedDialog(errorDialog, this);
                 return;
             }
 
             var selectedFolder = combo_folder.SelectedItem as Archive;
             LoadFolders(selectedFolder == null ? null : selectedFolder.code);
+            HasArchiveStructureChanges = true;
 
             new NotificationWindow(Loc.T("Noti.ThemeDeletedTitle"), selectedArchive.theme, Loc.T("Noti.DeletedSuccess")).Show();
         }
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
-            var addFolderWindow = new AddArchiveWindow { Owner = this };
-            DialogHelper.ShowOwnedDialog(addFolderWindow, this, 0.85);
+            var addFolderWindow = new AddArchiveWindow();
+            DialogHelper.ShowOwnedDialog(addFolderWindow, this);
 
             LoadFolders();
+            HasArchiveStructureChanges = true;
         }
 
         private void btn_add_theme_Click(object sender, RoutedEventArgs e)
@@ -198,10 +196,96 @@ namespace Callen.Windows.Forms
             if (selectedFolder == null)
                 return;
 
-            var addThemeWindow = new AddArchiveWindow(selectedFolder.code) { Owner = this };
-            DialogHelper.ShowOwnedDialog(addThemeWindow, this, 0.85);
+            var addThemeWindow = new AddArchiveWindow(selectedFolder.code);
+            DialogHelper.ShowOwnedDialog(addThemeWindow, this);
 
             LoadFolders(selectedFolder.code);
+            HasArchiveStructureChanges = true;
+        }
+
+        private void btn_split_folder_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedFolder = combo_folder.SelectedItem as Archive;
+            if (selectedFolder == null)
+                return;
+
+            SuggestSplit(selectedFolder.code, out var sourceRange, out var suggestedRangeA, out var suggestedRangeB, out var suggestedCodeA, out var suggestedCodeB);
+
+            var splitWindow = new SplitArchiveWindow(
+                selectedFolder.code,
+                sourceRange,
+                suggestedCodeA,
+                suggestedRangeA,
+                suggestedCodeB,
+                suggestedRangeB);
+
+            DialogHelper.ShowOwnedDialog(splitWindow, this);
+            if (splitWindow.DialogResult != true)
+                return;
+
+            var confirmDialog = new ActionDialogWindow(
+                Loc.T("ManageArchive.SplitConfirmTitle"),
+                selectedFolder.code,
+                Loc.F(
+                    "ManageArchive.SplitConfirmMessage",
+                    splitWindow.TargetCodeA,
+                    splitWindow.TargetRangeA,
+                    splitWindow.TargetCodeB,
+                    splitWindow.TargetRangeB),
+                Loc.T("ManageArchive.SplitConfirm"),
+                Loc.T("Dlg.Cancel"));
+
+            DialogHelper.ShowOwnedDialog(confirmDialog, this);
+            if (confirmDialog.SelectedAction != DialogAction.Primary)
+                return;
+
+            try
+            {
+                var result = DBConnect.SplitFolder(new FolderSplitRequest
+                {
+                    SourceCode = selectedFolder.code,
+                    TargetCodeA = splitWindow.TargetCodeA,
+                    TargetRangeA = splitWindow.TargetRangeA,
+                    TargetCodeB = splitWindow.TargetCodeB,
+                    TargetRangeB = splitWindow.TargetRangeB
+                });
+
+                LoadFolders(splitWindow.TargetCodeA);
+                HasArchiveStructureChanges = true;
+
+                var details = Loc.F(
+                    "ManageArchive.SplitSummaryCounts",
+                    result.TotalCalendarsMoved,
+                    result.CalendarsMovedToA,
+                    result.CalendarsMovedToB);
+
+                if (result.UnmatchedMovedToA > 0)
+                {
+                    details += Environment.NewLine + Environment.NewLine
+                        + Loc.F("ManageArchive.SplitSummaryUnmatched", result.UnmatchedMovedToA, splitWindow.TargetCodeA);
+
+                    if (result.WarningSamples.Count > 0)
+                        details += Environment.NewLine + Loc.F("ManageArchive.SplitSummaryExamples", string.Join(", ", result.WarningSamples));
+                }
+
+                var summaryDialog = new ActionDialogWindow(
+                    Loc.T("ManageArchive.SplitSummaryTitle"),
+                    Loc.F("ManageArchive.SplitSummaryContext", splitWindow.TargetCodeA, splitWindow.TargetCodeB),
+                    details,
+                    Loc.T("Dlg.Close"));
+
+                DialogHelper.ShowOwnedDialog(summaryDialog, this);
+            }
+            catch (Exception ex)
+            {
+                var errorDialog = new ActionDialogWindow(
+                    Loc.T("ManageArchive.SplitErrorTitle"),
+                    selectedFolder.code,
+                    ex.Message,
+                    Loc.T("Dlg.Close"));
+
+                DialogHelper.ShowOwnedDialog(errorDialog, this);
+            }
         }
 
         private void LoadFolders(string folderCodeToSelect = null)
@@ -229,6 +313,7 @@ namespace Callen.Windows.Forms
                 folder_name_box.Text = string.Empty;
                 theme_name_box.Text = string.Empty;
                 btn_add_theme.IsEnabled = false;
+                btn_split_folder.IsEnabled = false;
                 btn_delete_theme.IsEnabled = false;
                 btn_rename_theme.IsEnabled = false;
             }
@@ -271,6 +356,28 @@ namespace Callen.Windows.Forms
             if (themes.Count == 0)
                 lbl_usage.Content = Loc.T("ManageArchive.NoThemesInFolder");
         }
+
+        private static void SuggestSplit(
+            string sourceCode,
+            out string sourceRange,
+            out string suggestedRangeA,
+            out string suggestedRangeB,
+            out string suggestedCodeA,
+            out string suggestedCodeB)
+        {
+            var suggestion = DBConnect.GetFolderSplitSuggestion(sourceCode);
+            sourceRange = suggestion.SourceRange;
+            suggestedRangeA = suggestion.SuggestedRangeA;
+            suggestedRangeB = suggestion.SuggestedRangeB;
+
+            var baseCode = Regex.Replace(sourceCode ?? string.Empty, @"\s*\([^)]*/[^)]*\)\s*$", string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(baseCode))
+                baseCode = sourceCode ?? string.Empty;
+
+            suggestedCodeA = baseCode + " A";
+            suggestedCodeB = baseCode + " B";
+        }
     }
 }
+
 

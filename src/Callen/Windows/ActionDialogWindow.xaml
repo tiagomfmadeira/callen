@@ -11,16 +11,13 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False">
 
-    <Border BorderThickness="1"
-            Background="{DynamicResource lightestHighLight}"
-            BorderBrush="{DynamicResource highLight}"
-            CornerRadius="9"
-            Padding="14">
+    <Border Style="{StaticResource dialogSurfaceBorder}"
+            Padding="{StaticResource layoutMarginThickness}">
         <StackPanel HorizontalAlignment="Center">
             <Grid Width="400"
                   HorizontalAlignment="Center">
                 <TextBlock Name="dialogTitle"
-                           Margin="4,1,4,6"
+                           Margin="0,0,0,6"
                            FontWeight="ExtraBlack"
                            FontSize="16"
                            TextAlignment="Center"
@@ -28,7 +25,7 @@
                            MaxWidth="392" />
             </Grid>
             <TextBlock Name="dialogContext"
-                       Margin="4,0,4,4"
+                       Margin="0,0,0,6"
                        FontWeight="SemiBold"
                        FontSize="14"
                        TextAlignment="Center"
@@ -36,7 +33,7 @@
                        MaxWidth="392"
                        Visibility="Collapsed" />
             <TextBlock Name="dialogMessage"
-                       Margin="4,0,4,12"
+                       Margin="0,0,0,10"
                        FontSize="14"
                        TextAlignment="Center"
                        TextWrapping="Wrap"

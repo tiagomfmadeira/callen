@@ -40,39 +40,8 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="ToolbarActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
+        <Style x:Key="ToolbarActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource dialogIconButtonBase}">
             <Setter Property="Opacity" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{TemplateBinding Tag}"
-                                           Width="{StaticResource dialogIconSize}"
-                                           Height="{StaticResource dialogIconSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Tint="#FF2E3136" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.45" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.45"/>
@@ -80,44 +49,16 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="DescCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.CloseWindow}"
-                                           Tint="#FF2E3136"
-                                           Width="{StaticResource dialogCloseIconSize}"
-                                           Height="{StaticResource dialogCloseIconSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="DescCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource dialogCloseButtonBase}" />
 
         <Style x:Key="DescNavPrevButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
+            <Setter Property="Opacity" Value="0.75" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
+                                Background="{DynamicResource lightestHighLight}"
+                                BorderBrush="{DynamicResource highLight}"
                                 BorderThickness="1"
                                 CornerRadius="4">
                             <ui:TintedIcon x:Name="img"
@@ -126,16 +67,17 @@
                                            Height="{StaticResource dialogIconSize}"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Tint="#FFC9CBCC"
+                                           Tint="#FF2E3136"
                                            RenderOptions.BitmapScalingMode="HighQuality" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource lightHighLight}" />
                                 <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}" />
+                                <Setter TargetName="img" Property="Tint" Value="{DynamicResource lightestHighLight}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.45" />
@@ -147,12 +89,13 @@
         </Style>
 
         <Style x:Key="DescNavNextButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
+            <Setter Property="Opacity" Value="0.75" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
+                                Background="{DynamicResource lightestHighLight}"
+                                BorderBrush="{DynamicResource highLight}"
                                 BorderThickness="1"
                                 CornerRadius="4">
                             <ui:TintedIcon x:Name="img"
@@ -161,16 +104,17 @@
                                            Height="{StaticResource dialogIconSize}"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Tint="#FFC9CBCC"
+                                           Tint="#FF2E3136"
                                            RenderOptions.BitmapScalingMode="HighQuality" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource lightHighLight}" />
                                 <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource highLight}" />
+                                <Setter TargetName="img" Property="Tint" Value="{DynamicResource lightestHighLight}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.45" />
@@ -354,10 +298,7 @@
                         IsHitTestVisible="True">
                         <Border Height="317"
                             Width="480"
-                            Background="{DynamicResource lightestHighLight}"
-                            BorderBrush="{DynamicResource highLight}"
-                            BorderThickness="1"
-                            CornerRadius="3,3,3,3" />
+                            Style="{StaticResource dialogSurfaceBorder}" />
 
                         <Button Width="25" Height="25" Panel.ZIndex="1"
                             x:Name="btn_save"
@@ -413,9 +354,9 @@
 
                         <TextBox Name="item_name"
                              IsEnabled="False"
-                             Width="464"
-                             Canvas.Left="7"
-                             Canvas.Top="29"
+                             Width="460"
+                             Canvas.Left="10"
+                             Canvas.Top="27"
                              Height="40"
                              FontWeight="Bold"
                              FontSize="13.5"
@@ -433,30 +374,30 @@
                              FontSize="13.8"
                              Style="{StaticResource descTextBox}" />
 
-                        <Label Content="{DynamicResource Details.Collection}" Canvas.Left="7" Canvas.Top="111" Style="{StaticResource DescLabel}" />
-                        <TextBox Name="item_collec" IsEnabled="False" Width="157" Canvas.Left="78" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Collection}" Canvas.Left="10" Canvas.Top="111" Style="{StaticResource DescLabel}" />
+                        <TextBox Name="item_collec" IsEnabled="False" Width="157" Canvas.Left="81" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
 
-                        <Label Content="{DynamicResource Details.Matrix}" Canvas.Left="7" Canvas.Top="146" Style="{StaticResource DescLabel}" />
-                        <TextBox Name="item_other" IsEnabled="False" Width="157" Canvas.Left="78" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Matrix}" Canvas.Left="10" Canvas.Top="146" Style="{StaticResource DescLabel}" />
+                        <TextBox Name="item_other" IsEnabled="False" Width="157" Canvas.Left="81" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
 
-                        <Label Content="{DynamicResource Details.Description}" Canvas.Left="7" Canvas.Top="181" Style="{StaticResource DescLabel}" />
+                        <Label Content="{DynamicResource Details.Description}" Canvas.Left="10" Canvas.Top="181" Style="{StaticResource DescLabel}" />
                         <TextBox Name="item_desc"
                              IsEnabled="False"
                              VerticalContentAlignment="Center"
-                             Width="464"
-                             Canvas.Left="7"
+                             Width="460"
+                             Canvas.Left="10"
                              Canvas.Top="207"
-                             Height="97"
+                             Height="100"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
                              Style="{StaticResource descTextBox}" />
 
-                        <Label Content="{DynamicResource Details.Folder}" Canvas.Left="241" Canvas.Top="111" Style="{StaticResource DescLabel}"/>
-                        <TextBox Name="item_folder" IsEnabled="False" Width="140" Canvas.Left="312" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Folder}" Canvas.Left="248" Canvas.Top="111" Style="{StaticResource DescLabel}"/>
+                        <TextBox Name="item_folder" IsEnabled="False" Width="133" Canvas.Left="319" Canvas.Top="111" Height="26" Style="{StaticResource descTextBox}" />
                         <ComboBox Name="combo_folder"
                               Visibility="Hidden"
-                              Width="140"
-                              Canvas.Left="312"
+                              Width="133"
+                              Canvas.Left="319"
                               Canvas.Top="111"
                               Padding="0,2,22,2"
                               Height="26"
@@ -469,51 +410,16 @@
                             Width="25"
                             Height="25"
                             Canvas.Top="112"
-                            Canvas.Left="453">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarActionButton}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border Name="border"
-                                                Background="Transparent"
-                                                BorderBrush="Transparent"
-                                                BorderThickness="1"
-                                                CornerRadius="4">
-                                                    <ui:TintedIcon x:Name="img"
-                                                           MaskSource="{TemplateBinding Tag}"
-                                                           Width="{StaticResource dialogIconSize}"
-                                                           Height="{StaticResource dialogIconSize}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           Tint="#FF2E3136" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                                        <Setter Property="Cursor" Value="Hand" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsPressed" Value="True">
-                                                        <Setter TargetName="border" Property="Background" Value="#59000000" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsEnabled" Value="False">
-                                                        <Setter Property="Opacity" Value="0.45" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                            Canvas.Left="453"
+                            Style="{StaticResource ToolbarActionButton}" />
 
-                        <Label Content="{DynamicResource Details.Theme}" Canvas.Left="241" Canvas.Top="146" Style="{StaticResource DescLabel}"/>
-                        <TextBox Name="item_theme" IsEnabled="False" Width="160" Canvas.Left="312" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
+                        <Label Content="{DynamicResource Details.Theme}" Canvas.Left="248" Canvas.Top="146" Style="{StaticResource DescLabel}"/>
+                        <TextBox Name="item_theme" IsEnabled="False" Width="133" Canvas.Left="319" Canvas.Top="146" Height="26" Style="{StaticResource descTextBox}" />
 
                         <ComboBox Name="combo_theme"
                               Visibility="Hidden"
-                              Width="140"
-                              Canvas.Left="312"
+                              Width="133"
+                              Canvas.Left="319"
                               Canvas.Top="146"
                               Padding="0,2,22,2"
                               Height="26" />

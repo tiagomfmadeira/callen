@@ -1,9 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Collection">Collection</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Add">Add</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Print">Print</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Menu.Settings">Settings</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Header">Search</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Search.Name">Name</sys:String>
@@ -46,12 +42,35 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Folder">Folder</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Theme">Theme</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.Submit">Submit</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.MissingFieldsTitle">Missing required fields</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddArchive.MissingFieldsMessage">Please fill all required fields before continuing.</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Title">Manage Folders / Themes</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.Folder">Folder</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SelectTheme">Select a theme</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditFolder">Edit folder</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.EditTheme">Edit theme</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTitle">Split folder</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSourceFolder">Source folder</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetOneCode">Folder A</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitPoint">New split</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetTwoCode">Folder B</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirm">Split</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirmTitle">Confirm split</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitConfirmMessage">Create folder '{0}' ({1}) and folder '{2}' ({3}), duplicate themes, move calendars by name range, and remove the original folder.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryTitle">Split completed</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryContext">Created: {0} / {1}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryCounts">Calendars moved: {0} (A: {1}, B: {2})</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryUnmatched">{0} calendar(s) did not match either range and were moved to '{1}'.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitSummaryExamples">Examples: {0}</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitErrorTitle">Split error</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitMissingFields">All split fields are required.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitCodesMustDiffer">Target folder codes must be different.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitTargetCodeCannotMatchSource">Target folder codes cannot be the same as source folder.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.SplitCodeExists">Folder '{0}' already exists.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeRequired">Range is required.</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeInvalid">Range must be in the format A/Z (prefixes allowed).</sys:String>
+    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ManageArchive.RangeOrderInvalid">Range start must come before range end.</sys:String>
 
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Name">Name</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="AddItem.Year">Year</sys:String>
@@ -84,7 +103,6 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SettingsSavedWarnApply">Settings were saved, but new paths could not be applied.{0}{0}{1}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SelectDatabaseTitle">Select database</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.OpenReleasesError">Could not open releases page.</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SearchingUpdates">Checking for updates...</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesGithubFail">Could not check updates on GitHub.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdatesInvalidResponse">Invalid response from releases server.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.NewVersionAvailable">New version available: {0}.</sys:String>
@@ -97,13 +115,10 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdaterMissing">Updater executable was not found in this build.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateConfirm">The application will close to install update {0}.{1}{1}Do you want to continue?</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateTitle">Update Callen</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateDownloading">Downloading update package...</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateValidating">Validating package integrity...</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateHashMismatch">Package SHA256 hash does not match.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.UpdateInstallFail">Automatic update installation failed.</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.InsertError">Insert error: {0}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.SaveImageFail">Could not save the new image.</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.RequireBothAttributes">Both fields are required</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbCreateFolderError">Error creating folder: {0}</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Msg.DbGetPicItemsError">Error getting picture items: {0}</sys:String>
 
@@ -113,8 +128,6 @@
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NoCalendarsToPrint">There are no calendars to print</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedCount">{0} items removed</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.ClearedSuccess">List cleared successfully</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedCount">{0} item(s) removed</sys:String>
-    <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedSuccess">Removed successfully</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.RemovedFromPrint">Item removed from print list</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.NewItemTitle">New Item</sys:String>
     <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="Noti.InsertedSuccess">Inserted successfully</sys:String>

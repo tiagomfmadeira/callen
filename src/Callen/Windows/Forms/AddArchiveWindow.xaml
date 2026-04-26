@@ -15,34 +15,9 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style x:Key="dialogCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.CloseWindow}"
-                                           Tint="#FF2E3136"
-                                           Width="{StaticResource dialogCloseIconSize}"
-                                           Height="{StaticResource dialogCloseIconSize}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="dialogCloseButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogCloseButtonBase}" />
     </Window.Resources>
 
     <Grid>
@@ -54,30 +29,29 @@
         <Viewbox Stretch="Uniform">
             <Grid Width="800" Height="600">
                 <Canvas Height="150"
-                        Width="212"
+                        Width="240"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center">
 
-                    <Border Height="150" Width="212"
-                            Canvas.Left="0" Canvas.Top="0"
-                            Background="{DynamicResource lightestHighLight}"
-                            BorderBrush="{DynamicResource highLight}"
-                            BorderThickness="1"
-                            CornerRadius="3,3,3,3" />
+                    <Border Height="150"
+                            Width="240"
+                            Canvas.Left="0"
+                            Canvas.Top="0"
+                            Style="{StaticResource dialogSurfaceBorder}" />
 
                     <Button Width="25" Height="25"
                             Panel.ZIndex="3"
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource dialogCloseButtonStyle}"
-                            Canvas.Left="185"
+                            Canvas.Left="213"
                             Canvas.Top="2" />
 
                     <!-- Header title in centered container -->
-                    <Grid Width="212"
-                          Height="30"
+                    <Grid Width="240"
+                          Height="{StaticResource dialogTitleHeight}"
                           Canvas.Left="0"
-                          Canvas.Top="6"
+                          Canvas.Top="4"
                           Panel.ZIndex="2">
                         <Label Name="wind_name"
                                Content="{DynamicResource AddArchive.Title}"
@@ -90,38 +64,56 @@
                                Foreground="{DynamicResource highLight}" />
                     </Grid>
 
-                    <Label Content="{DynamicResource AddArchive.Folder}"
-                           Canvas.Left="10"
-                           Canvas.Top="46"
-                           Style="{DynamicResource formLabel}"
-                           Width="50" />
-                    <TextBox Name="folder_box"
-                             Width="139"
-                             Canvas.Left="63"
-                             Canvas.Top="46"
-                             Height="26"
-                             Style="{DynamicResource formTextBox}" />
+                    <Grid Width="220"
+                          Height="94"
+                          Canvas.Left="{StaticResource layoutMargin}"
+                          Canvas.Top="46">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="154" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="26" />
+                        </Grid.RowDefinitions>
 
-                    <Label Content="{DynamicResource AddArchive.Theme}"
-                           Canvas.Left="10"
-                           Canvas.Top="77"
-                           Style="{DynamicResource formLabel}"
-                           Width="50" />
-                    <TextBox Name="theme_box"
-                             Width="139"
-                             Canvas.Left="63"
-                             Canvas.Top="77"
-                             Height="26"
-                             Style="{DynamicResource formTextBox}" />
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="{DynamicResource AddArchive.Folder}"
+                               Style="{DynamicResource formLabel}"
+                               Width="60" />
+                        <TextBox Name="folder_box"
+                                 Grid.Row="0"
+                                 Grid.Column="2"
+                                 Width="154"
+                                 Height="26"
+                                 Style="{DynamicResource formTextBox}" />
 
-                    <Grid Width="212"
-                          Canvas.Left="0"
-                          Canvas.Top="114"
-                          Style="{StaticResource bottomActionRow}">
-                        <Button Name="btn_add_folder"
-                                Click="btn_add_folder_Click"
-                                Content="{DynamicResource AddArchive.Submit}"
-                                Style="{StaticResource bottomActionButtonLast}" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Content="{DynamicResource AddArchive.Theme}"
+                               Style="{DynamicResource formLabel}"
+                               Width="60" />
+                        <TextBox Name="theme_box"
+                                 Grid.Row="2"
+                                 Grid.Column="2"
+                                 Width="154"
+                                 Height="26"
+                                 Style="{DynamicResource formTextBox}" />
+
+                        <Grid Grid.Row="4"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Style="{StaticResource bottomActionRow}">
+                            <Button Name="btn_add_folder"
+                                    Click="btn_add_folder_Click"
+                                    Content="{DynamicResource AddArchive.Submit}"
+                                    Style="{StaticResource bottomActionButtonLast}" />
+                        </Grid>
                     </Grid>
                 </Canvas>
             </Grid>

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Callen.Windows;
 
 namespace Callen.Pages
@@ -13,6 +14,7 @@ namespace Callen.Pages
     public partial class ListSearch : UserControl
     {
         public event EventHandler LoadMoreRequested;
+        public event EventHandler ArchiveStructureChangedRequested;
 
         private ScrollViewer gridScrollViewer;
         private bool isRequestingMore;
@@ -38,8 +40,17 @@ namespace Callen.Pages
 
         public void ApplyData(DataTable data)
         {
+            // Guard against ScrollChanged load-more events while replacing the result set.
+            isRequestingMore = true;
             grdColec.ItemsSource = data == null ? null : data.DefaultView;
-            isRequestingMore = false;
+
+            // Fresh searches must start at the top to avoid accidental pagination cascades.
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (gridScrollViewer != null)
+                    gridScrollViewer.ScrollToTop();
+                isRequestingMore = false;
+            }), DispatcherPriority.Background);
         }
 
         public void AppendData(DataTable data)
@@ -59,6 +70,7 @@ namespace Callen.Pages
             }
 
             currentView.Table.Merge(data, false, MissingSchemaAction.Ignore);
+            grdColec.Items.Refresh();
             isRequestingMore = false;
         }
 
@@ -197,6 +209,8 @@ namespace Callen.Pages
                 ScrollToLastRowSafe();
             };
             descriptionWindow.OnCalendarNavigated += SelectCalendarRowById;
+            descriptionWindow.OnArchiveStructureChanged += () =>
+                ArchiveStructureChangedRequested?.Invoke(this, EventArgs.Empty);
 
             DialogHelper.ShowOwnedDialog(descriptionWindow, DialogHelper.GetActiveMainWindow());
         }

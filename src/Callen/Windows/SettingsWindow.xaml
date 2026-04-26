@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SettingsWindow"
         Height="520"
-        Width="800"
+        Width="560"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="{x:Null}"
@@ -15,63 +15,13 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style x:Key="settingsCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.CloseWindow}"
-                                           Tint="#FF2E3136"
-                                           Width="{StaticResource dialogCloseIconSize}"
-                                           Height="{StaticResource dialogCloseIconSize}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="settingsCloseButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogCloseButtonBase}" />
 
-        <Style x:Key="settingsIconButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="3">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{TemplateBinding Tag}"
-                                           Width="{StaticResource dialogIconSize}"
-                                           Height="{StaticResource dialogIconSize}"
-                                           Tint="#FF2E3136" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="settingsIconButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogIconButtonBase}" />
 
     </Window.Resources>
 
@@ -81,28 +31,28 @@
                 MouseLeftButtonDown="Border_MouseLeftButtonDown" />
 
         <Viewbox Stretch="Uniform">
-            <Grid Width="800" Height="560">
-                <Canvas Width="479"
-                        Height="202"
+            <Grid Width="560" Height="520">
+                <Canvas Width="362"
+                        Height="214"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
 
-                    <Border Height="202" Width="479" Canvas.Left="0" Canvas.Top="0"
-                            Background="{DynamicResource lightestHighLight}"
-                            BorderBrush="{DynamicResource highLight}"
-                            BorderThickness="1"
-                            CornerRadius="3,3,3,3" />
+                    <Border Height="214"
+                            Width="362"
+                            Canvas.Left="0"
+                            Canvas.Top="0"
+                            Style="{StaticResource dialogSurfaceBorder}" />
 
                     <Button Width="25" Height="25"
                             Panel.ZIndex="3"
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource settingsCloseButtonStyle}"
-                            Canvas.Left="452"
+                            Canvas.Left="335"
                             Canvas.Top="2" />
 
-                    <Grid Width="479"
-                          Height="30"
+                    <Grid Width="362"
+                          Height="{StaticResource dialogTitleHeight}"
                           Canvas.Left="0"
                           Canvas.Top="4">
                         <Label Content="{DynamicResource Settings.Title}"
@@ -115,101 +65,126 @@
                                Foreground="{DynamicResource highLight}" />
                     </Grid>
 
-                    <Label Content="{DynamicResource Settings.Version}"
-                           Canvas.Left="10"
-                           Canvas.Top="36"
-                           Style="{DynamicResource formLabel}"
-                           Width="95" />
-                    <TextBlock x:Name="app_version"
-                             Width="332"
-                             Canvas.Left="108"
-                             Canvas.Top="42"
-                             TextWrapping="Wrap"
-                             Foreground="{DynamicResource highLight}"
-                             Cursor="Hand"
-                             TextDecorations="Underline"
-                             ToolTip="{DynamicResource Settings.ReleaseTooltip}"
-                             MouseLeftButtonUp="app_version_MouseLeftButtonUp" />
-                    <Button x:Name="btn_check_updates"
-                            Click="btn_check_updates_Click"
-                            Width="25"
-                            Height="25"
-                            Tag="{StaticResource Icon.Refresh}"
-                            ToolTip="{DynamicResource Settings.Update}"
-                            Style="{StaticResource settingsIconButtonStyle}"
-                            Canvas.Left="444"
-                            Canvas.Top="40" />
+                    <Grid Width="351"
+                          Height="158"
+                          Canvas.Left="{StaticResource layoutMargin}"
+                          Canvas.Top="46">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="86" />
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="233" />
+                            <ColumnDefinition Width="0" />
+                            <ColumnDefinition Width="26" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="26" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="26" />
+                        </Grid.RowDefinitions>
 
-                    <Label x:Name="lbl_language"
-                           Content="{DynamicResource Settings.Language}"
-                           Canvas.Left="10"
-                           Canvas.Top="66"
-                           Style="{DynamicResource formLabel}"
-                           Width="95" />
-                    <ComboBox x:Name="combo_language"
-                              Width="182"
-                              Canvas.Left="108"
-                              Canvas.Top="66"
-                              Height="26"
-                              SelectionChanged="combo_language_SelectionChanged" />
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Content="{DynamicResource Settings.Version}"
+                               Style="{DynamicResource formLabel}"
+                               Width="86" />
+                        <TextBlock x:Name="app_version"
+                                   Grid.Row="0"
+                                   Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource highLight}"
+                                   Cursor="Hand"
+                                   TextDecorations="Underline"
+                                   ToolTip="{DynamicResource Settings.ReleaseTooltip}"
+                                   MouseLeftButtonUp="app_version_MouseLeftButtonUp" />
+                        <Button x:Name="btn_check_updates"
+                                Grid.Row="0"
+                                Grid.Column="4"
+                                Click="btn_check_updates_Click"
+                                Width="25"
+                                Height="25"
+                                Tag="{StaticResource Icon.Refresh}"
+                                ToolTip="{DynamicResource Settings.Update}"
+                                Style="{StaticResource settingsIconButtonStyle}" />
 
-                    <Label x:Name="lbl_database"
-                           Content="{DynamicResource Settings.Database}"
-                           Canvas.Left="10"
-                           Canvas.Top="96"
-                           Style="{DynamicResource formLabel}"
-                           Width="95" />
-                    <TextBox Name="db_string"
-                             Width="332"
-                             Canvas.Left="108"
-                             Canvas.Top="96"
-                             Height="25"
-                             HorizontalContentAlignment="Left"
-                             TextAlignment="Left"
-                             Style="{StaticResource descTextBox}" />
-                    <Button Width="25" Height="25"
-                            x:Name="btn_db_path"
-                            Click="btn_db_path_Click"
-                            Tag="{StaticResource Icon.OpenFolder}"
-                            Style="{StaticResource settingsIconButtonStyle}"
-                            Canvas.Left="444"
-                            Canvas.Top="96" />
+                        <Label x:Name="lbl_language"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               Content="{DynamicResource Settings.Language}"
+                               Style="{DynamicResource formLabel}"
+                               Width="86" />
+                        <ComboBox x:Name="combo_language"
+                                  Grid.Row="2"
+                                  Grid.Column="2"
+                                  Width="164"
+                                  HorizontalAlignment="Left"
+                                  Height="26"
+                                  SelectionChanged="combo_language_SelectionChanged" />
 
-                    <Label x:Name="lbl_images"
-                           Content="{DynamicResource Settings.ImagesFolder}"
-                           Canvas.Left="10"
-                           Canvas.Top="126"
-                           Style="{DynamicResource formLabel}"
-                           Width="95" />
-                    <TextBox x:Name="img_folder"
-                             IsReadOnly="True"
-                             Width="332"
-                             Canvas.Left="108"
-                             Canvas.Top="126"
-                             Height="25"
-                             HorizontalAlignment="Left"
-                             HorizontalContentAlignment="Left"
-                             TextAlignment="Left"
-                             Style="{StaticResource descTextBox}" />
-                    <Button Width="25" Height="25"
-                            x:Name="btn_img_folder"
-                            Click="btn_img_folder_Click"
-                            Tag="{StaticResource Icon.OpenFolder}"
-                            Style="{StaticResource settingsIconButtonStyle}"
-                            Canvas.Left="444"
-                            Canvas.Top="126" />
+                        <Label x:Name="lbl_database"
+                               Grid.Row="4"
+                               Grid.Column="0"
+                               Content="{DynamicResource Settings.Database}"
+                               Style="{DynamicResource formLabel}"
+                               Width="86" />
+                        <TextBox Name="db_string"
+                                 Grid.Row="4"
+                                 Grid.Column="2"
+                                 Height="25"
+                                 HorizontalContentAlignment="Left"
+                                 TextAlignment="Left"
+                                 Style="{StaticResource descTextBox}" />
+                        <Button Width="25"
+                                Height="25"
+                                Grid.Row="4"
+                                Grid.Column="4"
+                                x:Name="btn_db_path"
+                                Click="btn_db_path_Click"
+                                Tag="{StaticResource Icon.OpenFolder}"
+                                Style="{StaticResource settingsIconButtonStyle}" />
 
-                    <Grid x:Name="save_row"
-                          Width="479"
-                          Canvas.Left="0"
-                          Canvas.Top="163"
-                          Style="{StaticResource bottomActionRow}">
+                        <Label x:Name="lbl_images"
+                               Grid.Row="6"
+                               Grid.Column="0"
+                               Content="{DynamicResource Settings.ImagesFolder}"
+                               Style="{DynamicResource formLabel}"
+                               Width="86" />
+                        <TextBox x:Name="img_folder"
+                                 Grid.Row="6"
+                                 Grid.Column="2"
+                                 IsReadOnly="True"
+                                 Height="25"
+                                 HorizontalAlignment="Stretch"
+                                 HorizontalContentAlignment="Left"
+                                 TextAlignment="Left"
+                                 Style="{StaticResource descTextBox}" />
+                        <Button Width="25"
+                                Height="25"
+                                Grid.Row="6"
+                                Grid.Column="4"
+                                x:Name="btn_img_folder"
+                                Click="btn_img_folder_Click"
+                                Tag="{StaticResource Icon.OpenFolder}"
+                                Style="{StaticResource settingsIconButtonStyle}" />
+
+                        <Grid x:Name="save_row"
+                              Grid.Row="8"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="5"
+                              Style="{StaticResource bottomActionRow}">
                         <Button x:Name="btn_save_changes"
                                 Content="{DynamicResource Settings.Save}"
                                 Click="btn_save_changes_Click"
                                 Style="{StaticResource bottomActionButtonLast}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
+                        </Grid>
                     </Grid>
                 </Canvas>
             </Grid>

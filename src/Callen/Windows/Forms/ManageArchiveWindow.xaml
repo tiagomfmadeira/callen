@@ -156,11 +156,11 @@
         <Viewbox Stretch="Uniform">
             <Grid Width="800" Height="600">
                 <Canvas Width="373"
-                        Height="292"
+                        Height="302"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                     <Border Width="373"
-                            Height="292"
+                            Height="302"
                             Canvas.Left="0"
                             Canvas.Top="0"
                             Background="{DynamicResource lightestHighLight}"
@@ -187,47 +187,56 @@
                            Canvas.Top="42"
                            Style="{DynamicResource formLabel}" />
                     <ComboBox Name="combo_folder"
-                              Width="248"
+                              Width="224"
                               Height="26"
                               Canvas.Left="96"
                               Canvas.Top="42"
-                              SelectionChanged="combo_folder_SelectionChanged" />
+                              SelectionChanged="combo_folder_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+                    <Button Name="btn_split_folder"
+                            Click="btn_split_folder_Click"
+                            Tag="{StaticResource Icon.Split}"
+                            Width="26"
+                            Height="26"
+                            Canvas.Left="320"
+                            Canvas.Top="42"
+                            Style="{StaticResource archiveIconButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
                     <Button Name="btn_add_folder"
                             Click="btn_add_folder_Click"
                             Tag="{StaticResource Icon.Plus}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="345"
+                            Canvas.Left="346"
                             Canvas.Top="42"
                             Style="{StaticResource archiveIconButtonStyle}" />
 
                     <ListBox Name="list_themes"
-                             Width="334"
-                             Height="117"
+                             Width="336"
+                             Height="126"
                              Canvas.Left="10"
                              Canvas.Top="73"
                              SelectionChanged="list_themes_SelectionChanged"
-                             DisplayMemberPath="theme" />
+                             DisplayMemberPath="theme" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
                     <Label Name="lbl_usage"
                            Content="{DynamicResource ManageArchive.SelectTheme}"
                            Canvas.Left="10"
-                           Canvas.Top="195"
-                           Width="334"
+                           Canvas.Top="204"
+                           Width="336"
                            Height="26"
                            Style="{StaticResource archiveUsageLabelStyle}" />
 
                     <Label Content="{DynamicResource ManageArchive.EditFolder}"
                            Canvas.Left="10"
-                           Canvas.Top="226"
+                           Canvas.Top="235"
                            Width="130"
                            Style="{DynamicResource formLabel}" />
                     <TextBox Name="folder_name_box"
-                             Width="198"
+                             Width="200"
                              Height="25"
                              Canvas.Left="146"
-                             Canvas.Top="226"
+                             Canvas.Top="235"
                              Style="{DynamicResource formTextBox}" />
 
                     <Button Name="btn_rename_folder"
@@ -235,20 +244,20 @@
                             Tag="{StaticResource Icon.Check}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="345"
-                            Canvas.Top="226"
+                            Canvas.Left="346"
+                            Canvas.Top="235"
                             Style="{StaticResource archiveCheckIconButtonStyle}" />
 
                     <Label Content="{DynamicResource ManageArchive.EditTheme}"
                            Canvas.Left="10"
-                           Canvas.Top="257"
+                           Canvas.Top="266"
                            Width="130"
                            Style="{DynamicResource formLabel}" />
                     <TextBox Name="theme_name_box"
-                             Width="198"
+                             Width="200"
                              Height="25"
                              Canvas.Left="146"
-                             Canvas.Top="257"
+                             Canvas.Top="266"
                              Style="{DynamicResource formTextBox}" />
 
                     <Button Name="btn_rename_theme"
@@ -256,8 +265,8 @@
                             Tag="{StaticResource Icon.Check}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="345"
-                            Canvas.Top="257"
+                            Canvas.Left="346"
+                            Canvas.Top="266"
                             Style="{StaticResource archiveCheckIconButtonStyle}" />
 
                     <Button Name="btn_add_theme"
@@ -265,17 +274,17 @@
                             Tag="{StaticResource Icon.Plus}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="345"
-                            Canvas.Top="164"
-                            Style="{StaticResource archiveIconButtonStyle}" />
+                            Canvas.Left="346"
+                            Canvas.Top="173"
+                            Style="{StaticResource archiveIconButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
                     <Button Name="btn_delete_theme"
                             Click="btn_delete_theme_Click"
                             Tag="{StaticResource Icon.Delete}"
                             Width="26"
                             Height="26"
-                            Canvas.Left="345"
-                            Canvas.Top="195"
+                            Canvas.Left="346"
+                            Canvas.Top="204"
                             Style="{StaticResource archiveIconButtonStyle}" />
 
                     <Button Width="25"
@@ -283,7 +292,7 @@
                             x:Name="btn_close"
                             Click="btn_close_Click"
                             Style="{StaticResource archiveCloseButtonStyle}"
-                            Canvas.Left="346"
+                            Canvas.Left="347"
                             Canvas.Top="2" />
                 </Canvas>
             </Grid>

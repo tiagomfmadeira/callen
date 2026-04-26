@@ -40,6 +40,7 @@ namespace Callen.Windows
 
         // Event to notify when current navigation item changes.
         public event Action<int> OnCalendarNavigated;
+        public event Action OnArchiveStructureChanged;
 
         public ItemDetailsWindow(Calendar calen, bool preview)
             : this(calen, preview, null)
@@ -140,8 +141,8 @@ namespace Callen.Windows
             if (img.Source == null)
                 return;
 
-            var popZoomImg = new ImageZoomWindow(img.Source) { Owner = this };
-            popZoomImg.ShowDialog();
+            var popZoomImg = new ImageZoomWindow(img.Source);
+            DialogHelper.ShowOwnedDialog(popZoomImg, this);
         }
 
         // ---------- Edit mode helpers ----------
@@ -251,12 +252,9 @@ namespace Callen.Windows
                 Loc.T("Dlg.UnsavedChangesMessage"),
                 Loc.T("Dlg.Save"),
                 Loc.T("Dlg.Discard"),
-                Loc.T("Dlg.Cancel"))
-            {
-                Owner = this
-            };
+                Loc.T("Dlg.Cancel"));
 
-            DialogHelper.ShowOwnedDialog(saveChangesDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(saveChangesDialog, this);
 
             if (saveChangesDialog.SelectedAction == DialogAction.Primary)
             {
@@ -528,12 +526,15 @@ namespace Callen.Windows
             var selectedTheme = combo_theme.SelectedItem as Archive;
             var archiveId = selectedTheme == null ? (int?)null : selectedTheme.id;
 
-            var manageArchiveWindow = new ManageArchiveWindow(folderCode, archiveId) { Owner = this };
-            DialogHelper.ShowOwnedDialog(manageArchiveWindow, this, 0.85);
+            var manageArchiveWindow = new ManageArchiveWindow(folderCode, archiveId);
+            DialogHelper.ShowOwnedDialog(manageArchiveWindow, this);
 
             RefreshArchiveSelection(
                 manageArchiveWindow.SelectedFolderCode ?? folderCode,
                 manageArchiveWindow.SelectedArchiveId ?? archiveId);
+
+            if (manageArchiveWindow.HasArchiveStructureChanges)
+                OnArchiveStructureChanged?.Invoke();
         }
 
         private void RefreshArchiveSelection(string folderCode, int? archiveId)
@@ -565,12 +566,9 @@ namespace Callen.Windows
                 cal.id + " - " + cal.name,
                 Loc.T("Dlg.DeleteItemMessage"),
                 Loc.T("Dlg.Delete"),
-                Loc.T("Dlg.Cancel"))
-            {
-                Owner = this
-            };
+                Loc.T("Dlg.Cancel"));
 
-            DialogHelper.ShowOwnedDialog(deleteDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(deleteDialog, this);
 
             if (deleteDialog.SelectedAction != DialogAction.Primary)
                 return;
@@ -589,7 +587,7 @@ namespace Callen.Windows
 
         private void btn_duplicate_Click(object sender, RoutedEventArgs e)
         {
-            var popDup = new AddItemWindow(cal) { Owner = this };
+            var popDup = new AddItemWindow(cal);
 
             popDup.OnInserted += () =>
             {
@@ -597,7 +595,7 @@ namespace Callen.Windows
                 OnItemInserted?.Invoke();
             };
 
-            DialogHelper.ShowOwnedDialog(popDup, this, 0.85);
+            DialogHelper.ShowOwnedDialog(popDup, this);
         }
 
         // ---------- Popups ----------
@@ -721,7 +719,7 @@ namespace Callen.Windows
             }
             catch
             {
-                MessageBox.Show(Loc.F("Msg.InvalidFile", op.FileName), Loc.T("Msg.GenericTitle"));
+                ShowErrorDialog(Loc.T("Msg.GenericTitle"), op.FileName, Loc.F("Msg.InvalidFile", op.FileName));
             }
         }
 
@@ -770,9 +768,21 @@ namespace Callen.Windows
             }
             catch
             {
-                MessageBox.Show(Loc.T("Msg.SaveImageFail"), Loc.T("Msg.GenericTitle"));
+                ShowErrorDialog(Loc.T("Msg.GenericTitle"), cal.id + " - " + cal.name, Loc.T("Msg.SaveImageFail"));
                 return cal.pic_path;
             }
         }
+
+        private void ShowErrorDialog(string title, string context, string message)
+        {
+            var dialog = new ActionDialogWindow(
+                title,
+                context ?? string.Empty,
+                message ?? string.Empty,
+                Loc.T("Dlg.Close"));
+
+            DialogHelper.ShowOwnedDialog(dialog, this);
+        }
     }
 }
+

@@ -13,6 +13,14 @@
             <Setter Property="Height" Value="26" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Margin" Value="0,0,12,0" />
+            <Setter Property="Foreground" Value="{DynamicResource highLight}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource highLight}" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="#FF9AA0A6" />
+                    <Setter Property="BorderBrush" Value="#FF9AA0A6" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="printBottomActionButtonLast" TargetType="{x:Type Button}" BasedOn="{StaticResource bottomActionButtonLast}">
@@ -21,34 +29,9 @@
             <Setter Property="FontSize" Value="14" />
         </Style>
 
-        <Style x:Key="printCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.CloseWindow}"
-                                           Tint="#FF2E3136"
-                                           Width="{StaticResource dialogCloseIconSize}"
-                                           Height="{StaticResource dialogCloseIconSize}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="printCloseButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogCloseButtonBase}" />
 
         <Style x:Key="printPrevPageButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
             <Setter Property="Template">
@@ -127,19 +110,19 @@
             <Canvas Width="730" Height="540" VerticalAlignment="Center" HorizontalAlignment="Center"
                     Margin="0">
 
-                <Border Height="540" Width="730" Canvas.Left="0" Canvas.Top="0"
-                        Background="{DynamicResource lightestHighLight}"
-                        BorderBrush="{DynamicResource highLight}"
-                        BorderThickness="1"
-                        CornerRadius="3,3,3,3" />
+                <Border Height="540"
+                        Width="730"
+                        Canvas.Left="0"
+                        Canvas.Top="0"
+                        Style="{StaticResource dialogSurfaceBorder}" />
 
                 <Button Width="25" Height="25" Panel.ZIndex="3" x:Name="btn_close" Click="btn_close_Click"
                         Style="{StaticResource printCloseButtonStyle}" Canvas.Left="703" Canvas.Top="2" />
 
                 <Grid Width="730"
-                      Height="30"
+                      Height="{StaticResource dialogTitleHeight}"
                       Canvas.Left="0"
-                      Canvas.Top="8">
+                      Canvas.Top="4">
                     <Label Content="{DynamicResource Print.Title}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
@@ -155,7 +138,7 @@
                               HorizontalScrollBarVisibility="Disabled"
                               HorizontalContentAlignment="Center"
                               VerticalContentAlignment="Top"
-                              Canvas.Left="10"
+                              Canvas.Left="{StaticResource layoutMargin}"
                               Canvas.Top="46"
                               Height="404"
                               Width="710"
@@ -247,7 +230,7 @@
                       Panel.ZIndex="5"
                       Height="78"
                       Canvas.Left="0"
-                      Canvas.Top="457">
+                      Canvas.Top="456">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="36" />
                         <RowDefinition Height="42" />

@@ -9,14 +9,13 @@
     <Grid RenderTransformOrigin="0,1">
 
         <!-- Notification area -->
-        <Border BorderThickness="1" Background="{DynamicResource lightestHighLight}" BorderBrush="{DynamicResource highLight}"
-                CornerRadius="9">
-            <StackPanel Margin="14">
+        <Border Style="{StaticResource dialogSurfaceBorder}">
+            <StackPanel Margin="{StaticResource layoutMarginThickness}">
                 <Grid Width="376"
                       HorizontalAlignment="Center">
                     <TextBlock Name="notiTitle"
                                TextWrapping="Wrap"
-                               Margin="0,0,0,4"
+                               Margin="0,0,0,6"
                                FontWeight="ExtraBlack"
                                FontSize="16"
                                TextAlignment="Center">
@@ -25,7 +24,7 @@
                 </Grid>
                 <TextBlock Name="notiFText"
                            TextWrapping="Wrap"
-                           Margin="0,0,0,3"
+                           Margin="0,0,0,6"
                            FontWeight="SemiBold"
                            FontSize="14"
                            TextAlignment="Center">
@@ -33,7 +32,7 @@
                 </TextBlock>
                 <TextBlock Name="notiText"
                            TextWrapping="Wrap"
-                           Margin="0,0,0,2"
+                           Margin="0"
                            FontSize="14"
                            TextAlignment="Center">
                     Something just happened and you are being notified of it.

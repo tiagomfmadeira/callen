@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Callen.Windows;
 
 namespace Callen.Windows.Forms
 {
@@ -69,9 +71,21 @@ namespace Callen.Windows.Forms
 
         private void btn_add_folder_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(folder_box.Text) || string.IsNullOrWhiteSpace(theme_box.Text))
+            var missingFields = new List<string>();
+            if (string.IsNullOrWhiteSpace(folder_box.Text))
+                missingFields.Add(Loc.T("AddArchive.Folder"));
+            if (string.IsNullOrWhiteSpace(theme_box.Text))
+                missingFields.Add(Loc.T("AddArchive.Theme"));
+
+            if (missingFields.Count > 0)
             {
-                MessageBox.Show(Loc.T("Msg.RequireBothAttributes"), Loc.T("Msg.GenericTitle"));
+                var missingDialog = new ActionDialogWindow(
+                    Loc.T("AddArchive.MissingFieldsTitle"),
+                    string.Join(", ", missingFields),
+                    Loc.T("AddArchive.MissingFieldsMessage"),
+                    Loc.T("Dlg.Close"));
+
+                DialogHelper.ShowOwnedDialog(missingDialog, this);
                 return;
             }
 
@@ -80,4 +94,5 @@ namespace Callen.Windows.Forms
         }
     }
 }
+
 

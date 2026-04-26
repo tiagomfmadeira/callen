@@ -62,8 +62,14 @@ namespace Callen.Windows
             initialLanguageCode = App.CurrentLanguageCode;
             InitializeLanguageOptions(initialLanguageCode);
 
-            db_string.Text = App.DatabasePath;
-            img_folder.Text = App.ImagePath;
+            var configuredDbPath = config.AppSettings.Settings["database_path"]?.Value;
+            var configuredImagePath = config.AppSettings.Settings["image_path"]?.Value;
+            db_string.Text = string.IsNullOrWhiteSpace(configuredDbPath)
+                ? App.ToPortableConfigPath(App.DefaultPortableDatabasePath, App.DefaultPortableDatabasePath)
+                : configuredDbPath;
+            img_folder.Text = string.IsNullOrWhiteSpace(configuredImagePath)
+                ? App.ToPortableConfigPath(App.DefaultPortableImagePath, App.DefaultPortableImagePath)
+                : configuredImagePath;
             app_version.Text = GetCurrentVersionText();
             btn_check_updates.ToolTip = Loc.T("Settings.Update");
         }
@@ -98,8 +104,14 @@ namespace Callen.Windows
 
         private void btn_save_changes_Click(object sender, RoutedEventArgs e)
         {
-            var configuredDbPath = db_string.Text?.Trim() ?? string.Empty;
-            var configuredImagePath = img_folder.Text?.Trim() ?? string.Empty;
+            var configuredDbPath = App.ToPortableConfigPath(
+                db_string.Text?.Trim() ?? string.Empty,
+                App.DefaultPortableDatabasePath);
+
+            var configuredImagePath = App.ToPortableConfigPath(
+                img_folder.Text?.Trim() ?? string.Empty,
+                App.DefaultPortableImagePath);
+
             var selectedLanguageCode = (combo_language.SelectedItem as LanguageOption)?.Code ?? App.CurrentLanguageCode;
 
             if (config.AppSettings.Settings["database_path"] == null)
@@ -123,17 +135,18 @@ namespace Callen.Windows
             string applyError;
             if (!App.TryApplyPaths(configuredDbPath, configuredImagePath, out applyError))
             {
-                MessageBox.Show(
-                    Loc.F("Msg.SettingsSavedWarnApply", Environment.NewLine, applyError),
+                ShowSettingsDialog(
                     Loc.T("Msg.GenericTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+                    string.Empty,
+                    Loc.F("Msg.SettingsSavedWarnApply", Environment.NewLine, applyError));
                 return;
             }
 
             App.ApplyLanguage(selectedLanguageCode);
             RefreshLanguageOptionDisplay(selectedLanguageCode);
             suppressCloseRevertPrompt = true;
+            db_string.Text = configuredDbPath;
+            img_folder.Text = configuredImagePath;
 
             new NotificationWindow(Loc.T("Noti.SettingsSavedTitle"), Loc.T("Msg.SettingsSaved"), string.Empty).Show();
             onSettingsSaved?.Invoke();
@@ -189,11 +202,10 @@ namespace Callen.Windows
             }
             catch
             {
-                MessageBox.Show(
-                    Loc.T("Msg.OpenReleasesError"),
+                ShowSettingsDialog(
                     Loc.T("Msg.GenericTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                    string.Empty,
+                    Loc.T("Msg.OpenReleasesError"));
             }
         }
 
@@ -271,13 +283,13 @@ namespace Callen.Windows
                 {
                     if (string.IsNullOrWhiteSpace(latestZipDownloadUrl))
                     {
-                        await ShowUpdateDialogAsync(Loc.F("Msg.NewVersionAvailable", release.TagName), false);
+                        ShowUpdatePrompt(Loc.F("Msg.NewVersionAvailable", release.TagName));
                         return;
                     }
 
                     if (string.IsNullOrWhiteSpace(latestZipSha256))
                     {
-                        await ShowUpdateDialogAsync(Loc.F("Msg.NewVersionNoAuto", release.TagName), false);
+                        ShowUpdatePrompt(Loc.F("Msg.NewVersionNoAuto", release.TagName));
                         return;
                     }
 
@@ -287,15 +299,15 @@ namespace Callen.Windows
 
                 if (latestVersion == null)
                 {
-                    await ShowUpdateDialogAsync(Loc.F("Msg.LatestReleaseFound", release.TagName ?? "(sem tag)"), false);
+                    ShowUpdatePrompt(Loc.F("Msg.LatestReleaseFound", release.TagName ?? "(sem tag)"));
                     return;
                 }
 
-                await ShowUpdateDialogAsync(Loc.F("Msg.AlreadyLatest", currentVersion), false);
+                ShowUpdatePrompt(Loc.F("Msg.AlreadyLatest", currentVersion));
             }
             catch (Exception)
             {
-                await ShowUpdateDialogAsync(Loc.T("Msg.UpdatesCheckFailNow"), false);
+                ShowUpdatePrompt(Loc.T("Msg.UpdatesCheckFailNow"));
             }
             finally
             {
@@ -322,13 +334,15 @@ namespace Callen.Windows
 
             if (requireConfirmation)
             {
-                var answer = MessageBox.Show(
-                    Loc.F("Msg.UpdateConfirm", latestTagName, Environment.NewLine),
+                var confirmDialog = new ActionDialogWindow(
                     Loc.T("Msg.UpdateTitle"),
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                    string.Empty,
+                    Loc.F("Msg.UpdateConfirm", latestTagName, Environment.NewLine),
+                    Loc.T("Settings.Install"),
+                    Loc.T("Dlg.Cancel"));
 
-                if (answer != MessageBoxResult.Yes)
+                DialogHelper.ShowOwnedDialog(confirmDialog, this);
+                if (confirmDialog.SelectedAction != DialogAction.Primary)
                     return;
             }
 
@@ -380,12 +394,9 @@ namespace Callen.Windows
                 string.Empty,
                 message,
                 primaryText,
-                secondaryText)
-            {
-                Owner = this
-            };
+                secondaryText);
 
-            DialogHelper.ShowOwnedDialog(updateDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(updateDialog, this);
 
             if (allowInstall && updateDialog.SelectedAction == DialogAction.Primary)
                 await StartAutoUpdateAsync(false);
@@ -400,12 +411,20 @@ namespace Callen.Windows
                 Loc.T("Msg.UpdateTitle"),
                 string.Empty,
                 message,
-                Loc.T("Dlg.Close"))
-            {
-                Owner = this
-            };
+                Loc.T("Dlg.Close"));
 
-            DialogHelper.ShowOwnedDialog(updateDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(updateDialog, this);
+        }
+
+        private void ShowSettingsDialog(string title, string context, string message)
+        {
+            var dialog = new ActionDialogWindow(
+                title ?? Loc.T("Msg.GenericTitle"),
+                context ?? string.Empty,
+                message ?? string.Empty,
+                Loc.T("Dlg.Close"));
+
+            DialogHelper.ShowOwnedDialog(dialog, this);
         }
 
         private void InitializeLanguageOptions(string selectedLanguageCode = null)
@@ -442,12 +461,9 @@ namespace Callen.Windows
                 Loc.T("Dlg.LanguagePreviewDiscardMessage"),
                 Loc.T("Dlg.Save"),
                 Loc.T("Dlg.Discard"),
-                Loc.T("Dlg.Cancel"))
-            {
-                Owner = this
-            };
+                Loc.T("Dlg.Cancel"));
 
-            DialogHelper.ShowOwnedDialog(languageDialog, this, 0.85);
+            DialogHelper.ShowOwnedDialog(languageDialog, this);
 
             if (languageDialog.SelectedAction == DialogAction.Primary)
             {
@@ -673,4 +689,5 @@ namespace Callen.Windows
         }
     }
 }
+
 

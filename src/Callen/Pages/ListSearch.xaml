@@ -10,14 +10,17 @@
                   ColumnHeaderStyle="{DynamicResource DGColumnHeader}" CellStyle="{DynamicResource DGCell}"
                   BorderThickness="0"
                   AutoGenerateColumns="False"
+                  RowHeight="30"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True"
                   VerticalScrollBarVisibility="Visible"
                   EnableRowVirtualization="True"
                   EnableColumnVirtualization="True"
                   VirtualizingPanel.IsVirtualizing="True"
-                  VirtualizingPanel.VirtualizationMode="Recycling">
+                  VirtualizingPanel.VirtualizationMode="Standard">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="MinHeight" Value="30" />
+                    <Setter Property="Height" Value="30" />
                     <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="Foreground" Value="{DynamicResource darkHighLight}" />
@@ -51,7 +54,7 @@
                                     ElementStyle="{DynamicResource DGElementLeft}"
                                     Width="1.0*" />
                 <DataGridTextColumn Binding="{Binding Path=code}" IsReadOnly="True" Header="{DynamicResource Grid.Col.Folder}"
-                                    ElementStyle="{DynamicResource DGElemntCenter}" 
+                                    ElementStyle="{DynamicResource DGElemntCenter}"
                                     Width="0.65*"
                                     MinWidth="84" />
                 <DataGridTextColumn Binding="{Binding Path=theme}" IsReadOnly="True" Header="{DynamicResource Grid.Col.Theme}" 

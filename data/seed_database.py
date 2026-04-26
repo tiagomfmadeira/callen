@@ -71,7 +71,7 @@ def load_raw_themes_by_code(table2_path: Path) -> Dict[str, List[str]]:
 
 
 def resolve_concrete_themes(raw_themes_by_code: Dict[str, List[str]]) -> Dict[str, List[str]]:
-    """Resolve concrete themes for each folder, expanding 'Temas da Pasta X' references."""
+    """Resolve themes for each folder, importing references while preserving original labels."""
     cache: Dict[str, List[str]] = {}
 
     def resolve_for_code(code: str, stack: Set[str]) -> List[str]:
@@ -83,12 +83,11 @@ def resolve_concrete_themes(raw_themes_by_code: Dict[str, List[str]]) -> Dict[st
         stack.add(code)
         resolved: List[str] = []
         for theme in raw_themes_by_code.get(code, []):
+            append_unique(resolved, theme)
             base_code = extract_referenced_base_code(theme)
             if base_code:
                 for derived_theme in resolve_for_code(base_code, stack):
                     append_unique(resolved, derived_theme)
-                continue
-            append_unique(resolved, theme)
         stack.remove(code)
         cache[code] = resolved
         return list(resolved)

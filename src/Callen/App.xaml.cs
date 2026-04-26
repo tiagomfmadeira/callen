@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Windows;
 using SQLite;
+using Callen.Windows;
 
 namespace Callen
 {
@@ -38,6 +39,8 @@ namespace Callen
 
         public static string databasePath => DatabasePath;
         public static string CurrentLanguageCode { get; private set; } = PortugueseLanguageCode;
+        public static string DefaultPortableDatabasePath => PortableDatabasePath;
+        public static string DefaultPortableImagePath => PortableImagePath;
 
         private static void EnsureRuntimePathsInitialized()
         {
@@ -54,6 +57,23 @@ namespace Callen
                 path = Path.Combine(AppBasePath, path);
 
             return Path.GetFullPath(path);
+        }
+
+        public static string ToPortableConfigPath(string configuredPath, string defaultPath)
+        {
+            var resolvedPath = ResolveConfiguredPath(configuredPath, defaultPath);
+            var basePath = AppBasePath;
+            if (!basePath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+                basePath += Path.DirectorySeparatorChar;
+
+            var baseUri = new Uri(basePath, UriKind.Absolute);
+            var targetUri = new Uri(resolvedPath, UriKind.Absolute);
+            var relativeUri = baseUri.MakeRelativeUri(targetUri);
+            if (relativeUri.IsAbsoluteUri)
+                return resolvedPath;
+
+            var relative = Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
+            return string.IsNullOrWhiteSpace(relative) ? "." : relative;
         }
 
         public static bool TryInitializeStorage(out string error)
@@ -117,6 +137,7 @@ namespace Callen
                         archive_id INTEGER,
                         FOREIGN KEY (archive_id) REFERENCES Archive (id)
                     );");
+
             }
         }
 
@@ -127,11 +148,13 @@ namespace Callen
             string error;
             if (!TryInitializeStorage(out error))
             {
-                MessageBox.Show(
-                    Loc.F("Msg.InitStorageError", Environment.NewLine, error),
+                var startupDialog = new ActionDialogWindow(
                     Loc.T("Msg.GenericTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                    string.Empty,
+                    Loc.F("Msg.InitStorageError", Environment.NewLine, error),
+                    Loc.T("Dlg.Close"));
+
+                DialogHelper.ShowOwnedDialog(startupDialog, Current?.MainWindow);
             }
         }
 
@@ -172,3 +195,4 @@ namespace Callen
         }
     }
 }
+

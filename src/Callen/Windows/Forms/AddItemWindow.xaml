@@ -16,67 +16,13 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style x:Key="dialogCloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{StaticResource Icon.CloseWindow}"
-                                           Tint="#FF2E3136"
-                                           Width="{StaticResource dialogCloseIconSize}"
-                                           Height="{StaticResource dialogCloseIconSize}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="dialogCloseButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogCloseButtonBase}" />
 
-        <Style x:Key="dialogIconButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource menuMinButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="4">
-                            <ui:TintedIcon x:Name="img"
-                                           MaskSource="{TemplateBinding Tag}"
-                                           Width="{StaticResource dialogIconSize}"
-                                           Height="{StaticResource dialogIconSize}"
-                                           Tint="#FF2E3136"
-                                           RenderOptions.BitmapScalingMode="HighQuality" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#59000000" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.45" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style x:Key="dialogIconButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource dialogIconButtonBase}" />
     </Window.Resources>
 
     <Grid>
@@ -130,10 +76,7 @@
                                 Canvas.Top="125">
                             <Border Height="340"
                                     Width="560"
-                                    Background="{DynamicResource lightestHighLight}"
-                                    BorderBrush="{DynamicResource highLight}"
-                                    BorderThickness="1"
-                                    CornerRadius="3,3,3,3" />
+                                    Style="{StaticResource dialogSurfaceBorder}" />
 
                             <Button Width="25"
                                     Height="25"
@@ -145,14 +88,14 @@
                                     Canvas.Top="2" />
 
                             <Label Content="{DynamicResource AddItem.Name}"
-                                   Canvas.Left="12"
+                                   Canvas.Left="10"
                                    Canvas.Top="36"
                                    Style="{DynamicResource formLabel}"
                                    Width="77"
                                    Height="26" />
                             <TextBox Name="name_box"
                                      Width="185"
-                                     Canvas.Left="95"
+                                     Canvas.Left="93"
                                      Canvas.Top="36"
                                      Height="26"
                                      Style="{DynamicResource formTextBox}" />
@@ -180,14 +123,14 @@
                                     Style="{StaticResource dialogIconButtonStyle}" />
 
                             <Label Content="{DynamicResource AddItem.Year}"
-                                   Canvas.Left="12"
+                                   Canvas.Left="10"
                                    Canvas.Top="72"
                                    Style="{DynamicResource formLabel}"
                                    Width="77"
                                    Height="26" />
                             <TextBox Name="year_box"
                                      Width="185"
-                                     Canvas.Left="95"
+                                     Canvas.Left="93"
                                      Canvas.Top="72"
                                      Height="26"
                                      Style="{DynamicResource formTextBox}" />
@@ -206,14 +149,14 @@
                                       IsEnabled="False" />
 
                             <Label Content="{DynamicResource AddItem.Collection}"
-                                   Canvas.Left="12"
+                                   Canvas.Left="10"
                                    Canvas.Top="108"
                                    Style="{DynamicResource formLabel}"
                                    Width="77"
                                    Height="26" />
                             <TextBox Name="collec_box"
                                      Width="185"
-                                     Canvas.Left="95"
+                                     Canvas.Left="93"
                                      Canvas.Top="108"
                                      Height="26"
                                      Style="{DynamicResource formTextBox}" />
@@ -232,14 +175,14 @@
                                      Style="{DynamicResource formTextBox}" />
 
                             <Label Content="{DynamicResource AddItem.Description}"
-                                   Canvas.Left="12"
+                                   Canvas.Left="10"
                                    Canvas.Top="144"
                                    Style="{DynamicResource formLabel}"
                                    Width="77"
                                    Height="26" />
                             <TextBox Name="desc_box"
-                                     Width="536"
-                                     Canvas.Left="12"
+                                     Width="540"
+                                     Canvas.Left="10"
                                      Canvas.Top="174"
                                      Height="120"
                                      VerticalContentAlignment="Top"

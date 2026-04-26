@@ -35,7 +35,7 @@ namespace Callen
 
         public Color Tint
         {
-            get => (Color)GetValue(TintProperty);
+            get => ResolveTintColor(GetValue(TintProperty));
             set => SetValue(TintProperty, value);
         }
 
@@ -199,6 +199,31 @@ namespace Callen
             };
             brush.Freeze();
             return brush;
+        }
+
+        private static Color ResolveTintColor(object value)
+        {
+            if (value is Color color)
+                return color;
+
+            if (value is SolidColorBrush brush)
+                return brush.Color;
+
+            if (value is string text)
+            {
+                try
+                {
+                    var parsed = new ColorConverter().ConvertFromInvariantString(text);
+                    if (parsed is Color parsedColor)
+                        return parsedColor;
+                }
+                catch
+                {
+                    // Ignore invalid color text and fall back.
+                }
+            }
+
+            return Colors.White;
         }
     }
 }

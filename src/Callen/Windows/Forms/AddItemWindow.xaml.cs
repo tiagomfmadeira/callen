@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using SQLite;
+using Callen.Windows;
 
 namespace Callen.Windows.Forms
 {
@@ -151,7 +152,7 @@ namespace Callen.Windows.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Loc.F("Msg.InvalidFile", op.FileName), Loc.T("Msg.GenericTitle"));
+                ShowErrorDialog(Loc.T("Msg.GenericTitle"), op.FileName, Loc.F("Msg.InvalidFile", op.FileName));
                 Debug.WriteLine("File Error: " + ex);
             }
         }
@@ -183,7 +184,7 @@ namespace Callen.Windows.Forms
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show(Loc.F("Msg.InsertError", ex.Message), Loc.T("Msg.GenericTitle"));
+                ShowErrorDialog(Loc.T("Msg.GenericTitle"), name_box.Text, Loc.F("Msg.InsertError", ex.Message));
                 Debug.WriteLine(ex);
                 return;
             }
@@ -211,8 +212,8 @@ namespace Callen.Windows.Forms
             var selectedTheme = combo_theme.SelectedItem as Archive;
             var archiveId = selectedTheme == null ? (int?)null : selectedTheme.id;
 
-            var manageArchiveWindow = new ManageArchiveWindow(folderCode, archiveId) { Owner = this };
-            DialogHelper.ShowOwnedDialog(manageArchiveWindow, this, 0.85);
+            var manageArchiveWindow = new ManageArchiveWindow(folderCode, archiveId);
+            DialogHelper.ShowOwnedDialog(manageArchiveWindow, this);
 
             RefreshArchiveSelection(
                 manageArchiveWindow.SelectedFolderCode ?? folderCode,
@@ -279,7 +280,19 @@ namespace Callen.Windows.Forms
             PrintListStore.AddIfMissing(calendar);
         }
 
+        private void ShowErrorDialog(string title, string context, string message)
+        {
+            var dialog = new ActionDialogWindow(
+                title,
+                context ?? string.Empty,
+                message ?? string.Empty,
+                Loc.T("Dlg.Close"));
+
+            DialogHelper.ShowOwnedDialog(dialog, this);
+        }
+
     }
 }
+
 
 
